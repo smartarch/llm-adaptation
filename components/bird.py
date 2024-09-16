@@ -31,15 +31,16 @@ class Bird(MovingComponent2D):
         super().__init__(simulation, location, Bird.BirdSpeed)
 
     def actuate(self):
-        if self.isScared():
-            self.flee()
-        elif self.state == BirdState.IDLE:
+        if self.state == BirdState.IDLE:
             if random.random() < Bird.IdleToAttackProb:
                 self.attackNewField()
         elif self.state == BirdState.MOVING_TO_FIELD:
             self.flyToTarget()
         elif self.state == BirdState.EATING:
-            self.damage()
+            if self.isScared():
+                self.flee()
+            else:
+                self.damage()
         elif self.state == BirdState.FLEEING:
             self.flyToTarget()
 

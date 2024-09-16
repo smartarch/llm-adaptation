@@ -64,15 +64,29 @@ class Field(Component):
         undamaged = self.crops > 0
         coordinates = np.argwhere(undamaged)
 
-        # TODO: optimize this
+        if len(coordinates) == 0:
+            return None
+
         def point_unprotected(point):
             for drone in self.simulation.drones:
                 if drone.protectsPoint(Point2D(point)):
                     return False
             return True
 
-        unprotected = list(filter(point_unprotected, coordinates))
-        return self.__randomCrop(unprotected)
+        # try 20 random points and see if there is an uprotected one
+        for _ in range(20):
+            idx = np.random.choice(len(coordinates))
+            x, y = coordinates[idx]
+            point = Point2D(x + self.left, y + self.top)
+
+            if point_unprotected(point):
+                return point
+
+        print("Could not find unprotected crop")
+        return None
+        # Slow version: try all points
+        # unprotected = list(filter(point_unprotected, coordinates))
+        # return self.__randomCrop(unprotected)
 
     def __randomCrop(self, cropCoordinates):
 

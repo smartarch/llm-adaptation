@@ -17,22 +17,22 @@ class Point2D:
         The y-coordinate of the point.
     """
 
-    def __init__(self, *coordinates: Union[float, List[float], Tuple[float, float]]):
+    def __init__(self, x: Union[float, List[float], Tuple[float, float], "Point2D"], y=0.0):
         """
         Constructs a point from either
         x and y coordinates as two numbers (two arguments), or
-        a list / tuple containing two numbers.
+        a list / tuple containing two numbers or another Point2D.
         """
-        if len(coordinates) == 1:
-            assert type(coordinates) == list or type(coordinates) == tuple
-            assert len(coordinates[0]) == 2  # type: ignore
-            self.x = coordinates[0][0]  # type: ignore
-            self.y = coordinates[0][1]  # type: ignore
-        elif len(coordinates) == 2:
-            self.x = coordinates[0]
-            self.y = coordinates[1]
+        if isinstance(x, Point2D):
+            self.x = x.x
+            self.y = x.y
+        elif isinstance(x, (list, tuple)):
+            assert len(x) == 2
+            self.x = x[0]
+            self.y = x[1]
         else:
-            raise ValueError("Point2D must have two coordinates.")
+            self.x = x
+            self.y = y
 
     def __sub__(self, other):
         return self.x - other.x, self.y - other.y
