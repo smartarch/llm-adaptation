@@ -32,6 +32,7 @@ class Field(Component):
 
         self.crops = np.ones((right - left + 1, bottom - top + 1))  # rectangle of crops
         self.damage = 0  # total damage
+        self.damagedThisStep = set()
 
     def isPointInField(self, point):
         """
@@ -48,6 +49,7 @@ class Field(Component):
         if self.crops[point.x - self.left, point.y - self.top] > 0:
             self.crops[point.x - self.left, point.y - self.top] -= 1
             self.damage += 1
+            self.damagedThisStep.add(point)
             return True
 
         return False

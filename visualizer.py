@@ -16,6 +16,7 @@ COLORS = {
     'bird': [250, 105, 157],
     'bird_eating': [255, 20, 102],
     'field': [228, 255, 122],
+    'field_damaged': [228, 122, 122],
     'charger': [204, 204, 0],
     'charger_failed': [50, 50, 0],
     'grid': [255, 255, 255],
@@ -67,16 +68,14 @@ class Visualizer:
         self.images: list[Image] = []
         self.grid = {}
 
-    def _drawRectangle(self, canvas, point, component, color=None):
+    def _drawRectangle(self, canvas: np.ndarray, point, component, color=None):
         if color is None:
             color = COLORS[component]
-        startY = point.y * self.cellSize
+        startY = int(point.y * self.cellSize)
         endY = startY + SIZES[component]
-        startX = point.x * self.cellSize
+        startX = int(point.x * self.cellSize)
         endX = startX + SIZES[component]
-        for i in range(int(startY), int(endY)):
-            for j in range(int(startX), int(endX)):
-                canvas[i][j] = color
+        canvas[startX:endX, startY:endY] = color
         return startX + (endX - startX) / 2, startY + (endY - startY) / 2
 
     def _drawCircle(self, drawObject, rectangelMap, fill=None, outline='blue'):
@@ -92,6 +91,7 @@ class Visualizer:
             (self.height,
              self.width, 3))  # 3 for RGB and H for unsigned short
         self.background.fill(255)
+
         for field in self.simulation.fields:
             filedPoints = [Point2D(x, y) for x in range(field.left, field.right + 1) for y in range(field.top, field.bottom + 1)]
             self.grid[field] = filedPoints
@@ -147,19 +147,18 @@ class Visualizer:
 
     def _drawDamage(self, array):
         for field in self.simulation.fields:
-            for crop in self.grid[field]:
-                damage = field.crops[crop.x - field.left, crop.y - field.top]
-                if damage > 0:
-                    color = plt.colormaps["Wistia"](damage / 3)[:3]
-                    color = tuple(int(c * 255) for c in color)
-                    self._drawRectangle(array, crop, 'crop', color=color)
+            for crop in field.damagedThisStep:
+                # damage = field.crops[crop.x - field.left, crop.y - field.top]
+                # color = plt.colormaps["Wistia"](damage / 3)[:3]
+                # color = tuple(int(c * 255) for c in color)
+                self._drawRectangle(array, crop, 'crop', color=COLORS['field_damaged'])
+            field.damagedThisStep.clear()
 
     def drawComponents(self, iteration=0):
 
-        # TODO: the animation generation can be sped up by saving the updated background and only updating more damaged field points
-        array = np.array(self.background, copy=True)
+        self._drawDamage(self.background)
 
-        self._drawDamage(array)  # TODO: disabled for now for speedup
+        array = np.array(self.background, copy=True)
 
         for bird in self.simulation.birds:
             birdColor = 'bird'  # 'bird_eating' if bird.ateThisTimeStep else 'bird'

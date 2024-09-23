@@ -19,5 +19,7 @@ visualizer.drawFields()
 
 simulation.run_simulation(100)
 
+print("Saving animation...")
 os.makedirs("animations", exist_ok=True)
 visualizer.createAnimation(f"animations/output.gif")
+print("Done")
