@@ -19,6 +19,7 @@ class SmartFarmSimulation:
 
         self.fields: list[Field] = [Field(self, *coords) for coords in config["fields"]]
         self.drones: list[Drone] = [Drone(self, self.randomPoint()) for _ in range(config["drones"])]
+        self.dronesDict = {drone.id: drone for drone in self.drones}
         self.birds: list[Bird] = [Bird(self, self.randomPoint()) for _ in range(config["birds"])]
 
         self.components: list[Component] = self.fields + self.drones + self.birds
@@ -36,7 +37,7 @@ class SmartFarmSimulation:
                 self.visualizer.drawComponents()
 
     def simulation_step(self):
-        self.adapt()
+        self.adapt(self)
 
         for component in self.components:
             component.actuate()

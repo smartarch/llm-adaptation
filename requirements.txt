@@ -1,0 +1,11 @@
+# common
+python-dotenv
+pyyaml
+matplotlib
+pillow
+colorama
+
+# LLMs
+langchain
+langchain-openai
+tiktoken

@@ -23,7 +23,7 @@ class Field(Component):
         """
         super().__init__(simulation)
         Field.Count = Field.Count + 1
-        self.id = f"FIELD_{Field.Count}"
+        self.id = f"Field_{Field.Count}"
 
         self.top = top
         self.left = left
@@ -98,6 +98,13 @@ class Field(Component):
         idx = np.random.choice(len(cropCoordinates))
         x, y = cropCoordinates[idx]
         return Point2D(x + self.left, y + self.top)
+
+    def threat_level(self):
+        birds_inside = len([
+            bird for bird in self.simulation.birds
+            if bird.location.is_inside(self.left, self.top, self.right, self.bottom)
+        ])
+        return birds_inside / len(self.simulation.birds)
 
     def __str__(self):
         return f"{self.id}({self.top},{self.left}),{self.bottom},{self.right})"

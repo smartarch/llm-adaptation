@@ -8,6 +8,9 @@ class DroneState(Enum):
     CHARGING = 1
     # TODO
 
+    def __str__(self):
+        return self.name
+
 
 class Drone(MovingComponent2D):
 
@@ -18,6 +21,7 @@ class Drone(MovingComponent2D):
         super().__init__(simulation, location, Drone.DroneSpeed)
         self.battery = 1
         self.state = DroneState.IDLE
+        self.target = None
 
     def protectsPoint(self, point: Point2D) -> bool:
         """Returns true if the point is protected by this drone."""

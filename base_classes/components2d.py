@@ -61,6 +61,10 @@ class Point2D:
         """Returns a random point in the specified rectangular area, all borders inclusive."""
         return Point2D(random.randint(left, right), random.randint(top, bottom))
 
+    def is_inside(self, left, top, right, bottom):
+        """Returns true if the point is inside the specified rectangular area."""
+        return left <= self.x <= right and top <= self.y <= bottom
+
 
 class StationaryComponent2D(Component):
     """
