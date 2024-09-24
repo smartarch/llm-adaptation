@@ -5,22 +5,16 @@ from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 
 from base_classes.components2d import Point2D
+from components.bird import BirdState
 from components.drone import DroneState
 
 if TYPE_CHECKING:
     from simulation import SmartFarmSimulation
 
 COLORS = {
-    'drone': [0, 0, 255],
-    'drone_slow': [120, 120, 255],
-    'bird': [250, 105, 157],
-    'bird_eating': [255, 20, 102],
     'field': [228, 255, 122],
     'field_damaged': [228, 122, 122],
     'charger': [204, 204, 0],
-    'charger_failed': [50, 50, 0],
-    'grid': [255, 255, 255],
-    'crop': [0, 0, 0],
     'text': (0, 0, 0),
     'line': [255, 0, 0],
 }
@@ -34,16 +28,21 @@ DRONE_COLORS = {
     DroneState.CHARGING: [0, 153, 0],
     # DroneState.TERMINATED: [60, 60, 60],
 }
+BIRD_COLORS = {
+    BirdState.IDLE: [255, 189, 212],
+    BirdState.FLYING_RANDOMLY: [255, 189, 212],
+    BirdState.MOVING_TO_FIELD: [252, 84, 0],
+    BirdState.EATING: [153, 0, 0],
+    BirdState.FLEEING_OUTSIDE: [199, 18, 166],
+    BirdState.FLEEING_WITHIN_FIELD: [199, 18, 166],
+}
 
 SIZES = {
     'drone': 6,
     'drone_slow': 6,
-    'bird': 3,
-    'bird_eating': 4,
+    'bird': 4,
     'field': 10,
     'charger': 10,
-    'charger_failed': 10,
-    'crop': 10,
 }
 
 LEGEND_SIZE = 260
@@ -151,7 +150,7 @@ class Visualizer:
                 # damage = field.crops[crop.x - field.left, crop.y - field.top]
                 # color = plt.colormaps["Wistia"](damage / 3)[:3]
                 # color = tuple(int(c * 255) for c in color)
-                self._drawRectangle(array, crop, 'crop', color=COLORS['field_damaged'])
+                self._drawRectangle(array, crop, 'field', color=COLORS['field_damaged'])
             field.damagedThisStep.clear()
 
     def drawComponents(self, iteration=0):
@@ -161,8 +160,8 @@ class Visualizer:
         array = np.array(self.background, copy=True)
 
         for bird in self.simulation.birds:
-            birdColor = 'bird'  # 'bird_eating' if bird.ateThisTimeStep else 'bird'
-            self.grid[bird] = self._drawRectangle(array, bird.location, birdColor)
+            birdColor = BIRD_COLORS[bird.state]
+            self.grid[bird] = self._drawRectangle(array, bird.location, 'bird', birdColor)
 
         for drone in self.simulation.drones:
             droneColor = DRONE_COLORS[drone.state]

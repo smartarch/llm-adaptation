@@ -8,7 +8,9 @@ class BirdState(Enum):
     IDLE = 0
     MOVING_TO_FIELD = 1
     EATING = 3
-    FLEEING = 4
+    FLEEING_WITHIN_FIELD = 4
+    FLEEING_OUTSIDE = 5
+    FLYING_RANDOMLY = 6
 
 
 class Bird(MovingComponent2D):
@@ -34,15 +36,14 @@ class Bird(MovingComponent2D):
         if self.state == BirdState.IDLE:
             if random.random() < Bird.IdleToAttackProb:
                 self.attackNewField()
-        elif self.state == BirdState.MOVING_TO_FIELD:
+        elif self.state in (BirdState.MOVING_TO_FIELD, BirdState.FLEEING_WITHIN_FIELD,
+                            BirdState.FLEEING_OUTSIDE, BirdState.FLYING_RANDOMLY):
             self.flyToTarget()
         elif self.state == BirdState.EATING:
             if self.isScared():
                 self.flee()
             else:
                 self.damage()
-        elif self.state == BirdState.FLEEING:
-            self.flyToTarget()
 
     def isScared(self):
         """Returns true if bird is scared by a drone."""
@@ -54,9 +55,9 @@ class Bird(MovingComponent2D):
     def flee(self):
         """Flee from the drones and fly away to an empty place. If there is an unprotected crop in the same field, fly there."""
         if self.field is not None:
-            self.attackSameField()
+            self.attackSameField(True)
         else:
-            self.flyRandomly()
+            self.flyRandomly(BirdState.FLEEING_OUTSIDE)
 
     def attackNewField(self):
         self.field = random.choice(self.simulation.fields)
@@ -66,28 +67,28 @@ class Bird(MovingComponent2D):
         else:
             self.state = BirdState.IDLE
 
-    def attackSameField(self):
+    def attackSameField(self, fleeing):
         self.target = self.field.randomUnprotectedCrop()
         if self.target is not None:
-            self.state = BirdState.MOVING_TO_FIELD
+            self.state = BirdState.FLEEING_WITHIN_FIELD if fleeing else BirdState.MOVING_TO_FIELD
         else:
-            self.state = BirdState.IDLE
+            self.flyRandomly(BirdState.FLEEING_OUTSIDE if fleeing else BirdState.FLYING_RANDOMLY)
 
-    def flyRandomly(self):
+    def flyRandomly(self, newState):
         self.target = self.simulation.randomPoint()
-        self.state = BirdState.FLEEING
+        self.state = newState
 
     def damage(self):
         self.field.eatCrop(self.location)
 
         if random.random() < Bird.AttackToAttackProb:
-            self.attackSameField()
+            self.attackSameField(False)
         else:
-            self.flyRandomly()
+            self.flyRandomly(BirdState.FLYING_RANDOMLY)
 
     def flyToTarget(self):
         if self.move(self.target):
-            if self.state == BirdState.MOVING_TO_FIELD:
+            if self.state in (BirdState.MOVING_TO_FIELD, BirdState.FLEEING_WITHIN_FIELD):
                 self.state = BirdState.EATING
             else:
                 self.state = BirdState.IDLE
