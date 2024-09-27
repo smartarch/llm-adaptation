@@ -3,6 +3,7 @@ from typing import Optional, TYPE_CHECKING
 from base_classes.components import Component
 from base_classes.components2d import Point2D
 from components.bird import Bird
+from components.charger import Charger
 from components.drone import Drone
 from components.field import Field
 
@@ -21,8 +22,9 @@ class SmartFarmSimulation:
         self.drones: list[Drone] = [Drone(self, self.randomPoint()) for _ in range(config["drones"])]
         self.dronesDict = {drone.id: drone for drone in self.drones}
         self.birds: list[Bird] = [Bird(self, self.randomPoint()) for _ in range(config["birds"])]
+        self.charger = Charger(self, config["charger"])
 
-        self.components: list[Component] = self.fields + self.drones + self.birds
+        self.components: list[Component] = self.fields + self.drones + self.birds + [self.charger]
         self.adapt = adapt
 
         self.visualizer: Optional["Visualizer"] = None
@@ -34,7 +36,7 @@ class SmartFarmSimulation:
             self.simulation_step()
 
             if self.visualizer:
-                self.visualizer.drawComponents()
+                self.visualizer.drawComponents(step)
 
     def simulation_step(self):
         self.adapt(self)

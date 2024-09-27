@@ -1,4 +1,5 @@
 import os
+import random
 
 from langchain.globals import set_verbose, set_debug
 
@@ -21,7 +22,12 @@ prompt_template = GroupsLLMTemplate()
 
 
 def adapt(simulation: SmartFarmSimulation):
-    invoke_template(llm, prompt_template, simulation)
+    # invoke_template(llm, prompt_template, simulation)
+    for drone in simulation.drones:
+        if drone.battery < 0.2:
+            drone.assignTarget(simulation.charger)
+        elif drone.target is None:
+            drone.assignTarget(random.choice(simulation.fields))
 
 
 config = read_yaml("config.yaml")
@@ -32,7 +38,7 @@ visualizer = Visualizer(simulation)
 simulation.add_visualizer(visualizer)
 visualizer.drawFields()
 
-simulation.run_simulation(2)
+simulation.run_simulation(200)
 
 print("Saving animation...")
 os.makedirs("animations", exist_ok=True)

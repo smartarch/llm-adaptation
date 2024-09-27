@@ -1,9 +1,13 @@
 import random
+from typing import TYPE_CHECKING
 
 import numpy as np
 
 from base_classes.components import Component
 from base_classes.components2d import Point2D
+
+if TYPE_CHECKING:
+    from components.drone import Drone
 
 
 class Field(Component):
@@ -34,12 +38,29 @@ class Field(Component):
         self.damage = 0  # total damage
         self.damagedThisStep = set()
 
+        from components.drone import Drone
+        self.protectingDrones: set[Drone] = set()
+        self.patrollingPlaces = [
+            Point2D(left + Drone.Radius, top + Drone.Radius),
+            Point2D(right - Drone.Radius + 1, top + Drone.Radius),
+            Point2D(right - Drone.Radius + 1, bottom - Drone.Radius + 1),
+            Point2D(left + Drone.Radius, bottom - Drone.Radius + 1),
+        ]
+
     def isPointInField(self, point):
         """
         Checks if the given point is inside the field.
         """
         return self.left <= point.x <= self.right and \
             self.top <= point.y <= self.bottom
+
+    def closestPlaceToDrone(self, drone: "Drone"):
+        return min(self.patrollingPlaces, key=lambda p: p.distance(drone.location))
+
+    def assignNextPlace(self, drone: "Drone"):
+        currentPlaceIndex = self.patrollingPlaces.index(drone.location)
+        newPlaceIndex = (currentPlaceIndex + 1) % len(self.patrollingPlaces)
+        return self.patrollingPlaces[newPlaceIndex]
 
     def eatCrop(self, point):
         """Damages the crop at the given point. Returns false if the crop is already damaged."""
@@ -53,6 +74,9 @@ class Field(Component):
             return True
 
         return False
+
+    def assignLocationForDrone(self):
+        pass
 
     def randomUndamagedCrop(self):
         """

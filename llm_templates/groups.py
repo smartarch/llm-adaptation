@@ -1,6 +1,10 @@
 import textwrap
+from typing import TYPE_CHECKING
 
 from base_classes.llm_template import LLMTemplate
+
+if TYPE_CHECKING:
+    from components.drone import Drone
 
 
 class GroupsLLMTemplate(LLMTemplate):
@@ -30,17 +34,17 @@ class GroupsLLMTemplate(LLMTemplate):
         groups = answer.split("\n")
 
         for drone in self.extract_drone_list(groups[0], simulation):  # idle
-            drone.target = None
+            drone.assignTarget(None)
         for drone in self.extract_drone_list(groups[1], simulation):  # charging
-            drone.target = "Charger"
+            drone.assignTarget(simulation.charger)
         for field, group in zip(simulation.fields, groups[2:]):
             for drone in self.extract_drone_list(group, simulation):  # protecting
-                drone.target = field
+                drone.assignTarget(field)
 
         pass
 
     @staticmethod
-    def extract_drone_list(line, simulation):
+    def extract_drone_list(line, simulation) -> "list[Drone]":
         group, drones = line.split(":")
         drone_names = [d.strip() for d in drones.split(",")]
         return [simulation.dronesDict[name] for name in drone_names if name != ""]

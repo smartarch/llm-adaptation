@@ -85,7 +85,7 @@ class StationaryComponent2D(Component):
             The initial location of the component.
         """
         super().__init__(simulation)
-        self.location: Point2D = location
+        self.location = Point2D(location)
 
 
 class MovingComponent2D(StationaryComponent2D):
