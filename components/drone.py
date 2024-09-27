@@ -90,6 +90,7 @@ class Drone(MovingComponent2D):
 
     def startProtecting(self):
         self.targetLocation = self.target.assignNextPlace(self)
+        self.target.protectingDrones.add(self)
         self.state = DroneState.PROTECTING
 
     def startCharging(self):
@@ -108,8 +109,7 @@ class Drone(MovingComponent2D):
         if self.state != DroneState.PROTECTING:
             return
 
-        protectingDrones = list(self.target.protectingDrones)
-        for drone in protectingDrones:
+        for drone in self.target.protectingDrones:
             if drone == self:
                 continue
             if self.location.distance(drone.location) < Drone.Radius * 1.5:  # nearby drone
