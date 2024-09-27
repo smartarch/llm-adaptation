@@ -44,10 +44,10 @@ class Point2D:
         return hash((self.x, self.y))
 
     def __str__(self):
-        return f"{self.x}, {self.y}"
+        return f"{self.x:.2f}, {self.y:.2f}"
 
     def __repr__(self):
-        return f"Point2D({self.x}, {self.y})"
+        return f"Point2D({self.x:.2f}, {self.y:.2f})"
 
     def distance(self, other: 'Point2D') -> float:
         """Distance between the current point and other point."""

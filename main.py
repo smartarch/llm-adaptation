@@ -21,13 +21,15 @@ llm = create_llm()
 prompt_template = GroupsLLMTemplate()
 
 
-def adapt(simulation: SmartFarmSimulation):
-    # invoke_template(llm, prompt_template, simulation)
-    for drone in simulation.drones:
-        if drone.battery < 0.2:
-            drone.assignTarget(simulation.charger)
-        elif drone.target is None:
-            drone.assignTarget(random.choice(simulation.fields))
+def adapt(simulation: SmartFarmSimulation, step: int):
+    if step % 10 == 0:
+        invoke_template(llm, prompt_template, simulation)
+
+    # for drone in simulation.drones:
+    #     if drone.battery < 0.2:
+    #         drone.assignTarget(simulation.charger)
+    #     elif drone.target is None:
+    #         drone.assignTarget(random.choice(simulation.fields))
 
 
 config = read_yaml("config.yaml")

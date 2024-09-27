@@ -129,6 +129,7 @@ class Drone(MovingComponent2D):
 
     def protectsPoint(self, point: Point2D) -> bool:
         """Returns true if the point is protected by this drone."""
+        # TODO: idle drones should not protect?
         return self.location.distance(point) <= Drone.Radius
 
     def protectRadiusBox(self) -> tuple[float, float, float, float]:

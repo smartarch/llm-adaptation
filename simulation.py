@@ -33,13 +33,13 @@ class SmartFarmSimulation:
         for step in range(steps):
             print(f"Step: {step + 1}")
 
-            self.simulation_step()
+            self.simulation_step(step)
 
             if self.visualizer:
                 self.visualizer.drawComponents(step)
 
-    def simulation_step(self):
-        self.adapt(self)
+    def simulation_step(self, step):
+        self.adapt(self, step)
 
         for component in self.components:
             component.actuate()

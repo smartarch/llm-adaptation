@@ -47,7 +47,7 @@ class GroupsLLMTemplate(LLMTemplate):
     def extract_drone_list(line, simulation) -> "list[Drone]":
         group, drones = line.split(":")
         drone_names = [d.strip() for d in drones.split(",")]
-        return [simulation.dronesDict[name] for name in drone_names if name != ""]
+        return [simulation.dronesDict[name] for name in drone_names if name in simulation.dronesDict]
 
 
 if __name__ == "__main__":
