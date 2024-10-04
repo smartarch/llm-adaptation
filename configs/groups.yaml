@@ -1,0 +1,19 @@
+drones: 10
+birds: 100
+charger: [22,21]
+fields: [
+  [3,4,21,18],
+  [35,7,48,36],
+  [4,33,26,47],
+]
+mapWidth: 50
+mapHeight: 50
+
+name: groups
+adaptation_name: adaptations.openai.OpenAIAdaptation
+adaptation_params:
+  llm: gpt-4o-mini-2024-07-18
+  adaptation_steps: 10
+  prompt_template: prompt_templates.groups.GroupsLLMTemplate
+  prompt_template_params:
+    extra_goal: ""

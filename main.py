@@ -5,8 +5,7 @@ from datetime import datetime
 
 from langchain.globals import set_verbose, set_debug
 
-from adaptation.openai import create_llm, invoke_template
-from llm_templates.groups import GroupsLLMTemplate
+from base_classes.adaptation import import_adaptation
 from simulation import SmartFarmSimulation
 from stats import Stats
 from utils import read_yaml, Logger
@@ -19,27 +18,15 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 # set_verbose(True)
 # set_debug(True)
 
-config = read_yaml("config.yaml")
-name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+config_file = sys.argv[1] if len(sys.argv) > 1 else "configs/config.yaml"
+
+config = read_yaml(config_file)
+name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
 sys.stdout = Logger(f"logs/{name}.log")
 
 
-llm = create_llm()
-prompt_template = GroupsLLMTemplate()
-
-
-def adapt(simulation: SmartFarmSimulation, step: int):
-    # if step % 10 == 0:
-    #     invoke_template(llm, prompt_template, simulation)
-
-    for drone in simulation.drones:
-        if drone.battery < 0.25:
-            drone.assignTarget(simulation.charger)
-        elif drone.target is None:
-            drone.assignTarget(random.choice(simulation.fields))
-
-
-simulation = SmartFarmSimulation(adapt, config)
+adaptation = import_adaptation(config)
+simulation = SmartFarmSimulation(adaptation.adapt, config)
 
 visualizer = Visualizer(simulation)
 simulation.add_visualizer(visualizer)
@@ -48,9 +35,14 @@ stats = Stats(simulation, f"logs/{name}.csv")
 simulation.add_stats(stats)
 stats.write_header()
 
+print("\nRunning simulation...\n")
 simulation.run_simulation(200)
+print("\nSimulation done")
 
-print("Saving animation...")
+print("\nStatistics:")
+for label, value in zip(stats.global_stats(None, header=True), stats.global_stats(None)):
+    print(f"{label}: {value}")
+print("\nSaving animation...")
 os.makedirs("animations", exist_ok=True)
 visualizer.createAnimation(f"logs/{name}.gif")
 print("Done")

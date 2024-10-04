@@ -1,5 +1,5 @@
 import abc
-import textwrap
+import importlib
 from typing import TYPE_CHECKING
 
 import tiktoken
@@ -11,8 +11,7 @@ if TYPE_CHECKING:
     from components.field import Field
 
 
-class LLMTemplate(abc.ABC):
-    pass
+class PromptTemplate(abc.ABC):
 
     @abc.abstractmethod
     def create_prompt(self, simulation: "SmartFarmSimulation") -> str:
@@ -51,3 +50,14 @@ class LLMTemplate(abc.ABC):
               - battery: {drone.battery:.2f}
               - location: {drone.location}
             """
+
+
+def import_prompt_template(template_name: str, template_params: dict) -> PromptTemplate:
+    assert template_name.startswith("prompt_templates.")
+
+    template_module, template_class = template_name.rsplit(".", 1)
+    print(f"Loading prompt template {template_class} from module {template_module}")
+    module = importlib.import_module(template_module)
+    clazz = getattr(module, template_class)
+
+    return clazz(**template_params)

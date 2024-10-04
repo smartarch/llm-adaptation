@@ -1,13 +1,14 @@
 import textwrap
 from typing import TYPE_CHECKING
 
-from base_classes.llm_template import LLMTemplate
-
-if TYPE_CHECKING:
-    from components.drone import Drone
+from base_classes.llm_template import PromptTemplate
+from components.drone import Drone, DroneState
 
 
-class GroupsLLMTemplate(LLMTemplate):
+class GroupsLLMTemplate(PromptTemplate):
+
+    def __init__(self, extra_goal: str):
+        self.extra_goal = extra_goal
 
     def create_prompt(self, simulation) -> str:
         return textwrap.dedent(f"""\
@@ -17,7 +18,7 @@ class GroupsLLMTemplate(LLMTemplate):
             {"".join(self.field_attributes(field) for field in simulation.fields)}\
             
             Available drones:
-            {"".join(self.drone_attributes(drone) for drone in simulation.drones)}\
+            {"".join(self.drone_attributes(drone) for drone in simulation.drones if drone.state != DroneState.TERMINATED)}\
             
             Your goal is to divide the drones among the following groups:
             1. idle
@@ -25,6 +26,8 @@ class GroupsLLMTemplate(LLMTemplate):
             3. protecting Field_1
             4. protecting Field_2
             5. protecting Field_3
+            
+            {self.extra_goal}
             
             Think step by step. First, reason about the question and write a short explanation of your answer. Then, on a separate line, write "Final answer:". After that, write one line per group. The line must start with the group number followed by a colon (':') and then a comma-separated list of drones assigned to the group.
             """)

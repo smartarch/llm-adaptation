@@ -8,3 +8,7 @@ fields: [
 ]
 mapWidth: 50
 mapHeight: 50
+
+name: fake
+adaptation_name: adaptations.fake.FakeAdaptation
+adaptation_params: {}
