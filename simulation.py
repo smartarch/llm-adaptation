@@ -9,6 +9,7 @@ from components.field import Field
 
 if TYPE_CHECKING:
     from visualizer import Visualizer
+    from stats import Stats
 
 
 class SmartFarmSimulation:
@@ -28,13 +29,16 @@ class SmartFarmSimulation:
         self.adapt = adapt
 
         self.visualizer: Optional["Visualizer"] = None
+        self.stats: Optional["Stats"] = None
 
     def run_simulation(self, steps: int):
-        for step in range(steps):
-            print(f"Step: {step + 1}")
+        for step in range(1, steps + 1):
+            print(f"Step: {step}")
 
             self.simulation_step(step)
 
+            if self.stats:
+                self.stats.write_row(step)
             if self.visualizer:
                 self.visualizer.drawComponents(step)
 
@@ -49,3 +53,6 @@ class SmartFarmSimulation:
 
     def add_visualizer(self, visualizer: "Visualizer"):
         self.visualizer = visualizer
+
+    def add_stats(self, stats: "Stats"):
+        self.stats = stats
