@@ -6,6 +6,7 @@ from datetime import datetime
 from langchain.globals import set_verbose, set_debug
 
 from base_classes.adaptation import import_adaptation
+from plots import draw_plots
 from simulation import SmartFarmSimulation
 from stats import Stats
 from utils import read_yaml, Logger
@@ -22,7 +23,7 @@ config_file = sys.argv[1] if len(sys.argv) > 1 else "configs/config.yaml"
 
 config = read_yaml(config_file)
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
-sys.stdout = Logger(f"logs/{name}.log")
+sys.stdout = Logger(f"logs/{name}")
 
 
 adaptation = import_adaptation(config)
@@ -42,6 +43,8 @@ print("\nSimulation done")
 print("\nStatistics:")
 for label, value in zip(stats.global_stats(None, header=True), stats.global_stats(None)):
     print(f"{label}: {value}")
+print("\nSaving plot...")
+draw_plots(f"logs/{name}")
 print("\nSaving animation...")
 os.makedirs("animations", exist_ok=True)
 visualizer.createAnimation(f"logs/{name}.gif")

@@ -4,6 +4,7 @@ pyyaml
 matplotlib
 pillow
 colorama
+pandas
 
 # LLMs
 langchain
