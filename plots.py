@@ -29,13 +29,20 @@ def draw_plots(file_name: str, show=False):
     axes[1].legend(loc='upper right')
 
     # Line Chart for "damage"
+    df['damage_diff'] = df['damage'].diff().fillna(0)  # fill NaN with 0 for the first step
+    ax2 = axes[2].twinx()  # Create a secondary axis
+    ax2.bar(df['step'], df['damage_diff'], label='Damage Difference', color='pink')
+    ax2.set_ylim((0, 10))
+    ax2.set_zorder(-1)
     axes[2].plot(df['step'], df['damage'], label='Damage', color='red')
+    axes[2].set_frame_on(False)
     axes[2].set_xlabel('Step')
     axes[2].set_ylabel('Damage')
+    ax2.set_ylabel('Damage per time step')
     axes[2].set_title('Damage Over Time')
 
     # Show the plot
-    plt.title(file_name)
+    plt.suptitle(file_name)
     plt.tight_layout()
     plt.savefig(file_name + ".png")
     if show:

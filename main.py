@@ -43,6 +43,7 @@ print("\nSimulation done")
 print("\nStatistics:")
 for label, value in zip(stats.global_stats(None, header=True), stats.global_stats(None)):
     print(f"{label}: {value}")
+stats.close_file()
 print("\nSaving plot...")
 draw_plots(f"logs/{name}")
 print("\nSaving animation...")

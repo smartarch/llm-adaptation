@@ -10,7 +10,8 @@ class Stats:
 
     def __init__(self, simulation: "SmartFarmSimulation", file_name: str):
         self.simulation = simulation
-        self.csv_file = csv.writer(open(file_name, "w", newline=""))
+        self._csv_file = open(file_name, "w", newline="")
+        self.csv_writer = csv.writer(self._csv_file)
 
     def write_header(self):
         row = self.global_stats(None, header=True)
@@ -18,7 +19,7 @@ class Stats:
             row += self.drone_stats(drone, header=True)
         for field in self.simulation.fields:
             row += self.field_stats(field, header=True)
-        self.csv_file.writerow(row)
+        self.csv_writer.writerow(row)
 
     def write_row(self, step: int):
         row = self.global_stats(step)
@@ -27,7 +28,7 @@ class Stats:
         for field in self.simulation.fields:
             row += self.field_stats(field)
         row = [f"{value:.2f}" if isinstance(value, float) else value for value in row]
-        self.csv_file.writerow(row)
+        self.csv_writer.writerow(row)
 
     def global_stats(self, step: Optional[int], header=False):
         if header:
@@ -50,3 +51,6 @@ class Stats:
         if header:
             return [f"{field.id}_damage", f"{field.id}_threat_level", f"{field.id}_protecting_drones"]
         return [field.damage, field.threat_level(), len(field.protectingDrones)]
+
+    def close_file(self):
+        self._csv_file.close()
