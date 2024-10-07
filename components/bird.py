@@ -18,6 +18,7 @@ class Bird(MovingComponent2D):
     BirdSpeed = 1
     IdleToAttackProb = 0.2
     AttackToAttackProb = 0.5  # keep eating in the same field
+    MaxFleeInSameField = 3
 
     def __init__(self, simulation, location):
         """
@@ -30,14 +31,19 @@ class Bird(MovingComponent2D):
         self.field = None
         self.target = None
         self.ateThisTimeStep = False
+        self.fleeCounter = 0
         super().__init__(simulation, location, Bird.BirdSpeed)
 
     def actuate(self):
         if self.state == BirdState.IDLE:
             if random.random() < Bird.IdleToAttackProb:
                 self.attackNewField()
-        elif self.state in (BirdState.MOVING_TO_FIELD, BirdState.FLEEING_WITHIN_FIELD,
-                            BirdState.FLEEING_OUTSIDE, BirdState.FLYING_RANDOMLY):
+        elif self.state in (BirdState.MOVING_TO_FIELD, BirdState.FLYING_RANDOMLY):
+            if self.isScared():
+                self.flee()
+            else:
+                self.flyToTarget()
+        elif self.state in (BirdState.FLEEING_WITHIN_FIELD, BirdState.FLEEING_OUTSIDE):
             self.flyToTarget()
         elif self.state == BirdState.EATING:
             if self.isScared():
@@ -54,13 +60,15 @@ class Bird(MovingComponent2D):
 
     def flee(self):
         """Flee from the drones and fly away to an empty place. If there is an unprotected crop in the same field, fly there."""
-        if self.field is not None:
+        if self.field is not None and self.fleeCounter < Bird.MaxFleeInSameField:
+            self.fleeCounter += 1
             self.attackSameField(True)
         else:
             self.flyRandomly(BirdState.FLEEING_OUTSIDE)
 
     def attackNewField(self):
         self.field = random.choice(self.simulation.fields)
+        self.fleeCounter = 0
         self.target = self.field.randomUndamagedCrop()
         if self.target is not None:
             self.state = BirdState.MOVING_TO_FIELD
