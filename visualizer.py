@@ -148,7 +148,8 @@ class Visualizer:
             if drone.state == DroneState.TERMINATED:
                 continue
 
-            self._drawCircle(draw, drone.protectRadiusBox())
+            if drone.protectsPoint(drone.location):
+                self._drawCircle(draw, drone.protectRadiusBox())
             draw.text((self.grid[drone]), f"\n{drone.id}\nbattery:{drone.battery:.2f}", COLORS['text'], font=self.font)
         #
         # for charger in self.world.chargers:
