@@ -7,6 +7,7 @@ import numpy as np
 from base_classes.components2d import Point2D
 from components.bird import BirdState
 from components.drone import DroneState
+from components.field import Field
 
 if TYPE_CHECKING:
     from simulation import SmartFarmSimulation
@@ -32,7 +33,7 @@ BIRD_COLORS = {
     BirdState.MOVING_TO_FIELD: [252, 84, 0],
     BirdState.EATING: [153, 0, 0],
     BirdState.FLEEING_OUTSIDE: [199, 18, 166],
-    BirdState.FLEEING_WITHIN_FIELD: [199, 18, 166],
+    BirdState.FLEEING_WITHIN_FIELD: [138, 6, 138],
 }
 
 SIZES = {
@@ -45,7 +46,7 @@ SIZES = {
 
 LEGEND_SIZE = 260
 LOWER_EXTRA = 50
-TEXT_MARGIN = 20
+TEXT_MARGIN = 10
 
 
 class Visualizer:
@@ -94,6 +95,7 @@ class Visualizer:
             self.grid[field] = fieldPoints
             for point in fieldPoints:
                 self._drawRectangle(self.background, point, 'field')
+            self.grid[field] = fieldPoints[-1].x * self.cellSize, fieldPoints[-1].y * self.cellSize
         # draw a line
         legendStartPoint = self.width - LEGEND_SIZE
         for i in range(self.height):
@@ -101,10 +103,13 @@ class Visualizer:
 
     def _getLegends(self, step):
         text = f"Step: {step}"
+        text += f"\nTotal damage: {sum(field.damage for field in self.simulation.fields)}"
         for field in self.simulation.fields:
             text += f"\n{field.id}: threat: {field.threat_level():.2f}, dmg: {field.damage}"
         for drone in self.simulation.drones:
-            text += f"\n{drone.id}: battery: {drone.battery:.2f}, state: {drone.state}"
+            text += f"\n{drone.id}: bat: {drone.battery:.2f}, state: {drone.state}"
+            if isinstance(drone.target, Field):
+                text += f" ({drone.target.id.split('_')[1]})"
         return text
 
     def _drawLegends(self, draw, step):
@@ -150,7 +155,10 @@ class Visualizer:
 
             if drone.protectsPoint(drone.location):
                 self._drawCircle(draw, drone.protectRadiusBox())
-            draw.text((self.grid[drone]), f"\n{drone.id}\nbattery:{drone.battery:.2f}", COLORS['text'], font=self.font)
+            draw.text(self.grid[drone], f"\n{drone.id}\nbattery:{drone.battery:.2f}", COLORS['text'], font=self.font)
+
+        for field in self.simulation.fields:
+            draw.text(self.grid[field], f"\n{field.id}", COLORS['text'], font=self.font)
         #
         # for charger in self.world.chargers:
         #     draw.text((self.grid[charger]), f"{charger.id}", COLORS['text'], font=self.font)
