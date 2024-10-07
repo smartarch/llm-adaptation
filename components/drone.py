@@ -13,7 +13,6 @@ class DroneState(Enum):
     MOVING_TO_CHARGER = 3
     MOVING_TO_FIELD = 4
     TERMINATED = 9
-    # TODO
 
     def __str__(self):
         return self.name
@@ -48,8 +47,10 @@ class Drone(MovingComponent2D):
 
     def assignTarget(self, target: Optional[Field | Charger]):
         if self.target == target:
+            print(f"Assigning same target to {self}: {target}")
             return
 
+        print(f"Assigning new target to {self}: {target}")
         self.unassignPreviousTarget()
         self.target = target
         if target is not None:

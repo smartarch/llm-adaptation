@@ -5,7 +5,7 @@ from base_classes.llm_template import PromptTemplate
 from components.drone import Drone, DroneState
 
 
-class GroupsLLMTemplate(PromptTemplate):
+class DronesLLMTemplate(PromptTemplate):
 
     def __init__(self, extra_goal: str):
         self.extra_goal = extra_goal
@@ -29,20 +29,26 @@ class GroupsLLMTemplate(PromptTemplate):
             
             {self.extra_goal}
             
-            Think step by step. First, reason about the question and write a short explanation of your answer. Then, on a separate line, write "Final answer:". After that, write one line per group. The line must start with the group number followed by a colon (':') and then a comma-separated list of drones assigned to the group.
+            Think step by step. First, reason about the question and write a short explanation of your answer. Then, on a separate line, write "Final answer:". After that, write one line for each drone with the group selected for the drone (in format "Drone_<N>: <group>", the group name must be exactly as listed above).
             """)
 
     def process_response(self, response, simulation):
         answer = self.extract_answer(response)
-        groups = answer.split("\n")
+        drone_rows = answer.split("\n")
 
-        for drone in self.extract_drone_list(groups[0], simulation):  # idle
-            drone.assignTarget(None)
-        for drone in self.extract_drone_list(groups[1], simulation):  # charging
-            drone.assignTarget(simulation.charger)
-        for field, group in zip(simulation.fields, groups[2:]):
-            for drone in self.extract_drone_list(group, simulation):  # protecting
-                drone.assignTarget(field)
+        for row in drone_rows:
+            drone_id, group = row.split(":")
+            drone = simulation.dronesDict[drone_id.strip()]
+            if group.strip() in ["idle", "1"]:  # idle
+                drone.assignTarget(None)
+            elif group.strip() in ["charging", "2"]:  # charging
+                drone.assignTarget(simulation.charger)
+            elif group.strip().startswith("protecting"):  # protecting
+                field_id = group.strip().split()[1]
+                field_idx = int(field_id[-1]) - 1
+                drone.assignTarget(simulation.fields[field_idx])
+            else:
+                raise print(f"Unknown group: {group}")
 
     @staticmethod
     def extract_drone_list(line, simulation) -> "list[Drone]":
@@ -52,7 +58,7 @@ class GroupsLLMTemplate(PromptTemplate):
 
 
 if __name__ == "__main__":
-    template = GroupsLLMTemplate()
+    template = DronesLLMTemplate()
     prompt = template.create_prompt()
     count = template.count_tokens(prompt)
     print(count)

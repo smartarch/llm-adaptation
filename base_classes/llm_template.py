@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING
 import tiktoken
 
 from components.drone import Drone
+from components.field import Field
 
 if TYPE_CHECKING:
     from simulation import SmartFarmSimulation
-    from components.field import Field
 
 
 class PromptTemplate(abc.ABC):
@@ -45,8 +45,9 @@ class PromptTemplate(abc.ABC):
 
     @staticmethod
     def drone_attributes(drone: "Drone") -> str:
+        target_field = f" ({drone.target.id})" if isinstance(drone.target, Field) else ""
         return f"""- {drone.id}
-              - state: {drone.state}
+              - state: {drone.state}{target_field}
               - battery: {drone.battery:.2f}
               - location: {drone.location}
             """
