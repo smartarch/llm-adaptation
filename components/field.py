@@ -1,4 +1,3 @@
-import random
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -40,11 +39,24 @@ class Field(Component):
 
         from components.drone import Drone
         self.protectingDrones: set[Drone] = set()
-        self.patrollingPlaces = [
-            Point2D(left + Drone.Radius, top + Drone.Radius),
-            Point2D(right - Drone.Radius + 1, top + Drone.Radius),
-            Point2D(right - Drone.Radius + 1, bottom - Drone.Radius + 1),
-            Point2D(left + Drone.Radius, bottom - Drone.Radius + 1),
+        self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 1)
+
+    def computePatrollingPlaces(self, radius):
+        from components.drone import Drone
+        patrolLeft = self.left + radius
+        patrolTop = self.top + radius
+        patrolRight = self.right - radius + 1
+        patrolBottom = self.bottom - radius + 1
+
+        return [
+            Point2D(patrolLeft, patrolTop),
+            Point2D((patrolLeft + patrolRight) / 2, patrolTop),
+            Point2D(patrolRight, patrolTop),
+            Point2D(patrolRight, (patrolTop + patrolBottom) / 2),
+            Point2D(patrolRight, patrolBottom),
+            Point2D((patrolLeft + patrolRight) / 2, patrolBottom),
+            Point2D(patrolLeft, patrolBottom),
+            Point2D(patrolLeft, (patrolTop + patrolBottom) / 2),
         ]
 
     def isPointInField(self, point):
@@ -74,9 +86,6 @@ class Field(Component):
             return True
 
         return False
-
-    def assignLocationForDrone(self):
-        pass
 
     def randomUndamagedCrop(self):
         """
