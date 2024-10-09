@@ -37,7 +37,7 @@ simulation.add_stats(stats)
 stats.write_header()
 
 print("\nRunning simulation...\n")
-simulation.run_simulation(200)
+simulation.run_simulation(300)
 print("\nSimulation done")
 
 print("\nStatistics:")

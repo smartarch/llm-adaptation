@@ -1,0 +1,32 @@
+Loading adaptation FakeAdaptation from module adaptations.fake
+
+Running simulation...
+
+Step: 1
+Assigning new target to Drone_1(IDLE, bat=1.000): Field_2(35,7),51,31)
+Assigning new target to Drone_2(IDLE, bat=1.000): Field_2(35,7),51,31)
+Assigning new target to Drone_3(IDLE, bat=1.000): Field_2(35,7),51,31)
+Assigning new target to Drone_4(IDLE, bat=1.000): Field_1(3,4),19,20)
+Assigning new target to Drone_5(IDLE, bat=1.000): Field_3(4,37),28,45)
+Assigning new target to Drone_6(IDLE, bat=1.000): Field_1(3,4),19,20)
+Assigning new target to Drone_7(IDLE, bat=1.000): Field_3(4,37),28,45)
+Assigning new target to Drone_8(IDLE, bat=1.000): Field_2(35,7),51,31)
+Assigning new target to Drone_9(IDLE, bat=1.000): Field_3(4,37),28,45)
+Assigning new target to Drone_10(IDLE, bat=1.000): Field_2(35,7),51,31)
+
+Simulation done
+
+Statistics:
+step: None
+damage: 0
+IDLE: 0
+CHARGING: 0
+PROTECTING: 0
+MOVING_TO_CHARGER: 0
+MOVING_TO_FIELD: 10
+TERMINATED: 0
+
+Saving plot...
+
+Saving animation...
+Done

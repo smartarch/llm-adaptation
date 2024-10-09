@@ -20,9 +20,10 @@ class DroneState(Enum):
 
 class Drone(MovingComponent2D):
 
-    Speed = 1
+    Speed = 2
     Radius = 5
     MovingEnergyConsumption = 0.01
+    HoveringEnergyConsumption = 0.007
     IdleEnergyConsumption = 0
 
     def __init__(self, simulation, location):
@@ -59,7 +60,7 @@ class Drone(MovingComponent2D):
                 self.state = DroneState.MOVING_TO_CHARGER
             elif isinstance(self.target, Field):
                 self.state = DroneState.MOVING_TO_FIELD
-                self.targetLocation = target.closestPlaceToDrone(self)
+                self.targetLocation = target.assignNextPlace(self)
         else:
             self.targetLocation = None
             self.state = DroneState.IDLE
@@ -69,6 +70,7 @@ class Drone(MovingComponent2D):
             return
         if isinstance(self.target, Field):
             self.target.protectingDrones.discard(self)
+            self.target.unassignDrone(self)
         if isinstance(self.target, Charger):
             self.target.chargingDrones.discard(self)
 
@@ -100,8 +102,11 @@ class Drone(MovingComponent2D):
 
     def move(self, target=None):
         """It moves the drone by using the MovingComponent2D.move method, with addition of decreasing the battery in moving consumption rate."""
-        self.adjustSpeed()
-        self.consumeBattery(Drone.MovingEnergyConsumption)
+        if not self.simulation.config.get("patrolling", False) and self.state == DroneState.PROTECTING:
+            self.consumeBattery(Drone.HoveringEnergyConsumption)
+        else:
+            self.adjustSpeed()
+            self.consumeBattery(Drone.MovingEnergyConsumption)
         return super().move(self.targetLocation)
 
     def adjustSpeed(self):

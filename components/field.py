@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 import numpy as np
 
@@ -40,9 +40,13 @@ class Field(Component):
         from components.drone import Drone
         self.protectingDrones: set[Drone] = set()
         self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 1)
+        self.protectionPlaces: dict[Point2D, Optional[Drone]] = \
+            {place: None for place in self.computeProtectionPlaces(Drone.Radius - 1)}
+
+    def patrollingProtection(self) -> bool:
+        return self.simulation.config.get("patrolling", False)
 
     def computePatrollingPlaces(self, radius):
-        from components.drone import Drone
         patrolLeft = self.left + radius
         patrolTop = self.top + radius
         patrolRight = self.right - radius + 1
@@ -59,6 +63,11 @@ class Field(Component):
             Point2D(patrolLeft, (patrolTop + patrolBottom) / 2),
         ]
 
+    def computeProtectionPlaces(self, radius):
+        return [Point2D(x, y)
+                for x in range(self.left + radius, self.right + 1, radius * 2)
+                for y in range(self.top + radius, self.bottom + 1, radius * 2)]
+
     def isPointInField(self, point):
         """
         Checks if the given point is inside the field.
@@ -66,10 +75,35 @@ class Field(Component):
         return self.left <= point.x <= self.right and \
             self.top <= point.y <= self.bottom
 
-    def closestPlaceToDrone(self, drone: "Drone"):
-        return min(self.patrollingPlaces, key=lambda p: p.distance(drone.location))
+    def closestPlaceToDrone(self, drone: "Drone") -> Point2D:
+        if self.patrollingProtection():
+            places = self.patrollingPlaces
+        else:
+            places = [p for p in self.protectionPlaces if self.protectionPlaces[p] is None]
+            if len(places) == 0:
+                print(f"{drone.id} assigned to a fully protected {self.id}")
+                places = self.protectionPlaces
 
-    def assignNextPlace(self, drone: "Drone"):
+        return min(places, key=lambda p: p.distance(drone.location))
+
+    def assignNextPlace(self, drone: "Drone") -> Point2D:
+        if self.patrollingProtection():
+            try:
+                return self.assignNextPatrollingPlace(drone)
+            except ValueError:
+                return self.closestPlaceToDrone(drone)
+        else:
+            for place in self.protectionPlaces:
+                if self.protectionPlaces[place] == drone:
+                    return place
+            place = self.closestPlaceToDrone(drone)
+            self.protectionPlaces[place] = drone
+            return place
+
+    def unassignDrone(self, drone: "Drone"):
+        self.protectionPlaces[drone.location] = None
+
+    def assignNextPatrollingPlace(self, drone: "Drone"):
         currentPlaceIndex = self.patrollingPlaces.index(drone.location)
         newPlaceIndex = (currentPlaceIndex + 1) % len(self.patrollingPlaces)
         return self.patrollingPlaces[newPlaceIndex]

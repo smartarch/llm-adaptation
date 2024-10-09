@@ -50,6 +50,7 @@ TEXT_MARGIN = 10
 
 
 class Visualizer:
+    """Animation of the simulation. The coordinate system: (0, 0) is top left corner, x is horizontal, y is vertical."""
 
     def __init__(self, simulation: "SmartFarmSimulation"):
         self.simulation = simulation
@@ -133,6 +134,11 @@ class Visualizer:
         self._drawDamage(self.background)
 
         array = np.array(self.background, copy=True)
+
+        if not self.simulation.config.get("patrolling", False):
+            for field in self.simulation.fields:
+                for point in field.protectionPlaces:
+                    self._drawRectangle(array, point, 'field', color=(255, 255, 0))
 
         for bird in self.simulation.birds:
             birdColor = BIRD_COLORS[bird.state]

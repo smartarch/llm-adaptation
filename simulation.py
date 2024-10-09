@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 class SmartFarmSimulation:
 
     def __init__(self, adapt: callable, config: dict):
+        self.config = config
 
         self.mapWidth = config["mapWidth"]
         self.mapHeight = config["mapHeight"]

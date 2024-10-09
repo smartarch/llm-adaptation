@@ -27,12 +27,12 @@ class FakeField2Adaptation(Adaptation):
 
         protecting = list(simulation.fields[1].protectingDrones)
         for drone in protecting:
-            if drone.battery < 0.15:
+            if drone.battery <= 0.16:
                 drone.assignTarget(simulation.charger)
                 self.assigned -= 1
-            elif drone.battery < 0.3:
+            elif drone.battery <= 0.22:
                 for new_drone in drones:
                    if new_drone.state == DroneState.IDLE:
                        new_drone.assignTarget(simulation.fields[1])
                        self.assigned += 1
-        print(self.assigned)
+        # print(self.assigned)
