@@ -1,0 +1,7 @@
+Loading adaptation OpenAIAdaptation from module adaptations.openai
+LLM model: gpt-4o-mini-2024-07-18
+Loading prompt template DronesLLMTemplate from module prompt_templates.drones
+
+Running simulation...
+
+Step: 1
