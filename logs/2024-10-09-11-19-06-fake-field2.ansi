@@ -1,0 +1,564 @@
+Loading adaptation FakeField2Adaptation from module adaptations.fake_field_2
+
+Running simulation...
+
+Step: 1
+Assigning new target to Drone_1(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_2(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_3(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_4(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_5(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_6(IDLE, bat=1.000): Field_2(35,7),48,36)
+6
+Step: 2
+6
+Step: 3
+6
+Step: 4
+6
+Step: 5
+6
+Step: 6
+6
+Step: 7
+6
+Step: 8
+6
+Step: 9
+6
+Step: 10
+6
+Step: 11
+6
+Step: 12
+6
+Step: 13
+6
+Step: 14
+6
+Step: 15
+6
+Step: 16
+6
+Step: 17
+6
+Step: 18
+6
+Step: 19
+6
+Step: 20
+6
+Step: 21
+6
+Step: 22
+6
+Could not find unprotected crop
+Step: 23
+6
+Step: 24
+6
+Step: 25
+6
+Step: 26
+6
+Step: 27
+6
+Could not find unprotected crop
+Step: 28
+6
+Could not find unprotected crop
+Step: 29
+6
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 30
+6
+Step: 31
+6
+Step: 32
+6
+Step: 33
+6
+Step: 34
+6
+Could not find unprotected crop
+Step: 35
+6
+Step: 36
+6
+Step: 37
+6
+Step: 38
+6
+Step: 39
+6
+Step: 40
+6
+Step: 41
+6
+Step: 42
+6
+Step: 43
+6
+Step: 44
+6
+Step: 45
+6
+Step: 46
+6
+Step: 47
+6
+Step: 48
+6
+Step: 49
+6
+Step: 50
+6
+Could not find unprotected crop
+Step: 51
+6
+Step: 52
+6
+Could not find unprotected crop
+Step: 53
+6
+Step: 54
+6
+Step: 55
+6
+Step: 56
+6
+Step: 57
+6
+Step: 58
+6
+Step: 59
+6
+Step: 60
+6
+Step: 61
+6
+Step: 62
+6
+Step: 63
+6
+Step: 64
+6
+Step: 65
+6
+Step: 66
+6
+Step: 67
+6
+Step: 68
+6
+Step: 69
+6
+Step: 70
+6
+Step: 71
+Assigning new target to Drone_7(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_8(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_9(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_10(IDLE, bat=1.000): Field_2(35,7),48,36)
+10
+Step: 72
+10
+Could not find unprotected crop
+Step: 73
+10
+Step: 74
+10
+Step: 75
+10
+Step: 76
+10
+Step: 77
+10
+Step: 78
+10
+Step: 79
+10
+Step: 80
+10
+Step: 81
+10
+Could not find unprotected crop
+Step: 82
+10
+Step: 83
+10
+Step: 84
+10
+Step: 85
+10
+Step: 86
+Assigning new target to Drone_6(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_1(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_2(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_5(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_3(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_4(PROTECTING, bat=0.150): Charger_1
+4
+Step: 87
+4
+Step: 88
+4
+Step: 89
+4
+Step: 90
+4
+Step: 91
+4
+Step: 92
+4
+Step: 93
+4
+Step: 94
+4
+Step: 95
+4
+Step: 96
+4
+Step: 97
+4
+Step: 98
+4
+Step: 99
+4
+Step: 100
+4
+Step: 101
+4
+Step: 102
+4
+Step: 103
+4
+Step: 104
+4
+Step: 105
+4
+Step: 106
+4
+Step: 107
+4
+Step: 108
+4
+Step: 109
+4
+Step: 110
+4
+Step: 111
+4
+Step: 112
+4
+Step: 113
+4
+Step: 114
+4
+Step: 115
+4
+Step: 116
+4
+Step: 117
+4
+Step: 118
+4
+Step: 119
+4
+Step: 120
+4
+Step: 121
+4
+Step: 122
+4
+Step: 123
+4
+Step: 124
+4
+Step: 125
+4
+Step: 126
+4
+Step: 127
+4
+Step: 128
+4
+Step: 129
+4
+Step: 130
+4
+Step: 131
+4
+Step: 132
+4
+Step: 133
+4
+Step: 134
+4
+Step: 135
+4
+Step: 136
+4
+Step: 137
+4
+Step: 138
+4
+Step: 139
+4
+Step: 140
+4
+Step: 141
+4
+Step: 142
+4
+Step: 143
+4
+Step: 144
+4
+Step: 145
+4
+Step: 146
+4
+Step: 147
+4
+Step: 148
+4
+Step: 149
+4
+Step: 150
+4
+Step: 151
+4
+Step: 152
+4
+Step: 153
+4
+Step: 154
+4
+Step: 155
+4
+Step: 156
+Assigning new target to Drone_9(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_10(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_7(PROTECTING, bat=0.150): Charger_1
+Assigning new target to Drone_8(PROTECTING, bat=0.150): Charger_1
+0
+Step: 157
+0
+Step: 158
+0
+Step: 159
+0
+Step: 160
+0
+Step: 161
+0
+Step: 162
+0
+Step: 163
+0
+Step: 164
+0
+Step: 165
+0
+Step: 166
+0
+Step: 167
+0
+Step: 168
+0
+Step: 169
+0
+Step: 170
+0
+Step: 171
+0
+Step: 172
+0
+Step: 173
+0
+Step: 174
+0
+Step: 175
+0
+Step: 176
+0
+Step: 177
+0
+Step: 178
+0
+Step: 179
+0
+Step: 180
+0
+Step: 181
+0
+Step: 182
+0
+Step: 183
+0
+Step: 184
+0
+Step: 185
+0
+Step: 186
+0
+Step: 187
+0
+Step: 188
+0
+Step: 189
+0
+Assigning new target to Drone_5(CHARGING, bat=1.000): None
+Assigning new target to Drone_4(CHARGING, bat=1.000): None
+Step: 190
+Assigning new target to Drone_4(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_5(IDLE, bat=1.000): Field_2(35,7),48,36)
+2
+Step: 191
+2
+Step: 192
+2
+Step: 193
+2
+Assigning new target to Drone_2(CHARGING, bat=1.000): None
+Assigning new target to Drone_3(CHARGING, bat=1.000): None
+Step: 194
+Assigning new target to Drone_2(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_3(IDLE, bat=1.000): Field_2(35,7),48,36)
+4
+Step: 195
+4
+Assigning new target to Drone_6(CHARGING, bat=1.000): None
+Assigning new target to Drone_1(CHARGING, bat=1.000): None
+Step: 196
+Assigning new target to Drone_1(IDLE, bat=1.000): Field_2(35,7),48,36)
+Assigning new target to Drone_6(IDLE, bat=1.000): Field_2(35,7),48,36)
+6
+Step: 197
+6
+Step: 198
+6
+Step: 199
+6
+Step: 200
+6
+Step: 201
+6
+Step: 202
+6
+Step: 203
+6
+Step: 204
+6
+Step: 205
+6
+Step: 206
+6
+Step: 207
+6
+Step: 208
+6
+Step: 209
+6
+Step: 210
+6
+Step: 211
+6
+Step: 212
+6
+Step: 213
+6
+Step: 214
+6
+Step: 215
+6
+Step: 216
+6
+Step: 217
+6
+Step: 218
+6
+Step: 219
+6
+Step: 220
+6
+Step: 221
+6
+Step: 222
+6
+Step: 223
+6
+Step: 224
+6
+Step: 225
+6
+Step: 226
+6
+Step: 227
+6
+Step: 228
+6
+Step: 229
+6
+Step: 230
+6
+Step: 231
+6
+Step: 232
+6
+Step: 233
+6
+Step: 234
+6
+Step: 235
+6
+Step: 236
+6
+Step: 237
+6
+Step: 238
+6
+Step: 239
+6
+Step: 240
+6
+Step: 241
+6
+Step: 242
+6
+Step: 243
+6
+Step: 244
+6
+Could not find unprotected crop
+Step: 245
+6
+Step: 246
+6
+Step: 247
+6
+Step: 248
+6
+Step: 249
+6
+Step: 250
+6
+
+Simulation done
+
+Statistics:
+step: None
+damage: 558
+IDLE: 0
+CHARGING: 4
+PROTECTING: 6
+MOVING_TO_CHARGER: 0
+MOVING_TO_FIELD: 0
+TERMINATED: 0
+
+Saving plot...
+
+Saving animation...
+Done
