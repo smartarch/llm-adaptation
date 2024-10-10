@@ -164,3 +164,4 @@ cython_debug/
 # Custom ignores
 /animations/
 /logs/*.gif
+/rl_models/

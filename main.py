@@ -40,6 +40,8 @@ print("\nRunning simulation...\n")
 simulation.run_simulation(300)
 print("\nSimulation done")
 
+adaptation.end()
+
 print("\nStatistics:")
 for label, value in zip(stats.global_stats(None, header=True), stats.global_stats(None)):
     print(f"{label}: {value}")

@@ -10,4 +10,5 @@ adaptation_params:
   tau: 0.01
   train_every: 1
   target_update_every: 1
+  save_path: rl_models/q_network
   config: true

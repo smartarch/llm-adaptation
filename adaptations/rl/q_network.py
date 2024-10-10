@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Union, TYPE_CHECKING
 
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")  # Report only TF errors by default
@@ -18,13 +19,18 @@ if TYPE_CHECKING:
 
 
 class DoubleQNetwork:
-    def __init__(self, inputs_count, actions_count, layer_widths=[50], gamma=0.99, tau=0.01, learning_rate=0.001):
+    def __init__(self, inputs_count, actions_count, *, layer_widths=[50], gamma=0.99, tau=0.01, learning_rate=0.001, batch_size=64, load_path=None):
 
-        self._network = self._construct_model(inputs_count, actions_count, layer_widths, learning_rate)
-        self._target_network = self._construct_model(inputs_count, actions_count, layer_widths, learning_rate)
+        if load_path is not None:
+            self._network = tf.keras.models.load_model(load_path / "network.keras")
+            self._target_network = tf.keras.models.load_model(load_path / "target_network.keras")
+        else:
+            self._network = self._construct_model(inputs_count, actions_count, layer_widths, learning_rate)
+            self._target_network = self._construct_model(inputs_count, actions_count, layer_widths, learning_rate)
 
         self.gamma = gamma
         self.tau = tau
+        self.batch_size = batch_size
 
         # run the model once with a dummy input to initialize it
         self.predict_one(np.ones(self._network.input_shape[1:]))
@@ -58,14 +64,14 @@ class DoubleQNetwork:
 
     def train(self, transitions: list['Transition']):
         states = np.array([t.state for t in transitions])
-        q_values = np.array(self._network.predict(states, verbose=0))
+        q_values = np.array(self._network.predict(states, verbose=0, batch_size=self.batch_size))
         next_states = np.array([t.next_state for t in transitions])
-        q_next = np.array(self._target_network.predict(next_states, verbose=0))
+        q_next = np.array(self._target_network.predict(next_states, verbose=0, batch_size=self.batch_size))
 
         for i, t in enumerate(transitions):
             q_values[i, t.action] = t.reward + self.gamma * np.max(q_next[i, :])
 
-        # self._network.fit(x=states, y=q_values, verbose=0)
+        # self._network.fit(x=states, y=q_values, verbose=0, batch_size=self.batch_size)
         self._train_network(states, q_values)
 
     @tf.function
@@ -79,3 +85,7 @@ class DoubleQNetwork:
 
     def predict_one(self, state: Union[list, np.array]) -> np.ndarray:
         return self.predict(np.array([state]))[0]
+
+    def save(self, path: Path):
+        self._network.save(path / "network.keras")
+        self._target_network.save(path / "target_network.keras")

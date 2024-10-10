@@ -1,3 +1,5 @@
+import pickle
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -18,12 +20,20 @@ class QNetworkAdaptation(Adaptation):
     DroneState = len(DroneState) + 1 + 2
     FieldState = 1
 
-    def __init__(self, config: dict, replay_buffer_size=10_000, epsilon=0.1, batch_size=64, train_every=1, target_update_every=1, **q_network_args):
-        # TODO: save and load Q-network model and replay buffer
-        self.q_network = DoubleQNetwork(self.stateSize(config), self.actionSize(config), **q_network_args)
+    def __init__(self, config: dict, replay_buffer_size=10_000, epsilon=0.1, batch_size=64, train_every=1, target_update_every=1, save_path=None, **q_network_args):
+
+        self.save_path = Path(save_path)
+        if self.save_path.exists():  # load saved Q-network and replay buffer
+            print("Loading Q-network and replay buffer from", self.save_path)
+            self.replay_buffer = pickle.load(open(self.save_path / "replay_buffer.pkl", "rb"))
+            self.q_network = DoubleQNetwork(self.stateSize(config), self.actionSize(config), batch_size=batch_size, **q_network_args, load_path=self.save_path)
+        else:
+            print("Creating new Q-network and replay buffer")
+            self.q_network = DoubleQNetwork(self.stateSize(config), self.actionSize(config), batch_size=batch_size, **q_network_args)
+            self.replay_buffer = ReplayBuffer(replay_buffer_size)
+
         self.epsilon = epsilon
         self.batch_size = batch_size
-        self.replay_buffer = ReplayBuffer(replay_buffer_size)
         self.train_every = train_every
         self.target_update_every = target_update_every
 
@@ -127,4 +137,11 @@ class QNetworkAdaptation(Adaptation):
         print("Training Q-network... ", end="")
         batch = self.replay_buffer.sample(self.batch_size)
         self.q_network.train(batch)
+        print("Done")
+
+    def end(self):
+        print("Saving Q-network... ", end="")
+        self.save_path.mkdir(parents=True, exist_ok=True)
+        self.q_network.save(self.save_path)
+        pickle.dump(self.replay_buffer, open(self.save_path / "replay_buffer.pkl", "wb"))
         print("Done")

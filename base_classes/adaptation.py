@@ -10,6 +10,11 @@ class Adaptation(abc.ABC):
 
     @abc.abstractmethod
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
+        """Called before every step of the simulation."""
+        pass
+
+    def end(self):
+        """Called when the simulation ends."""
         pass
 
 
