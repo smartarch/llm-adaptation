@@ -101,7 +101,8 @@ class Field(Component):
             return place
 
     def unassignDrone(self, drone: "Drone"):
-        self.protectionPlaces[drone.location] = None
+        if drone.location in self.protectionPlaces:
+            self.protectionPlaces[drone.location] = None
 
     def assignNextPatrollingPlace(self, drone: "Drone"):
         currentPlaceIndex = self.patrollingPlaces.index(drone.location)

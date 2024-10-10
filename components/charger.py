@@ -20,6 +20,7 @@ class Charger(StationaryComponent2D):
         for drone in self.chargingDrones:
             drone.battery += Charger.ChargingRate
             if drone.battery >= 1:
+                drone.battery = 1
                 done_charging.append(drone)
 
         for drone in done_charging:

@@ -1,4 +1,4 @@
-drones: 10
+drones: 12
 birds: 100
 charger: [22,21]
 fields: [
@@ -9,7 +9,3 @@ fields: [
 mapWidth: 50
 mapHeight: 50
 patrolling: false
-
-name: fake
-adaptation_name: adaptations.fake.FakeAdaptation
-adaptation_params: {}

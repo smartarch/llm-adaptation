@@ -1,14 +1,3 @@
-drones: 10
-birds: 100
-charger: [22,21]
-fields: [
-  [3,4,18,19],
-  [35,7,50,30],
-  [4,37,27,44],
-]
-mapWidth: 50
-mapHeight: 50
-
 name: fake-field2
 adaptation_name: adaptations.fake_field_2.FakeField2Adaptation
 adaptation_params: {}

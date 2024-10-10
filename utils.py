@@ -13,6 +13,13 @@ def read_yaml(file):
             raise e
 
 
+def read_configs(config_files):
+    config = {}
+    for file in config_files:
+        config.update(read_yaml(file))
+    return config
+
+
 class Logger:
     """Prints the stdout simultaneously to the terminal and a file."""
     def __init__(self, log_file: Path | str):

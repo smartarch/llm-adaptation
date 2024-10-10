@@ -9,7 +9,7 @@ from base_classes.adaptation import import_adaptation
 from plots import draw_plots
 from simulation import SmartFarmSimulation
 from stats import Stats
-from utils import read_yaml, Logger
+from utils import read_configs, Logger
 from visualizer import Visualizer
 
 
@@ -19,9 +19,9 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 # set_verbose(True)
 # set_debug(True)
 
-config_file = sys.argv[1] if len(sys.argv) > 1 else "configs/config.yaml"
+config_files = sys.argv[1:] if len(sys.argv) > 1 else ["configs/config.yaml", "configs/fake.yaml"]
 
-config = read_yaml(config_file)
+config = read_configs(config_files)
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
 sys.stdout = Logger(f"logs/{name}")
 
