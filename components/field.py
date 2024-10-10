@@ -175,4 +175,4 @@ class Field(Component):
         return birds_inside / len(self.simulation.birds)
 
     def __str__(self):
-        return f"{self.id}({self.top},{self.left}),{self.bottom},{self.right})"
+        return f"{self.id}({self.top},{self.left},{self.bottom},{self.right})"

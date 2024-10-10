@@ -12,7 +12,7 @@ class DroneState(Enum):
     PROTECTING = 2
     MOVING_TO_CHARGER = 3
     MOVING_TO_FIELD = 4
-    TERMINATED = 9
+    TERMINATED = 5
 
     def __str__(self):
         return self.name

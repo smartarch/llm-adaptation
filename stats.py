@@ -33,12 +33,11 @@ class Stats:
     def global_stats(self, step: Optional[int], header=False):
         if header:
             return ["step", "damage"] + [state.name for state in DroneState]
-        total_dmg = sum(field.damage for field in self.simulation.fields)
         drones_in_states = [
             sum(1 for drone in self.simulation.drones if drone.state == state)
             for state in DroneState
         ]
-        return [step, total_dmg] + drones_in_states
+        return [step, self.simulation.total_damage] + drones_in_states
 
     @staticmethod
     def drone_stats(drone: Drone, header=False):

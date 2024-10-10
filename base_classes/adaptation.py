@@ -22,5 +22,7 @@ def import_adaptation(config: dict) -> Adaptation:
     print(f"Loading adaptation {adaptation_class} from module {adaptation_module}")
     module = importlib.import_module(adaptation_module)
     clazz = getattr(module, adaptation_class)
+    if "config" in adaptation_params:
+        adaptation_params["config"] = config
 
     return clazz(**adaptation_params)

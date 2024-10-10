@@ -5,8 +5,12 @@ matplotlib
 pillow
 colorama
 pandas
+numpy
 
 # LLMs
 langchain
 langchain-openai
 tiktoken
+
+# RL
+tensorflow

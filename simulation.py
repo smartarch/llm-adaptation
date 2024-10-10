@@ -49,6 +49,10 @@ class SmartFarmSimulation:
         for component in self.components:
             component.actuate()
 
+    @property
+    def total_damage(self):
+        return sum(field.damage for field in self.fields)
+
     def randomPoint(self):
         return Point2D.random(0, 0, self.mapWidth, self.mapHeight)
 
