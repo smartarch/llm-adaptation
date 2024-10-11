@@ -14,25 +14,55 @@ if TYPE_CHECKING:
     from simulation import SmartFarmSimulation
 
 
+class EpsilonSchedule:
+
+    def __init__(self, epsilon_start, epsilon_final=None, epsilon_final_steps=None, load_path=None):
+        self.epsilon_start = epsilon_start
+        self.epsilon_final = epsilon_final
+        self.epsilon_final_steps = epsilon_final_steps
+
+        self.initial_step = 0
+        if load_path is not None:
+            try:
+                with open(load_path / "epsilon_step.txt", "r") as f:
+                    self.initial_step = int(f.read())
+                    print(f"Loaded epsilon step: {self.initial_step}")
+            except FileNotFoundError:
+                print("Epsilon step file not found")
+        self.current_step = self.initial_step
+
+    def __call__(self, step) -> float:
+        if self.epsilon_final is None:
+            return self.epsilon_start
+
+        self.current_step = self.initial_step + step
+        return float(np.interp(self.current_step, [0, self.epsilon_final_steps], [self.epsilon_start, self.epsilon_final]))
+
+    def save(self, save_path: Path):
+        with open(save_path / "epsilon_step.txt", "w") as f:
+            f.write(str(self.current_step))
+
+
 class QNetworkAdaptation(Adaptation):
 
     DroneActions = 5
     DroneState = len(DroneState) + 1 + 2
     FieldState = 1
 
-    def __init__(self, config: dict, replay_buffer_size=10_000, epsilon=0.1, batch_size=64, train_every=1, target_update_every=1, save_path=None, **q_network_args):
+    def __init__(self, config: dict, replay_buffer_size=10_000, epsilon=0.1, epsilon_final=None, epsilon_final_steps=None, batch_size=64, train_every=1, target_update_every=1, save_path=None, **q_network_args):
 
         self.save_path = Path(save_path)
         if self.save_path.exists():  # load saved Q-network and replay buffer
             print("Loading Q-network and replay buffer from", self.save_path)
             self.replay_buffer = pickle.load(open(self.save_path / "replay_buffer.pkl", "rb"))
             self.q_network = DoubleQNetwork(self.stateSize(config), self.actionSize(config), batch_size=batch_size, **q_network_args, load_path=self.save_path)
+            self.epsilon = EpsilonSchedule(epsilon, epsilon_final, epsilon_final_steps, load_path=self.save_path)
         else:
             print("Creating new Q-network and replay buffer")
             self.q_network = DoubleQNetwork(self.stateSize(config), self.actionSize(config), batch_size=batch_size, **q_network_args)
             self.replay_buffer = ReplayBuffer(replay_buffer_size)
+            self.epsilon = EpsilonSchedule(epsilon, epsilon_final, epsilon_final_steps)
 
-        self.epsilon = epsilon
         self.batch_size = batch_size
         self.train_every = train_every
         self.target_update_every = target_update_every
@@ -53,7 +83,7 @@ class QNetworkAdaptation(Adaptation):
             self.q_network.update_target_network()
 
         # select actions and perform adaptation
-        self.selectActions(simulation)
+        self.selectActions(simulation, step)
 
         # update last damage for reward computation
         self.last_damage = simulation.total_damage
@@ -85,7 +115,7 @@ class QNetworkAdaptation(Adaptation):
         damage = current_damage - self.last_damage
         return -damage
 
-    def selectActions(self, simulation):
+    def selectActions(self, simulation, step):
         """Selects an action for each drone using the predictions by a Q-network and epsilon-greedy algorithm."""
         state = self.getState(simulation)
         q_values = self.q_network.predict_one(state)
@@ -95,19 +125,15 @@ class QNetworkAdaptation(Adaptation):
         for i, drone in enumerate(simulation.drones):
             if drone.state == DroneState.TERMINATED:
                 continue
-            action = self.selectDroneAction(q_values[self.DroneActions * i: self.DroneActions * (i + 1)])
+            action = self.selectDroneAction(q_values[self.DroneActions * i: self.DroneActions * (i + 1)], step)
             self.performDroneAction(drone, action, simulation)
             self.last_action.append(action + i * self.DroneActions)
 
     def actionSize(self, config):
         return self.DroneActions * config["drones"]
 
-    def selectDroneAction(self, q_values):
-        epsilon = self.epsilon
-        # TODO:
-        # epsilon = np.interp(self.dispatched_jobs, [0, self.epsilon_final_after_jobs],
-        #                     [self.epsilon_initial, self.epsilon_final])
-        if np.random.uniform() >= epsilon:
+    def selectDroneAction(self, q_values, step):
+        if np.random.uniform() >= self.epsilon(step):
             action = np.argmax(q_values)  # greedy
         else:
             action = np.random.randint(len(q_values))
@@ -144,4 +170,5 @@ class QNetworkAdaptation(Adaptation):
         self.save_path.mkdir(parents=True, exist_ok=True)
         self.q_network.save(self.save_path)
         pickle.dump(self.replay_buffer, open(self.save_path / "replay_buffer.pkl", "wb"))
+        self.epsilon.save(self.save_path)
         print("Done")
