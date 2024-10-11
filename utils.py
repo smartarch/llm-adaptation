@@ -14,9 +14,17 @@ def read_yaml(file):
 
 
 def read_configs(config_files):
+    def nested_update(old_dict, new_dict):
+        for key, value in new_dict.items():
+            if isinstance(value, dict):
+                old_dict[key] = nested_update(old_dict.get(key, {}), value)
+            else:
+                old_dict[key] = value
+        return old_dict
+
     config = {}
     for file in config_files:
-        config.update(read_yaml(file))
+        config = nested_update(config, read_yaml(file))
     return config
 
 
