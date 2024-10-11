@@ -1,3 +1,4 @@
+import argparse
 import os
 import random
 import sys
@@ -16,12 +17,15 @@ from visualizer import Visualizer
 from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv(), override=True)  # take environment variables from .env
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--animation", "-a", default=False, action="store_true")
+parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.", default=["configs/config.yaml", "configs/fake.yaml"])
+args = parser.parse_args()
+
 # set_verbose(True)
 # set_debug(True)
 
-config_files = sys.argv[1:] if len(sys.argv) > 1 else ["configs/config.yaml", "configs/fake.yaml"]
-
-config = read_configs(config_files)
+config = read_configs(args.config_files)
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
 sys.stdout = Logger(f"logs/{name}")
 
@@ -29,9 +33,10 @@ sys.stdout = Logger(f"logs/{name}")
 adaptation = import_adaptation(config)
 simulation = SmartFarmSimulation(adaptation.adapt, config)
 
-visualizer = Visualizer(simulation)
-simulation.add_visualizer(visualizer)
-visualizer.drawFields()
+if args.animation:
+    visualizer = Visualizer(simulation)
+    simulation.add_visualizer(visualizer)
+    visualizer.drawFields()
 stats = Stats(simulation, f"logs/{name}.csv")
 simulation.add_stats(stats)
 stats.write_header()
@@ -46,9 +51,13 @@ print("\nStatistics:")
 for label, value in zip(stats.global_stats(None, header=True), stats.global_stats(None)):
     print(f"{label}: {value}")
 stats.close_file()
+
 print("\nSaving plot...")
 draw_plots(f"logs/{name}")
-print("\nSaving animation...")
-os.makedirs("animations", exist_ok=True)
-visualizer.createAnimation(f"logs/{name}.gif")
-print("Done")
+
+if args.animation:
+    print("\nSaving animation...")
+    os.makedirs("animations", exist_ok=True)
+    # noinspection PyUnboundLocalVariable
+    visualizer.createAnimation(f"logs/{name}.gif")
+    print("Done")
