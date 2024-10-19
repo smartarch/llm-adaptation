@@ -46,14 +46,14 @@ class EpsilonSchedule:
 class QNetworkAdaptation(Adaptation):
 
     DroneActions = 5
-    DroneState = len(DroneState) + 1 + 2
-    FieldState = 1
 
     def __init__(self, config: dict,
                  replay_buffer_size=10_000,
                  epsilon=0.1, epsilon_final=None, epsilon_final_steps=None,
                  batch_size=64, train_every=1, target_update_every=1, save_path=None,
-                 reward_state_consistence=0, reward_drone_charging=0, reward_drone_charging_battery=0, reward_drone_protecting=0, reward_drone_protecting_battery=0,
+                 reward_state_consistence=0,
+                 reward_drone_charging=0, reward_drone_charging_battery=0,
+                 reward_drone_protecting=0, reward_drone_protecting_battery=0,
                  **q_network_args):
 
         self.save_path = Path(save_path)
@@ -108,8 +108,12 @@ class QNetworkAdaptation(Adaptation):
             *[self.getStateField(field) for field in simulation.fields],
         ])
 
-    def stateSize(self, config):
-        return self.DroneState * config["drones"] + self.FieldState * len(config["fields"])
+    @staticmethod
+    def stateSize(config):
+        # Drone: state (one-hot), battery, location (x, y), target field (one-hot)
+        # Field: threat level, drone for full protection
+        return (len(DroneState) + 1 + 2 + len(config["fields"])) * config["drones"] \
+            + 2 * len(config["fields"])
 
     @staticmethod
     def getStateDrone(drone: "Drone", simulation):
@@ -118,11 +122,12 @@ class QNetworkAdaptation(Adaptation):
         drone_state[drone.state.value] = 1
         x = drone.location.x / simulation.mapWidth
         y = drone.location.y / simulation.mapHeight
-        return [*drone_state, drone.battery, x, y]
+        target_field = [1 if drone.target == field else 0 for field in simulation.fields]
+        return [*drone_state, drone.battery, x, y, *target_field]
 
     @staticmethod
     def getStateField(field: "Field"):
-        return [field.threat_level()]
+        return [field.threat_level(), field.drones_for_full_protection() / len(field.protectionPlaces)]
 
     def getReward(self, simulation):
         current_damage = simulation.total_damage

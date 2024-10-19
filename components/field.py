@@ -174,5 +174,9 @@ class Field(Component):
         ])
         return birds_inside / len(self.simulation.birds)
 
+    def drones_for_full_protection(self) -> int:
+        # TODO: we might want to also consider drones moving to field here
+        return len(self.protectionPlaces) - len(self.protectingDrones)
+
     def __str__(self):
         return f"{self.id}({self.top},{self.left},{self.bottom},{self.right})"

@@ -48,8 +48,8 @@ class Stats:
     @staticmethod
     def field_stats(field: Field, header=False):
         if header:
-            return [f"{field.id}_damage", f"{field.id}_threat_level", f"{field.id}_protecting_drones"]
-        return [field.damage, field.threat_level(), len(field.protectingDrones)]
+            return [f"{field.id}_damage", f"{field.id}_threat_level", f"{field.id}_protecting_drones", f"{field.id}_drones_for_full_protection"]
+        return [field.damage, field.threat_level(), len(field.protectingDrones), field.drones_for_full_protection()]
 
     def close_file(self):
         self._csv_file.close()

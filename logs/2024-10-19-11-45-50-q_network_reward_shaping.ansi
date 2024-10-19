@@ -1,0 +1,3035 @@
+Loading adaptation QNetworkAdaptation from module adaptations.rl.q_network_adaptation
+Creating new Q-network and replay buffer
+
+Running simulation...
+
+Step: 1
+Assigning new target to Drone_1(IDLE, bat=1.000): Charger_1
+Assigning new target to Drone_2(IDLE, bat=1.000): Charger_1
+Assigning new target to Drone_3(IDLE, bat=1.000): Field_3(4,37,27,44)
+Assigning same target to Drone_4(IDLE, bat=1.000): None
+Assigning new target to Drone_5(IDLE, bat=1.000): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=1.000): Charger_1
+Assigning new target to Drone_7(IDLE, bat=1.000): Field_2(35,7,50,30)
+Assigning new target to Drone_8(IDLE, bat=1.000): Charger_1
+Assigning new target to Drone_9(IDLE, bat=1.000): Charger_1
+Assigning same target to Drone_10(IDLE, bat=1.000): None
+Assigning new target to Drone_11(IDLE, bat=1.000): Charger_1
+Assigning new target to Drone_12(IDLE, bat=1.000): Field_1(3,4,18,19)
+Step: 2
+Reward = 0.40 (damage = 0, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.990): None
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.990): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.990): Field_3(4,37,27,44)
+Assigning same target to Drone_4(IDLE, bat=1.000): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.990): None
+Assigning same target to Drone_6(MOVING_TO_CHARGER, bat=0.990): Charger_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.990): Field_2(35,7,50,30)
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.990): Charger_1
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.990): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=1.000): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.990): Field_2(35,7,50,30)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.990): Field_1(3,4,18,19)
+Step: 3
+Reward = 1.00 (damage = 0, drone_state_consistence = 0.70, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(IDLE, bat=0.990): Field_3(4,37,27,44)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.980): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.980): Field_1(3,4,18,19)
+Assigning same target to Drone_4(IDLE, bat=1.000): None
+Assigning new target to Drone_5(IDLE, bat=0.990): Charger_1
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.980): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.980): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.980): Charger_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.980): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=1.000): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.980): Charger_1
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.980): Field_1(3,4,18,19)
+Step: 4
+Reward = 0.85 (damage = 0, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.980): Field_2(35,7,50,30)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.970): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.970): Charger_1
+Assigning same target to Drone_4(IDLE, bat=1.000): None
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.980): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(IDLE, bat=0.980): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.970): Field_1(3,4,18,19)
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.970): Field_2(35,7,50,30)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.970): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.990): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.970): Field_2(35,7,50,30)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.970): Field_1(3,4,18,19)
+Step: 5
+Reward = -0.30 (damage = -1, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.970): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.960): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.960): Field_1(3,4,18,19)
+Assigning new target to Drone_4(IDLE, bat=1.000): Charger_1
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.970): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.970): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.960): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.960): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.960): None
+Assigning new target to Drone_10(IDLE, bat=0.990): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.960): None
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.960): Field_1(3,4,18,19)
+Step: 6
+Reward = -0.65 (damage = -1, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.960): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.950): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.950): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.990): None
+Assigning same target to Drone_5(IDLE, bat=0.970): None
+Assigning new target to Drone_6(IDLE, bat=0.970): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.950): Charger_1
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.950): Field_2(35,7,50,30)
+Assigning new target to Drone_9(IDLE, bat=0.960): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.980): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning same target to Drone_11(IDLE, bat=0.960): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.950): Field_2(35,7,50,30)
+Step: 7
+Reward = -0.25 (damage = -1, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.950): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.940): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.940): Field_3(4,37,27,44)
+Assigning same target to Drone_4(IDLE, bat=0.990): None
+Assigning same target to Drone_5(IDLE, bat=0.970): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.960): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.940): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.940): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.950): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.970): Charger_1
+Assigning same target to Drone_11(IDLE, bat=0.960): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.940): Field_1(3,4,18,19)
+Step: 8
+Reward = 0.95 (damage = 0, drone_state_consistence = 0.70, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.940): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.930): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.930): Field_1(3,4,18,19)
+Assigning same target to Drone_4(IDLE, bat=0.990): None
+Assigning same target to Drone_5(IDLE, bat=0.970): None
+Assigning same target to Drone_6(IDLE, bat=0.960): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.930): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.930): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.943): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_2
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.960): None
+Assigning new target to Drone_11(IDLE, bat=0.960): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.930): Field_2(35,7,50,30)
+Step: 9
+Reward = -0.25 (damage = -1, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.930): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.920): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.920): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning same target to Drone_4(IDLE, bat=0.990): None
+Assigning same target to Drone_5(IDLE, bat=0.970): None
+Assigning new target to Drone_6(IDLE, bat=0.960): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.920): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.920): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.933): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(IDLE, bat=0.960): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning same target to Drone_11(MOVING_TO_CHARGER, bat=0.950): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.920): Field_1(3,4,18,19)
+Step: 10
+Reward = 0.95 (damage = 0, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.45)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.920): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.910): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.910): Field_2(35,7,50,30)
+Assigning same target to Drone_4(IDLE, bat=0.990): None
+Assigning new target to Drone_5(IDLE, bat=0.970): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.950): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.910): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.910): Field_2(35,7,50,30)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.923): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.950): None
+Assigning same target to Drone_11(MOVING_TO_CHARGER, bat=0.940): Charger_1
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.910): Field_1(3,4,18,19)
+Step: 11
+Reward = -0.40 (damage = -1, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.910): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.900): Field_2(35,7,50,30)
+Assigning new target to Drone_3(PROTECTING, bat=0.900): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(IDLE, bat=0.990): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.960): None
+Assigning new target to Drone_6(IDLE, bat=0.950): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.900): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.900): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(PROTECTING, bat=0.913): Charger_1
+Assigning new target to Drone_10(IDLE, bat=0.950): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.930): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.900): None
+Step: 12
+Reward = -1.55 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.900): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.890): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.890): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.980): Field_1(3,4,18,19)
+Assigning new target to Drone_5(IDLE, bat=0.960): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.940): Field_1(3,4,18,19)
+Drone_6 assigned to a fully protected Field_1
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.890): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.890): Charger_1
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.903): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.940): None
+Assigning same target to Drone_11(IDLE, bat=0.930): None
+Assigning new target to Drone_12(IDLE, bat=0.900): Field_1(3,4,18,19)
+Step: 13
+Reward = -1.50 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning same target to Drone_1(MOVING_TO_CHARGER, bat=0.890): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.880): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.880): Charger_1
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.970): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.950): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.930): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.880): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.880): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.903): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning same target to Drone_10(IDLE, bat=0.940): None
+Assigning same target to Drone_11(IDLE, bat=0.930): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.890): Field_3(4,37,27,44)
+Drone_12 assigned to a fully protected Field_3
+Step: 14
+Reward = 0.70 (damage = 0, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.880): Field_2(35,7,50,30)
+Drone_1 assigned to a fully protected Field_2
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.870): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.870): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.960): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.950): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.920): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.870): Charger_1
+Assigning new target to Drone_8(CHARGING, bat=0.880): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.893): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.940): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning new target to Drone_11(IDLE, bat=0.930): Charger_1
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.880): Field_3(4,37,27,44)
+Step: 15
+Reward = -0.25 (damage = -1, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.45)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.870): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.860): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.860): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.950): None
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.940): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.910): Field_2(35,7,50,30)
+Assigning same target to Drone_7(CHARGING, bat=0.870): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.870): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.883): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.930): Charger_1
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.920): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.870): Field_1(3,4,18,19)
+Step: 16
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.860): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.850): Charger_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.850): Field_3(4,37,27,44)
+Assigning new target to Drone_4(IDLE, bat=0.950): Field_3(4,37,27,44)
+Assigning same target to Drone_5(IDLE, bat=0.940): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.900): None
+Assigning same target to Drone_7(CHARGING, bat=0.880): Charger_1
+Assigning same target to Drone_8(CHARGING, bat=0.870): Charger_1
+Assigning same target to Drone_9(IDLE, bat=0.883): None
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.920): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.910): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.860): None
+Step: 17
+Reward = -0.25 (damage = -1, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.15)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.850): Charger_1
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.840): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.840): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.940): None
+Assigning new target to Drone_5(IDLE, bat=0.940): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.900): Charger_1
+Assigning new target to Drone_7(CHARGING, bat=0.890): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(CHARGING, bat=0.880): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.883): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning same target to Drone_10(IDLE, bat=0.920): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.900): None
+Assigning new target to Drone_12(IDLE, bat=0.860): Field_1(3,4,18,19)
+Step: 18
+Reward = -3.40 (damage = -4, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.840): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.830): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.830): Field_3(4,37,27,44)
+Assigning same target to Drone_4(IDLE, bat=0.940): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.930): None
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.890): Field_2(35,7,50,30)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.880): Field_1(3,4,18,19)
+Assigning same target to Drone_8(CHARGING, bat=0.890): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.873): Field_3(4,37,27,44)
+Drone_9 assigned to a fully protected Field_3
+Assigning new target to Drone_10(IDLE, bat=0.920): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(IDLE, bat=0.900): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.850): None
+Step: 19
+Reward = -4.10 (damage = -5, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.830): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.820): Field_1(3,4,18,19)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.820): Charger_1
+Assigning same target to Drone_4(IDLE, bat=0.940): None
+Assigning same target to Drone_5(IDLE, bat=0.930): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.880): None
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.870): Field_1(3,4,18,19)
+Assigning new target to Drone_8(CHARGING, bat=0.900): None
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.863): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.910): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.890): Charger_1
+Assigning same target to Drone_12(IDLE, bat=0.850): None
+Step: 20
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.820): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.810): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.810): Field_1(3,4,18,19)
+Assigning new target to Drone_4(IDLE, bat=0.940): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(IDLE, bat=0.930): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(IDLE, bat=0.880): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.860): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning new target to Drone_8(IDLE, bat=0.900): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.853): Charger_1
+Assigning same target to Drone_10(IDLE, bat=0.910): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.880): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(IDLE, bat=0.850): Field_1(3,4,18,19)
+Step: 21
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.50)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.810): Field_1(3,4,18,19)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.800): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.800): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.930): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.920): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.870): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.850): None
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.890): Charger_1
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.843): None
+Assigning new target to Drone_10(IDLE, bat=0.910): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.870): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.840): Field_2(35,7,50,30)
+Step: 22
+Reward = -2.55 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.800): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.790): Field_1(3,4,18,19)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.790): Field_1(3,4,18,19)
+Assigning new target to Drone_4(IDLE, bat=0.930): Field_1(3,4,18,19)
+Drone_4 assigned to a fully protected Field_1
+Assigning new target to Drone_5(IDLE, bat=0.920): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.860): None
+Assigning new target to Drone_7(IDLE, bat=0.850): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.880): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.843): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.900): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.860): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.830): Field_3(4,37,27,44)
+Drone_12 assigned to a fully protected Field_3
+Step: 23
+Reward = -3.60 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.790): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.780): None
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.780): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.920): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.910): None
+Assigning new target to Drone_6(IDLE, bat=0.860): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.840): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(CHARGING, bat=0.880): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.833): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_2
+Assigning new target to Drone_10(IDLE, bat=0.900): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.850): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.820): Field_1(3,4,18,19)
+Step: 24
+Reward = -5.50 (damage = -6, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.780): None
+Assigning new target to Drone_2(IDLE, bat=0.780): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.770): Charger_1
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.910): None
+Assigning same target to Drone_5(IDLE, bat=0.910): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.850): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.830): None
+Assigning new target to Drone_8(CHARGING, bat=0.890): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.823): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.890): None
+Assigning new target to Drone_11(IDLE, bat=0.850): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.810): Charger_1
+Step: 25
+Reward = -1.60 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(IDLE, bat=0.780): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.770): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.760): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(IDLE, bat=0.910): Field_3(4,37,27,44)
+Assigning same target to Drone_5(IDLE, bat=0.910): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.840): None
+Assigning new target to Drone_7(IDLE, bat=0.830): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.880): Charger_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.813): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.890): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.840): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.800): Field_1(3,4,18,19)
+Step: 26
+Reward = -3.40 (damage = -4, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning same target to Drone_1(PROTECTING, bat=0.770): Field_1(3,4,18,19)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.760): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.750): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.900): Charger_1
+Assigning new target to Drone_5(IDLE, bat=0.910): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning same target to Drone_6(IDLE, bat=0.840): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.820): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(CHARGING, bat=0.880): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning same target to Drone_9(PROTECTING, bat=0.803): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.890): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.830): Charger_1
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.790): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Step: 27
+Reward = -1.00 (damage = -2, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning same target to Drone_1(PROTECTING, bat=0.763): Field_1(3,4,18,19)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.750): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.740): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.890): None
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.900): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.840): Field_1(3,4,18,19)
+Drone_6 assigned to a fully protected Field_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.810): None
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.870): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_9(PROTECTING, bat=0.796): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.890): None
+Assigning same target to Drone_11(MOVING_TO_CHARGER, bat=0.820): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.780): Charger_1
+Drone_1 assigned to a fully protected Field_1
+Step: 28
+Reward = -2.05 (damage = -3, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning new target to Drone_1(PROTECTING, bat=0.756): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.740): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.730): Field_2(35,7,50,30)
+Assigning new target to Drone_4(IDLE, bat=0.890): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.890): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.830): None
+Assigning new target to Drone_7(IDLE, bat=0.810): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.860): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.789): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.890): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.810): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.770): Field_2(35,7,50,30)
+Step: 29
+Reward = -2.50 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.746): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.730): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.720): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.880): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.890): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning same target to Drone_6(IDLE, bat=0.830): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.800): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(CHARGING, bat=0.860): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.782): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.890): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.800): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.760): Field_1(3,4,18,19)
+Step: 30
+Reward = 0.90 (damage = 0, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.736): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.720): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.710): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.870): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.880): None
+Assigning new target to Drone_6(IDLE, bat=0.830): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.790): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(CHARGING, bat=0.870): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_9(PROTECTING, bat=0.775): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.880): None
+Assigning new target to Drone_11(IDLE, bat=0.800): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.750): Field_3(4,37,27,44)
+Drone_12 assigned to a fully protected Field_3
+Step: 31
+Reward = -2.35 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.45)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.726): Field_1(3,4,18,19)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.710): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.700): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.860): None
+Assigning new target to Drone_5(IDLE, bat=0.880): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.820): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.780): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.860): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.768): None
+Assigning new target to Drone_10(IDLE, bat=0.880): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.790): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.740): Field_1(3,4,18,19)
+Step: 32
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning same target to Drone_1(PROTECTING, bat=0.716): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.700): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.690): Field_2(35,7,50,30)
+Assigning same target to Drone_4(IDLE, bat=0.860): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.870): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.810): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.770): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.850): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.768): Charger_1
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.870): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.780): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.730): Field_2(35,7,50,30)
+Step: 33
+Reward = -4.40 (damage = -5, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning same target to Drone_1(PROTECTING, bat=0.709): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.690): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.680): Field_2(35,7,50,30)
+Assigning new target to Drone_4(IDLE, bat=0.860): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(IDLE, bat=0.870): None
+Assigning new target to Drone_6(IDLE, bat=0.810): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.760): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(CHARGING, bat=0.850): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.758): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.860): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.770): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.720): Field_1(3,4,18,19)
+Step: 34
+Reward = -1.20 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.50)
+Assigning new target to Drone_1(PROTECTING, bat=0.702): Field_2(35,7,50,30)
+Drone_1 assigned to a fully protected Field_2
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.680): Field_2(35,7,50,30)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.670): Field_2(35,7,50,30)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.850): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(IDLE, bat=0.870): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.800): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.750): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.840): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.748): None
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.760): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.710): None
+Step: 35
+Reward = -3.40 (damage = -4, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.692): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.670): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.660): None
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.840): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.860): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.790): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(CHARGING, bat=0.750): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.830): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.748): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning same target to Drone_11(MOVING_TO_CHARGER, bat=0.750): Charger_1
+Assigning new target to Drone_12(IDLE, bat=0.710): Field_1(3,4,18,19)
+Step: 36
+Reward = -3.60 (damage = -4, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.682): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.660): Field_3(4,37,27,44)
+Assigning new target to Drone_3(IDLE, bat=0.660): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning new target to Drone_4(IDLE, bat=0.840): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.850): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.780): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.740): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(CHARGING, bat=0.830): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.738): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning new target to Drone_11(CHARGING, bat=0.750): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.700): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Step: 37
+Reward = -4.95 (damage = -6, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.45)
+Assigning new target to Drone_1(PROTECTING, bat=0.672): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.650): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.650): Field_1(3,4,18,19)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.830): None
+Assigning same target to Drone_5(IDLE, bat=0.850): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.770): None
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.730): Field_1(3,4,18,19)
+Assigning same target to Drone_8(CHARGING, bat=0.840): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.731): Charger_1
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.740): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.690): Field_3(4,37,27,44)
+Step: 38
+Reward = -4.40 (damage = -5, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.662): Field_1(3,4,18,19)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.640): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.640): Field_2(35,7,50,30)
+Assigning same target to Drone_4(IDLE, bat=0.830): None
+Assigning new target to Drone_5(IDLE, bat=0.850): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning same target to Drone_6(IDLE, bat=0.770): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.720): Charger_1
+Assigning same target to Drone_8(CHARGING, bat=0.850): Charger_1
+Assigning same target to Drone_9(MOVING_TO_CHARGER, bat=0.721): Charger_1
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning new target to Drone_11(CHARGING, bat=0.740): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.680): Field_1(3,4,18,19)
+Step: 39
+Reward = -7.15 (damage = -8, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.652): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.630): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.630): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(IDLE, bat=0.830): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.840): None
+Assigning new target to Drone_6(IDLE, bat=0.770): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.710): Field_1(3,4,18,19)
+Assigning new target to Drone_8(CHARGING, bat=0.860): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.711): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning new target to Drone_11(IDLE, bat=0.740): Charger_1
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.670): Field_1(3,4,18,19)
+Step: 40
+Reward = -1.35 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.642): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.620): Field_2(35,7,50,30)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.620): Field_3(4,37,27,44)
+Assigning new target to Drone_4(IDLE, bat=0.830): Field_1(3,4,18,19)
+Assigning same target to Drone_5(IDLE, bat=0.840): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.760): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.700): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.850): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.701): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.860): None
+Assigning new target to Drone_11(CHARGING, bat=0.740): Field_2(35,7,50,30)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.660): Field_1(3,4,18,19)
+Step: 41
+Reward = -3.05 (damage = -4, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.45)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.632): Field_2(35,7,50,30)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.610): Field_2(35,7,50,30)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.610): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.820): None
+Assigning new target to Drone_5(IDLE, bat=0.840): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.750): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.690): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.840): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.691): Field_3(4,37,27,44)
+Assigning new target to Drone_10(IDLE, bat=0.860): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.730): None
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.650): Field_1(3,4,18,19)
+Step: 42
+Reward = -0.45 (damage = -1, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.622): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.600): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.600): Charger_1
+Assigning same target to Drone_4(IDLE, bat=0.820): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.830): None
+Assigning new target to Drone_6(IDLE, bat=0.750): Field_2(35,7,50,30)
+Assigning new target to Drone_7(CHARGING, bat=0.690): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(CHARGING, bat=0.840): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.681): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_2
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.850): None
+Assigning new target to Drone_11(IDLE, bat=0.730): Charger_1
+Assigning same target to Drone_12(PROTECTING, bat=0.640): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Step: 43
+Reward = -6.45 (damage = -7, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning same target to Drone_1(PROTECTING, bat=0.612): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.590): Charger_1
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.590): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning new target to Drone_4(IDLE, bat=0.820): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(IDLE, bat=0.830): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.740): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.680): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.830): Field_3(4,37,27,44)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.671): Field_2(35,7,50,30)
+Assigning new target to Drone_10(IDLE, bat=0.850): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning same target to Drone_11(CHARGING, bat=0.730): Charger_1
+Assigning new target to Drone_12(PROTECTING, bat=0.633): Charger_1
+Step: 44
+Reward = -2.25 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning new target to Drone_1(PROTECTING, bat=0.605): Field_2(35,7,50,30)
+Drone_1 assigned to a fully protected Field_2
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.580): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.580): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.810): None
+Assigning same target to Drone_5(IDLE, bat=0.830): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.730): Field_3(4,37,27,44)
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.670): Charger_1
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.820): Field_3(4,37,27,44)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.661): Field_2(35,7,50,30)
+Assigning new target to Drone_10(PROTECTING, bat=0.840): None
+Assigning new target to Drone_11(CHARGING, bat=0.740): Field_1(3,4,18,19)
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.623): Field_1(3,4,18,19)
+Drone_12 assigned to a fully protected Field_1
+Step: 45
+Reward = -4.20 (damage = -5, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.40)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.595): None
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.570): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.570): None
+Assigning same target to Drone_4(IDLE, bat=0.810): None
+Assigning same target to Drone_5(IDLE, bat=0.830): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.720): Field_3(4,37,27,44)
+Assigning same target to Drone_7(CHARGING, bat=0.670): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.810): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.651): Field_3(4,37,27,44)
+Assigning same target to Drone_10(IDLE, bat=0.840): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.730): Field_2(35,7,50,30)
+Assigning new target to Drone_12(PROTECTING, bat=0.613): Charger_1
+Step: 46
+Reward = -3.20 (damage = -4, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(IDLE, bat=0.595): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.560): Field_2(35,7,50,30)
+Assigning new target to Drone_3(IDLE, bat=0.570): Field_3(4,37,27,44)
+Assigning new target to Drone_4(IDLE, bat=0.810): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(IDLE, bat=0.830): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.710): Field_1(3,4,18,19)
+Assigning new target to Drone_7(CHARGING, bat=0.680): None
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.800): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.641): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.840): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.720): Charger_1
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.603): Field_1(3,4,18,19)
+Drone_12 assigned to a fully protected Field_1
+Step: 47
+Reward = -3.50 (damage = -4, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.585): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.550): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.560): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.800): None
+Assigning new target to Drone_5(IDLE, bat=0.830): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.700): None
+Assigning new target to Drone_7(IDLE, bat=0.680): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(CHARGING, bat=0.800): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.631): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.830): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(CHARGING, bat=0.720): None
+Assigning same target to Drone_12(PROTECTING, bat=0.593): Field_1(3,4,18,19)
+Step: 48
+Reward = -1.25 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.45)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.575): Field_1(3,4,18,19)
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.540): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.550): Charger_1
+Assigning same target to Drone_4(IDLE, bat=0.800): None
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.820): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.700): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.670): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.790): Field_3(4,37,27,44)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.621): Field_1(3,4,18,19)
+Assigning new target to Drone_10(PROTECTING, bat=0.820): None
+Assigning new target to Drone_11(IDLE, bat=0.720): Charger_1
+Assigning new target to Drone_12(PROTECTING, bat=0.586): None
+Step: 49
+Reward = -2.25 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.35)
+Assigning same target to Drone_1(PROTECTING, bat=0.565): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.530): Charger_1
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.540): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(IDLE, bat=0.800): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.810): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.690): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.660): None
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.780): Field_3(4,37,27,44)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.611): Field_1(3,4,18,19)
+Assigning same target to Drone_10(IDLE, bat=0.820): None
+Assigning new target to Drone_11(CHARGING, bat=0.720): Field_2(35,7,50,30)
+Assigning new target to Drone_12(IDLE, bat=0.586): Field_1(3,4,18,19)
+Drone_12 assigned to a fully protected Field_1
+Step: 50
+Reward = -3.30 (damage = -4, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning same target to Drone_1(PROTECTING, bat=0.558): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.520): Field_2(35,7,50,30)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.530): Field_1(3,4,18,19)
+Assigning new target to Drone_4(IDLE, bat=0.800): Field_1(3,4,18,19)
+Assigning same target to Drone_5(IDLE, bat=0.810): None
+Assigning same target to Drone_6(MOVING_TO_CHARGER, bat=0.680): Charger_1
+Assigning new target to Drone_7(IDLE, bat=0.660): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.770): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.601): None
+Assigning same target to Drone_10(IDLE, bat=0.820): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.710): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(PROTECTING, bat=0.576): Field_3(4,37,27,44)
+Drone_12 assigned to a fully protected Field_3
+Step: 51
+Reward = -3.20 (damage = -4, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(PROTECTING, bat=0.551): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.510): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.520): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.790): None
+Assigning same target to Drone_5(IDLE, bat=0.810): None
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.670): None
+Assigning same target to Drone_7(CHARGING, bat=0.660): Charger_1
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.760): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.601): Field_2(35,7,50,30)
+Assigning same target to Drone_10(IDLE, bat=0.820): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.700): Field_2(35,7,50,30)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.566): Field_3(4,37,27,44)
+Step: 52
+Reward = -2.35 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.541): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.500): Field_1(3,4,18,19)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.510): None
+Assigning new target to Drone_4(IDLE, bat=0.790): Charger_1
+Assigning new target to Drone_5(IDLE, bat=0.810): Charger_1
+Assigning new target to Drone_6(IDLE, bat=0.670): Field_2(35,7,50,30)
+Assigning same target to Drone_7(CHARGING, bat=0.670): Charger_1
+Assigning new target to Drone_8(CHARGING, bat=0.760): None
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.591): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(IDLE, bat=0.820): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.690): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.556): Field_1(3,4,18,19)
+Drone_12 assigned to a fully protected Field_1
+Step: 53
+Reward = -4.65 (damage = -5, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.25)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.531): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.490): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.510): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.780): None
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.800): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.660): Field_2(35,7,50,30)
+Assigning same target to Drone_7(CHARGING, bat=0.680): Charger_1
+Assigning new target to Drone_8(IDLE, bat=0.760): Charger_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.581): Field_1(3,4,18,19)
+Assigning new target to Drone_10(PROTECTING, bat=0.810): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.680): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.546): Field_1(3,4,18,19)
+Step: 54
+Reward = -3.50 (damage = -4, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.521): None
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.480): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.500): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(IDLE, bat=0.780): None
+Assigning new target to Drone_5(IDLE, bat=0.800): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.650): Charger_1
+Assigning same target to Drone_7(CHARGING, bat=0.690): Charger_1
+Assigning new target to Drone_8(CHARGING, bat=0.760): Field_2(35,7,50,30)
+Assigning same target to Drone_9(PROTECTING, bat=0.571): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.810): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.670): Field_1(3,4,18,19)
+Drone_11 assigned to a fully protected Field_1
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.536): Field_1(3,4,18,19)
+Step: 55
+Reward = -3.50 (damage = -4, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(IDLE, bat=0.521): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.470): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.490): Field_3(4,37,27,44)
+Assigning new target to Drone_4(IDLE, bat=0.780): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.790): None
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.640): None
+Assigning same target to Drone_7(CHARGING, bat=0.700): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.750): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.564): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.800): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.660): Field_2(35,7,50,30)
+Assigning same target to Drone_12(PROTECTING, bat=0.526): Field_1(3,4,18,19)
+Step: 56
+Reward = -2.30 (damage = -3, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning same target to Drone_1(MOVING_TO_CHARGER, bat=0.511): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.460): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.480): Charger_1
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.770): None
+Assigning same target to Drone_5(IDLE, bat=0.790): None
+Assigning same target to Drone_6(IDLE, bat=0.640): None
+Assigning same target to Drone_7(CHARGING, bat=0.710): Charger_1
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.740): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.557): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.800): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.650): None
+Assigning same target to Drone_12(PROTECTING, bat=0.519): Field_1(3,4,18,19)
+Step: 57
+Reward = -2.15 (damage = -3, drone_state_consistence = 0.70, drone_charging = 0.00, drone_protecting = 0.15)
+Assigning same target to Drone_1(MOVING_TO_CHARGER, bat=0.501): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.450): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.470): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(IDLE, bat=0.770): None
+Assigning same target to Drone_5(IDLE, bat=0.790): None
+Assigning new target to Drone_6(IDLE, bat=0.640): Charger_1
+Assigning same target to Drone_7(CHARGING, bat=0.720): Charger_1
+Assigning new target to Drone_8(CHARGING, bat=0.740): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_9(PROTECTING, bat=0.550): Field_1(3,4,18,19)
+Assigning new target to Drone_10(PROTECTING, bat=0.790): None
+Assigning new target to Drone_11(IDLE, bat=0.650): Field_2(35,7,50,30)
+Assigning same target to Drone_12(PROTECTING, bat=0.512): Field_1(3,4,18,19)
+Step: 58
+Reward = -1.20 (damage = -2, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.491): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.440): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.460): Field_3(4,37,27,44)
+Assigning same target to Drone_4(IDLE, bat=0.770): None
+Assigning same target to Drone_5(IDLE, bat=0.790): None
+Assigning same target to Drone_6(MOVING_TO_CHARGER, bat=0.630): Charger_1
+Assigning new target to Drone_7(CHARGING, bat=0.730): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.730): Field_2(35,7,50,30)
+Assigning same target to Drone_9(PROTECTING, bat=0.543): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.790): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.640): None
+Assigning same target to Drone_12(PROTECTING, bat=0.505): Field_1(3,4,18,19)
+Step: 59
+Reward = -7.20 (damage = -8, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.481): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.430): Field_3(4,37,27,44)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.450): Field_3(4,37,27,44)
+Assigning new target to Drone_4(IDLE, bat=0.770): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning same target to Drone_5(IDLE, bat=0.790): None
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.620): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.720): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.720): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.536): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.780): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(IDLE, bat=0.640): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning same target to Drone_12(PROTECTING, bat=0.498): Field_1(3,4,18,19)
+Drone_10 assigned to a fully protected Field_2
+Step: 60
+Reward = -2.45 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.15)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.471): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.420): Field_2(35,7,50,30)
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.440): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.760): None
+Assigning new target to Drone_5(IDLE, bat=0.790): Charger_1
+Assigning same target to Drone_6(IDLE, bat=0.620): None
+Assigning new target to Drone_7(CHARGING, bat=0.720): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(CHARGING, bat=0.720): Field_3(4,37,27,44)
+Assigning new target to Drone_9(IDLE, bat=0.536): Field_1(3,4,18,19)
+Assigning same target to Drone_10(PROTECTING, bat=0.770): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.630): Charger_1
+Assigning new target to Drone_12(PROTECTING, bat=0.491): None
+Drone_3 assigned to a fully protected Field_3
+Step: 61
+Reward = -3.60 (damage = -4, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.461): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.410): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(PROTECTING, bat=0.430): Charger_1
+Assigning new target to Drone_4(IDLE, bat=0.760): Field_1(3,4,18,19)
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.780): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning new target to Drone_6(IDLE, bat=0.620): Charger_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.710): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.710): Field_1(3,4,18,19)
+Assigning new target to Drone_9(PROTECTING, bat=0.526): Field_3(4,37,27,44)
+Assigning new target to Drone_10(PROTECTING, bat=0.763): None
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.620): Field_2(35,7,50,30)
+Assigning new target to Drone_12(IDLE, bat=0.491): Charger_1
+Step: 62
+Reward = -2.50 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.30)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.451): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.400): Field_3(4,37,27,44)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.420): None
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.750): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.770): None
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.610): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.700): Field_1(3,4,18,19)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.700): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.516): None
+Assigning new target to Drone_10(IDLE, bat=0.763): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.610): Charger_1
+Assigning same target to Drone_12(MOVING_TO_CHARGER, bat=0.481): Charger_1
+Step: 63
+Reward = -5.60 (damage = -6, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.441): Field_2(35,7,50,30)
+Drone_1 assigned to a fully protected Field_2
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.390): Field_2(35,7,50,30)
+Assigning new target to Drone_3(IDLE, bat=0.420): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.740): None
+Assigning same target to Drone_5(IDLE, bat=0.770): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.600): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.690): Charger_1
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.690): Field_1(3,4,18,19)
+Assigning new target to Drone_9(IDLE, bat=0.516): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(PROTECTING, bat=0.753): Charger_1
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.600): Field_2(35,7,50,30)
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.471): Field_3(4,37,27,44)
+Drone_12 assigned to a fully protected Field_3
+Step: 64
+Reward = -4.70 (damage = -5, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.20)
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.431): Charger_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.380): Field_2(35,7,50,30)
+Assigning same target to Drone_3(PROTECTING, bat=0.410): Field_3(4,37,27,44)
+Assigning new target to Drone_4(IDLE, bat=0.740): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(IDLE, bat=0.770): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.590): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.680): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.680): Field_2(35,7,50,30)
+Assigning same target to Drone_9(PROTECTING, bat=0.506): Field_1(3,4,18,19)
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.743): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.590): None
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.461): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Step: 65
+Reward = -3.35 (damage = -4, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.421): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.370): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(PROTECTING, bat=0.403): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.730): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.760): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning same target to Drone_6(IDLE, bat=0.590): None
+Assigning new target to Drone_7(CHARGING, bat=0.680): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.670): Charger_1
+Assigning same target to Drone_9(PROTECTING, bat=0.499): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.733): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(IDLE, bat=0.590): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.451): Charger_1
+Drone_3 assigned to a fully protected Field_3
+Step: 66
+Reward = -6.55 (damage = -7, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.411): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.360): Field_2(35,7,50,30)
+Assigning new target to Drone_3(PROTECTING, bat=0.396): Charger_1
+Assigning same target to Drone_4(IDLE, bat=0.730): None
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.750): Charger_1
+Assigning new target to Drone_6(IDLE, bat=0.590): Field_1(3,4,18,19)
+Drone_6 assigned to a fully protected Field_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.670): Field_3(4,37,27,44)
+Assigning new target to Drone_8(CHARGING, bat=0.670): Field_3(4,37,27,44)
+Assigning same target to Drone_9(PROTECTING, bat=0.492): Field_1(3,4,18,19)
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.723): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.580): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning same target to Drone_12(MOVING_TO_CHARGER, bat=0.441): Charger_1
+Drone_10 assigned to a fully protected Field_2
+Step: 67
+Reward = -6.35 (damage = -7, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.25)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.401): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.350): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.386): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(IDLE, bat=0.730): None
+Assigning same target to Drone_5(MOVING_TO_CHARGER, bat=0.740): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.580): None
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.660): Field_3(4,37,27,44)
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.660): Field_3(4,37,27,44)
+Assigning new target to Drone_9(PROTECTING, bat=0.485): Field_2(35,7,50,30)
+Assigning new target to Drone_10(PROTECTING, bat=0.713): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.570): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.431): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_3
+Step: 68
+Reward = -3.45 (damage = -4, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning new target to Drone_1(PROTECTING, bat=0.391): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.340): Field_1(3,4,18,19)
+Assigning new target to Drone_3(PROTECTING, bat=0.376): Charger_1
+Assigning new target to Drone_4(IDLE, bat=0.730): Charger_1
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.730): None
+Assigning new target to Drone_6(IDLE, bat=0.580): Charger_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.650): Field_3(4,37,27,44)
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.650): Field_3(4,37,27,44)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.475): None
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.703): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.560): Field_2(35,7,50,30)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.421): Field_2(35,7,50,30)
+Step: 69
+Reward = -2.45 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_CHARGER, bat=0.381): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.330): Charger_1
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.366): Field_3(4,37,27,44)
+Assigning same target to Drone_4(MOVING_TO_CHARGER, bat=0.720): Charger_1
+Assigning new target to Drone_5(IDLE, bat=0.730): Charger_1
+Assigning same target to Drone_6(MOVING_TO_CHARGER, bat=0.570): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.640): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.640): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.475): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.693): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.550): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.411): Field_1(3,4,18,19)
+Drone_12 assigned to a fully protected Field_1
+Drone_3 assigned to a fully protected Field_3
+Step: 70
+Reward = -2.55 (damage = -3, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.371): Field_1(3,4,18,19)
+Drone_1 assigned to a fully protected Field_1
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.320): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(PROTECTING, bat=0.356): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.710): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.720): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.560): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.630): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.630): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.465): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.683): Charger_1
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.540): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.401): Charger_1
+Step: 71
+Reward = -2.60 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.30)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.361): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.310): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.346): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.700): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.710): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.550): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.620): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.620): Charger_1
+Assigning new target to Drone_9(PROTECTING, bat=0.455): None
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.673): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.530): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.391): Field_2(35,7,50,30)
+Step: 72
+Reward = -2.45 (damage = -3, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.25)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.361): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.300): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(PROTECTING, bat=0.336): Field_3(4,37,27,44)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.690): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning same target to Drone_5(IDLE, bat=0.710): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.540): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.610): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.610): Field_3(4,37,27,44)
+Assigning same target to Drone_9(IDLE, bat=0.455): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.663): None
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.520): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.381): Charger_1
+Drone_3 assigned to a fully protected Field_3
+Step: 73
+Reward = -1.25 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.25)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.351): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.290): None
+Assigning new target to Drone_3(PROTECTING, bat=0.329): Charger_1
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.680): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(IDLE, bat=0.710): Charger_1
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.530): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.600): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.600): Charger_1
+Assigning new target to Drone_9(IDLE, bat=0.455): Field_2(35,7,50,30)
+Assigning new target to Drone_10(IDLE, bat=0.663): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.510): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_CHARGER, bat=0.371): Charger_1
+Step: 74
+Reward = -3.50 (damage = -4, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.20)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.341): None
+Assigning same target to Drone_2(IDLE, bat=0.290): None
+Assigning same target to Drone_3(MOVING_TO_CHARGER, bat=0.319): Charger_1
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.670): Charger_1
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.700): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.520): Field_3(4,37,27,44)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.590): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.590): Field_3(4,37,27,44)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.445): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.653): Field_2(35,7,50,30)
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.500): Field_3(4,37,27,44)
+Assigning same target to Drone_12(CHARGING, bat=0.371): Charger_1
+Step: 75
+Reward = -2.20 (damage = -3, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.20)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.341): None
+Assigning same target to Drone_2(IDLE, bat=0.290): None
+Assigning same target to Drone_3(MOVING_TO_CHARGER, bat=0.309): Charger_1
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.660): None
+Assigning new target to Drone_5(IDLE, bat=0.700): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.510): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.580): None
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.580): Field_1(3,4,18,19)
+Assigning new target to Drone_9(IDLE, bat=0.445): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.643): Field_2(35,7,50,30)
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.490): Field_3(4,37,27,44)
+Assigning same target to Drone_12(CHARGING, bat=0.381): Charger_1
+Step: 76
+Reward = -1.35 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.341): None
+Assigning new target to Drone_2(IDLE, bat=0.290): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.299): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning new target to Drone_4(IDLE, bat=0.660): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.690): Charger_1
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.500): Field_2(35,7,50,30)
+Assigning new target to Drone_7(IDLE, bat=0.580): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.570): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.435): Field_1(3,4,18,19)
+Assigning same target to Drone_10(PROTECTING, bat=0.633): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.480): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(CHARGING, bat=0.391): Field_2(35,7,50,30)
+Step: 77
+Reward = 0.60 (damage = 0, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.20)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.341): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.280): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.289): Field_1(3,4,18,19)
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.650): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.680): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.490): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.570): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.560): Field_1(3,4,18,19)
+Assigning new target to Drone_9(PROTECTING, bat=0.425): Field_3(4,37,27,44)
+Drone_9 assigned to a fully protected Field_3
+Assigning same target to Drone_10(PROTECTING, bat=0.626): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.470): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.381): Field_2(35,7,50,30)
+Step: 78
+Reward = -2.25 (damage = -3, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.25)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.331): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.270): None
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.279): Field_1(3,4,18,19)
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.640): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.670): Field_3(4,37,27,44)
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.480): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.560): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.550): Field_3(4,37,27,44)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.415): Field_1(3,4,18,19)
+Assigning same target to Drone_10(PROTECTING, bat=0.619): Field_2(35,7,50,30)
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.460): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.371): None
+Step: 79
+Reward = -2.25 (damage = -3, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.25)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.331): None
+Assigning same target to Drone_2(IDLE, bat=0.270): None
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.269): None
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.630): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.660): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.470): Field_2(35,7,50,30)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.550): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.540): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.405): Field_1(3,4,18,19)
+Assigning same target to Drone_10(PROTECTING, bat=0.612): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.450): None
+Assigning new target to Drone_12(IDLE, bat=0.371): Field_2(35,7,50,30)
+Step: 80
+Reward = -0.20 (damage = -1, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.20)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.331): None
+Assigning new target to Drone_2(IDLE, bat=0.270): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(IDLE, bat=0.269): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.620): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.660): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.460): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.540): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.530): Field_1(3,4,18,19)
+Assigning new target to Drone_9(PROTECTING, bat=0.395): Field_3(4,37,27,44)
+Assigning same target to Drone_10(PROTECTING, bat=0.605): Field_2(35,7,50,30)
+Assigning new target to Drone_11(IDLE, bat=0.450): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.361): Charger_1
+Step: 81
+Reward = -0.35 (damage = -1, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.25)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.331): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.260): None
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.259): Charger_1
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.610): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.650): None
+Assigning new target to Drone_6(IDLE, bat=0.460): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.530): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.520): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.385): Field_3(4,37,27,44)
+Assigning same target to Drone_10(PROTECTING, bat=0.598): Field_2(35,7,50,30)
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.440): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.351): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_3
+Step: 82
+Reward = -1.25 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.20)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.331): None
+Assigning same target to Drone_2(IDLE, bat=0.260): None
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.249): None
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.600): Charger_1
+Assigning new target to Drone_5(IDLE, bat=0.650): Charger_1
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.450): Field_3(4,37,27,44)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.520): Field_3(4,37,27,44)
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.510): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.375): None
+Assigning same target to Drone_10(PROTECTING, bat=0.591): Field_2(35,7,50,30)
+Assigning same target to Drone_11(PROTECTING, bat=0.430): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.341): Field_2(35,7,50,30)
+Step: 83
+Reward = -4.10 (damage = -5, drone_state_consistence = 0.80, drone_charging = 0.00, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.331): Field_1(3,4,18,19)
+Assigning new target to Drone_2(IDLE, bat=0.260): Field_2(35,7,50,30)
+Assigning same target to Drone_3(IDLE, bat=0.249): None
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.590): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.640): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.440): Field_3(4,37,27,44)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.510): Field_3(4,37,27,44)
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.500): Field_1(3,4,18,19)
+Assigning new target to Drone_9(IDLE, bat=0.375): Field_3(4,37,27,44)
+Assigning same target to Drone_10(PROTECTING, bat=0.584): Field_2(35,7,50,30)
+Assigning same target to Drone_11(PROTECTING, bat=0.423): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.331): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_3
+Step: 84
+Reward = -0.20 (damage = -1, drone_state_consistence = 0.70, drone_charging = 0.00, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.321): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.250): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.249): Charger_1
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.580): Charger_1
+Assigning same target to Drone_5(IDLE, bat=0.640): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.430): Field_3(4,37,27,44)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.500): Field_3(4,37,27,44)
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.490): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.365): Field_2(35,7,50,30)
+Assigning same target to Drone_10(PROTECTING, bat=0.577): Field_2(35,7,50,30)
+Assigning same target to Drone_11(PROTECTING, bat=0.416): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.321): Charger_1
+Step: 85
+Reward = -1.25 (damage = -2, drone_state_consistence = 0.60, drone_charging = 0.10, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.321): None
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.240): Field_2(35,7,50,30)
+Assigning new target to Drone_3(MOVING_TO_CHARGER, bat=0.239): None
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.570): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(IDLE, bat=0.640): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.420): Field_1(3,4,18,19)
+Drone_6 assigned to a fully protected Field_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.490): Field_3(4,37,27,44)
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.480): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.355): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning same target to Drone_10(PROTECTING, bat=0.570): Field_2(35,7,50,30)
+Assigning same target to Drone_11(PROTECTING, bat=0.409): Field_3(4,37,27,44)
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.311): Field_2(35,7,50,30)
+Drone_8 assigned to a fully protected Field_1
+Step: 86
+Reward = 0.60 (damage = 0, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.321): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.230): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.239): None
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.560): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.640): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.410): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.480): Field_3(4,37,27,44)
+Assigning new target to Drone_8(PROTECTING, bat=0.470): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.345): Field_3(4,37,27,44)
+Assigning same target to Drone_10(PROTECTING, bat=0.563): Field_2(35,7,50,30)
+Assigning new target to Drone_11(PROTECTING, bat=0.402): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.301): Field_2(35,7,50,30)
+Step: 87
+Reward = -1.30 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.15)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.321): Field_2(35,7,50,30)
+Drone_1 assigned to a fully protected Field_2
+Assigning same target to Drone_2(MOVING_TO_CHARGER, bat=0.220): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.239): None
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.550): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.630): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.400): Field_3(4,37,27,44)
+Assigning same target to Drone_7(PROTECTING, bat=0.470): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.460): Field_3(4,37,27,44)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.335): Field_3(4,37,27,44)
+Assigning same target to Drone_10(PROTECTING, bat=0.556): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.392): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.291): None
+Drone_7 assigned to a fully protected Field_3
+Step: 88
+Reward = -3.15 (damage = -4, drone_state_consistence = 0.70, drone_charging = 0.05, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.311): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.210): Field_1(3,4,18,19)
+Assigning same target to Drone_3(IDLE, bat=0.239): None
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.540): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning same target to Drone_5(IDLE, bat=0.630): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.390): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning same target to Drone_7(PROTECTING, bat=0.463): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.450): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.325): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_2
+Assigning same target to Drone_10(PROTECTING, bat=0.549): Field_2(35,7,50,30)
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.382): Field_3(4,37,27,44)
+Assigning new target to Drone_12(IDLE, bat=0.291): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_3
+Drone_10 assigned to a fully protected Field_2
+Drone_11 assigned to a fully protected Field_3
+Step: 89
+Reward = -1.50 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.301): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.200): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.239): None
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.530): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(IDLE, bat=0.630): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.380): Field_2(35,7,50,30)
+Assigning new target to Drone_7(PROTECTING, bat=0.456): None
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.440): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.315): Field_3(4,37,27,44)
+Assigning same target to Drone_10(PROTECTING, bat=0.542): Field_2(35,7,50,30)
+Assigning new target to Drone_11(PROTECTING, bat=0.372): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.281): Field_2(35,7,50,30)
+Step: 90
+Reward = -1.35 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.301): None
+Assigning same target to Drone_2(MOVING_TO_CHARGER, bat=0.190): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.239): Charger_1
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.520): Field_2(35,7,50,30)
+Assigning same target to Drone_5(IDLE, bat=0.630): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.370): Field_2(35,7,50,30)
+Assigning new target to Drone_7(IDLE, bat=0.456): Field_3(4,37,27,44)
+Assigning new target to Drone_8(PROTECTING, bat=0.430): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.305): Field_1(3,4,18,19)
+Assigning new target to Drone_10(PROTECTING, bat=0.535): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.362): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.271): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_3
+Step: 91
+Reward = -2.40 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.10, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.301): Charger_1
+Assigning new target to Drone_2(CHARGING, bat=0.190): None
+Assigning new target to Drone_3(CHARGING, bat=0.239): None
+Assigning same target to Drone_4(PROTECTING, bat=0.510): Field_2(35,7,50,30)
+Assigning same target to Drone_5(IDLE, bat=0.630): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.360): Field_2(35,7,50,30)
+Assigning same target to Drone_7(PROTECTING, bat=0.446): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.420): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.295): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.525): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.352): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.261): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_3
+Step: 92
+Reward = -2.30 (damage = -3, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.10)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.291): None
+Assigning same target to Drone_2(IDLE, bat=0.190): None
+Assigning new target to Drone_3(IDLE, bat=0.239): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(PROTECTING, bat=0.503): Field_2(35,7,50,30)
+Assigning same target to Drone_5(IDLE, bat=0.630): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.350): Field_2(35,7,50,30)
+Assigning new target to Drone_7(PROTECTING, bat=0.439): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.410): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.285): Charger_1
+Assigning new target to Drone_10(PROTECTING, bat=0.515): None
+Assigning same target to Drone_11(PROTECTING, bat=0.342): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.251): Field_2(35,7,50,30)
+Step: 93
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.291): Field_3(4,37,27,44)
+Assigning new target to Drone_2(IDLE, bat=0.190): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.229): None
+Assigning same target to Drone_4(PROTECTING, bat=0.496): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.630): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.340): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.429): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(PROTECTING, bat=0.400): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.275): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(IDLE, bat=0.515): Field_2(35,7,50,30)
+Assigning same target to Drone_11(PROTECTING, bat=0.335): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.241): Field_2(35,7,50,30)
+Drone_8 assigned to a fully protected Field_1
+Drone_11 assigned to a fully protected Field_3
+Step: 94
+Reward = -1.55 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.281): None
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.180): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.229): None
+Assigning same target to Drone_4(PROTECTING, bat=0.489): Field_2(35,7,50,30)
+Assigning new target to Drone_5(CHARGING, bat=0.630): None
+Assigning same target to Drone_6(MOVING_TO_CHARGER, bat=0.330): Charger_1
+Assigning new target to Drone_7(PROTECTING, bat=0.419): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning same target to Drone_8(PROTECTING, bat=0.393): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.265): Field_1(3,4,18,19)
+Assigning same target to Drone_10(PROTECTING, bat=0.505): Field_2(35,7,50,30)
+Assigning same target to Drone_11(PROTECTING, bat=0.328): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.231): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_1
+Step: 95
+Reward = -2.25 (damage = -3, drone_state_consistence = 0.70, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(IDLE, bat=0.281): None
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.170): None
+Assigning same target to Drone_3(IDLE, bat=0.229): None
+Assigning same target to Drone_4(PROTECTING, bat=0.482): Field_2(35,7,50,30)
+Assigning same target to Drone_5(IDLE, bat=0.630): None
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.320): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.409): Charger_1
+Assigning same target to Drone_8(PROTECTING, bat=0.386): Field_1(3,4,18,19)
+Assigning new target to Drone_9(PROTECTING, bat=0.255): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_2
+Assigning new target to Drone_10(PROTECTING, bat=0.498): Charger_1
+Assigning same target to Drone_11(PROTECTING, bat=0.321): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.221): Field_2(35,7,50,30)
+Step: 96
+Reward = 0.70 (damage = 0, drone_state_consistence = 0.70, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.281): Field_1(3,4,18,19)
+Assigning new target to Drone_2(IDLE, bat=0.170): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.229): None
+Assigning same target to Drone_4(PROTECTING, bat=0.475): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.630): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.310): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.399): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(PROTECTING, bat=0.379): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.245): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.488): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning same target to Drone_11(PROTECTING, bat=0.314): Field_3(4,37,27,44)
+Assigning same target to Drone_12(MOVING_TO_FIELD, bat=0.211): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Drone_8 assigned to a fully protected Field_1
+Drone_10 assigned to a fully protected Field_2
+Drone_11 assigned to a fully protected Field_3
+Step: 97
+Reward = -2.40 (damage = -3, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.271): Charger_1
+Assigning new target to Drone_2(CHARGING, bat=0.170): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(IDLE, bat=0.229): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(PROTECTING, bat=0.468): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.620): None
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.300): Field_2(35,7,50,30)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.389): Field_3(4,37,27,44)
+Assigning same target to Drone_8(PROTECTING, bat=0.372): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.235): Field_3(4,37,27,44)
+Drone_9 assigned to a fully protected Field_3
+Assigning new target to Drone_10(PROTECTING, bat=0.478): Charger_1
+Assigning same target to Drone_11(PROTECTING, bat=0.307): Field_3(4,37,27,44)
+Assigning same target to Drone_12(PROTECTING, bat=0.201): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_3
+Drone_11 assigned to a fully protected Field_3
+Step: 98
+Reward = -0.50 (damage = -1, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_CHARGER, bat=0.261): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.160): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.219): None
+Assigning same target to Drone_4(PROTECTING, bat=0.461): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.620): Charger_1
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.290): Field_2(35,7,50,30)
+Assigning same target to Drone_7(PROTECTING, bat=0.379): Field_3(4,37,27,44)
+Assigning new target to Drone_8(PROTECTING, bat=0.365): Charger_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.225): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.468): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning same target to Drone_11(PROTECTING, bat=0.300): Field_3(4,37,27,44)
+Assigning same target to Drone_12(PROTECTING, bat=0.194): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Drone_7 assigned to a fully protected Field_3
+Drone_10 assigned to a fully protected Field_2
+Drone_11 assigned to a fully protected Field_3
+Step: 99
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.60, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.251): Field_3(4,37,27,44)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.150): None
+Assigning same target to Drone_3(IDLE, bat=0.219): None
+Assigning new target to Drone_4(PROTECTING, bat=0.454): None
+Assigning new target to Drone_5(CHARGING, bat=0.620): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.280): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(PROTECTING, bat=0.372): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.355): Field_2(35,7,50,30)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.215): Field_1(3,4,18,19)
+Assigning new target to Drone_10(PROTECTING, bat=0.458): Charger_1
+Assigning same target to Drone_11(PROTECTING, bat=0.293): Field_3(4,37,27,44)
+Assigning same target to Drone_12(PROTECTING, bat=0.187): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_3
+Drone_11 assigned to a fully protected Field_3
+Step: 100
+Reward = -1.60 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.241): Field_3(4,37,27,44)
+Assigning same target to Drone_2(IDLE, bat=0.150): None
+Assigning same target to Drone_3(IDLE, bat=0.219): None
+Assigning new target to Drone_4(IDLE, bat=0.454): Field_2(35,7,50,30)
+Assigning new target to Drone_5(IDLE, bat=0.620): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.270): Field_3(4,37,27,44)
+Assigning new target to Drone_7(PROTECTING, bat=0.365): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.345): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(PROTECTING, bat=0.205): Field_3(4,37,27,44)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.448): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Assigning new target to Drone_11(PROTECTING, bat=0.286): Field_1(3,4,18,19)
+Assigning same target to Drone_12(PROTECTING, bat=0.180): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Drone_10 assigned to a fully protected Field_2
+Step: 101
+Reward = -1.45 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.00, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.231): Field_3(4,37,27,44)
+Assigning same target to Drone_2(IDLE, bat=0.150): None
+Assigning same target to Drone_3(IDLE, bat=0.219): None
+Assigning same target to Drone_4(PROTECTING, bat=0.444): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.610): Field_3(4,37,27,44)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.260): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.355): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.335): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.195): Charger_1
+Assigning new target to Drone_10(PROTECTING, bat=0.438): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.276): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning same target to Drone_12(PROTECTING, bat=0.173): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_3
+Drone_8 assigned to a fully protected Field_1
+Step: 102
+Reward = -5.35 (damage = -6, drone_state_consistence = 0.50, drone_charging = 0.10, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.221): Field_3(4,37,27,44)
+Assigning new target to Drone_2(IDLE, bat=0.150): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.219): None
+Assigning same target to Drone_4(PROTECTING, bat=0.437): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.600): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.250): None
+Assigning same target to Drone_7(PROTECTING, bat=0.345): Field_3(4,37,27,44)
+Assigning new target to Drone_8(PROTECTING, bat=0.325): None
+Assigning new target to Drone_9(MOVING_TO_CHARGER, bat=0.185): Field_3(4,37,27,44)
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.428): Charger_1
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.266): Field_3(4,37,27,44)
+Assigning same target to Drone_12(PROTECTING, bat=0.166): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_3
+Step: 103
+Reward = -0.30 (damage = -1, drone_state_consistence = 0.60, drone_charging = 0.05, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.211): Field_3(4,37,27,44)
+Assigning new target to Drone_2(CHARGING, bat=0.150): Field_1(3,4,18,19)
+Assigning same target to Drone_3(IDLE, bat=0.219): None
+Assigning new target to Drone_4(PROTECTING, bat=0.430): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.590): None
+Assigning new target to Drone_6(IDLE, bat=0.250): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(PROTECTING, bat=0.338): Charger_1
+Assigning new target to Drone_8(IDLE, bat=0.325): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.175): Field_3(4,37,27,44)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.418): Field_3(4,37,27,44)
+Assigning new target to Drone_11(PROTECTING, bat=0.256): None
+Assigning same target to Drone_12(PROTECTING, bat=0.159): Field_2(35,7,50,30)
+Step: 104
+Reward = -2.60 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.201): Charger_1
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.140): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.219): Field_2(35,7,50,30)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.420): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(IDLE, bat=0.590): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.240): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.328): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning same target to Drone_8(PROTECTING, bat=0.315): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.165): Field_3(4,37,27,44)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.408): None
+Assigning new target to Drone_11(IDLE, bat=0.256): Field_3(4,37,27,44)
+Assigning same target to Drone_12(PROTECTING, bat=0.152): Field_2(35,7,50,30)
+Step: 105
+Reward = -0.55 (damage = -1, drone_state_consistence = 0.30, drone_charging = 0.10, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.191): None
+Assigning new target to Drone_2(CHARGING, bat=0.140): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.209): None
+Assigning same target to Drone_4(PROTECTING, bat=0.410): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.580): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.240): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.318): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning same target to Drone_8(PROTECTING, bat=0.308): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.155): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(IDLE, bat=0.408): Charger_1
+Assigning same target to Drone_11(PROTECTING, bat=0.246): Field_3(4,37,27,44)
+Assigning same target to Drone_12(PROTECTING, bat=0.145): Field_2(35,7,50,30)
+Drone_8 assigned to a fully protected Field_1
+Drone_11 assigned to a fully protected Field_3
+Step: 106
+Reward = -0.40 (damage = -1, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning new target to Drone_1(IDLE, bat=0.191): Field_3(4,37,27,44)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.130): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(IDLE, bat=0.209): None
+Assigning new target to Drone_4(PROTECTING, bat=0.403): Charger_1
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.570): Field_1(3,4,18,19)
+Assigning same target to Drone_6(MOVING_TO_CHARGER, bat=0.230): Charger_1
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.308): Field_2(35,7,50,30)
+Assigning same target to Drone_8(PROTECTING, bat=0.301): Field_1(3,4,18,19)
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.145): Field_3(4,37,27,44)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.398): None
+Assigning same target to Drone_11(PROTECTING, bat=0.239): Field_3(4,37,27,44)
+Assigning new target to Drone_12(PROTECTING, bat=0.138): Field_1(3,4,18,19)
+Drone_12 assigned to a fully protected Field_1
+Step: 107
+Reward = -1.40 (damage = -2, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.181): Field_3(4,37,27,44)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.120): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.209): None
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.393): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.560): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.220): Field_2(35,7,50,30)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.298): Field_2(35,7,50,30)
+Assigning same target to Drone_8(PROTECTING, bat=0.294): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.135): Field_3(4,37,27,44)
+Assigning same target to Drone_10(IDLE, bat=0.398): None
+Assigning new target to Drone_11(PROTECTING, bat=0.232): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.128): Field_2(35,7,50,30)
+Drone_12 assigned to a fully protected Field_2
+Step: 108
+Reward = -1.20 (damage = -2, drone_state_consistence = 0.70, drone_charging = 0.05, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.171): Field_3(4,37,27,44)
+Assigning new target to Drone_2(CHARGING, bat=0.120): None
+Assigning new target to Drone_3(IDLE, bat=0.209): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(PROTECTING, bat=0.383): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.550): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.210): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.288): Field_3(4,37,27,44)
+Assigning new target to Drone_8(PROTECTING, bat=0.287): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.125): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.398): Charger_1
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.222): Field_2(35,7,50,30)
+Assigning same target to Drone_12(PROTECTING, bat=0.118): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_1
+Step: 109
+Reward = 0.45 (damage = 0, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.161): Field_3(4,37,27,44)
+Assigning new target to Drone_2(IDLE, bat=0.120): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.199): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning same target to Drone_4(PROTECTING, bat=0.376): Field_2(35,7,50,30)
+Assigning new target to Drone_5(PROTECTING, bat=0.540): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(IDLE, bat=0.210): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.278): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.277): None
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.115): Field_2(35,7,50,30)
+Drone_9 assigned to a fully protected Field_2
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.388): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.212): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(PROTECTING, bat=0.111): Field_1(3,4,18,19)
+Step: 110
+Reward = -2.65 (damage = -3, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.151): Field_3(4,37,27,44)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.110): None
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.189): None
+Assigning new target to Drone_4(PROTECTING, bat=0.369): Charger_1
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.530): Field_1(3,4,18,19)
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.200): Field_3(4,37,27,44)
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.268): Field_3(4,37,27,44)
+Assigning new target to Drone_8(IDLE, bat=0.277): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.105): None
+Assigning new target to Drone_10(IDLE, bat=0.388): Field_2(35,7,50,30)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.202): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.101): Field_2(35,7,50,30)
+Drone_12 assigned to a fully protected Field_2
+Drone_7 assigned to a fully protected Field_3
+Step: 111
+Reward = -2.75 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.05)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.141): Field_1(3,4,18,19)
+Assigning new target to Drone_2(IDLE, bat=0.110): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.189): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(MOVING_TO_CHARGER, bat=0.359): Charger_1
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.520): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.190): None
+Assigning new target to Drone_7(PROTECTING, bat=0.258): Field_2(35,7,50,30)
+Drone_7 assigned to a fully protected Field_2
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.267): Field_2(35,7,50,30)
+Assigning new target to Drone_9(IDLE, bat=0.105): Field_3(4,37,27,44)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.378): Field_1(3,4,18,19)
+Assigning new target to Drone_11(IDLE, bat=0.202): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning same target to Drone_12(PROTECTING, bat=0.091): Field_2(35,7,50,30)
+Step: 112
+Reward = -2.75 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.131): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning same target to Drone_2(MOVING_TO_CHARGER, bat=0.100): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.179): None
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.349): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(IDLE, bat=0.520): Charger_1
+Assigning new target to Drone_6(IDLE, bat=0.190): Field_1(3,4,18,19)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.248): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.257): None
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.095): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.368): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.192): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Assigning new target to Drone_12(PROTECTING, bat=0.084): Field_1(3,4,18,19)
+Step: 113
+Reward = -0.95 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.121): Field_3(4,37,27,44)
+Assigning same target to Drone_2(CHARGING, bat=0.100): Charger_1
+Assigning same target to Drone_3(IDLE, bat=0.179): None
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.339): Charger_1
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.510): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.180): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.238): Field_2(35,7,50,30)
+Assigning new target to Drone_8(IDLE, bat=0.257): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.085): Field_3(4,37,27,44)
+Assigning new target to Drone_10(IDLE, bat=0.368): Field_1(3,4,18,19)
+Drone_10 assigned to a fully protected Field_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.182): Charger_1
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.074): Field_2(35,7,50,30)
+Drone_12 assigned to a fully protected Field_2
+Step: 114
+Reward = -1.60 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.111): Field_3(4,37,27,44)
+Assigning same target to Drone_2(CHARGING, bat=0.110): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.179): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.329): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.500): Charger_1
+Assigning same target to Drone_6(IDLE, bat=0.180): None
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.228): Field_2(35,7,50,30)
+Assigning new target to Drone_8(PROTECTING, bat=0.247): Charger_1
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.075): Field_3(4,37,27,44)
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.358): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_CHARGER, bat=0.172): Field_1(3,4,18,19)
+Assigning new target to Drone_12(PROTECTING, bat=0.064): Charger_1
+Step: 115
+Reward = -0.35 (damage = -1, drone_state_consistence = 0.50, drone_charging = 0.15, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(PROTECTING, bat=0.101): Charger_1
+Assigning same target to Drone_2(CHARGING, bat=0.120): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.169): Field_1(3,4,18,19)
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.319): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.490): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning same target to Drone_6(IDLE, bat=0.180): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.218): Charger_1
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.237): Field_2(35,7,50,30)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.065): Field_3(4,37,27,44)
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.348): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.162): None
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.054): Field_2(35,7,50,30)
+Step: 116
+Reward = -1.45 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.15, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.091): Field_3(4,37,27,44)
+Assigning same target to Drone_2(CHARGING, bat=0.130): Charger_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.159): Field_1(3,4,18,19)
+Assigning same target to Drone_4(PROTECTING, bat=0.309): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.480): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.180): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.208): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.227): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.055): Field_1(3,4,18,19)
+Drone_9 assigned to a fully protected Field_1
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.338): Field_1(3,4,18,19)
+Assigning new target to Drone_11(IDLE, bat=0.162): Field_2(35,7,50,30)
+Assigning new target to Drone_12(PROTECTING, bat=0.044): Charger_1
+Drone_5 assigned to a fully protected Field_1
+Step: 117
+Reward = -2.25 (damage = -3, drone_state_consistence = 0.60, drone_charging = 0.15, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.081): Field_2(35,7,50,30)
+Assigning new target to Drone_2(CHARGING, bat=0.140): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.149): Field_1(3,4,18,19)
+Assigning same target to Drone_4(PROTECTING, bat=0.302): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.470): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.180): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.198): Charger_1
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.217): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.045): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.328): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.152): None
+Assigning new target to Drone_12(MOVING_TO_CHARGER, bat=0.034): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Step: 118
+Reward = -2.35 (damage = -3, drone_state_consistence = 0.60, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.071): Field_3(4,37,27,44)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.130): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.139): None
+Assigning same target to Drone_4(PROTECTING, bat=0.295): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.463): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.180): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.188): Field_2(35,7,50,30)
+Assigning same target to Drone_8(PROTECTING, bat=0.207): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.035): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.318): None
+Assigning new target to Drone_11(IDLE, bat=0.152): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.024): Field_3(4,37,27,44)
+Drone_12 assigned to a fully protected Field_3
+Step: 119
+Reward = -4.45 (damage = -5, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(PROTECTING, bat=0.061): Charger_1
+Assigning same target to Drone_2(MOVING_TO_CHARGER, bat=0.120): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.139): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(PROTECTING, bat=0.288): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.456): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.180): Field_1(3,4,18,19)
+Drone_6 assigned to a fully protected Field_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.178): Field_2(35,7,50,30)
+Assigning same target to Drone_8(PROTECTING, bat=0.200): Field_1(3,4,18,19)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.025): Field_1(3,4,18,19)
+Assigning new target to Drone_10(IDLE, bat=0.318): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.142): Field_2(35,7,50,30)
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.014): Field_2(35,7,50,30)
+Drone_12 assigned to a fully protected Field_2
+Drone_3 assigned to a fully protected Field_1
+Drone_5 assigned to a fully protected Field_1
+Step: 120
+Reward = -3.40 (damage = -4, drone_state_consistence = 0.50, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_CHARGER, bat=0.051): Charger_1
+Assigning new target to Drone_2(CHARGING, bat=0.120): Field_3(4,37,27,44)
+Assigning same target to Drone_3(PROTECTING, bat=0.129): Field_1(3,4,18,19)
+Assigning same target to Drone_4(PROTECTING, bat=0.281): Field_2(35,7,50,30)
+Assigning new target to Drone_5(PROTECTING, bat=0.449): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.170): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.168): Field_2(35,7,50,30)
+Assigning new target to Drone_8(PROTECTING, bat=0.193): Field_2(35,7,50,30)
+Assigning same target to Drone_9(MOVING_TO_FIELD, bat=0.015): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.308): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.132): None
+Assigning new target to Drone_12(MOVING_TO_FIELD, bat=0.004): Field_1(3,4,18,19)
+Step: 121
+Reward = -3.45 (damage = -4, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_CHARGER, bat=0.041): Field_2(35,7,50,30)
+Drone_1 assigned to a fully protected Field_2
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=0.110): Field_3(4,37,27,44)
+Assigning same target to Drone_3(PROTECTING, bat=0.122): Field_1(3,4,18,19)
+Assigning new target to Drone_4(PROTECTING, bat=0.274): Field_1(3,4,18,19)
+Drone_4 assigned to a fully protected Field_1
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.439): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.160): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.158): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.183): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_9(MOVING_TO_FIELD, bat=0.005): None
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.298): Field_1(3,4,18,19)
+Assigning new target to Drone_11(IDLE, bat=0.132): Field_2(35,7,50,30)
+Drone_11 assigned to a fully protected Field_2
+Step: 122
+Reward = -2.70 (damage = -3, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.031): Field_1(3,4,18,19)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.100): Charger_1
+Assigning same target to Drone_3(PROTECTING, bat=0.115): Field_1(3,4,18,19)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.264): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.429): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.150): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.148): Field_2(35,7,50,30)
+Assigning same target to Drone_8(PROTECTING, bat=0.173): Field_1(3,4,18,19)
+Assigning new target to Drone_9(IDLE, bat=0.005): Field_3(4,37,27,44)
+Drone_9 assigned to a fully protected Field_3
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.288): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.122): None
+Step: 123
+Reward = -5.65 (damage = -6, drone_state_consistence = 0.30, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=0.021): Field_3(4,37,27,44)
+Drone_1 assigned to a fully protected Field_3
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.090): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning new target to Drone_3(PROTECTING, bat=0.108): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.254): None
+Assigning same target to Drone_5(PROTECTING, bat=0.419): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.150): None
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=0.138): Field_2(35,7,50,30)
+Assigning new target to Drone_8(PROTECTING, bat=0.166): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.278): Charger_1
+Assigning same target to Drone_11(IDLE, bat=0.122): None
+Step: 124
+Reward = -1.60 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.011): Field_3(4,37,27,44)
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.080): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.098): Field_1(3,4,18,19)
+Assigning new target to Drone_4(IDLE, bat=0.254): Charger_1
+Assigning same target to Drone_5(PROTECTING, bat=0.412): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.150): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.128): Charger_1
+Assigning new target to Drone_8(IDLE, bat=0.166): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.268): Field_1(3,4,18,19)
+Drone_10 assigned to a fully protected Field_1
+Assigning new target to Drone_11(IDLE, bat=0.122): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Drone_5 assigned to a fully protected Field_1
+Step: 125
+Reward = -1.55 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.15, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=0.001): Field_3(4,37,27,44)
+Assigning same target to Drone_2(MOVING_TO_CHARGER, bat=0.070): Charger_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.088): Field_1(3,4,18,19)
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.244): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(PROTECTING, bat=0.405): Charger_1
+Assigning same target to Drone_6(IDLE, bat=0.150): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.118): Field_2(35,7,50,30)
+Assigning same target to Drone_8(PROTECTING, bat=0.156): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.258): None
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.112): None
+Step: 126
+Reward = -4.65 (damage = -5, drone_state_consistence = 0.30, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(CHARGING, bat=0.070): Field_3(4,37,27,44)
+Drone_2 assigned to a fully protected Field_3
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.078): Field_1(3,4,18,19)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.234): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.395): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.150): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.108): Charger_1
+Assigning new target to Drone_8(PROTECTING, bat=0.149): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning new target to Drone_10(IDLE, bat=0.258): Field_1(3,4,18,19)
+Assigning new target to Drone_11(IDLE, bat=0.112): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Drone_3 assigned to a fully protected Field_1
+Step: 127
+Reward = -2.85 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.060): Charger_1
+Assigning new target to Drone_3(PROTECTING, bat=0.068): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_2
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.224): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.385): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.150): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.098): Charger_1
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.139): None
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.248): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.102): None
+Drone_4 assigned to a fully protected Field_2
+Step: 128
+Reward = -3.60 (damage = -4, drone_state_consistence = 0.30, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(CHARGING, bat=0.060): Field_1(3,4,18,19)
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.058): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning same target to Drone_4(PROTECTING, bat=0.214): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.375): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.150): None
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.088): Charger_1
+Assigning new target to Drone_8(IDLE, bat=0.139): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.238): Field_1(3,4,18,19)
+Assigning new target to Drone_11(IDLE, bat=0.102): Field_1(3,4,18,19)
+Drone_11 assigned to a fully protected Field_1
+Drone_5 assigned to a fully protected Field_1
+Step: 129
+Reward = -0.45 (damage = -1, drone_state_consistence = 0.50, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.050): Charger_1
+Assigning new target to Drone_3(MOVING_TO_FIELD, bat=0.048): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning same target to Drone_4(PROTECTING, bat=0.207): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.368): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.150): Charger_1
+Assigning same target to Drone_7(MOVING_TO_CHARGER, bat=0.078): Charger_1
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=0.129): Field_1(3,4,18,19)
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.228): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.092): Field_2(35,7,50,30)
+Drone_8 assigned to a fully protected Field_1
+Step: 130
+Reward = -1.45 (damage = -2, drone_state_consistence = 0.40, drone_charging = 0.15, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(CHARGING, bat=0.050): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=0.038): Field_1(3,4,18,19)
+Assigning same target to Drone_4(PROTECTING, bat=0.200): Field_2(35,7,50,30)
+Assigning new target to Drone_5(PROTECTING, bat=0.361): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.140): None
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.068): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(PROTECTING, bat=0.119): None
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.218): Field_1(3,4,18,19)
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.082): Field_2(35,7,50,30)
+Step: 131
+Reward = -2.80 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.040): Charger_1
+Assigning same target to Drone_3(PROTECTING, bat=0.028): Field_1(3,4,18,19)
+Assigning same target to Drone_4(PROTECTING, bat=0.193): Field_2(35,7,50,30)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.351): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning same target to Drone_6(IDLE, bat=0.140): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.058): Charger_1
+Assigning new target to Drone_8(IDLE, bat=0.119): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_10(PROTECTING, bat=0.208): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.072): None
+Drone_8 assigned to a fully protected Field_1
+Step: 132
+Reward = -2.60 (damage = -3, drone_state_consistence = 0.30, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.030): Field_1(3,4,18,19)
+Drone_2 assigned to a fully protected Field_1
+Assigning new target to Drone_3(PROTECTING, bat=0.021): None
+Assigning same target to Drone_4(PROTECTING, bat=0.186): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.341): Field_1(3,4,18,19)
+Assigning new target to Drone_6(IDLE, bat=0.140): Charger_1
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.048): Field_1(3,4,18,19)
+Assigning new target to Drone_8(PROTECTING, bat=0.109): None
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.198): Field_3(4,37,27,44)
+Assigning new target to Drone_11(IDLE, bat=0.072): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Step: 133
+Reward = -1.75 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=0.020): Charger_1
+Assigning new target to Drone_3(IDLE, bat=0.021): Field_1(3,4,18,19)
+Drone_3 assigned to a fully protected Field_1
+Assigning new target to Drone_4(PROTECTING, bat=0.179): Field_1(3,4,18,19)
+Drone_4 assigned to a fully protected Field_1
+Assigning same target to Drone_5(PROTECTING, bat=0.331): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_CHARGER, bat=0.130): Field_2(35,7,50,30)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.038): Charger_1
+Assigning new target to Drone_8(IDLE, bat=0.109): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.188): Field_3(4,37,27,44)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.062): Field_2(35,7,50,30)
+Drone_3 assigned to a fully protected Field_1
+Drone_8 assigned to a fully protected Field_1
+Step: 134
+Reward = -4.70 (damage = -5, drone_state_consistence = 0.20, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_2(MOVING_TO_CHARGER, bat=0.010): Field_2(35,7,50,30)
+Assigning same target to Drone_3(PROTECTING, bat=0.011): Field_1(3,4,18,19)
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.169): Charger_1
+Assigning same target to Drone_5(PROTECTING, bat=0.324): Field_1(3,4,18,19)
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.120): Field_2(35,7,50,30)
+Assigning new target to Drone_7(CHARGING, bat=0.038): Field_1(3,4,18,19)
+Drone_7 assigned to a fully protected Field_1
+Assigning new target to Drone_8(PROTECTING, bat=0.099): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.178): Field_1(3,4,18,19)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.052): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_1
+Step: 135
+Reward = -1.65 (damage = -2, drone_state_consistence = 0.30, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_3(PROTECTING, bat=0.004): Field_3(4,37,27,44)
+Drone_3 assigned to a fully protected Field_3
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.159): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(PROTECTING, bat=0.317): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.110): None
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.028): None
+Assigning same target to Drone_8(IDLE, bat=0.099): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.168): Field_3(4,37,27,44)
+Drone_10 assigned to a fully protected Field_3
+Assigning same target to Drone_11(MOVING_TO_FIELD, bat=0.042): Field_3(4,37,27,44)
+Step: 136
+Reward = -2.70 (damage = -3, drone_state_consistence = 0.30, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.149): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.310): Field_1(3,4,18,19)
+Assigning same target to Drone_6(IDLE, bat=0.110): None
+Assigning new target to Drone_7(IDLE, bat=0.028): Charger_1
+Assigning same target to Drone_8(IDLE, bat=0.099): None
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.158): Field_3(4,37,27,44)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.032): Field_1(3,4,18,19)
+Step: 137
+Reward = -4.55 (damage = -5, drone_state_consistence = 0.40, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(PROTECTING, bat=0.139): Field_1(3,4,18,19)
+Drone_4 assigned to a fully protected Field_1
+Assigning new target to Drone_5(PROTECTING, bat=0.303): Field_2(35,7,50,30)
+Assigning new target to Drone_6(IDLE, bat=0.110): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_7(MOVING_TO_CHARGER, bat=0.018): Field_2(35,7,50,30)
+Assigning same target to Drone_8(IDLE, bat=0.099): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.148): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.022): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Step: 138
+Reward = 0.15 (damage = 0, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.129): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.293): Field_1(3,4,18,19)
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.100): Field_3(4,37,27,44)
+Assigning new target to Drone_7(MOVING_TO_FIELD, bat=0.008): Field_3(4,37,27,44)
+Drone_7 assigned to a fully protected Field_3
+Assigning new target to Drone_8(IDLE, bat=0.099): Field_2(35,7,50,30)
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.138): Charger_1
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.012): Field_2(35,7,50,30)
+Step: 139
+Reward = 0.25 (damage = 0, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.119): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.283): Field_1(3,4,18,19)
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.090): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.089): Field_1(3,4,18,19)
+Drone_8 assigned to a fully protected Field_1
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.128): Field_3(4,37,27,44)
+Assigning new target to Drone_11(MOVING_TO_FIELD, bat=0.002): Field_3(4,37,27,44)
+Drone_11 assigned to a fully protected Field_3
+Drone_5 assigned to a fully protected Field_1
+Drone_8 assigned to a fully protected Field_1
+Step: 140
+Reward = -2.90 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.109): Field_2(35,7,50,30)
+Assigning same target to Drone_5(PROTECTING, bat=0.273): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.080): None
+Assigning new target to Drone_8(PROTECTING, bat=0.079): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.118): None
+Step: 141
+Reward = -1.90 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_4(PROTECTING, bat=0.099): Field_2(35,7,50,30)
+Assigning new target to Drone_5(PROTECTING, bat=0.266): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning new target to Drone_6(IDLE, bat=0.080): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning new target to Drone_8(IDLE, bat=0.079): Charger_1
+Assigning new target to Drone_10(IDLE, bat=0.118): Charger_1
+Drone_4 assigned to a fully protected Field_2
+Step: 142
+Reward = -0.80 (damage = -1, drone_state_consistence = 0.10, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(PROTECTING, bat=0.092): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.256): None
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.070): Field_1(3,4,18,19)
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.069): None
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.108): Field_3(4,37,27,44)
+Step: 143
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.082): Field_1(3,4,18,19)
+Assigning new target to Drone_5(IDLE, bat=0.256): Field_2(35,7,50,30)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.060): Field_3(4,37,27,44)
+Drone_6 assigned to a fully protected Field_3
+Assigning new target to Drone_8(IDLE, bat=0.069): Field_2(35,7,50,30)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.098): Charger_1
+Step: 144
+Reward = -1.95 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.072): Charger_1
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.246): Field_1(3,4,18,19)
+Drone_5 assigned to a fully protected Field_1
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=0.050): Field_3(4,37,27,44)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.059): None
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.088): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Step: 145
+Reward = -2.85 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.062): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.236): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.040): None
+Assigning same target to Drone_8(IDLE, bat=0.059): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.078): Charger_1
+Step: 146
+Reward = -6.85 (damage = -7, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.052): Field_2(35,7,50,30)
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.226): Field_2(35,7,50,30)
+Assigning new target to Drone_6(IDLE, bat=0.040): Field_3(4,37,27,44)
+Assigning same target to Drone_8(IDLE, bat=0.059): None
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.068): Charger_1
+Step: 147
+Reward = -2.55 (damage = -3, drone_state_consistence = 0.40, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.042): Charger_1
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.216): Charger_1
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.030): Field_1(3,4,18,19)
+Drone_6 assigned to a fully protected Field_1
+Assigning new target to Drone_8(IDLE, bat=0.059): Charger_1
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.058): Field_3(4,37,27,44)
+Step: 148
+Reward = -1.85 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.15, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.032): Field_3(4,37,27,44)
+Drone_4 assigned to a fully protected Field_3
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.206): Field_2(35,7,50,30)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.020): Field_2(35,7,50,30)
+Drone_6 assigned to a fully protected Field_2
+Assigning same target to Drone_8(MOVING_TO_CHARGER, bat=0.049): Charger_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.048): None
+Step: 149
+Reward = -3.85 (damage = -4, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=0.022): Field_3(4,37,27,44)
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.196): Field_1(3,4,18,19)
+Assigning new target to Drone_6(MOVING_TO_FIELD, bat=0.010): Charger_1
+Assigning new target to Drone_8(MOVING_TO_CHARGER, bat=0.039): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning new target to Drone_10(IDLE, bat=0.048): Field_2(35,7,50,30)
+Drone_10 assigned to a fully protected Field_2
+Step: 150
+Reward = -1.90 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_FIELD, bat=0.012): Charger_1
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.186): Field_2(35,7,50,30)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.029): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.038): Charger_1
+Step: 151
+Reward = -1.90 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_4(MOVING_TO_CHARGER, bat=0.002): Field_2(35,7,50,30)
+Drone_4 assigned to a fully protected Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.176): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning same target to Drone_8(IDLE, bat=0.029): None
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.028): Charger_1
+Step: 152
+Reward = -0.85 (damage = -1, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.166): Field_1(3,4,18,19)
+Assigning same target to Drone_8(IDLE, bat=0.029): None
+Assigning same target to Drone_10(CHARGING, bat=0.028): Charger_1
+Step: 153
+Reward = -1.75 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.156): Field_1(3,4,18,19)
+Assigning new target to Drone_8(IDLE, bat=0.029): Field_2(35,7,50,30)
+Assigning new target to Drone_10(CHARGING, bat=0.038): Field_1(3,4,18,19)
+Drone_10 assigned to a fully protected Field_1
+Step: 154
+Reward = -2.90 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.146): Field_1(3,4,18,19)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.019): None
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.028): Charger_1
+Step: 155
+Reward = -3.85 (damage = -4, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.136): Field_1(3,4,18,19)
+Assigning same target to Drone_8(IDLE, bat=0.019): None
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.018): Charger_1
+Step: 156
+Reward = -2.75 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.126): None
+Assigning same target to Drone_8(IDLE, bat=0.019): None
+Assigning same target to Drone_10(CHARGING, bat=0.018): Charger_1
+Step: 157
+Reward = -1.75 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(IDLE, bat=0.126): Field_1(3,4,18,19)
+Assigning new target to Drone_8(IDLE, bat=0.019): Field_3(4,37,27,44)
+Drone_8 assigned to a fully protected Field_3
+Assigning same target to Drone_10(CHARGING, bat=0.028): Charger_1
+Step: 158
+Reward = -6.85 (damage = -7, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=0.116): Field_1(3,4,18,19)
+Assigning new target to Drone_8(MOVING_TO_FIELD, bat=0.009): None
+Assigning same target to Drone_10(CHARGING, bat=0.038): Charger_1
+Step: 159
+Reward = -1.85 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.106): Field_1(3,4,18,19)
+Assigning new target to Drone_8(IDLE, bat=0.009): Charger_1
+Assigning same target to Drone_10(CHARGING, bat=0.048): Charger_1
+Step: 160
+Reward = 0.25 (damage = 0, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.099): Field_1(3,4,18,19)
+Assigning same target to Drone_10(CHARGING, bat=0.058): Charger_1
+Step: 161
+Reward = -1.75 (damage = -2, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.092): Field_1(3,4,18,19)
+Assigning same target to Drone_10(CHARGING, bat=0.068): Charger_1
+Step: 162
+Reward = -2.75 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(PROTECTING, bat=0.085): None
+Assigning same target to Drone_10(CHARGING, bat=0.078): Charger_1
+Step: 163
+Reward = -1.85 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(IDLE, bat=0.085): Field_1(3,4,18,19)
+Assigning same target to Drone_10(CHARGING, bat=0.088): Charger_1
+Step: 164
+Reward = -1.85 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.075): Field_1(3,4,18,19)
+Assigning same target to Drone_10(CHARGING, bat=0.098): Charger_1
+Step: 165
+Reward = -3.75 (damage = -4, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.068): Field_1(3,4,18,19)
+Assigning new target to Drone_10(CHARGING, bat=0.108): Field_2(35,7,50,30)
+Step: 166
+Reward = -2.90 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.061): Field_1(3,4,18,19)
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.098): Charger_1
+Step: 167
+Reward = -2.85 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.054): Field_1(3,4,18,19)
+Assigning same target to Drone_10(MOVING_TO_CHARGER, bat=0.088): Charger_1
+Step: 168
+Reward = -0.85 (damage = -1, drone_state_consistence = 0.10, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.047): Field_1(3,4,18,19)
+Assigning same target to Drone_10(CHARGING, bat=0.088): Charger_1
+Step: 169
+Reward = -2.75 (damage = -3, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_5(PROTECTING, bat=0.040): Field_1(3,4,18,19)
+Assigning same target to Drone_10(CHARGING, bat=0.098): Charger_1
+Step: 170
+Reward = -3.75 (damage = -4, drone_state_consistence = 0.20, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(PROTECTING, bat=0.033): Charger_1
+Assigning same target to Drone_10(CHARGING, bat=0.108): Charger_1
+Step: 171
+Reward = -4.80 (damage = -5, drone_state_consistence = 0.10, drone_charging = 0.10, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.023): Field_3(4,37,27,44)
+Drone_5 assigned to a fully protected Field_3
+Assigning new target to Drone_10(CHARGING, bat=0.118): Field_1(3,4,18,19)
+Step: 172
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=0.013): Charger_1
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.108): Field_2(35,7,50,30)
+Step: 173
+Reward = -1.95 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_5(MOVING_TO_CHARGER, bat=0.003): Field_2(35,7,50,30)
+Drone_5 assigned to a fully protected Field_2
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.098): Field_2(35,7,50,30)
+Step: 174
+Reward = -2.90 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.088): Field_1(3,4,18,19)
+Step: 175
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.078): Field_2(35,7,50,30)
+Step: 176
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.068): Field_2(35,7,50,30)
+Step: 177
+Reward = -0.90 (damage = -1, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.058): Field_2(35,7,50,30)
+Step: 178
+Reward = -2.90 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_10(MOVING_TO_FIELD, bat=0.048): None
+Step: 179
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_10(IDLE, bat=0.048): Charger_1
+Step: 180
+Reward = -2.95 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.05, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning new target to Drone_10(MOVING_TO_CHARGER, bat=0.038): Field_2(35,7,50,30)
+Step: 181
+Reward = -5.00 (damage = -5, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.028): Field_2(35,7,50,30)
+Step: 182
+Reward = -1.90 (damage = -2, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.018): Field_2(35,7,50,30)
+Step: 183
+Reward = -2.90 (damage = -3, drone_state_consistence = 0.10, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Assigning same target to Drone_10(MOVING_TO_FIELD, bat=0.008): Field_2(35,7,50,30)
+Step: 184
+Reward = -5.00 (damage = -5, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 185
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 186
+Reward = -9.00 (damage = -9, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 187
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 188
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 189
+Reward = -5.00 (damage = -5, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 190
+Reward = -5.00 (damage = -5, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 191
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 192
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 193
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 194
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 195
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 196
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 197
+Reward = -6.00 (damage = -6, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 198
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 199
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 200
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 201
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 202
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 203
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 204
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 205
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 206
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 207
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 208
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 209
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 210
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 211
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 212
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 213
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 214
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 215
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 216
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 217
+Reward = -8.00 (damage = -8, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 218
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 219
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 220
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 221
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 222
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 223
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 224
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 225
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 226
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 227
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 228
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 229
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 230
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 231
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 232
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 233
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 234
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 235
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 236
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 237
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 238
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 239
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 240
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 241
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 242
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 243
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 244
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 245
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 246
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 247
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 248
+Reward = -5.00 (damage = -5, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 249
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 250
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 251
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 252
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 253
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 254
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 255
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 256
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 257
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 258
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 259
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 260
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 261
+Reward = -6.00 (damage = -6, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 262
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 263
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 264
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 265
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 266
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 267
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 268
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 269
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 270
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 271
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 272
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 273
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 274
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 275
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 276
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 277
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 278
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 279
+Reward = -4.00 (damage = -4, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 280
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 281
+Reward = -6.00 (damage = -6, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 282
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 283
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 284
+Reward = -6.00 (damage = -6, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 285
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 286
+Reward = -2.00 (damage = -2, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 287
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 288
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 289
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 290
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 291
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 292
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 293
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 294
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 295
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 296
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 297
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 298
+Reward = -1.00 (damage = -1, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 299
+Reward = 0.00 (damage = 0, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+Step: 300
+Reward = -3.00 (damage = -3, drone_state_consistence = 0.00, drone_charging = 0.00, drone_protecting = 0.00)
+Training Q-network... Done
+
+Simulation done
+Saving Q-network... Done
+
+Statistics:
+step: None
+damage: 744
+IDLE: 0
+CHARGING: 0
+PROTECTING: 0
+MOVING_TO_CHARGER: 0
+MOVING_TO_FIELD: 0
+TERMINATED: 12
+
+Saving plot... Done
