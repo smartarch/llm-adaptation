@@ -53,11 +53,12 @@ for label, value in zip(stats.global_stats(None, header=True), stats.global_stat
     print(f"{label}: {value}")
 stats.close_file()
 
-print("\nSaving plot...")
+print("\nSaving plot... ", end="")
 draw_plots(f"{args.log_dir}/{name}")
+print("Done")
 
 if args.animation:
-    print("\nSaving animation...")
+    print("\nSaving animation... ", end="")
     os.makedirs("animations", exist_ok=True)
     # noinspection PyUnboundLocalVariable
     visualizer.createAnimation(f"{args.log_dir}/{name}.gif")

@@ -49,7 +49,12 @@ class QNetworkAdaptation(Adaptation):
     DroneState = len(DroneState) + 1 + 2
     FieldState = 1
 
-    def __init__(self, config: dict, replay_buffer_size=10_000, epsilon=0.1, epsilon_final=None, epsilon_final_steps=None, batch_size=64, train_every=1, target_update_every=1, save_path=None, **q_network_args):
+    def __init__(self, config: dict,
+                 replay_buffer_size=10_000,
+                 epsilon=0.1, epsilon_final=None, epsilon_final_steps=None,
+                 batch_size=64, train_every=1, target_update_every=1, save_path=None,
+                 reward_state_consistence=0, reward_drone_charging=0, reward_drone_charging_battery=0, reward_drone_protecting=0, reward_drone_protecting_battery=0,
+                 **q_network_args):
 
         self.save_path = Path(save_path)
         if self.save_path.exists():  # load saved Q-network and replay buffer
@@ -69,7 +74,16 @@ class QNetworkAdaptation(Adaptation):
 
         self.last_state = None
         self.last_action = None
-        self.last_damage = 0
+        self.reward_data = {  # necessary to compute the reward in the next step
+            "damage": 0,
+            "drone_states": [None] * config["drones"],
+            "drone_targets": [None] * config["drones"],
+        }
+        self.reward_state_consistence = reward_state_consistence
+        self.reward_drone_charging = reward_drone_charging
+        self.reward_drone_charging_battery = reward_drone_charging_battery
+        self.reward_drone_protecting = reward_drone_protecting
+        self.reward_drone_protecting_battery = reward_drone_protecting_battery
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
         # save last transition
@@ -82,11 +96,11 @@ class QNetworkAdaptation(Adaptation):
         if step % self.target_update_every == 0:
             self.q_network.update_target_network()
 
+        # save data for reward computation
+        self.reward_data = self.getRewardData(simulation)
+
         # select actions and perform adaptation
         self.selectActions(simulation, step)
-
-        # update last damage for reward computation
-        self.last_damage = simulation.total_damage
 
     def getState(self, simulation):
         return np.concatenate([
@@ -112,8 +126,42 @@ class QNetworkAdaptation(Adaptation):
 
     def getReward(self, simulation):
         current_damage = simulation.total_damage
-        damage = current_damage - self.last_damage
-        return -damage
+        damage = current_damage - self.reward_data["damage"]
+
+        drone_state_consistence = sum(
+            self.reward_state_consistence
+            for old_state, old_target, drone in zip(self.reward_data["drone_states"], self.reward_data["drone_targets"], simulation.drones)
+            if drone.state != DroneState.TERMINATED
+            and old_state == drone.state
+            and old_target == drone.target
+        )
+
+        drone_charging = sum(
+            self.reward_drone_charging
+            for drone in simulation.drones
+            if drone.state in (DroneState.CHARGING, DroneState.MOVING_TO_CHARGER)
+            and drone.battery < self.reward_drone_charging_battery
+        )
+
+        drone_protecting = sum(
+            self.reward_drone_protecting
+            for drone in simulation.drones
+            if drone.state in (DroneState.PROTECTING, DroneState.MOVING_TO_FIELD)
+            and drone.battery > self.reward_drone_protecting_battery
+        )
+
+        reward = -damage + drone_state_consistence + drone_charging + drone_protecting
+        print(f"Reward = {reward:.2f} (damage = {-damage}, drone_state_consistence = {drone_state_consistence:.2f}, drone_charging = {drone_charging:.2f}, drone_protecting = {drone_protecting:.2f})")
+        return reward
+
+    @staticmethod
+    def getRewardData(simulation):
+        """Get data necessary to compute the reward in the next step."""
+        return {
+            "damage": simulation.total_damage,
+            "drone_states": [drone.state for drone in simulation.drones],
+            "drone_targets": [drone.target for drone in simulation.drones],
+        }
 
     def selectActions(self, simulation, step):
         """Selects an action for each drone using the predictions by a Q-network and epsilon-greedy algorithm."""
