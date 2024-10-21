@@ -22,8 +22,14 @@ class DoubleQNetwork:
     def __init__(self, inputs_count, actions_count, *, layer_widths=[50], gamma=0.99, tau=0.01, learning_rate=0.001, batch_size=64, load_path=None):
 
         if load_path is not None:
-            self._network = tf.keras.models.load_model(load_path / "network.keras")
-            self._target_network = tf.keras.models.load_model(load_path / "target_network.keras")
+            try:
+                self._network = tf.keras.models.load_model(load_path / "network.keras")
+                self._target_network = tf.keras.models.load_model(load_path / "target_network.keras")
+            except ValueError:
+                # if keras models did not load correctly, try to load h5 models
+                print('  Loading ".keras" models failed. Trying ".h5" models.')
+                self._network = tf.keras.models.load_model(load_path / "network.h5")
+                self._target_network = tf.keras.models.load_model(load_path / "target_network.h5")
         else:
             self._network = self._construct_model(inputs_count, actions_count, layer_widths, learning_rate)
             self._target_network = self._construct_model(inputs_count, actions_count, layer_widths, learning_rate)
@@ -89,3 +95,5 @@ class DoubleQNetwork:
     def save(self, path: Path):
         self._network.save(path / "network.keras")
         self._target_network.save(path / "target_network.keras")
+        self._network.save(path / "network.h5")
+        self._target_network.save(path / "target_network.h5")

@@ -13,4 +13,4 @@ langchain-openai
 tiktoken
 
 # RL
-tensorflow
+tensorflow==2.14.0
