@@ -133,39 +133,50 @@ class QNetworkAdaptation(Adaptation):
         current_damage = simulation.total_damage
         damage = current_damage - self.reward_data["damage"]
 
-        drone_state_consistence = sum(
-            self.reward_state_consistence
-            for old_state, old_target, drone in zip(self.reward_data["drone_states"], self.reward_data["drone_targets"], simulation.drones)
-            if drone.state != DroneState.TERMINATED
-            and old_state == drone.state
-            and old_target == drone.target
-        )
+        drones_state_consistence = 0
+        drones_charging = 0
+        drones_protecting = 0
 
-        drone_charging = sum(
-            self.reward_drone_charging
-            for drone in simulation.drones
-            if drone.state in (DroneState.CHARGING, DroneState.MOVING_TO_CHARGER)
-            and drone.battery < self.reward_drone_charging_battery
-        )
+        for drone in simulation.drones:
+            drones_state_consistence += self.getRewardDroneStateConsistence(drone)
+            drones_charging += self.getRewardDroneCharging(drone)
+            drones_protecting += self.getRewardDroneProtecting(drone)
 
-        drone_protecting = sum(
-            self.reward_drone_protecting
-            for drone in simulation.drones
-            if drone.state in (DroneState.PROTECTING, DroneState.MOVING_TO_FIELD)
-            and drone.battery > self.reward_drone_protecting_battery
-        )
-
-        reward = -damage + drone_state_consistence + drone_charging + drone_protecting
-        print(f"Reward = {reward:.2f} (damage = {-damage}, drone_state_consistence = {drone_state_consistence:.2f}, drone_charging = {drone_charging:.2f}, drone_protecting = {drone_protecting:.2f})")
+        reward = -damage + drones_state_consistence + drones_charging + drones_protecting
+        print(f"Reward = {reward:.2f} (damage = {-damage}, drones_state_consistence = {drones_state_consistence:.2f}, drones_charging = {drones_charging:.2f}, drones_protecting = {drones_protecting:.2f})")
         return reward
+
+    def getRewardDroneStateConsistence(self, drone):
+        old_state = self.reward_data["drone_states"][drone]
+        old_target = self.reward_data["drone_targets"][drone]
+        if (drone.state != DroneState.TERMINATED
+                and old_state == drone.state
+                and old_target == drone.target):
+            return self.reward_state_consistence
+        else:
+            return 0
+
+    def getRewardDroneCharging(self, drone):
+        if (drone.state in (DroneState.CHARGING, DroneState.MOVING_TO_CHARGER)
+                and drone.battery < self.reward_drone_charging_battery):
+            return self.reward_drone_charging
+        else:
+            return 0
+
+    def getRewardDroneProtecting(self, drone):
+        if (drone.state in (DroneState.PROTECTING, DroneState.MOVING_TO_FIELD)
+                and drone.battery > self.reward_drone_protecting_battery):
+            return self.reward_drone_protecting
+        else:
+            return 0
 
     @staticmethod
     def getRewardData(simulation):
         """Get data necessary to compute the reward in the next step."""
         return {
             "damage": simulation.total_damage,
-            "drone_states": [drone.state for drone in simulation.drones],
-            "drone_targets": [drone.target for drone in simulation.drones],
+            "drone_states": {drone: drone.state for drone in simulation.drones},
+            "drone_targets": {drone: drone.target for drone in simulation.drones},
         }
 
     def selectActions(self, simulation, step):
