@@ -2,7 +2,7 @@ name: drones
 adaptation_name: adaptations.openai.OpenAIAdaptation
 adaptation_params:
   llm: gpt-4o-mini-2024-07-18
-  adaptation_steps: 10
+  adapt_every: 10
   prompt_template: prompt_templates.drones.DronesLLMTemplate
   prompt_template_params:
     extra_goal: ""

@@ -49,6 +49,7 @@ class QNetworkAdaptation(Adaptation):
 
     def __init__(self, config: dict,
                  replay_buffer_size=10_000,
+                 adapt_every=1,
                  epsilon=0.1, epsilon_final=None, epsilon_final_steps=None,
                  batch_size=64, train_every=1, target_update_every=1, save_path=None,
                  reward_state_consistence=0,
@@ -71,6 +72,7 @@ class QNetworkAdaptation(Adaptation):
         self.batch_size = batch_size
         self.train_every = train_every
         self.target_update_every = target_update_every
+        self.adapt_every = adapt_every
 
         self.last_state = None
         self.last_action = None
@@ -98,6 +100,9 @@ class QNetworkAdaptation(Adaptation):
 
         # save data for reward computation
         self.reward_data = self.getRewardData(simulation)
+
+        if (step - 1) % self.adapt_every != 0:
+            return
 
         # select actions and perform adaptation
         self.selectActions(simulation, step)

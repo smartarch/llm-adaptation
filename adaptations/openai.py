@@ -14,10 +14,10 @@ if TYPE_CHECKING:
 
 class OpenAIAdaptation(Adaptation):
 
-    def __init__(self, llm: str, adaptation_steps: int, prompt_template: str, prompt_template_params: dict):
+    def __init__(self, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict):
         self.llm = self.create_llm(llm)
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params)
-        self.adaptation_steps = adaptation_steps
+        self.adapt_every = adapt_every
 
     @staticmethod
     def create_llm(model="gpt-4o-mini-2024-07-18"):
@@ -26,7 +26,7 @@ class OpenAIAdaptation(Adaptation):
         return llm
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
-        if step % self.adaptation_steps != 1:
+        if (step - 1) % self.adapt_every != 0:
             return
 
         prompt = self.prompt_template.create_prompt(simulation)
