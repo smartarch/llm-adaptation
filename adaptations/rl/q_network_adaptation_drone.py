@@ -2,6 +2,8 @@ import numpy as np
 
 from adaptations.rl.q_network_adaptation import QNetworkAdaptation
 from adaptations.rl.replay_buffer import Transition
+from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, getRewardDroneProtecting, \
+    getStateDrone, getStateField, performDroneAction, epsilonGreedy, DroneActions
 from components.drone import DroneState
 
 
@@ -9,8 +11,8 @@ class QNetworkAdaptationDrone(QNetworkAdaptation):
 
     def getState(self, simulation, drone):
         return np.concatenate([
-            self.getStateDrone(drone, simulation),
-            *[self.getStateField(field) for field in simulation.fields],
+            getStateDrone(drone, simulation),
+            *[getStateField(field) for field in simulation.fields],
         ])
 
     @staticmethod
@@ -32,20 +34,20 @@ class QNetworkAdaptationDrone(QNetworkAdaptation):
             q_values = self.q_network.predict_one(state)
             self.last_state[drone] = state
 
-            action = self.selectDroneAction(q_values, step)
-            self.performDroneAction(drone, action, simulation)
+            action = epsilonGreedy(q_values, self.epsilon, step)
+            performDroneAction(drone, action, simulation)
             self.last_action[drone] = action
 
     def actionSize(self, config):
-        return self.DroneActions
+        return DroneActions
 
     def getReward(self, simulation, drone):
         current_damage = simulation.total_damage
         damage = current_damage - self.reward_data["damage"]
 
-        drone_state_consistence = self.getRewardDroneStateConsistence(drone)
-        drone_charging = self.getRewardDroneCharging(drone)
-        drone_protecting = self.getRewardDroneProtecting(drone)
+        drone_state_consistence = getRewardDroneStateConsistence(self.reward_data, self.reward_shaping, drone)
+        drone_charging = getRewardDroneCharging(self.reward_shaping, drone)
+        drone_protecting = getRewardDroneProtecting(self.reward_shaping, drone)
 
         reward = -damage + drone_state_consistence + drone_charging + drone_protecting
         print(f"Reward = {reward:.2f} (damage = {-damage}, drone_state_consistence = {drone_state_consistence:.2f}, drones_charging = {drone_charging:.2f}, drone_protecting = {drone_protecting:.2f})")

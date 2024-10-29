@@ -13,9 +13,12 @@ adaptation_params:
   train_every: 1
   target_update_every: 1
   save_path: rl_models/q_network_drone_reward_shaping
-  reward_state_consistence: 0.8
-  reward_drone_charging: 0.4
-  reward_drone_charging_battery: 0.25
-  reward_drone_protecting: 0.4
-  reward_drone_protecting_battery: 0.5
+  reward_shaping:
+    reward_state_consistence: 1
+    reward_drone_charging: 2
+    reward_drone_moving_to_charger: 0.4
+    reward_drone_charging_battery: 0.25
+    reward_drone_protecting: 1
+    reward_drone_moving_to_field: 0.2
+    reward_drone_protecting_battery: 0.5
   config: true
