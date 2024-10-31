@@ -24,7 +24,7 @@ class PPOAdaptation(Adaptation):
                  adapt_every=1,
                  batch_size=64, epochs=5, save_path=None,
                  gamma=0.97, trace_lambda=0.95,
-                 reward_shaping=None,
+                 reward_shaping=None, drone_terminated_reward=0,
                  **ppo_network_args):
 
         self.network = PPONetwork(self.stateSize(config), DroneActions, **ppo_network_args)
@@ -40,6 +40,7 @@ class PPOAdaptation(Adaptation):
         self.epochs = epochs
         self.gamma = gamma
         self.trace_lambda = trace_lambda
+        self.drone_terminated_reward = drone_terminated_reward
 
         # Collect experience (list of steps for each drone)
         self.states = defaultdict(list)
@@ -155,14 +156,20 @@ class PPOAdaptation(Adaptation):
         print(f"Training metrics: ", end="")
         for metric in history.history:
             print(f"{metric}: {history.history[metric][-1]:.2f}, ", end="")
-        # TODO: save metrics to a file to visualize them
         print()
+        with open(self.save_path / "ppo_training.csv", "a") as metrics_file:
+            if metrics_file.tell() == 0:  # file is newly created
+                header = ["epoch", *history.history.keys()]
+                metrics_file.write(",".join(header) + "\n")
+            for epoch, metrics in enumerate(zip(*history.history.values()), start=1):
+                row = [str(epoch)] + [str(m) for m in metrics]
+                metrics_file.write(",".join(row) + "\n")
 
     def end(self, simulation):
         # save the last reward (we also need to add reward to terminated drones for their last action)
         self.addTransition(simulation)
         for drone in terminatedDrones(simulation):
-            self.rewards[drone].append(0)  # TODO: this should probably be a negative number instead of 0
+            self.rewards[drone].append(self.drone_terminated_reward)
         # add values for next state (0 for terminated drones)
         state = self.getState(simulation)
         if len(state) > 0:
@@ -172,10 +179,11 @@ class PPOAdaptation(Adaptation):
         for drone in terminatedDrones(simulation):
             self.values[drone].append(0)
 
+        self.save_path.mkdir(parents=True, exist_ok=True)
+
         self.train(simulation)
 
         print("Saving PPO network... ", end="")
-        self.save_path.mkdir(parents=True, exist_ok=True)
         self.network.save_weights(self.save_path / "ppo_network.weights.h5")
         print("Done")
 

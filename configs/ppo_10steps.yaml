@@ -9,6 +9,7 @@ adaptation_params:
   epochs: 5
   gamma: 0.97
   trace_lambda: 0.95
+  drone_terminated_reward: -10
 
   common_layer_widths: [100]
   policy_layer_widths: [100]
