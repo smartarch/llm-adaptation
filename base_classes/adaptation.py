@@ -13,7 +13,7 @@ class Adaptation(abc.ABC):
         """Called before every step of the simulation."""
         pass
 
-    def end(self):
+    def end(self, simulation: "SmartFarmSimulation"):
         """Called when the simulation ends."""
         pass
 

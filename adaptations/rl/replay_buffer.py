@@ -1,5 +1,6 @@
 """
-Replay buffer by Milan Straka (NPFL122 course)
+Replay buffer.
+Developed by Milan Straka for the NPFL122 course at MFF CUNI.
 
 We use a custom implementation instead of `collections.deque`, which has
 linear complexity of indexing (it is a two-way linked list). The following

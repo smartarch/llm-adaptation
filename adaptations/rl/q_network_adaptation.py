@@ -132,7 +132,7 @@ class QNetworkAdaptation(Adaptation):
         self.q_network.train(batch)
         print("Done")
 
-    def end(self):
+    def end(self, simulation):
         print("Saving Q-network... ", end="")
         self.save_path.mkdir(parents=True, exist_ok=True)
         self.q_network.save(self.save_path)

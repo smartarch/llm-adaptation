@@ -46,7 +46,7 @@ print("\nRunning simulation...\n")
 simulation.run_simulation(300)
 print("\nSimulation done")
 
-adaptation.end()
+adaptation.end(simulation)
 
 print("\nStatistics:")
 for label, value in zip(stats.global_stats(None, header=True), stats.global_stats(None)):
