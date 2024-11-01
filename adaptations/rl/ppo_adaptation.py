@@ -107,7 +107,8 @@ class PPOAdaptation(Adaptation):
         if (step - 1) % self.adapt_every == 0:
             action = [np.random.choice(self.Actions, p=p) for p in policy]
         else:
-            action = self.actions[-1]  # repeat last action
+            # repeat last action
+            action = [self.actions[drone][-1] for drone in notTerminatedDrones(simulation)]
         action_prob = [p[a] for p, a in zip(policy, action)]
 
         for drone, a, ap, v, s in zip(notTerminatedDrones(simulation), action, action_prob, value, state):

@@ -1,0 +1,4 @@
+name.append: _10steps
+adaptation_params:
+  adapt_every: 10
+  save_path.append: _10steps
