@@ -40,8 +40,8 @@ class Field(Component):
         from components.drone import Drone
         self.protectingDrones: set[Drone] = set()
         self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 1)
-        self.protectionPlaces: dict[Point2D, Optional[Drone]] = \
-            {place: None for place in self.computeProtectionPlaces(Drone.Radius - 1)}
+        self.protectionPlaces: dict[Point2D, list[Drone]] = \
+            {place: [] for place in self.computeProtectionPlaces(Drone.Radius - 1)}
 
     def patrollingProtection(self) -> bool:
         return self.simulation.config.get("patrolling", False)
@@ -79,10 +79,11 @@ class Field(Component):
         if self.patrollingProtection():
             places = self.patrollingPlaces
         else:
-            places = [p for p in self.protectionPlaces if self.protectionPlaces[p] is None]
-            if len(places) == 0:
+            # find the place that needs protection (unprotected or with the least number of drones)
+            leastDrones = len(min(self.protectionPlaces.values(), key=len))
+            if leastDrones != 0:
                 print(f"{drone.id} assigned to a fully protected {self.id}")
-                places = self.protectionPlaces
+            places = [p for p in self.protectionPlaces if len(self.protectionPlaces[p]) == leastDrones]
 
         return min(places, key=lambda p: p.distance(drone.location))
 
@@ -93,16 +94,24 @@ class Field(Component):
             except ValueError:
                 return self.closestPlaceToDrone(drone)
         else:
+            # primary protecting drones (first in the list) stay at the same place
             for place in self.protectionPlaces:
-                if self.protectionPlaces[place] == drone:
+                if len(self.protectionPlaces[place]) > 0 and self.protectionPlaces[place][0] == drone:
                     return place
+            # remove drone from all other places
+            for place in self.protectionPlaces:
+                if drone in self.protectionPlaces[place]:
+                    self.protectionPlaces[place].remove(drone)
+            # find the closest and least protected place
             place = self.closestPlaceToDrone(drone)
-            self.protectionPlaces[place] = drone
+            self.protectionPlaces[place].append(drone)
             return place
 
     def unassignDrone(self, drone: "Drone"):
-        if drone.location in self.protectionPlaces:
-            self.protectionPlaces[drone.location] = None
+        # remove drone from all places
+        for place in self.protectionPlaces:
+            if drone in self.protectionPlaces[place]:
+                self.protectionPlaces[place].remove(drone)
 
     def assignNextPatrollingPlace(self, drone: "Drone"):
         currentPlaceIndex = self.patrollingPlaces.index(drone.location)
