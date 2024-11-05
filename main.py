@@ -19,7 +19,6 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--animation", "-a", default=False, action="store_true")
-parser.add_argument("--log_dir", "-l", type=str, default="logs")
 parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.", default=["configs/config.yaml", "configs/fake.yaml"])
 args = parser.parse_args()
 
@@ -28,7 +27,8 @@ args = parser.parse_args()
 
 config = read_configs(args.config_files)
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
-sys.stdout = Logger(f"{args.log_dir}/{name}")
+log_dir = config["log_dir"]
+sys.stdout = Logger(f"{log_dir}/{name}")
 
 
 adaptation = import_adaptation(config)
@@ -38,7 +38,7 @@ if args.animation:
     visualizer = Visualizer(simulation)
     simulation.add_visualizer(visualizer)
     visualizer.drawFields()
-stats = Stats(simulation, f"{args.log_dir}/{name}.csv")
+stats = Stats(simulation, f"{log_dir}/{name}.csv")
 simulation.add_stats(stats)
 stats.write_header()
 
@@ -54,12 +54,12 @@ for label, value in zip(stats.global_stats(None, header=True), stats.global_stat
 stats.close_file()
 
 print("\nSaving plot... ", end="")
-draw_plots(f"{args.log_dir}/{name}")
+draw_plots(f"{log_dir}/{name}")
 print("Done")
 
 if args.animation:
     print("\nSaving animation... ", end="")
     os.makedirs("animations", exist_ok=True)
     # noinspection PyUnboundLocalVariable
-    visualizer.createAnimation(f"{args.log_dir}/{name}.gif")
+    visualizer.createAnimation(f"{log_dir}/{name}.gif")
     print("Done")

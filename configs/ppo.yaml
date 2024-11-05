@@ -1,4 +1,5 @@
 name: ppo
+log_dir.append: /ppo
 adaptation_name: adaptations.rl.ppo_adaptation.PPOAdaptation
 adaptation_params:
   adapt_every: 1
@@ -11,9 +12,9 @@ adaptation_params:
   trace_lambda: 0.95
   drone_terminated_reward: -10
 
-  common_layer_widths: [100]
-  policy_layer_widths: [100]
-  value_layer_widths: [100]
+  common_layer_widths: []
+  policy_layer_widths: [100, 100]
+  value_layer_widths: [100, 100]
   learning_rate: 0.001
   entropy_regularization: 0.1
   clip_epsilon: 0.2

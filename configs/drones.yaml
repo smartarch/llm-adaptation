@@ -1,4 +1,5 @@
 name: drones
+log_dir.append: /drones
 adaptation_name: adaptations.openai.OpenAIAdaptation
 adaptation_params:
   llm: gpt-4o-mini-2024-07-18

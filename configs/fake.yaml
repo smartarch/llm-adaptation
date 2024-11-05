@@ -1,3 +1,4 @@
 name: fake
+log_dir.append: /fake
 adaptation_name: adaptations.fake.FakeAdaptation
 adaptation_params: {}

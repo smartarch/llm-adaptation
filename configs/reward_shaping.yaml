@@ -1,4 +1,5 @@
 name.append: _rs
+log_dir.append: _rs
 adaptation_params:
   save_path.append: _rs
 
