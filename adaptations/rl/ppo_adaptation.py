@@ -111,6 +111,8 @@ class PPOAdaptation(Adaptation):
             action = [self.actions[drone][-1] for drone in notTerminatedDrones(simulation)]
         action_prob = [p[a] for p, a in zip(policy, action)]
 
+        print(f"Values: {[f'{v:.2g}' for v in value]}, action probs: {[f'{ap:.2g}' for ap in action_prob]}")
+
         for drone, a, ap, v, s in zip(notTerminatedDrones(simulation), action, action_prob, value, state):
             performDroneAction(drone, a, simulation)
 

@@ -7,7 +7,7 @@ class PPONetwork(tf.keras.Model):
     """Network for the PPO algorithm. Defined as a Keras Model to use the Keras training API automatically."""
 
     def __init__(self, inputs_count, actions_count, *,
-                 common_layer_widths=[100], policy_layer_widths=[100], value_layer_widths=[100],
+                 common_layer_widths=[], policy_layer_widths=[100, 100], value_layer_widths=[100, 100],
                  learning_rate=0.001, entropy_regularization=0.1, clip_epsilon=0.2) -> None:
 
         self.entropy_regularization = entropy_regularization

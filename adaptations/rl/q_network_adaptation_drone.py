@@ -34,6 +34,8 @@ class QNetworkAdaptationDrone(QNetworkAdaptation):
             q_values = self.q_network.predict_one(state)
             self.last_state[drone] = state
 
+            print(f"Q-values: {[f'{q:.2g}' for q in q_values]}")
+
             action = epsilonGreedy(q_values, self.epsilon, step)
             performDroneAction(drone, action, simulation)
             self.last_action[drone] = action
