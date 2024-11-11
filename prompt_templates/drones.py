@@ -34,18 +34,21 @@ class DronesLLMTemplate(PromptTemplate):
         drone_rows = answer.split("\n")
 
         for row in drone_rows:
-            drone_id, group = row.split(":")
-            drone = simulation.dronesDict[drone_id.strip()]
-            if group.strip() in ["idle", "1"]:  # idle
-                drone.assignTarget(None)
-            elif group.strip() in ["charging", "2"]:  # charging
-                drone.assignTarget(simulation.charger)
-            elif group.strip().startswith("protecting"):  # protecting
-                field_id = group.strip().split()[1]
-                field_idx = int(field_id[-1]) - 1
-                drone.assignTarget(simulation.fields[field_idx])
-            else:
-                raise print(f"Unknown group: {group}")
+            try:
+                drone_id, group = row.split(":")
+                drone = simulation.dronesDict[drone_id.strip()]
+                if group.strip() in ["idle", "1"]:  # idle
+                    drone.assignTarget(None)
+                elif group.strip() in ["charging", "2"]:  # charging
+                    drone.assignTarget(simulation.charger)
+                elif group.strip().startswith("protecting"):  # protecting
+                    field_id = group.strip().split()[1]
+                    field_idx = int(field_id[-1]) - 1
+                    drone.assignTarget(simulation.fields[field_idx])
+                else:
+                    print(f"Unknown group: {group}")
+            except ValueError as error:
+                print(f"Invalid row ({error}): {repr(row)}")
 
     @staticmethod
     def extract_drone_list(line, simulation) -> "list[Drone]":

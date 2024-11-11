@@ -32,6 +32,7 @@ class PromptTemplate(abc.ABC):
         _, _, final_answer = case_insensitive_partition(llm_answer, "Final answer:")
         final_answer = final_answer.lstrip("*")  # remove bold text from "**Final answer:** no"
         final_answer = final_answer.lstrip()     # remove newline trailing after "Final answer:"
+        final_answer = final_answer.rstrip()     # remove trailing empty lines
         return final_answer
 
     @staticmethod

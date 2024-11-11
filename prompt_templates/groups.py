@@ -33,6 +33,7 @@ class GroupsLLMTemplate(PromptTemplate):
         answer = self.extract_answer(response)
         groups = answer.split("\n")
 
+        # TODO: improve error handling
         for drone in self.extract_drone_list(groups[0], simulation):  # idle
             drone.assignTarget(None)
         for drone in self.extract_drone_list(groups[1], simulation):  # charging
