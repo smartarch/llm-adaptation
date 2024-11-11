@@ -6,6 +6,7 @@ import tiktoken
 
 from components.drone import Drone
 from components.field import Field
+from utils import case_insensitive_partition
 
 if TYPE_CHECKING:
     from simulation import SmartFarmSimulation
@@ -23,7 +24,7 @@ class PromptTemplate(abc.ABC):
 
     @staticmethod
     def extract_answer(llm_answer: str) -> str:
-        _, _, final_answer = llm_answer.partition("Final answer:")
+        _, _, final_answer = case_insensitive_partition(llm_answer, "Final answer:")
         final_answer = final_answer.lstrip("*")  # remove bold text from "**Final answer:** no"
         final_answer = final_answer.lstrip()     # remove newline trailing after "Final answer:"
         return final_answer
@@ -40,7 +41,9 @@ class PromptTemplate(abc.ABC):
               - top: {field.top}
               - right: {field.right}
               - bottom: {field.bottom}
-              - threat_level: {field.threat_level():.2f}
+              - threat level: {field.threat_level():.2f}
+              - protecting: {len(field.protectingDrones)} drones
+              - for full protection: {field.necessary_drones_for_full_protection} drones
             """
 
     @staticmethod
@@ -50,6 +53,7 @@ class PromptTemplate(abc.ABC):
               - state: {drone.state}{target_field}
               - battery: {drone.battery:.2f}
               - location: {drone.location}
+              - battery necessary to reach charger: {drone.energyToFlyToCharger():.2f}
             """
 
 

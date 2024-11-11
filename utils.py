@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+import re
 
 import yaml
 
@@ -49,3 +50,22 @@ class Logger:
     def flush(self):
         self.stdout.flush()
         self.file.flush()
+
+
+def case_insensitive_partition(string: str, separator: str):
+    # Escape special characters in the separator
+    escaped_separator = re.escape(separator)
+
+    # Search for the separator in a case-insensitive manner
+    match = re.search(escaped_separator, string, re.IGNORECASE)
+
+    if match:
+        # If found, partition the string
+        start = match.start()
+        end = match.end()
+
+        # Return the three parts: before, separator, and after
+        return string[:start], string[start:end], string[end:]
+    else:
+        # If not found, return the entire string and two empty strings
+        return string, '', ''

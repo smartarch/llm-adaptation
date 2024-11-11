@@ -44,7 +44,7 @@ class Point2D:
         return hash((self.x, self.y))
 
     def __str__(self):
-        return f"{self.x:.2f}, {self.y:.2f}"
+        return f"{self.x:.0f}, {self.y:.0f}"
 
     def __repr__(self):
         return f"Point2D({self.x:.2f}, {self.y:.2f})"

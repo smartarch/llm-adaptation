@@ -49,7 +49,7 @@ def getStateDrone(drone: "Drone", simulation):
 
 
 def getStateField(field: "Field"):
-    return [field.threat_level(), field.drones_for_full_protection() / len(field.protectionPlaces)]
+    return [field.threat_level(), field.remaining_drones_for_full_protection / len(field.protectionPlaces)]
 
 
 # action

@@ -151,3 +151,8 @@ class Drone(MovingComponent2D):
 
     def __repr__(self):
         return f"{self.id}({str(self.state)}, bat={self.battery:.3f})"
+
+    def energyToFlyToCharger(self) -> float:
+        distance = self.location.distance(self.simulation.charger.location)
+        time = distance / self.speed
+        return Drone.MovingEnergyConsumption * time
