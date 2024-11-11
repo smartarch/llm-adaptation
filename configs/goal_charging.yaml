@@ -1,0 +1,5 @@
+name.append: _charging
+log_dir.append: _charging
+adaptation_params:
+  prompt_template_params:
+    extra_goal: Drones with 25% battery or less should be assigned to the "charging" group to reach the charger before running out of battery.

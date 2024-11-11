@@ -14,6 +14,11 @@ if TYPE_CHECKING:
 
 class PromptTemplate(abc.ABC):
 
+    def __init__(self, extra_goal: str, field_attributes: dict, drone_attributes: dict):
+        self.extra_goal = extra_goal
+        self.field_attributes_config = field_attributes
+        self.drone_attributes_config = drone_attributes
+
     @abc.abstractmethod
     def create_prompt(self, simulation: "SmartFarmSimulation") -> str:
         return ""
@@ -34,27 +39,30 @@ class PromptTemplate(abc.ABC):
         encoding = tiktoken.encoding_for_model("gpt-4")
         return len(encoding.encode(text))
 
-    @staticmethod
-    def field_attributes(field: "Field") -> str:
-        return f"""- {field.id}
+    def field_attributes(self, field: "Field") -> str:
+        attributes = f"""- {field.id}
               - left: {field.left}
               - top: {field.top}
               - right: {field.right}
-              - bottom: {field.bottom}
-              - threat level: {field.threat_level():.2f}
-              - protecting: {len(field.protectingDrones)} drones
-              - for full protection: {field.necessary_drones_for_full_protection} drones
-            """
+              - bottom: {field.bottom}\n"""
+        if self.field_attributes_config["threat_level"]:
+            attributes += f"              - threat level: {field.threat_level():.2f}\n"
+        if self.field_attributes_config["protecting_drones"]:
+            attributes += f"              - protecting: {len(field.protectingDrones)} drones\n"
+        if self.field_attributes_config["necessary_drones_for_full_protection"]:
+            attributes += f"              - for full protection: {field.necessary_drones_for_full_protection} drones\n"
+        return attributes + "            "  # the empty spaces are necessary for a correct function of textwrap.dedent
 
-    @staticmethod
-    def drone_attributes(drone: "Drone") -> str:
+    def drone_attributes(self, drone: "Drone") -> str:
         target_field = f" ({drone.target.id})" if isinstance(drone.target, Field) else ""
-        return f"""- {drone.id}
+        attributes = f"""- {drone.id}
               - state: {drone.state}{target_field}
               - battery: {drone.battery:.2f}
-              - location: {drone.location}
-              - battery necessary to reach charger: {drone.energyToFlyToCharger():.2f}
-            """
+              - location: {drone.location}\n"""
+        if self.drone_attributes_config["energy_to_fly_to_charger"]:
+            attributes += f"              - battery necessary to reach charger: {drone.energyToFlyToCharger():.2f}\n"
+
+        return attributes + "            "  # the empty spaces are necessary for a correct function of textwrap.dedent
 
 
 def import_prompt_template(template_name: str, template_params: dict) -> PromptTemplate:

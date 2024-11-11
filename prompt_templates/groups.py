@@ -7,9 +7,6 @@ from components.drone import Drone, DroneState
 
 class GroupsLLMTemplate(PromptTemplate):
 
-    def __init__(self, extra_goal: str):
-        self.extra_goal = extra_goal
-
     def create_prompt(self, simulation) -> str:
         return textwrap.dedent(f"""\
             You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.

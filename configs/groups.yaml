@@ -7,3 +7,9 @@ adaptation_params:
   prompt_template: prompt_templates.groups.GroupsLLMTemplate
   prompt_template_params:
     extra_goal: ""
+    field_attributes:
+      threat_level: true
+      protecting_drones: true
+      necessary_drones_for_full_protection: true
+    drone_attributes:
+      energy_to_fly_to_charger: false
