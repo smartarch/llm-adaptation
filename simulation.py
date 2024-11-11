@@ -4,7 +4,7 @@ from base_classes.components import Component
 from base_classes.components2d import Point2D
 from components.bird import Bird
 from components.charger import Charger
-from components.drone import Drone
+from components.drone import Drone, DroneState
 from components.field import Field
 
 if TYPE_CHECKING:
@@ -61,3 +61,11 @@ class SmartFarmSimulation:
 
     def add_stats(self, stats: "Stats"):
         self.stats = stats
+
+
+def notTerminatedDrones(simulation):
+    return filter(lambda d: d.state != DroneState.TERMINATED, simulation.drones)
+
+
+def terminatedDrones(simulation):
+    return filter(lambda d: d.state == DroneState.TERMINATED, simulation.drones)

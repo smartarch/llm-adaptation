@@ -10,9 +10,9 @@ from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDr
     initializeRewardData
 from base_classes.adaptation import Adaptation
 from components.drone import DroneState
+from simulation import SmartFarmSimulation, notTerminatedDrones, terminatedDrones
 
 if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
     from components.drone import Drone
 
 
@@ -189,14 +189,6 @@ class PPOAdaptation(Adaptation):
         print("Saving PPO network... ", end="")
         self.network.save_weights(self.save_path / "ppo_network.weights.h5")
         print("Done")
-
-
-def notTerminatedDrones(simulation):
-    return filter(lambda d: d.state != DroneState.TERMINATED, simulation.drones)
-
-
-def terminatedDrones(simulation):
-    return filter(lambda d: d.state == DroneState.TERMINATED, simulation.drones)
 
 
 def concatenateDict(data: dict["Drone", list[float | np.ndarray]]):

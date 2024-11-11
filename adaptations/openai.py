@@ -7,9 +7,7 @@ from langchain_openai import ChatOpenAI
 from base_classes.adaptation import Adaptation
 from base_classes.llm_template import import_prompt_template
 from helpers import print_prompt, print_response
-
-if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
+from simulation import SmartFarmSimulation, notTerminatedDrones
 
 
 class OpenAIAdaptation(Adaptation):
@@ -27,6 +25,9 @@ class OpenAIAdaptation(Adaptation):
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
         if (step - 1) % self.adapt_every != 0:
+            return
+
+        if not any(notTerminatedDrones(simulation)):  # no drones to adapt
             return
 
         prompt = self.prompt_template.create_prompt(simulation)
