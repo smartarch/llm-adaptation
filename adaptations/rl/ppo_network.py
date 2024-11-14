@@ -43,6 +43,7 @@ class PPONetwork(tf.keras.Model):
         action_probs = targets["action_probs"]
         advantages = targets["advantages"]
         returns = targets["returns"]
+        action_probs = tf.clip_by_value(action_probs, 1e-10, 1)  # prevent NaN (from division by almost 0)
 
         with tf.GradientTape() as tape:
             # Compute the policy and the value function
