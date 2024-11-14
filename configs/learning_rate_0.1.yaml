@@ -1,0 +1,5 @@
+name.append: _lr1
+log_dir.append: _lr1
+adaptation_params:
+  save_path.append: _lr1
+  learning_rate: 0.1
