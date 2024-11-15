@@ -1,0 +1,4 @@
+name.append: _history
+log_dir.append: _history
+adaptation_params:
+  message_history: true  # note that all the previous messages are kept in the history, so the input gets long, but the price is still reasonable -> the total number of input tokens is approx 500k which corresponds to roughly $0.08 for GPT-4o-mini

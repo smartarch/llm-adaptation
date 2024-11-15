@@ -1,7 +1,7 @@
 import abc
 from typing import TYPE_CHECKING
 
-from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 
 from base_classes.adaptation import Adaptation
@@ -12,10 +12,12 @@ from simulation import SmartFarmSimulation, notTerminatedDrones
 
 class OpenAIAdaptation(Adaptation):
 
-    def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict):
+    def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict, message_history=False):
         self.llm = self.create_llm(llm)
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)
         self.adapt_every = adapt_every
+
+        self.message_history = [] if message_history else None
 
     @staticmethod
     def create_llm(model="gpt-4o-mini-2024-07-18"):
@@ -32,6 +34,12 @@ class OpenAIAdaptation(Adaptation):
 
         prompt = self.prompt_template.create_prompt(simulation)
         print_prompt(prompt)
-        response = self.llm.invoke(prompt)
+        if self.message_history is not None:
+            self.message_history.append(HumanMessage(prompt))
+            response = self.llm.invoke(self.message_history)
+            self.message_history.append(response)
+        else:
+            response = self.llm.invoke(prompt)
+
         print_response(response.content)
         self.prompt_template.process_response(response.content, simulation)
