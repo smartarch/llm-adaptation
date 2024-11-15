@@ -1,0 +1,3 @@
+adaptation_params:
+  save_path: rl_models/no_battery
+  drone_state_battery: false

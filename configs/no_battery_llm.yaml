@@ -2,4 +2,3 @@ adaptation_params:
   prompt_template_params:
     drone_attributes:
       battery: false
-    charging: false

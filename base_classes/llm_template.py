@@ -15,11 +15,11 @@ if TYPE_CHECKING:
 
 class PromptTemplate(abc.ABC):
 
-    def __init__(self, extra_goal: str, field_attributes: dict, drone_attributes: dict, charging=True):
+    def __init__(self, extra_goal: str, field_attributes: dict, drone_attributes: dict, config: dict):
         self.extra_goal = extra_goal
         self.field_attributes_config = field_attributes
         self.drone_attributes_config = drone_attributes
-        self.charging = charging
+        self.charging = ("no_charging" not in config or not config["no_charging"])
 
     @abc.abstractmethod
     def create_prompt(self, simulation: "SmartFarmSimulation") -> str:
@@ -109,7 +109,7 @@ class BasicPromptTemplate(PromptTemplate, abc.ABC):
         return groups
 
 
-def import_prompt_template(template_name: str, template_params: dict) -> PromptTemplate:
+def import_prompt_template(template_name: str, template_params: dict, config: dict) -> PromptTemplate:
     assert template_name.startswith("prompt_templates.")
 
     template_module, template_class = template_name.rsplit(".", 1)
@@ -117,4 +117,4 @@ def import_prompt_template(template_name: str, template_params: dict) -> PromptT
     module = importlib.import_module(template_module)
     clazz = getattr(module, template_class)
 
-    return clazz(**template_params)
+    return clazz(**template_params, config=config)

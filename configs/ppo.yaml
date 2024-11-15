@@ -3,7 +3,7 @@ log_dir.append: /ppo
 adaptation_name: adaptations.rl.ppo_adaptation.PPOAdaptation
 adaptation_params:
   adapt_every: 1
-  save_path: rl_models/ppo
+  save_path.append: /ppo
   config: true
 
   batch_size: 64

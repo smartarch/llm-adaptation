@@ -3,7 +3,7 @@ import numpy as np
 from adaptations.rl.q_network_adaptation import QNetworkAdaptation
 from adaptations.rl.replay_buffer import Transition
 from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, getRewardDroneProtecting, \
-    getStateDrone, getStateField, performDroneAction, epsilonGreedy, DroneActions
+    getStateDrone, getStateField, performDroneAction, epsilonGreedy
 from components.drone import DroneState
 
 
@@ -11,15 +11,14 @@ class QNetworkAdaptationDrone(QNetworkAdaptation):
 
     def getState(self, simulation, drone):
         return np.concatenate([
-            getStateDrone(drone, simulation),
+            getStateDrone(drone, simulation, self.drone_state_battery),
             *[getStateField(field) for field in simulation.fields],
         ])
 
-    @staticmethod
-    def stateSize(config):
-        # Drone: state (one-hot), battery, location (x, y), target field (one-hot)
+    def stateSize(self, config):
+        # Drone: state (one-hot), battery (optional), location (x, y), target field (one-hot)
         # Field: threat level, drone for full protection
-        return len(DroneState) + 1 + 2 + len(config["fields"]) \
+        return len(DroneState) + (1 if self.drone_state_battery else 0) + 2 + len(config["fields"]) \
             + 2 * len(config["fields"])
 
     def selectActions(self, simulation, step):
@@ -37,11 +36,11 @@ class QNetworkAdaptationDrone(QNetworkAdaptation):
             print(f"Q-values: {[f'{q:.2g}' for q in q_values]}")
 
             action = epsilonGreedy(q_values, self.epsilon, step)
-            performDroneAction(drone, action, simulation)
+            performDroneAction(drone, action, simulation, self.charging)
             self.last_action[drone] = action
 
     def actionSize(self, config):
-        return DroneActions
+        return self.droneActionsCount
 
     def getReward(self, simulation, drone):
         current_damage = simulation.total_damage

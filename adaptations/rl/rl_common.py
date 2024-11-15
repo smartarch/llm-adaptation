@@ -38,14 +38,17 @@ class EpsilonSchedule:
 # state
 
 
-def getStateDrone(drone: "Drone", simulation):
+def getStateDrone(drone: "Drone", simulation, include_battery=True):
     """drone.state (one-hot), drone.battery, drone.location (x, y)"""
     drone_state = np.zeros(len(DroneState))
     drone_state[drone.state.value] = 1
     x = drone.location.x / simulation.mapWidth
     y = drone.location.y / simulation.mapHeight
     target_field = [1 if drone.target == field else 0 for field in simulation.fields]
-    return [*drone_state, drone.battery, x, y, *target_field]
+    if include_battery:
+        return [*drone_state, drone.battery, x, y, *target_field]
+    else:
+        return [*drone_state, x, y, *target_field]
 
 
 def getStateField(field: "Field"):
@@ -54,7 +57,13 @@ def getStateField(field: "Field"):
 
 # action
 
-DroneActions = 5
+
+def droneActionsCount(config):
+    actionCount = 1  # idle
+    if "no_charging" not in config or not config["no_charging"]:
+        actionCount += 1  # charging
+    actionCount += len(config["fields"])  # protect
+    return actionCount
 
 
 def epsilonGreedy(q_values, epsilon: EpsilonSchedule, step):
@@ -65,7 +74,9 @@ def epsilonGreedy(q_values, epsilon: EpsilonSchedule, step):
     return action
 
 
-def performDroneAction(drone, action, simulation):
+def performDroneAction(drone, action, simulation, charging=True):
+    if not charging and action >= 1:
+        action += 1  # skip the charging action and move to protecting
     if action == 0:  # idle
         drone.assignTarget(None)
     elif action == 1:  # charging

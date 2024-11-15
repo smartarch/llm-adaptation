@@ -2,6 +2,7 @@ name: groups
 log_dir.append: /groups
 adaptation_name: adaptations.openai.OpenAIAdaptation
 adaptation_params:
+  config: true
   llm: gpt-4o-mini-2024-07-18
   adapt_every: 10
   prompt_template: prompt_templates.groups.GroupsLLMTemplate

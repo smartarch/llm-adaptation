@@ -12,9 +12,9 @@ from simulation import SmartFarmSimulation, notTerminatedDrones
 
 class OpenAIAdaptation(Adaptation):
 
-    def __init__(self, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict):
+    def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict):
         self.llm = self.create_llm(llm)
-        self.prompt_template = import_prompt_template(prompt_template, prompt_template_params)
+        self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)
         self.adapt_every = adapt_every
 
     @staticmethod

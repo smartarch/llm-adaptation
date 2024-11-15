@@ -6,8 +6,8 @@ import numpy as np
 
 from adaptations.rl.ppo_network import PPONetwork
 from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, \
-    getRewardDroneProtecting, performDroneAction, getStateDrone, getStateField, getRewardData, DroneActions, \
-    initializeRewardData
+    getRewardDroneProtecting, performDroneAction, getStateDrone, getStateField, getRewardData, \
+    initializeRewardData, droneActionsCount
 from base_classes.adaptation import Adaptation
 from components.drone import DroneState
 from simulation import SmartFarmSimulation, notTerminatedDrones, terminatedDrones
@@ -18,16 +18,19 @@ if TYPE_CHECKING:
 
 class PPOAdaptation(Adaptation):
 
-    Actions = np.arange(DroneActions)
-
     def __init__(self, config: dict,
                  adapt_every=1,
                  batch_size=64, epochs=5, save_path=None,
                  gamma=0.97, trace_lambda=0.95,
                  reward_shaping=None, drone_terminated_reward=0,
+                 drone_state_battery=True,
                  **ppo_network_args):
 
-        self.network = PPONetwork(self.stateSize(config), DroneActions, **ppo_network_args)
+        self.drone_state_battery = drone_state_battery
+        self.charging = ("no_charging" not in config or not config["no_charging"])
+        self.Actions = np.arange(droneActionsCount(config))
+
+        self.network = PPONetwork(self.stateSize(config), droneActionsCount(config), **ppo_network_args)
         self.save_path = Path(save_path)
         if self.save_path.exists():  # load saved network
             print("Loading PPO network from", self.save_path)
@@ -69,18 +72,16 @@ class PPOAdaptation(Adaptation):
              for drone in notTerminatedDrones(simulation)]
         )
 
-    @staticmethod
-    def getStateDrone(simulation, drone):
+    def getStateDrone(self, simulation, drone):
         return np.concatenate([
-            getStateDrone(drone, simulation),
+            getStateDrone(drone, simulation, self.drone_state_battery),
             *[getStateField(field) for field in simulation.fields],
         ])
 
-    @staticmethod
-    def stateSize(config):
-        # Drone: state (one-hot), battery, location (x, y), target field (one-hot)
+    def stateSize(self, config):
+        # Drone: state (one-hot), battery (optional), location (x, y), target field (one-hot)
         # Field: threat level, drone for full protection
-        return len(DroneState) + 1 + 2 + len(config["fields"]) \
+        return len(DroneState) + (1 if self.drone_state_battery else 0) + 2 + len(config["fields"]) \
             + 2 * len(config["fields"])
 
     def getReward(self, simulation, drone):
@@ -114,7 +115,7 @@ class PPOAdaptation(Adaptation):
         print(f"Values: {[f'{v:.2g}' for v in value]}, action probs: {[f'{ap:.2g}' for ap in action_prob]}")
 
         for drone, a, ap, v, s in zip(notTerminatedDrones(simulation), action, action_prob, value, state):
-            performDroneAction(drone, a, simulation)
+            performDroneAction(drone, a, simulation, self.charging)
 
             self.states[drone].append(s)
             self.actions[drone].append(a)

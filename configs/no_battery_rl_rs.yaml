@@ -1,0 +1,5 @@
+adaptation_params:
+  reward_shaping:
+    reward_drone_charging: 0
+    reward_drone_moving_to_charger: 0
+    reward_drone_charging_battery: 0

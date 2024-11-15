@@ -9,7 +9,7 @@ from adaptations.rl.q_network import DoubleQNetwork
 from adaptations.rl.replay_buffer import ReplayBuffer, Transition
 from adaptations.rl.rl_common import EpsilonSchedule, getRewardDroneStateConsistence, getRewardDroneCharging, \
     getRewardDroneProtecting, performDroneAction, getStateDrone, getStateField, getRewardData, epsilonGreedy, \
-    DroneActions, initializeRewardData
+    initializeRewardData, droneActionsCount
 from base_classes.adaptation import Adaptation
 from components.drone import DroneState
 
@@ -25,7 +25,12 @@ class QNetworkAdaptation(Adaptation):
                  epsilon=0.1, epsilon_final=None, epsilon_final_steps=None,
                  batch_size=64, train_every=1, target_update_every=1, save_path=None,
                  reward_shaping=None,
+                 drone_state_battery=True,
                  **q_network_args):
+
+        self.drone_state_battery = drone_state_battery
+        self.droneActionsCount = droneActionsCount(config)
+        self.charging = ("no_charging" not in config or not config["no_charging"])
 
         self.save_path = Path(save_path)
         if self.save_path.exists():  # load saved Q-network and replay buffer
@@ -71,15 +76,14 @@ class QNetworkAdaptation(Adaptation):
 
     def getState(self, simulation):
         return np.concatenate([
-            *[getStateDrone(drone, simulation) for drone in simulation.drones],
+            *[getStateDrone(drone, simulation, self.drone_state_battery) for drone in simulation.drones],
             *[getStateField(field) for field in simulation.fields],
         ])
 
-    @staticmethod
-    def stateSize(config):
-        # Drone: state (one-hot), battery, location (x, y), target field (one-hot)
+    def stateSize(self, config):
+        # Drone: state (one-hot), battery (optional), location (x, y), target field (one-hot)
         # Field: threat level, drone for full protection
-        return (len(DroneState) + 1 + 2 + len(config["fields"])) * config["drones"] \
+        return (len(DroneState) + (1 if self.drone_state_battery else 0) + 2 + len(config["fields"])) * config["drones"] \
             + 2 * len(config["fields"])
 
     def getReward(self, simulation):
@@ -109,12 +113,12 @@ class QNetworkAdaptation(Adaptation):
         for i, drone in enumerate(simulation.drones):
             if drone.state == DroneState.TERMINATED:
                 continue
-            action = epsilonGreedy(q_values[DroneActions * i: DroneActions * (i + 1)], self.epsilon, step)
-            performDroneAction(drone, action, simulation)
-            self.last_action.append(action + i * DroneActions)
+            action = epsilonGreedy(q_values[self.droneActionsCount * i: self.droneActionsCount * (i + 1)], self.epsilon, step)
+            performDroneAction(drone, action, simulation, self.charging)
+            self.last_action.append(action + i * self.droneActionsCount)
 
     def actionSize(self, config):
-        return DroneActions * config["drones"]
+        return self.droneActionsCount * config["drones"]
 
     def addTransition(self, simulation):
         state = self.last_state
