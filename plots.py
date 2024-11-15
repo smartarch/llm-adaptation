@@ -35,9 +35,10 @@ def draw_plots(file_name: str, show=False):
     ax2.set_ylim((0, 10))
     ax2.set_zorder(-1)
     axes[2].plot(df['step'], df['damage'], label='Damage', color='red')
-    axes[2].plot(df['step'], df['Field_1_damage'], label='Field 1 Damage', color='darkorange')
-    axes[2].plot(df['step'], df['Field_2_damage'], label='Field 2 Damage', color='maroon')
-    axes[2].plot(df['step'], df['Field_3_damage'], label='Field 3 Damage', color='olive')
+    for i in range(1, 10):
+        if 'Field_' + str(i) + '_damage' not in df.columns:
+            break
+        axes[2].plot(df['step'], df['Field_' + str(i) + '_damage'], label='Field ' + str(i) + ' Damage')
     axes[2].set_frame_on(False)
     axes[2].set_xlabel('Step')
     axes[2].set_ylabel('Damage')

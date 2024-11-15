@@ -1,3 +1,4 @@
+import argparse
 from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
@@ -8,6 +9,7 @@ from base_classes.components2d import Point2D
 from components.bird import BirdState
 from components.drone import DroneState
 from components.field import Field
+from utils import read_configs
 
 if TYPE_CHECKING:
     from simulation import SmartFarmSimulation
@@ -45,7 +47,7 @@ SIZES = {
 }
 
 LEGEND_SIZE = 260
-LOWER_EXTRA = 50
+LOWER_EXTRA = 10
 TEXT_MARGIN = 10
 
 
@@ -174,3 +176,21 @@ class Visualizer:
 
     def createAnimation(self, filename):
         self.images[0].save(filename, save_all=True, append_images=self.images[1:])
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.")
+    args = parser.parse_args()
+    config = read_configs(args.config_files)
+
+    from simulation import SmartFarmSimulation
+    simulation = SmartFarmSimulation(None, config)
+    visualizer = Visualizer(simulation)
+    visualizer.drawFields()
+    visualizer.drawComponents(0)
+    visualizer.createAnimation("animations/test.png")
+
+    field_sizes = [field.crops.size for field in simulation.fields]
+    print(field_sizes)
+    print(sum(field_sizes))

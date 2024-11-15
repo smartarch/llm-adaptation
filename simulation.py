@@ -32,6 +32,15 @@ class SmartFarmSimulation:
         self.visualizer: Optional["Visualizer"] = None
         self.stats: Optional["Stats"] = None
 
+        self.set_config_values(config)
+
+    @staticmethod
+    def set_config_values(config: dict):
+        if "droneMovingEnergyConsumption" in config:
+            Drone.MovingEnergyConsumption = config["droneMovingEnergyConsumption"]
+        if "droneHoveringEnergyConsumption" in config:
+            Drone.HoveringEnergyConsumption = config["droneHoveringEnergyConsumption"]
+
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):
             print(f"Step: {step}")

@@ -1,10 +1,11 @@
 import abc
 import importlib
+import textwrap
 from typing import TYPE_CHECKING
 
 import tiktoken
 
-from components.drone import Drone
+from components.drone import Drone, DroneState
 from components.field import Field
 from utils import case_insensitive_partition
 
@@ -14,10 +15,11 @@ if TYPE_CHECKING:
 
 class PromptTemplate(abc.ABC):
 
-    def __init__(self, extra_goal: str, field_attributes: dict, drone_attributes: dict):
+    def __init__(self, extra_goal: str, field_attributes: dict, drone_attributes: dict, charging=True):
         self.extra_goal = extra_goal
         self.field_attributes_config = field_attributes
         self.drone_attributes_config = drone_attributes
+        self.charging = charging
 
     @abc.abstractmethod
     def create_prompt(self, simulation: "SmartFarmSimulation") -> str:
@@ -41,29 +43,70 @@ class PromptTemplate(abc.ABC):
         return len(encoding.encode(text))
 
     def field_attributes(self, field: "Field") -> str:
-        attributes = f"""- {field.id}
+        attributes = textwrap.dedent(f"""\
+            - {field.id}
               - left: {field.left}
               - top: {field.top}
               - right: {field.right}
-              - bottom: {field.bottom}\n"""
+              - bottom: {field.bottom}
+            """)
         if self.field_attributes_config["threat_level"]:
-            attributes += f"              - threat level: {field.threat_level():.2f}\n"
+            attributes += f"  - threat level: {field.threat_level():.2f}\n"
         if self.field_attributes_config["protecting_drones"]:
-            attributes += f"              - protecting: {len(field.protectingDrones)} drones\n"
+            attributes += f"  - protecting: {len(field.protectingDrones)} drones\n"
         if self.field_attributes_config["necessary_drones_for_full_protection"]:
-            attributes += f"              - for full protection: {field.necessary_drones_for_full_protection} drones\n"
-        return attributes + "            "  # the empty spaces are necessary for a correct function of textwrap.dedent
+            attributes += f"  - for full protection: {field.necessary_drones_for_full_protection} drones\n"
+        return attributes
 
     def drone_attributes(self, drone: "Drone") -> str:
         target_field = f" ({drone.target.id})" if isinstance(drone.target, Field) else ""
-        attributes = f"""- {drone.id}
+        attributes = textwrap.dedent(f"""\
+            - {drone.id}
               - state: {drone.state}{target_field}
-              - battery: {drone.battery:.2f}
-              - location: {drone.location}\n"""
+              - location: {drone.location}
+            """)
+        if self.drone_attributes_config["battery"]:
+            attributes += f"  - battery: {drone.battery:.2f}\n"
         if self.drone_attributes_config["energy_to_fly_to_charger"]:
-            attributes += f"              - battery necessary to reach charger: {drone.energyToFlyToCharger():.2f}\n"
+            attributes += f"  - battery necessary to reach charger: {drone.energyToFlyToCharger():.2f}\n"
 
-        return attributes + "            "  # the empty spaces are necessary for a correct function of textwrap.dedent
+        return attributes
+
+
+class BasicPromptTemplate(PromptTemplate, abc.ABC):
+
+    def create_prompt(self, simulation) -> str:
+        prompt = "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.\n"
+
+        prompt += "\nFields on the farm with their location (rectangles) and bird-threat level (0 to 1):\n"
+        for field in simulation.fields:
+            prompt += self.field_attributes(field)
+
+        prompt += "\nAvailable drones:\n"
+        for drone in self.available_drones(simulation):
+            prompt += self.drone_attributes(drone)
+
+        prompt += "\nYour goal is to divide the drones among the following groups:\n"
+        groups = self.get_groups(simulation)
+        for order, group in enumerate(groups, start=1):
+            prompt += f"{order}. {group}\n"
+
+        if self.extra_goal != "":
+            prompt += f"\n{self.extra_goal}\n"
+
+        return prompt
+
+    @staticmethod
+    def available_drones(simulation):
+        return [drone for drone in simulation.drones if drone.state != DroneState.TERMINATED]
+
+    def get_groups(self, simulation):
+        groups = ["idle"]
+        if self.charging:
+            groups.append("charging")
+        for field in simulation.fields:
+            groups.append(f"protecting {field.id}")
+        return groups
 
 
 def import_prompt_template(template_name: str, template_params: dict) -> PromptTemplate:

@@ -13,3 +13,4 @@ adaptation_params:
       necessary_drones_for_full_protection: true
     drone_attributes:
       energy_to_fly_to_charger: false
+      battery: true
