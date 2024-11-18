@@ -1,0 +1,4 @@
+name.append: _history5
+log_dir.append: _history5
+adaptation_params:
+  message_history: 5  # number of adaptation decisions to remember

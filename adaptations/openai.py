@@ -1,4 +1,5 @@
 import abc
+from collections import deque
 from typing import TYPE_CHECKING
 
 from langchain_core.messages import HumanMessage
@@ -17,7 +18,15 @@ class OpenAIAdaptation(Adaptation):
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)
         self.adapt_every = adapt_every
 
-        self.message_history = [] if message_history else None
+        self.message_history = self.prepare_message_history(message_history)
+
+    @staticmethod
+    def prepare_message_history(message_history_config: bool | int):
+        if isinstance(message_history_config, int):
+            return deque(maxlen=message_history_config * 2 + 1)
+        if message_history_config:
+            return []
+        return None
 
     @staticmethod
     def create_llm(model="gpt-4o-mini-2024-07-18"):
