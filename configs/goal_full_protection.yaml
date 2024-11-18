@@ -2,4 +2,4 @@ name.append: _full_protection
 log_dir.append: _full_protection
 adaptation_params:
   prompt_template_params:
-    extra_goal: The protection of a field is not efficient unless the number of drones required for full protection is met. It is thus more efficient to assign multiple drones to protect one field than to spread them among all the fields.
+    extra_goal: The protection of a field is not efficient unless the number of drones required for full protection is met. It is thus more efficient to assign multiple drones to protect one field than to spread them among all the fields. Also note that idle drones are inactive and don't protect fields.
