@@ -2,7 +2,7 @@ from typing import Optional, TYPE_CHECKING
 
 from base_classes.components import Component
 from base_classes.components2d import Point2D
-from components.bird import Bird
+from components.bird import Bird, BirdFieldProbabilityGenerator
 from components.charger import Charger
 from components.drone import Drone, DroneState
 from components.field import Field
@@ -26,7 +26,9 @@ class SmartFarmSimulation:
         self.birds: list[Bird] = [Bird(self, self.randomPoint()) for _ in range(config["birds"])]
         self.charger = Charger(self, config["charger"])
 
-        self.components: list[Component] = self.fields + self.drones + self.birds + [self.charger]
+        self.fieldProbabilityGenerator = BirdFieldProbabilityGenerator(self, config["birdFieldProbabilities"])
+
+        self.components: list[Component] = [self.fieldProbabilityGenerator] + self.fields + self.drones + self.birds + [self.charger]
         self.adapt = adapt
 
         self.visualizer: Optional["Visualizer"] = None

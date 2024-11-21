@@ -1,5 +1,5 @@
-drones: 10
-birds: 100
+drones: 8
+birds: 80
 charger: [22,21]
 fields: [
   [3,4,18,19],
@@ -10,6 +10,11 @@ fields: [
 mapWidth: 50
 mapHeight: 50
 patrolling: false
+
+birdFieldProbabilities:
+  0: [0.6, 0.2, 0.1, 0.1]
+  100: [0.1, 0.7, 0.1, 0.1]
+  200: [0.1, 0.1, 0.4, 0.4]
 
 droneMovingEnergyConsumption: 0
 droneHoveringEnergyConsumption: 0

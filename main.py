@@ -1,6 +1,5 @@
 import argparse
 import os
-import random
 import sys
 from datetime import datetime
 
@@ -21,11 +20,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--animation", "-a", default=False, action="store_true")
 parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.", default=["configs/config.yaml", "configs/fake.yaml"])
 parser.add_argument('--episode', '-e', type=int, help="Episode (iteration) number. It is used as part of the log file name.")
+parser.add_argument('--seed', '-s', type=int, help="Seed for random number generator.")
 args = parser.parse_args()
 
 # set_verbose(True)
 # set_debug(True)
 
+if args.seed is not None:
+    from keras.utils import set_random_seed
+    set_random_seed(args.seed)
 config = read_configs(args.config_files)
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
 if args.episode is not None:

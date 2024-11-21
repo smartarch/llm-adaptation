@@ -1,6 +1,8 @@
 import random
 from enum import Enum
+from math import isclose
 
+from base_classes.components import Component
 from base_classes.components2d import MovingComponent2D
 
 
@@ -13,11 +15,31 @@ class BirdState(Enum):
     FLYING_RANDOMLY = 6
 
 
+class BirdFieldProbabilityGenerator(Component):
+
+    def __init__(self, simulation, birdFieldProbabilities):
+        super().__init__(simulation)
+
+        for step, probabilities in birdFieldProbabilities.items():
+            assert isclose(sum(probabilities), 1), f"Probabilities for step {step} must sum to 1"
+            assert len(probabilities) == len(self.simulation.fields), f"Number of probabilities for step {step} must match number of fields"
+        self.birdFieldProbabilities = birdFieldProbabilities
+        self.step = 0
+
+    def actuate(self):
+        self.step += 1
+
+    def __call__(self):
+        for step in reversed(self.birdFieldProbabilities):
+            if self.step >= step:
+                return self.birdFieldProbabilities[step]
+
+
 class Bird(MovingComponent2D):
 
     BirdSpeed = 1
     IdleToAttackProb = 0.2
-    AttackToAttackProb = 0.5  # keep eating in the same field
+    AttackToAttackProb = 0.4  # keep eating in the same field
     MaxFleeInSameField = 3
 
     def __init__(self, simulation, location):
@@ -67,7 +89,7 @@ class Bird(MovingComponent2D):
             self.flyRandomly(BirdState.FLEEING_OUTSIDE)
 
     def attackNewField(self):
-        self.field = random.choice(self.simulation.fields)
+        self.field = random.choices(self.simulation.fields, weights=self.simulation.fieldProbabilityGenerator())[0]
         self.fleeCounter = 0
         self.target = self.field.randomUndamagedCrop()
         if self.target is not None:

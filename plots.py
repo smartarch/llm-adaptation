@@ -6,7 +6,9 @@ import sys
 def draw_plots(file_name: str, show=False):
 
     # Load the CSV file
-    df = pd.read_csv(file_name + ".csv")
+    if not file_name.endswith(".csv"):
+        file_name += ".csv"
+    df = pd.read_csv(file_name)
 
     # Set up the figure and axes for 3 subplots (stacked vertically)
     fig, axes = plt.subplots(3, 1, figsize=(10, 15), sharex=True)
@@ -24,6 +26,10 @@ def draw_plots(file_name: str, show=False):
     df['Protecting_Sum'] = df['PROTECTING'] + df['MOVING_TO_FIELD']
     axes[1].plot(df['step'], df['Charging_Sum'], label='Charging + Moving to Charger', color='green')
     axes[1].plot(df['step'], df['Protecting_Sum'], label='Protecting + Moving to Field', color='blue')
+    for i in range(1, 10):
+        if f'Field_{i}_protecting_drones' not in df.columns:
+            break
+        axes[1].plot(df['step'], df[f'Field_{i}_protecting_drones'], label=f'Protecting Field {i}', linestyle='dotted')
     axes[1].set_ylabel('Sum Count')
     axes[1].set_title('Charging and Protecting drones')
     axes[1].legend(loc='upper right')
@@ -36,9 +42,9 @@ def draw_plots(file_name: str, show=False):
     ax2.set_zorder(-1)
     axes[2].plot(df['step'], df['damage'], label='Damage', color='red')
     for i in range(1, 10):
-        if 'Field_' + str(i) + '_damage' not in df.columns:
+        if f'Field_{i}_damage' not in df.columns:
             break
-        axes[2].plot(df['step'], df['Field_' + str(i) + '_damage'], label='Field ' + str(i) + ' Damage')
+        axes[2].plot(df['step'], df[f'Field_{i}_damage'], label=f'Field {i} Damage')
     axes[2].set_frame_on(False)
     axes[2].set_xlabel('Step')
     axes[2].set_ylabel('Damage')
