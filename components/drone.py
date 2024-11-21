@@ -21,7 +21,7 @@ class DroneState(Enum):
 class Drone(MovingComponent2D):
 
     Speed = 2
-    Radius = 5
+    Radius = 6
     MovingEnergyConsumption = 0.01
     HoveringEnergyConsumption = 0.007
     IdleEnergyConsumption = 0

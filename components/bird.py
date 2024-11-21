@@ -39,8 +39,9 @@ class Bird(MovingComponent2D):
 
     BirdSpeed = 1
     IdleToAttackProb = 0.2
-    AttackToAttackProb = 0.4  # keep eating in the same field
+    AttackToAttackProb = 0.6  # keep eating in the same field
     MaxFleeInSameField = 3
+    WaitBeforeEat = 2  # steps to wait before damage is dealt
 
     def __init__(self, simulation, location):
         """
@@ -54,6 +55,7 @@ class Bird(MovingComponent2D):
         self.target = None
         self.ateThisTimeStep = False
         self.fleeCounter = 0
+        self.eatWaitCounter = 0
         super().__init__(simulation, location, Bird.BirdSpeed)
 
     def actuate(self):
@@ -71,7 +73,10 @@ class Bird(MovingComponent2D):
             if self.isScared():
                 self.flee()
             else:
-                self.damage()
+                if self.eatWaitCounter > 0:
+                    self.eatWaitCounter -= 1
+                else:
+                    self.damage()
 
     def isScared(self):
         """Returns true if bird is scared by a drone."""
@@ -120,6 +125,7 @@ class Bird(MovingComponent2D):
         if self.move(self.target):
             if self.state in (BirdState.MOVING_TO_FIELD, BirdState.FLEEING_WITHIN_FIELD):
                 self.state = BirdState.EATING
+                self.eatWaitCounter = Bird.WaitBeforeEat
             else:
                 self.state = BirdState.IDLE
 

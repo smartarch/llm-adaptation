@@ -20,4 +20,9 @@ droneMovingEnergyConsumption: 0
 droneHoveringEnergyConsumption: 0
 no_charging: true
 
+birdIdleToAttackProb: 0.2
+birdAttackToAttackProb: 0.6  # keep eating in the same field
+birdMaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
+birdWaitBeforeEat: 2  # steps to wait before damage is dealt
+
 log_dir: logs/no_battery

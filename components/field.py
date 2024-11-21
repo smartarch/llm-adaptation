@@ -39,9 +39,9 @@ class Field(Component):
 
         from components.drone import Drone
         self.protectingDrones: set[Drone] = set()
-        self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 1)
+        self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 2)
         self.protectionPlaces: dict[Point2D, list[Drone]] = \
-            {place: [] for place in self.computeProtectionPlaces(Drone.Radius - 1)}
+            {place: [] for place in self.computeProtectionPlaces(Drone.Radius - 2)}
 
     def patrollingProtection(self) -> bool:
         return self.simulation.config.get("patrolling", False)
@@ -75,7 +75,7 @@ class Field(Component):
         return self.left <= point.x <= self.right and \
             self.top <= point.y <= self.bottom
 
-    def closestPlaceToDrone(self, drone: "Drone") -> Point2D:
+    def findClosestUnprotectedPlace(self, drone: "Drone") -> Point2D:
         if self.patrollingProtection():
             places = self.patrollingPlaces
         else:
@@ -87,12 +87,15 @@ class Field(Component):
 
         return min(places, key=lambda p: p.distance(drone.location))
 
+    def closestPlaceToDrone(self, drone: "Drone") -> Point2D:
+        return min(self.protectionPlaces, key=lambda p: p.distance(drone.location))
+
     def assignNextPlace(self, drone: "Drone") -> Point2D:
         if self.patrollingProtection():
             try:
                 return self.assignNextPatrollingPlace(drone)
             except ValueError:
-                return self.closestPlaceToDrone(drone)
+                return self.findClosestUnprotectedPlace(drone)
         else:
             # primary protecting drones (first in the list) stay at the same place
             for place in self.protectionPlaces:
@@ -103,7 +106,7 @@ class Field(Component):
                 if drone in self.protectionPlaces[place]:
                     self.protectionPlaces[place].remove(drone)
             # find the closest and least protected place
-            place = self.closestPlaceToDrone(drone)
+            place = self.findClosestUnprotectedPlace(drone)
             self.protectionPlaces[place].append(drone)
             return place
 
@@ -152,7 +155,7 @@ class Field(Component):
                     return False
             return True
 
-        # try 20 random points and see if there is an uprotected one
+        # try 20 random points and see if there is an unprotected one
         for _ in range(20):
             idx = np.random.choice(len(coordinates))
             x, y = coordinates[idx]

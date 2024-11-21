@@ -42,6 +42,14 @@ class SmartFarmSimulation:
             Drone.MovingEnergyConsumption = config["droneMovingEnergyConsumption"]
         if "droneHoveringEnergyConsumption" in config:
             Drone.HoveringEnergyConsumption = config["droneHoveringEnergyConsumption"]
+        if "birdIdleToAttackProb" in config:
+            Bird.IdleToAttackProb = config["birdIdleToAttackProb"]
+        if "birdAttackToAttackProb" in config:
+            Bird.AttackToAttackProb = config["birdAttackToAttackProb"]
+        if "birdMaxFleeInSameField" in config:
+            Bird.MaxFleeInSameField = config["birdMaxFleeInSameField"]
+        if "birdWaitBeforeEat" in config:
+            Bird.WaitBeforeEat = config["birdWaitBeforeEat"]
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):

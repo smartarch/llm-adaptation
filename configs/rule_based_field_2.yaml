@@ -1,0 +1,4 @@
+name: rule_based_field2
+log_dir.append: /rule_based_field2
+adaptation_name: adaptations.rule_based.RuleBasedField2Adaptation
+adaptation_params: {}

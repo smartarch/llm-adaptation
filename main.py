@@ -39,6 +39,7 @@ sys.stdout = Logger(f"{log_dir}/{name}")
 
 adaptation = import_adaptation(config)
 simulation = SmartFarmSimulation(adaptation.adapt, config)
+adaptation.init(simulation)
 
 if args.animation:
     visualizer = Visualizer(simulation)
