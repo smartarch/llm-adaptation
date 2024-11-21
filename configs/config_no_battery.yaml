@@ -24,8 +24,8 @@ no_charging: true
 birdIdleToAttackProb: 0.2
 birdAttackToAttackProb: 0.6  # keep eating in the same field
 birdMaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
-birdWaitBeforeEat: 4  # steps to wait before damage is dealt
-birdNearbyBirdsToEat: 2
+birdWaitBeforeEat: 3  # steps to wait before damage is dealt
+birdNearbyBirdsToEat: 1
 birdNearbyBirdsRadius: 4
 
 log_dir: logs/no_battery

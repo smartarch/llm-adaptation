@@ -1,0 +1,5 @@
+name.append: _threat_level
+log_dir.append: _threat_level
+adaptation_params:
+  prompt_template_params:
+    extra_goal.append: "\nWhen assigning the drones, pay attention to the threat levels of fields. Always prefer protecting fields with high threat levels.\n"

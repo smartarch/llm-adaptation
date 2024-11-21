@@ -92,7 +92,7 @@ class BasicPromptTemplate(PromptTemplate, abc.ABC):
             prompt += f"{order}. {group}\n"
 
         if self.extra_goal != "":
-            prompt += f"\n{self.extra_goal}\n"
+            prompt += f"{self.extra_goal}"
 
         return prompt
 

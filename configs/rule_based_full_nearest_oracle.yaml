@@ -1,0 +1,4 @@
+name: rule_based_full_nearest_oracle
+log_dir.append: /rule_based_full_nearest_oracle
+adaptation_name: adaptations.rule_based_smart.RuleBasedFullNearestOracleAdaptation
+adaptation_params: {}

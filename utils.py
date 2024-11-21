@@ -20,10 +20,12 @@ def read_configs(config_files):
             if isinstance(value, dict):
                 old_dict[key] = nested_update(old_dict.get(key, {}), value)
             else:
-                if isinstance(key, str) and key[-7:] == ".append" and key[:-7] in old_dict:
-                    old_dict[key[:-7]] = old_dict[key[:-7]] + value
-                elif isinstance(key, str) and key[-8:] == ".prepend" and key[:-8] in old_dict:
-                    old_dict[key[:-8]] = value + old_dict[key[:-8]]
+                if isinstance(key, str) and key[-7:] == ".append":
+                    if key[:-7] in old_dict:
+                        old_dict[key[:-7]] = old_dict[key[:-7]] + value
+                elif isinstance(key, str) and key[-8:] == ".prepend":
+                    if key[:-8] in old_dict:
+                        old_dict[key[:-8]] = value + old_dict[key[:-8]]
                 else:
                     old_dict[key] = value
         return old_dict

@@ -1,7 +1,4 @@
-import random
-
 from base_classes.adaptation import Adaptation
-from components.drone import DroneState
 from simulation import SmartFarmSimulation, notTerminatedDrones
 
 
@@ -16,7 +13,7 @@ class RuleBasedFullNearestAdaptation(Adaptation):
             drone.assignTarget(simulation.charger)
             available_drones.remove(drone)
 
-        for field in sorted(simulation.fields, key=lambda f: f.threat_level(), reverse=True):
+        for field in self.fieldsByThreatLevel(simulation):
             if len(available_drones) == 0:
                 break
 
@@ -24,6 +21,19 @@ class RuleBasedFullNearestAdaptation(Adaptation):
             for drone in closest_drones[:field.necessary_drones_for_full_protection]:
                 drone.assignTarget(field)
                 available_drones.remove(drone)
+
+    @staticmethod
+    def fieldsByThreatLevel(simulation):
+        return sorted(simulation.fields, key=lambda f: f.threat_level(), reverse=True)
+
+
+class RuleBasedFullNearestOracleAdaptation(RuleBasedFullNearestAdaptation):
+
+    @staticmethod
+    def fieldsByThreatLevel(simulation):
+        # get the true bird probabilities from an oracle
+        oracleAttackProbabilities = simulation.fieldProbabilityGenerator()
+        return [f for _, f in sorted(zip(oracleAttackProbabilities, simulation.fields), key=lambda f: f[0], reverse=True)]
 
 
 class RuleBasedProtectOneAdaptation(Adaptation):
