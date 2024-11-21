@@ -79,6 +79,18 @@ class Visualizer:
         canvas[startY:endY, startX:endX] = color
         return startX + (endX - startX) / 2, startY + (endY - startY) / 2
 
+    def _computeRadius(self, location, radius) -> tuple[float, float, float, float]:
+        """Gives the radius of the drone as form of rectangle to be presented in visualization."""
+        startX = location.x - radius
+        endX = location.x + radius
+        startY = location.y - radius
+        endY = location.y + radius
+        startX = max(startX, 0)
+        startY = max(startY, 0)
+        endX = min(endX, self.simulation.mapWidth)
+        endY = min(endY, self.simulation.mapHeight)
+        return startX, startY, endX, endY
+
     def _drawCircle(self, drawObject, rectangelMap, fill=None, outline='blue'):
         x1 = rectangelMap[0] * self.cellSize
         y1 = rectangelMap[1] * self.cellSize
@@ -109,6 +121,7 @@ class Visualizer:
         text += f"\nTotal damage: {sum(field.damage for field in self.simulation.fields)}"
         for field in self.simulation.fields:
             text += f"\n{field.id}: threat: {field.threat_level():.2f}, dmg: {field.damage}"
+        text += f"\nBird probs: {', '.join([f'{p:.2f}' for p in self.simulation.fieldProbabilityGenerator()])}"
         for drone in self.simulation.drones:
             text += f"\n{drone.id}: bat: {drone.battery:.2f}, state: {drone.state}"
             if isinstance(drone.target, Field):
@@ -162,7 +175,7 @@ class Visualizer:
                 continue
 
             if drone.protectsPoint(drone.location):
-                self._drawCircle(draw, drone.protectRadiusBox())
+                self._drawCircle(draw, self._computeRadius(drone.location, drone.Radius))
             draw.text(self.grid[drone], f"\n{drone.id}\nbattery:{drone.battery:.2f}", COLORS['text'], font=self.font)
 
         for field in self.simulation.fields:
@@ -170,6 +183,10 @@ class Visualizer:
         #
         # for charger in self.world.chargers:
         #     draw.text((self.grid[charger]), f"{charger.id}", COLORS['text'], font=self.font)
+
+        for bird in self.simulation.birds:
+            if bird.state == BirdState.EATING:
+                self._drawCircle(draw, self._computeRadius(bird.location, bird.NearbyBirdsRadius), outline='red')
 
         draw = self._drawLegends(draw, step)
         self.images.append(image)

@@ -26,7 +26,7 @@ class SmartFarmSimulation:
         self.birds: list[Bird] = [Bird(self, self.randomPoint()) for _ in range(config["birds"])]
         self.charger = Charger(self, config["charger"])
 
-        self.fieldProbabilityGenerator = BirdFieldProbabilityGenerator(self, config["birdFieldProbabilities"])
+        self.fieldProbabilityGenerator = BirdFieldProbabilityGenerator(self, config["birdFieldProbabilities"], config["birdCohesion"])
 
         self.components: list[Component] = [self.fieldProbabilityGenerator] + self.fields + self.drones + self.birds + [self.charger]
         self.adapt = adapt

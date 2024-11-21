@@ -139,16 +139,6 @@ class Drone(MovingComponent2D):
             return False
         return self.location.distance(point) <= Drone.Radius
 
-    def protectRadiusBox(self) -> tuple[float, float, float, float]:
-        """Gives the radius of the drone as form of rectangle to be presented in visualization."""
-        startX = self.location.x - Drone.Radius
-        endX = self.location.x + Drone.Radius
-        startY = self.location.y - Drone.Radius
-        endY = self.location.y + Drone.Radius
-        startX = max(startX, 0)
-        startY = max(startY, 0)
-        return startX, startY, endX, endY
-
     def __repr__(self):
         return f"{self.id}({str(self.state)}, bat={self.battery:.3f})"
 

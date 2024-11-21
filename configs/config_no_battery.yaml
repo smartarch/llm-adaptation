@@ -12,9 +12,10 @@ mapHeight: 50
 patrolling: false
 
 birdFieldProbabilities:
-  0: [0.6, 0.2, 0.1, 0.1]
+  0: [0.85, 0.05, 0.05, 0.05]
   100: [0.1, 0.7, 0.1, 0.1]
-  200: [0.1, 0.1, 0.4, 0.4]
+  200: [0, 0, 0.5, 0.5]
+birdCohesion: 0.5  # 0 = birds use only birdFieldProbabilities, 1 = birds prefer fields with more birds
 
 droneMovingEnergyConsumption: 0
 droneHoveringEnergyConsumption: 0
@@ -23,6 +24,8 @@ no_charging: true
 birdIdleToAttackProb: 0.2
 birdAttackToAttackProb: 0.6  # keep eating in the same field
 birdMaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
-birdWaitBeforeEat: 2  # steps to wait before damage is dealt
+birdWaitBeforeEat: 4  # steps to wait before damage is dealt
+birdNearbyBirdsToEat: 2
+birdNearbyBirdsRadius: 4
 
 log_dir: logs/no_battery

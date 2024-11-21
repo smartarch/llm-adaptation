@@ -1,0 +1,5 @@
+name.append: _5steps
+log_dir.append: _5steps
+adaptation_params:
+  adapt_every: 5
+  save_path.append: _5steps
