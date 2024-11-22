@@ -1,0 +1,14 @@
+name.append: _rs4
+log_dir.append: _rs4
+adaptation_params:
+  save_path.append: _rs4
+
+  reward_shaping:
+    reward_state_consistence: 1
+    reward_drone_charging: 3
+    reward_drone_moving_to_charger: 2
+    reward_drone_charging_battery: 0.25
+    reward_drone_protecting: 5
+    reward_drone_moving_to_field: 3
+    reward_drone_protecting_battery: 0.5
+    reward_drone_protecting_full: 10
