@@ -26,8 +26,9 @@ class Drone(MovingComponent2D):
     HoveringEnergyConsumption = 0.007
     IdleEnergyConsumption = 0
 
-    def __init__(self, simulation, location):
+    def __init__(self, simulation, location, autoCharge):
         super().__init__(simulation, location, Drone.Speed)
+        self.autoCharge = autoCharge
         self.battery = 1
         self.state = DroneState.IDLE
         self.target: Optional[Field | Charger] = None
@@ -36,6 +37,8 @@ class Drone(MovingComponent2D):
     def actuate(self):
         if self.state == DroneState.TERMINATED:  # no action
             return
+        if self.autoCharge and self.energyToFlyToCharger(includeSafetyMargin=True) >= self.battery:
+            self.assignTarget(self.simulation.charger)
 
         # fly towards assigned target
         if self.targetLocation is not None:
@@ -142,7 +145,8 @@ class Drone(MovingComponent2D):
     def __repr__(self):
         return f"{self.id}({str(self.state)}, bat={self.battery:.3f})"
 
-    def energyToFlyToCharger(self) -> float:
+    def energyToFlyToCharger(self, includeSafetyMargin=True) -> float:
         distance = self.location.distance(self.simulation.charger.location)
         time = distance / self.speed
-        return Drone.MovingEnergyConsumption * time
+        safetyMargin = self.simulation.config.get("autoChargeSafetyMargin", 0) if includeSafetyMargin else 0
+        return Drone.MovingEnergyConsumption * time + safetyMargin

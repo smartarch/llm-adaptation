@@ -19,7 +19,7 @@ class PromptTemplate(abc.ABC):
         self.extra_goal = extra_goal
         self.field_attributes_config = field_attributes
         self.drone_attributes_config = drone_attributes
-        self.charging = ("no_charging" not in config or not config["no_charging"])
+        self.charging = ("noCharging" not in config or not config["noCharging"])
 
     @abc.abstractmethod
     def create_prompt(self, simulation: "SmartFarmSimulation") -> str:

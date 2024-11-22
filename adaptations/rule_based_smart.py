@@ -1,12 +1,12 @@
 from base_classes.adaptation import Adaptation
-from simulation import SmartFarmSimulation, notTerminatedDrones
+from simulation import SmartFarmSimulation
 
 
 class RuleBasedFullNearestAdaptation(Adaptation):
     """Protects the most threatened fields with nearest drones."""
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
-        available_drones = set(notTerminatedDrones(simulation))
+        available_drones = set(simulation.availableDrones())
         drones_to_charge = [d for d in available_drones if d.battery < 0.25]
 
         for drone in drones_to_charge:
@@ -44,11 +44,13 @@ class RuleBasedProtectOneAdaptation(Adaptation):
         self.active_drones = []
         self.currently_protecting_field = None
         self.last_protected_field = None
+        self.charging = False
 
     def init(self, simulation: "SmartFarmSimulation"):
         # FIXME: this assumes 8 drones
         self.active_drones = simulation.drones[:4]
         self.standby_drones = simulation.drones[4:]
+        self.charging = ("noCharging" not in simulation.config or not simulation.config["noCharging"])
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
         field = max(simulation.fields, key=lambda f: f.threat_level())
@@ -59,11 +61,20 @@ class RuleBasedProtectOneAdaptation(Adaptation):
         self.last_protected_field = self.currently_protecting_field
         self.currently_protecting_field = field
 
-        # assign standby drones to the new target to protect
-        for drone in self.standby_drones:
+        if self.charging:
+            # use the group with more average battery as active
+            active_battery = sum(d.battery for d in self.active_drones) / len(self.active_drones)
+            standby_battery = sum(d.battery for d in self.standby_drones) / len(self.standby_drones)
+
+            if standby_battery > active_battery:
+                self.active_drones, self.standby_drones = self.standby_drones, self.active_drones
+        else:
+            # use standby drones for new field (swap groups)
+            self.standby_drones, self.active_drones = self.active_drones, self.standby_drones
+
+        for drone in self.active_drones:
             drone.assignTarget(field)
 
-        # swap active and standby drones
-        self.standby_drones, self.active_drones = self.active_drones, self.standby_drones
-
-        # TODO: if we have to charge the drones, we can start charging the standby drones now
+        if self.charging:
+            for drone in self.standby_drones:
+                drone.assignTarget(simulation.charger)

@@ -60,7 +60,7 @@ def getStateField(field: "Field"):
 
 def droneActionsCount(config):
     actionCount = 1  # idle
-    if "no_charging" not in config or not config["no_charging"]:
+    if "noCharging" not in config or not config["noCharging"]:
         actionCount += 1  # charging
     actionCount += len(config["fields"])  # protect
     return actionCount

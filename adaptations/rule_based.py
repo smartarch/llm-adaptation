@@ -11,9 +11,7 @@ if TYPE_CHECKING:
 class RuleBasedRandomAdaptation(Adaptation):
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
-        for drone in simulation.drones:
-            if drone.state == DroneState.TERMINATED:
-                continue
+        for drone in simulation.availableDrones():
             if drone.battery < 0.25:
                 drone.assignTarget(simulation.charger)
             elif drone.target is None:

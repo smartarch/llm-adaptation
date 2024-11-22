@@ -30,7 +30,7 @@ class QNetworkAdaptation(Adaptation):
 
         self.drone_state_battery = drone_state_battery
         self.droneActionsCount = droneActionsCount(config)
-        self.charging = ("no_charging" not in config or not config["no_charging"])
+        self.charging = ("noCharging" not in config or not config["noCharging"])
 
         self.save_path = Path(save_path)
         if self.save_path.exists():  # load saved Q-network and replay buffer

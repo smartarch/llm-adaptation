@@ -17,10 +17,9 @@ birdFieldProbabilities:
   200: [0, 0, 0.5, 0.5]
 birdCohesion: 0.5  # 0 = birds use only birdFieldProbabilities, 1 = birds prefer fields with more birds
 
-drone:
-  MovingEnergyConsumption: 0
-  HoveringEnergyConsumption: 0
 noCharging: true  # no "charging" group (action)
+autoCharging: true  # automatically charge drones
+autoChargeSafetyMargin: 0.03  # battery remaining when the drone reaches the charger
 
 bird:
   IdleToAttackProb: 0.2
@@ -30,4 +29,4 @@ bird:
   NearbyBirdsToEat: 1
   NearbyBirdsRadius: 4
 
-log_dir: logs/no_battery
+log_dir: logs/auto_charging

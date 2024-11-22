@@ -10,7 +10,7 @@ from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDr
     initializeRewardData, droneActionsCount
 from base_classes.adaptation import Adaptation
 from components.drone import DroneState
-from simulation import SmartFarmSimulation, notTerminatedDrones, terminatedDrones
+from simulation import SmartFarmSimulation
 
 if TYPE_CHECKING:
     from components.drone import Drone
@@ -27,7 +27,7 @@ class PPOAdaptation(Adaptation):
                  **ppo_network_args):
 
         self.drone_state_battery = drone_state_battery
-        self.charging = ("no_charging" not in config or not config["no_charging"])
+        self.charging = ("noCharging" not in config or not config["noCharging"])
         self.Actions = np.arange(droneActionsCount(config))
 
         self.network = PPONetwork(self.stateSize(config), droneActionsCount(config), **ppo_network_args)
@@ -69,7 +69,7 @@ class PPOAdaptation(Adaptation):
     def getState(self, simulation):
         return np.array(
             [self.getStateDrone(simulation, drone)
-             for drone in notTerminatedDrones(simulation)]
+             for drone in simulation.notTerminatedDrones()]
         )
 
     def getStateDrone(self, simulation, drone):
@@ -109,12 +109,12 @@ class PPOAdaptation(Adaptation):
             action = [np.random.choice(self.Actions, p=p) for p in policy]
         else:
             # repeat last action
-            action = [self.actions[drone][-1] for drone in notTerminatedDrones(simulation)]
+            action = [self.actions[drone][-1] for drone in simulation.notTerminatedDrones()]
         action_prob = [p[a] for p, a in zip(policy, action)]
 
         print(f"Values: {[f'{v:.2g}' for v in value]}, action probs: {[f'{ap:.2g}' for ap in action_prob]}")
 
-        for drone, a, ap, v, s in zip(notTerminatedDrones(simulation), action, action_prob, value, state):
+        for drone, a, ap, v, s in zip(simulation.notTerminatedDrones(), action, action_prob, value, state):
             performDroneAction(drone, a, simulation, self.charging)
 
             self.states[drone].append(s)
@@ -123,7 +123,7 @@ class PPOAdaptation(Adaptation):
             self.values[drone].append(v)
 
     def addTransition(self, simulation):
-        for drone in notTerminatedDrones(simulation):
+        for drone in simulation.notTerminatedDrones():
             self.rewards[drone].append(self.getReward(simulation, drone))
 
     def computeAdvantages(self, drone):
@@ -172,15 +172,15 @@ class PPOAdaptation(Adaptation):
     def end(self, simulation):
         # save the last reward (we also need to add reward to terminated drones for their last action)
         self.addTransition(simulation)
-        for drone in terminatedDrones(simulation):
+        for drone in simulation.terminatedDrones():
             self.rewards[drone].append(self.drone_terminated_reward)
         # add values for next state (0 for terminated drones)
         state = self.getState(simulation)
         if len(state) > 0:
             values = self.network.predict(self.getState(simulation))[1]
-            for drone, value in zip(notTerminatedDrones(simulation), values):
+            for drone, value in zip(simulation.notTerminatedDrones(), values):
                 self.values[drone].append(value)
-        for drone in terminatedDrones(simulation):
+        for drone in simulation.terminatedDrones():
             self.values[drone].append(0)
 
         self.save_path.mkdir(parents=True, exist_ok=True)

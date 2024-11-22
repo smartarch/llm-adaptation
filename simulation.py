@@ -21,7 +21,8 @@ class SmartFarmSimulation:
         self.mapHeight = config["mapHeight"]
 
         self.fields: list[Field] = [Field(self, *coords) for coords in config["fields"]]
-        self.drones: list[Drone] = [Drone(self, self.randomPoint()) for _ in range(config["drones"])]
+        self.autoChargeDrones = config.get("autoCharging", False)
+        self.drones: list[Drone] = [Drone(self, self.randomPoint(), self.autoChargeDrones) for _ in range(config["drones"])]
         self.dronesDict = {drone.id: drone for drone in self.drones}
         self.birds: list[Bird] = [Bird(self, self.randomPoint()) for _ in range(config["birds"])]
         self.charger = Charger(self, config["charger"])
@@ -81,10 +82,14 @@ class SmartFarmSimulation:
     def add_stats(self, stats: "Stats"):
         self.stats = stats
 
+    def notTerminatedDrones(self):
+        return filter(lambda d: d.state != DroneState.TERMINATED, self.drones)
 
-def notTerminatedDrones(simulation):
-    return filter(lambda d: d.state != DroneState.TERMINATED, simulation.drones)
+    def availableDrones(self):
+        if self.autoChargeDrones:
+            return filter(lambda d: d.state not in (DroneState.TERMINATED, DroneState.MOVING_TO_CHARGER, DroneState.CHARGING), self.drones)
+        else:
+            return self.notTerminatedDrones()
 
-
-def terminatedDrones(simulation):
-    return filter(lambda d: d.state == DroneState.TERMINATED, simulation.drones)
+    def terminatedDrones(self):
+        return filter(lambda d: d.state == DroneState.TERMINATED, self.drones)
