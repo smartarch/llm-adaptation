@@ -38,18 +38,18 @@ class SmartFarmSimulation:
 
     @staticmethod
     def set_config_values(config: dict):
-        if "droneMovingEnergyConsumption" in config:
-            Drone.MovingEnergyConsumption = config["droneMovingEnergyConsumption"]
-        if "droneHoveringEnergyConsumption" in config:
-            Drone.HoveringEnergyConsumption = config["droneHoveringEnergyConsumption"]
-        if "birdIdleToAttackProb" in config:
-            Bird.IdleToAttackProb = config["birdIdleToAttackProb"]
-        if "birdAttackToAttackProb" in config:
-            Bird.AttackToAttackProb = config["birdAttackToAttackProb"]
-        if "birdMaxFleeInSameField" in config:
-            Bird.MaxFleeInSameField = config["birdMaxFleeInSameField"]
-        if "birdWaitBeforeEat" in config:
-            Bird.WaitBeforeEat = config["birdWaitBeforeEat"]
+        if "drone" in config:
+            for key in config["drone"]:
+                if key in Drone.__dict__:
+                    setattr(Drone, key, config["drone"][key])
+                else:
+                    raise KeyError(f"Unknown drone attribute: {key}")
+        if "bird" in config:
+            for key in config["bird"]:
+                if key in Bird.__dict__:
+                    setattr(Bird, key, config["bird"][key])
+                else:
+                    raise KeyError(f"Unknown bird attribute: {key}")
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):

@@ -17,15 +17,17 @@ birdFieldProbabilities:
   200: [0, 0, 0.5, 0.5]
 birdCohesion: 0.5  # 0 = birds use only birdFieldProbabilities, 1 = birds prefer fields with more birds
 
-droneMovingEnergyConsumption: 0
-droneHoveringEnergyConsumption: 0
+drone:
+  MovingEnergyConsumption: 0
+  HoveringEnergyConsumption: 0
 no_charging: true
 
-birdIdleToAttackProb: 0.2
-birdAttackToAttackProb: 0.6  # keep eating in the same field
-birdMaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
-birdWaitBeforeEat: 3  # steps to wait before damage is dealt
-birdNearbyBirdsToEat: 1
-birdNearbyBirdsRadius: 4
+bird:
+  IdleToAttackProb: 0.2
+  AttackToAttackProb: 0.6  # keep eating in the same field
+  MaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
+  WaitBeforeEat: 3  # steps to wait before damage is dealt
+  NearbyBirdsToEat: 1
+  NearbyBirdsRadius: 4
 
 log_dir: logs/no_battery
