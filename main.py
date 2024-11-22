@@ -9,7 +9,7 @@ from base_classes.adaptation import import_adaptation
 from plots import draw_plots
 from simulation import SmartFarmSimulation
 from stats import Stats
-from utils import read_configs, Logger
+from utils import read_configs, Logger, print_config
 from visualizer import Visualizer
 
 
@@ -36,6 +36,10 @@ if args.episode is not None:
 log_dir = config["log_dir"]
 sys.stdout = Logger(f"{log_dir}/{name}")
 
+config["log_dir"] = log_dir
+config["log_file_name"] = name
+config["log_file_path"] = f"{log_dir}/{name}.ansi"
+print_config(config)
 
 adaptation = import_adaptation(config)
 simulation = SmartFarmSimulation(adaptation.adapt, config)

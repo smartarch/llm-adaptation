@@ -36,6 +36,12 @@ def read_configs(config_files):
     return config
 
 
+def print_config(config: dict):
+    print("Config:\n")
+    yaml.dump(config, sys.stdout, sort_keys=False)
+    print("\n")
+
+
 class Logger:
     """Prints the stdout simultaneously to the terminal and a file."""
     def __init__(self, log_file: Path | str):
