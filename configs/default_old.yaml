@@ -10,4 +10,4 @@ mapWidth: 50
 mapHeight: 50
 patrolling: false
 
-log_dir: logs/battery_and_charging
+log_dir: logs/old
