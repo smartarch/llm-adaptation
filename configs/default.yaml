@@ -21,6 +21,6 @@ bird:
   IdleToAttackProb: 0.2
   AttackToAttackProb: 0.6  # keep eating in the same field
   MaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
-  WaitBeforeEat: 3  # steps to wait before damage is dealt
-  NearbyBirdsToEat: 1
+  WaitBeforeEat: 5  # steps to wait before damage is dealt
+  NearbyBirdsToEat: 2
   NearbyBirdsRadius: 4
