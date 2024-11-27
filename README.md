@@ -10,6 +10,16 @@ To use OpenAI (paid API):
 * create API key: <https://platform.openai.com/api-keys>
 * rename `.env.example` to `.env` and save the API key there
 
+To use Google AI (free or paid API):
+
+* create API key: <https://aistudio.google.com/app/u/1/apikey>
+* rename `.env.example` to `.env` and save the API key there
+
+To use Anthropic (paid API):
+
+* create API key: <https://console.anthropic.com>
+* rename `.env.example` to `.env` and save the API key there
+
 ## Run
 
 The simulation is run via the `main.py` file. It is necessary to specify the configuration with command line arguments. The first argument should be `configs/config.yaml` (configuration of the smart farm scenario), the second argument should be the configuration of the adaptation (e.g., `configs/fake.yaml` for a random adaptation used for debugging).

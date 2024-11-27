@@ -1,9 +1,14 @@
 name: drones
 log_dir.append: /drones
 adaptation_name: adaptations.openai.OpenAIAdaptation
+#adaptation_name: adaptations.google.GoogleAIAdaptation
+#adaptation_name: adaptations.anthropic.AnthropicAdaptation
 adaptation_params:
   config: true
   llm: gpt-4o-mini-2024-07-18
+#  llm: gemini-1.5-flash
+#  llm: claude-3-5-haiku-20241022
+
   adapt_every: 10
   prompt_template: prompt_templates.drones.DronesLLMTemplate
   prompt_template_params:

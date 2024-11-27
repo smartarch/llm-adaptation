@@ -6,9 +6,7 @@ import sys
 def draw_plots(file_name: str, show=False):
 
     # Load the CSV file
-    if not file_name.endswith(".csv"):
-        file_name += ".csv"
-    df = pd.read_csv(file_name)
+    df = pd.read_csv(file_name if file_name.endswith(".csv") else file_name + ".csv")
 
     # Set up the figure and axes for 3 subplots (stacked vertically)
     fig, axes = plt.subplots(3, 1, figsize=(10, 15), sharex=True)

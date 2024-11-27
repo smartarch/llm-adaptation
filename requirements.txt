@@ -10,6 +10,8 @@ numpy
 # LLMs
 langchain
 langchain-openai
+langchain-google-genai
+langchain-anthropic
 tiktoken
 
 # RL
