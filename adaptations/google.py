@@ -7,11 +7,17 @@ from adaptations.llm import LLMAdaptation
 class GoogleAIAdaptation(LLMAdaptation):
 
     @staticmethod
-    def create_llm(model="gemini-1.5-flash"):
+    def create_llm(model="gemini-1.5-flash", config=None):
         print("LLM model:", model)
 
+        # free API has limited requests per minute
+        if config and "rpm_limit" in config:
+            rpm_limit = int(config["rpm_limit"])
+        else:
+            rpm_limit = 10
+
         rate_limiter = InMemoryRateLimiter(
-            requests_per_second=15/60,  # free API allows 15 requests per minute for "Gemini 1.5 Flash"
+            requests_per_second=rpm_limit/60,
             check_every_n_seconds=1,
             max_bucket_size=1,
         )

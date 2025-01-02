@@ -13,7 +13,7 @@ from simulation import SmartFarmSimulation
 class LLMAdaptation(Adaptation, ABC):
 
     def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict, message_history=False):
-        self.llm = self.create_llm(llm)
+        self.llm = self.create_llm(llm, config)
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)
         self.adapt_every = adapt_every
 
@@ -29,7 +29,7 @@ class LLMAdaptation(Adaptation, ABC):
 
     @staticmethod
     @abstractmethod
-    def create_llm(model="gpt-4o-mini-2024-07-18"):
+    def create_llm(model="gpt-4o-mini-2024-07-18", config=None):
         print("LLM model:", model)
         return ...
 

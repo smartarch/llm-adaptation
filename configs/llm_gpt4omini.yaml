@@ -1,0 +1,5 @@
+name.append: _gpt4omini
+log_dir.append: _gpt4omini
+adaptation_name: adaptations.openai.OpenAIAdaptation
+adaptation_params:
+  llm: gpt-4o-mini-2024-07-18

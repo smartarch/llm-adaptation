@@ -1,0 +1,5 @@
+name.append: _claude35haiku
+log_dir.append: _claude35haiku
+adaptation_name: adaptations.anthropic.AnthropicAdaptation
+adaptation_params:
+  llm: claude-3-5-haiku-20241022

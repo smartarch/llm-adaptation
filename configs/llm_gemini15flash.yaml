@@ -1,0 +1,6 @@
+name.append: _gemini15flash
+log_dir.append: _gemini15flash
+adaptation_name: adaptations.google.GoogleAIAdaptation
+adaptation_params:
+  llm: gemini-1.5-flash
+  rpm_limit: 15
