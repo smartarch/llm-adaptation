@@ -44,20 +44,28 @@ def print_config(config: dict):
 
 class Logger:
     """Prints the stdout simultaneously to the terminal and a file."""
-    def __init__(self, log_file: Path | str):
-        log_file = Path(log_file)
-        self.stdout = sys.stdout
-        os.makedirs(log_file.parent, exist_ok=True)
-        self.file_name = f'{log_file}.ansi'
-        self.file = open(self.file_name, "w")
+    def __init__(self, log_file: Path | str, stream=sys.stdout, create_on_first_write=False):
+        self.file_path = Path(log_file)
+        self.stream = stream
+        if create_on_first_write:  # the file is not created until it is needed
+            self.file = None
+        else:
+            self.file = self._create_file()
+
+    def _create_file(self):
+        os.makedirs(self.file_path.parent, exist_ok=True)
+        return open(self.file_path, "w")
 
     def write(self, message):
-        self.stdout.write(message)
+        if self.file is None:
+            self.file = self._create_file()
+        self.stream.write(message)
         self.file.write(message)
 
     def flush(self):
-        self.stdout.flush()
-        self.file.flush()
+        self.stream.flush()
+        if self.file is not None:
+            self.file.flush()
 
 
 def case_insensitive_partition(string: str, separator: str):

@@ -26,15 +26,17 @@ args = parser.parse_args()
 # set_verbose(True)
 # set_debug(True)
 
-if args.seed is not None:
-    from keras.utils import set_random_seed
-    set_random_seed(args.seed)
 config = read_configs(args.config_files)
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
 if args.episode is not None:
     name = f"{args.episode:03}-{name}"
 log_dir = config["log_dir"]
-sys.stdout = Logger(f"{log_dir}/{name}")
+sys.stdout = Logger(f"{log_dir}/{name}.ansi")
+sys.stderr = Logger(f"{log_dir}/{name}.err", sys.stderr, create_on_first_write=True)
+
+if args.seed is not None:
+    from keras.utils import set_random_seed
+    set_random_seed(args.seed)
 
 config["log_dir"] = log_dir
 config["log_file_name"] = name
