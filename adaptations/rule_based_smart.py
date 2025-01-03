@@ -5,7 +5,13 @@ from simulation import SmartFarmSimulation
 class RuleBasedFullNearestAdaptation(Adaptation):
     """Protects the most threatened fields with nearest drones."""
 
+    def __init__(self, adapt_every=1):
+        self.adapt_every = adapt_every
+
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
+        if (step - 1) % self.adapt_every != 0:
+            return
+
         available_drones = set(simulation.availableDrones())
         drones_to_charge = [d for d in available_drones if d.battery < 0.25]
 
