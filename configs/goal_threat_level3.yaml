@@ -1,0 +1,5 @@
+name.append: _threat_level3
+log_dir.append: _threat_level3
+adaptation_params:
+  prompt_template_params:
+    extra_goal.append: "\nAlways fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be idle or assigned to other fields.\n"

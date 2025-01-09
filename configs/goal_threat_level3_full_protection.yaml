@@ -1,0 +1,5 @@
+name.append: _threat_level3_full_protection
+log_dir.append: _threat_level3_full_protection
+adaptation_params:
+  prompt_template_params:
+    extra_goal.append: "\nAlways fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. When assigning the remaining drones to other fields, note that the protection of a field is not efficient unless the number of drones required for full protection is met.\n"
