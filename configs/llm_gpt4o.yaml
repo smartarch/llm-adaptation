@@ -1,0 +1,5 @@
+name.append: _gpt4o
+log_dir.append: _gpt4o
+adaptation_name: adaptations.openai.OpenAIAdaptation
+adaptation_params:
+  llm: gpt-4o-2024-11-20

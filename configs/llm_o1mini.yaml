@@ -1,0 +1,6 @@
+name.append: _o1mini
+log_dir.append: _o1mini
+adaptation_name: adaptations.openai.OpenAIAdaptation
+adaptation_params:
+  llm: o1-mini-2024-09-12
+  temperature: 1

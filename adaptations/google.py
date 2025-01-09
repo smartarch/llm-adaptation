@@ -11,8 +11,10 @@ class GoogleAIAdaptation(LLMAdaptation):
         print("LLM model:", model)
 
         # free API has limited requests per minute
-        if config and "rpm_limit" in config:
-            rpm_limit = int(config["rpm_limit"])
+        if config is not None \
+                and "adaptation_params" in config \
+                and "rpm_limit" in config["adaptation_params"]:
+            rpm_limit = int(config["adaptation_params"]["rpm_limit"])
         else:
             rpm_limit = 10
 

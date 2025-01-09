@@ -1,0 +1,5 @@
+name.append: _claude35sonnet
+log_dir.append: _claude35sonnet
+adaptation_name: adaptations.anthropic.AnthropicAdaptation
+adaptation_params:
+  llm: claude-3-5-sonnet-20241022
