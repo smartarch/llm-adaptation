@@ -5,6 +5,7 @@ adaptation_params:
   adapt_every: 10
   prompt_template: prompt_templates.drones.DronesLLMTemplate
   prompt_template_params:
+    simulation_description: "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields."
     extra_goal: ""
     field_attributes:
       threat_level: true

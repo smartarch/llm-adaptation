@@ -15,7 +15,8 @@ if TYPE_CHECKING:
 
 class PromptTemplate(abc.ABC):
 
-    def __init__(self, extra_goal: str, field_attributes: dict, drone_attributes: dict, config: dict):
+    def __init__(self, simulation_description: str, extra_goal: str, field_attributes: dict, drone_attributes: dict, config: dict):
+        self.simulation_description = simulation_description
         self.extra_goal = extra_goal
         self.field_attributes_config = field_attributes
         self.drone_attributes_config = drone_attributes
@@ -53,7 +54,7 @@ class PromptTemplate(abc.ABC):
         if self.field_attributes_config["threat_level"]:
             attributes += f"  - threat level: {field.threat_level():.2f}\n"
         if self.field_attributes_config["protecting_drones"]:
-            attributes += f"  - protecting: {len(field.protectingDrones)} drones\n"
+            attributes += f"  - protecting: {len(field.protectingDrones)} drone{'s' if len(field.protectingDrones) != 1 else ''}\n"
         if self.field_attributes_config["necessary_drones_for_full_protection"]:
             attributes += f"  - for full protection: {field.necessary_drones_for_full_protection} drones\n"
         return attributes
@@ -76,7 +77,7 @@ class PromptTemplate(abc.ABC):
 class BasicPromptTemplate(PromptTemplate, abc.ABC):
 
     def create_prompt(self, simulation) -> str:
-        prompt = "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.\n"
+        prompt = self.simulation_description + "\n"
 
         prompt += "\nFields on the farm with their location (rectangles) and bird-threat level (0 to 1):\n"
         for field in simulation.fields:
