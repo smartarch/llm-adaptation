@@ -20,6 +20,11 @@ class DronesLLMTemplate(BasicPromptTemplate):
 
         for row in drone_rows:
             try:
+                if row == "" or row == "```":
+                    continue
+                row = row.replace("- ", "")  # remove leading hyphens
+                row = row.replace("**", "")  # remove bold
+
                 drone_id, group = row.split(":")
                 drone = simulation.dronesDict[drone_id.strip()]
                 if group.strip() == "idle":
