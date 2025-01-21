@@ -95,29 +95,29 @@ def getRewardDroneStateConsistence(reward_data, reward_shaping: dict, drone):
     if (drone.state != DroneState.TERMINATED
             and old_state == drone.state
             and old_target == drone.target):
-        return reward_shaping["reward_state_consistence"]
+        return reward_shaping.get("reward_state_consistence", 0)
     else:
         return 0
 
 
 def getRewardDroneCharging(reward_shaping: dict, drone):
-    if drone.battery < reward_shaping["reward_drone_charging_battery"]:
+    if drone.battery < reward_shaping.get("reward_drone_charging_battery", 0):
         if drone.state == DroneState.CHARGING:
-            return reward_shaping["reward_drone_charging"]
+            return reward_shaping.get("reward_drone_charging", 0)
         if drone.state == DroneState.MOVING_TO_CHARGER:
-            return reward_shaping["reward_drone_moving_to_charger"]
+            return reward_shaping.get("reward_drone_moving_to_charger", 0)
     return 0
 
 
 def getRewardDroneProtecting(reward_shaping: dict, drone):
-    if drone.battery > reward_shaping["reward_drone_protecting_battery"]:
+    if drone.battery > reward_shaping.get("reward_drone_protecting_battery", 0):
         if drone.state == DroneState.PROTECTING:
-            if drone.target.isFullyProtected and reward_shaping["reward_drone_protecting_full"] > 0:
-                return reward_shaping["reward_drone_protecting_full"]
+            if drone.target.isFullyProtected and reward_shaping.get("reward_drone_protecting_full", 0) > 0:
+                return reward_shaping.get("reward_drone_protecting_full", 0)
             else:
-                return reward_shaping["reward_drone_protecting"]
+                return reward_shaping.get("reward_drone_protecting", 0)
         if drone.state == DroneState.MOVING_TO_FIELD:
-            return reward_shaping["reward_drone_moving_to_field"]
+            return reward_shaping.get("reward_drone_moving_to_field", 0)
     return 0
 
 
