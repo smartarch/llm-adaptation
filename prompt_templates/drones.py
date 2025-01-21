@@ -32,7 +32,7 @@ class DronesLLMTemplate(BasicPromptTemplate):
                     drone.assignTarget(simulation.fields[field_idx])
                 else:
                     print(f"Unknown group: {group}")
-            except (ValueError, KeyError) as error:
+            except (ValueError, KeyError, IndexError) as error:
                 print(f"Invalid row ({error}): {repr(row)}")
 
 

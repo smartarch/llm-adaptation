@@ -44,7 +44,7 @@ class GroupsLLMTemplate(BasicPromptTemplate):
             group, drones = line.split(":")
             drone_names = [d.strip() for d in drones.split(",")]
             return [simulation.dronesDict[name] for name in drone_names if name in simulation.dronesDict]
-        except (ValueError, KeyError) as error:
+        except (ValueError, KeyError, IndexError) as error:
             print(f"Invalid row ({error}): {repr(line)}")
             return []
 
