@@ -6,6 +6,7 @@ pillow
 colorama
 pandas
 numpy
+seaborn
 
 # LLMs
 langchain
