@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import numpy as np
+import tensorflow as tf
 
 from adaptations.rl.ppo_network import PPONetwork
 from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, \
@@ -30,13 +31,18 @@ class PPOAdaptation(Adaptation):
         self.charging = ("noCharging" not in config or not config["noCharging"])
         self.Actions = np.arange(droneActionsCount(config))
 
-        self.network = PPONetwork(self.stateSize(config), droneActionsCount(config), **ppo_network_args)
         self.save_path = Path(save_path)
         if self.save_path.exists():  # load saved network
             print("Loading PPO network from", self.save_path)
-            self.network.load_weights(self.save_path / "ppo_network.weights.h5")
+            try:
+                self.network = tf.keras.models.load_model(self.save_path / "ppo_network.keras", custom_objects={"PPONetwork": PPONetwork})
+            except (ValueError, IOError):
+                print('  Loading ".keras" model failed. Loading weights only from ".h5"')
+                self.network = PPONetwork(self.stateSize(config), droneActionsCount(config), **ppo_network_args)
+                self.network.load_weights(self.save_path / "ppo_network.weights.h5")
         else:
             print("Creating new PPO network")
+            self.network = PPONetwork(self.stateSize(config), droneActionsCount(config), **ppo_network_args)
 
         self.adapt_every = adapt_every
         self.batch_size = batch_size
@@ -188,6 +194,7 @@ class PPOAdaptation(Adaptation):
         self.train(simulation)
 
         print("Saving PPO network... ", end="")
+        self.network.save(self.save_path / "ppo_network.keras")
         self.network.save_weights(self.save_path / "ppo_network.weights.h5")
         print("Done")
 
