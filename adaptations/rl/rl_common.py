@@ -110,15 +110,19 @@ def getRewardDroneCharging(reward_shaping: dict, drone):
 
 
 def getRewardDroneProtecting(reward_shaping: dict, drone):
+    reward = 0
     if drone.battery > reward_shaping.get("reward_drone_protecting_battery", 0):
         if drone.state == DroneState.PROTECTING:
             if drone.target.isFullyProtected and reward_shaping.get("reward_drone_protecting_full", 0) > 0:
-                return reward_shaping.get("reward_drone_protecting_full", 0)
+                reward = reward_shaping.get("reward_drone_protecting_full", 0)
             else:
-                return reward_shaping.get("reward_drone_protecting", 0)
-        if drone.state == DroneState.MOVING_TO_FIELD:
-            return reward_shaping.get("reward_drone_moving_to_field", 0)
-    return 0
+                reward = reward_shaping.get("reward_drone_protecting", 0)
+        elif drone.state == DroneState.MOVING_TO_FIELD:
+            reward = reward_shaping.get("reward_drone_moving_to_field", 0)
+
+    if reward_shaping.get("protecting_reward_threat_level", False) and drone.target is not None:
+        reward *= drone.target.threat_level()
+    return reward
 
 
 def getRewardData(simulation):

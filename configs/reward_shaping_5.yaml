@@ -1,0 +1,12 @@
+name.append: _rs5
+log_dir.append: _rs5
+adaptation_params:
+  save_path.append: _rs5
+
+  reward_shaping:
+    # reward shaping without state consistence
+    reward_drone_protecting: 3
+    reward_drone_moving_to_field: 1
+    reward_drone_protecting_battery: 0.5
+    # multiply reward by threat level
+    protecting_reward_threat_level: true
