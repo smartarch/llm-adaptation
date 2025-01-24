@@ -54,7 +54,7 @@ class Logger:
 
     def _create_file(self):
         os.makedirs(self.file_path.parent, exist_ok=True)
-        return open(self.file_path, "w")
+        return open(self.file_path, "w", encoding="utf-8")
 
     def write(self, message):
         if self.file is None:

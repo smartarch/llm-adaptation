@@ -1,0 +1,15 @@
+name.append: _step_by_step
+log_dir.append: _step_by_step
+adaptation_params:
+  prompt_template_params:
+    extra_goal.append: |
+      
+      Follow these step-by-step instructions when assigning the groups:
+      
+      1. Sort the fields by threat level from highest to lowest.
+      2. For the most threatened field, determine how many additional drones are necessary for its full protection.
+      3. Identify the drones currently protecting the most threatened field. They should continue protecting it.
+      4. Sort the remaining drones by distance to the most threatened field from nearest to furthest.
+      5. Add as many drones as necessary to the protection of the most threatened field.
+      6. Distribute the remaining drones to the other fields.
+      7. Provide the answer in the format described below. Don't forget to include the drones already protecting the most threatened field. 
