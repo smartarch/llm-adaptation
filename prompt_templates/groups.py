@@ -26,9 +26,9 @@ class GroupsLLMTemplate(BasicPromptTemplate):
         protecting = [self.extract_drone_list(group, simulation) for group in groups[2:]]
 
         total_assignments = len(idle) + len(charging) + sum(len(group) for group in protecting)
-        assigned_drones = set.union(set(idle), set(charging), *(set(group) for group in protecting))
-        if len(assigned_drones) != total_assignments or total_assignments != len(self.available_drones(simulation)):
-            print(f"Wrong groups assignment. Unique drones: {len(assigned_drones)}, total_assignments: {total_assignments}, available_drones: {len(self.available_drones(simulation))}")
+        unique_drones = set.union(set(idle), set(charging), *(set(group) for group in protecting))
+        if len(unique_drones) != total_assignments or total_assignments != len(self.available_drones(simulation)):
+            print(f"Wrong groups assignment. Unique drones: {len(unique_drones)}, total_assignments: {total_assignments}, available_drones: {len(self.available_drones(simulation))}")
 
         for drone in idle:
             drone.assignTarget(None)

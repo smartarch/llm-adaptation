@@ -18,6 +18,8 @@ class DronesLLMTemplate(BasicPromptTemplate):
         answer = self.extract_answer(response)
         drone_rows = answer.split("\n")
 
+        assigned_drones = []
+
         for row in drone_rows:
             try:
                 if row == "" or row == "```":
@@ -27,6 +29,7 @@ class DronesLLMTemplate(BasicPromptTemplate):
 
                 drone_id, group = row.split(":")
                 drone = simulation.dronesDict[drone_id.strip()]
+                assigned_drones.append(drone)
                 if group.strip() == "idle":
                     drone.assignTarget(None)
                 elif group.strip() == "charging":
@@ -39,6 +42,11 @@ class DronesLLMTemplate(BasicPromptTemplate):
                     print(f"Unknown group: {group}")
             except (ValueError, KeyError, IndexError) as error:
                 print(f"Invalid row ({error}): {repr(row)}")
+
+        total_assignments = len(assigned_drones)
+        unique_drones = set(assigned_drones)
+        if len(unique_drones) != total_assignments or total_assignments != len(self.available_drones(simulation)):
+            print(f"Wrong groups assignment. Unique drones: {len(unique_drones)}, total_assignments: {total_assignments}, available_drones: {len(self.available_drones(simulation))}")
 
 
 if __name__ == "__main__":
