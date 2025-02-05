@@ -1,0 +1,4 @@
+name: gpt4o_1
+log_dir.append: /gpt4o_1
+adaptation_name: generated_adaptations.adaptations.gpt4o_1.Strategy
+adaptation_params: {}

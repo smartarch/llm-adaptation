@@ -3,4 +3,4 @@ drone:
   HoveringEnergyConsumption: 0
 noCharging: true  # no "charging" group (action)
 
-log_dir: logs/no_battery
+log_dir.append: /no_battery

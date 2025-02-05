@@ -3,4 +3,4 @@ autoCharging: true  # automatically charge drones
 autoChargeSafetyMargin: 0.03  # battery remaining when the drone reaches the charger
 noCharging: true  # no "charging" group (action)
 
-log_dir: logs/auto_charging
+log_dir.append: /auto_charging

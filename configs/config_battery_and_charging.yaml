@@ -1,1 +1,1 @@
-log_dir: logs/battery_and_charging
+log_dir.append: /battery_and_charging

@@ -24,3 +24,5 @@ bird:
   WaitBeforeEat: 5  # steps to wait before damage is dealt
   NearbyBirdsToEat: 2
   NearbyBirdsRadius: 4
+
+log_dir: logs
