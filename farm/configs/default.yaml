@@ -1,3 +1,6 @@
+example: farm
+steps: 300
+
 drones: 8
 birds: 80
 charger: [22,21]

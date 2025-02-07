@@ -1,21 +1,15 @@
-from typing import Optional, TYPE_CHECKING
-
-from base_classes.components import Component
 from base_classes.components2d import Point2D
-from components.bird import Bird, BirdFieldProbabilityGenerator
-from components.charger import Charger
-from components.drone import Drone, DroneState
-from components.field import Field
-
-if TYPE_CHECKING:
-    from visualizer import Visualizer
-    from stats import Stats
+from base_classes.simulation import Simulation
+from farm.components.bird import Bird, BirdFieldProbabilityGenerator
+from farm.components.charger import Charger
+from farm.components.drone import Drone, DroneState
+from farm.components.field import Field
 
 
-class SmartFarmSimulation:
+class SmartFarmSimulation(Simulation):
 
     def __init__(self, adapt: callable, config: dict):
-        self.config = config
+        super().__init__(adapt, config)
 
         self.mapWidth = config["mapWidth"]
         self.mapHeight = config["mapHeight"]
@@ -29,11 +23,7 @@ class SmartFarmSimulation:
 
         self.fieldProbabilityGenerator = BirdFieldProbabilityGenerator(self, config["birdFieldProbabilities"], config["birdCohesion"])
 
-        self.components: list[Component] = [self.fieldProbabilityGenerator] + self.fields + self.drones + self.birds + [self.charger]
-        self.adapt = adapt
-
-        self.visualizer: Optional["Visualizer"] = None
-        self.stats: Optional["Stats"] = None
+        self.components = [self.fieldProbabilityGenerator] + self.fields + self.drones + self.birds + [self.charger]
 
         self.set_config_values(config)
 
@@ -52,35 +42,12 @@ class SmartFarmSimulation:
                 else:
                     raise KeyError(f"Unknown bird attribute: {key}")
 
-    def run_simulation(self, steps: int):
-        for step in range(1, steps + 1):
-            print(f"Step: {step}")
-
-            self.simulation_step(step)
-
-            if self.stats:
-                self.stats.write_row(step)
-            if self.visualizer:
-                self.visualizer.drawComponents(step)
-
-    def simulation_step(self, step):
-        self.adapt(self, step)
-
-        for component in self.components:
-            component.actuate()
-
     @property
     def total_damage(self):
         return sum(field.damage for field in self.fields)
 
     def randomPoint(self):
         return Point2D.random(0, 0, self.mapWidth, self.mapHeight)
-
-    def add_visualizer(self, visualizer: "Visualizer"):
-        self.visualizer = visualizer
-
-    def add_stats(self, stats: "Stats"):
-        self.stats = stats
 
     def notTerminatedDrones(self):
         return filter(lambda d: d.state != DroneState.TERMINATED, self.drones)

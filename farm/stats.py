@@ -1,8 +1,8 @@
 from typing import Optional
 
-from components.drone import Drone, DroneState
-from components.field import Field
-from simulation import SmartFarmSimulation
+from farm.components.drone import Drone, DroneState
+from farm.components.field import Field
+from farm.simulation import SmartFarmSimulation
 import csv
 
 

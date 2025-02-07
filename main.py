@@ -3,14 +3,8 @@ import os
 import sys
 from datetime import datetime
 
-from langchain.globals import set_verbose, set_debug
-
 from base_classes.adaptation import import_adaptation
-from plots import draw_plots
-from simulation import SmartFarmSimulation
-from stats import Stats
 from utils import read_configs, Logger, print_config
-from visualizer import Visualizer
 
 
 from dotenv import find_dotenv, load_dotenv
@@ -18,7 +12,7 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--animation", "-a", default=False, action="store_true")
-parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.", default=["configs/config.yaml", "configs/fake.yaml"])
+parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.")
 parser.add_argument('--episode', '-e', type=int, help="Episode (iteration) number. It is used as part of the log file name.")
 parser.add_argument('--seed', '-s', type=int, help="Seed for random number generator.")
 args = parser.parse_args()
@@ -43,20 +37,27 @@ config["log_file_name"] = name
 config["log_file_path"] = f"{log_dir}/{name}.ansi"
 print_config(config)
 
+example = config["example"]
+if example == "farm":
+    from farm.simulation import SmartFarmSimulation as Simulation
+    from farm.visualizer import Visualizer
+    from farm.stats import Stats
+    from farm.plots import draw_plots
+
+
 adaptation = import_adaptation(config)
-simulation = SmartFarmSimulation(adaptation.adapt, config)
+simulation = Simulation(adaptation.adapt, config)
 adaptation.init(simulation)
 
 if args.animation:
     visualizer = Visualizer(simulation)
     simulation.add_visualizer(visualizer)
-    visualizer.drawFields()
 stats = Stats(simulation, f"{log_dir}/{name}.csv")
 simulation.add_stats(stats)
 stats.write_header()
 
 print("\nRunning simulation...\n")
-simulation.run_simulation(300)
+simulation.run_simulation(config["steps"])
 print("\nSimulation done")
 
 adaptation.end(simulation)

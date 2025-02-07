@@ -2,8 +2,8 @@ from enum import Enum
 from typing import Optional
 
 from base_classes.components2d import MovingComponent2D, Point2D
-from components.charger import Charger
-from components.field import Field
+from farm.components.charger import Charger
+from farm.components.field import Field
 
 
 class DroneState(Enum):

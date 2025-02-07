@@ -1,13 +1,12 @@
 from abc import abstractmethod, ABC
 from collections import deque
-from typing import TYPE_CHECKING
 
 from langchain_core.messages import HumanMessage
 
 from base_classes.adaptation import Adaptation
 from base_classes.llm_template import import_prompt_template
-from helpers import print_prompt, print_response
-from simulation import SmartFarmSimulation
+from utils import print_prompt, print_response
+from farm.simulation import SmartFarmSimulation
 
 
 class LLMAdaptation(Adaptation, ABC):

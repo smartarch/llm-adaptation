@@ -1,10 +1,10 @@
 import numpy as np
 
-from adaptations.rl.q_network_adaptation import QNetworkAdaptation
-from adaptations.rl.replay_buffer import Transition
-from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, getRewardDroneProtecting, \
+from farm.adaptations.rl.q_network_adaptation import QNetworkAdaptation
+from farm.adaptations.rl.replay_buffer import Transition
+from farm.adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, getRewardDroneProtecting, \
     getStateDrone, getStateField, performDroneAction, epsilonGreedy
-from components.drone import DroneState
+from farm.components.drone import DroneState
 
 
 class QNetworkAdaptationDrone(QNetworkAdaptation):

@@ -2,7 +2,7 @@ import abc
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
+    from simulation import Simulation
 
 
 class ComponentMeta(abc.ABCMeta):
@@ -27,7 +27,7 @@ class Component(metaclass=ComponentMeta):
     id: str
     _count = 0  # Number of components of each type
 
-    def __init__(self, simulation: "SmartFarmSimulation"):
+    def __init__(self, simulation: "Simulation"):
         # generate the ID
         cls = type(self)
         cls._count += 1

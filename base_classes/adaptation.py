@@ -3,7 +3,7 @@ import importlib
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
+    from farm.simulation import SmartFarmSimulation
 
 
 class Adaptation(abc.ABC):
@@ -25,7 +25,7 @@ class Adaptation(abc.ABC):
 def import_adaptation(config: dict) -> Adaptation:
     adaptation_name = config["adaptation_name"]
     adaptation_params = config["adaptation_params"]
-    assert adaptation_name.startswith("adaptations.") or adaptation_name.startswith("generated_adaptations.")
+    # assert adaptation_name.startswith("adaptations.") or adaptation_name.startswith("generated_adaptations.")
 
     adaptation_module, adaptation_class = adaptation_name.rsplit(".", 1)
     print(f"Loading adaptation {adaptation_class} from module {adaptation_module}")

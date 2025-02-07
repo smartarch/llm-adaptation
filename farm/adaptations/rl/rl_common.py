@@ -2,8 +2,8 @@ from pathlib import Path
 
 import numpy as np
 
-from components.drone import DroneState, Drone
-from components.field import Field
+from farm.components.drone import DroneState, Drone
+from farm.components.field import Field
 
 
 class EpsilonSchedule:

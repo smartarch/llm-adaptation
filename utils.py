@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 
 import yaml
+from colorama import Fore, Style
 
 
 def read_yaml(file):
@@ -85,3 +86,17 @@ def case_insensitive_partition(string: str, separator: str):
     else:
         # If not found, return the entire string and two empty strings
         return string, '', ''
+
+
+def print_prompt(prompt):
+    print(Fore.MAGENTA, end="")
+    print("PROMPT:")
+    print(prompt)
+    print(Style.RESET_ALL)
+
+
+def print_response(response):
+    print(Fore.CYAN, end="")
+    print("RESPONSE:")
+    print(response)
+    print(Style.RESET_ALL)

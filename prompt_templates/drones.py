@@ -1,8 +1,4 @@
-import textwrap
-from typing import TYPE_CHECKING
-
-from base_classes.llm_template import PromptTemplate, BasicPromptTemplate
-from components.drone import Drone, DroneState
+from base_classes.llm_template import BasicPromptTemplate
 
 
 class DronesLLMTemplate(BasicPromptTemplate):

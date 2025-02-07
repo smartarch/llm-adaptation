@@ -5,12 +5,12 @@ from typing import TYPE_CHECKING
 
 import tiktoken
 
-from components.drone import Drone, DroneState
-from components.field import Field
+from farm.components.drone import Drone, DroneState
+from farm.components.field import Field
 from utils import case_insensitive_partition
 
 if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
+    from farm.simulation import SmartFarmSimulation
 
 
 class PromptTemplate(abc.ABC):

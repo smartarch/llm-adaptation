@@ -1,14 +1,13 @@
 import argparse
 from typing import TYPE_CHECKING
 
-import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 
 from base_classes.components2d import Point2D
-from components.bird import BirdState
-from components.drone import DroneState
-from components.field import Field
+from farm.components.bird import BirdState
+from farm.components.drone import DroneState
+from farm.components.field import Field
 from utils import read_configs
 
 if TYPE_CHECKING:
@@ -68,6 +67,8 @@ class Visualizer:
 
         self.images: list[Image] = []
         self.grid = {}
+
+        self.drawFields()
 
     def _drawRectangle(self, canvas: np.ndarray, point, component, color=None):
         if color is None:

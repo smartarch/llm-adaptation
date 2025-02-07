@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import adaptations.rl.tf_wrappers as tf_wrappers
+import farm.adaptations.rl.tf_wrappers as tf_wrappers
 
 
 class PPONetwork(tf.keras.Model):

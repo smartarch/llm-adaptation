@@ -1,5 +1,5 @@
 from base_classes.adaptation import Adaptation
-from simulation import SmartFarmSimulation
+from farm.simulation import SmartFarmSimulation
 
 
 class RuleBasedFullNearestAdaptation(Adaptation):

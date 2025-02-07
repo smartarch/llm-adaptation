@@ -5,16 +5,16 @@ from typing import TYPE_CHECKING
 import numpy as np
 import tensorflow as tf
 
-from adaptations.rl.ppo_network import PPONetwork
-from adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, \
+from farm.adaptations.rl.ppo_network import PPONetwork
+from farm.adaptations.rl.rl_common import getRewardDroneStateConsistence, getRewardDroneCharging, \
     getRewardDroneProtecting, performDroneAction, getStateDrone, getStateField, getRewardData, \
     initializeRewardData, droneActionsCount
 from base_classes.adaptation import Adaptation
-from components.drone import DroneState
-from simulation import SmartFarmSimulation
+from farm.components.drone import DroneState
+from farm.simulation import SmartFarmSimulation
 
 if TYPE_CHECKING:
-    from components.drone import Drone
+    from farm.components.drone import Drone
 
 
 class PPOAdaptation(Adaptation):

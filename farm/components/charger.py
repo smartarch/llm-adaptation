@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from base_classes.components2d import StationaryComponent2D, Point2D
 
 if TYPE_CHECKING:
-    from components.drone import Drone
+    from farm.components.drone import Drone
 
 
 class Charger(StationaryComponent2D):

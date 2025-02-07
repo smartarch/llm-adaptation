@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -6,7 +6,7 @@ from base_classes.components import Component
 from base_classes.components2d import Point2D
 
 if TYPE_CHECKING:
-    from components.drone import Drone
+    from farm.components.drone import Drone
 
 
 class Field(Component):
@@ -37,7 +37,7 @@ class Field(Component):
         self.damage = 0  # total damage
         self.damagedThisStep = set()
 
-        from components.drone import Drone
+        from farm.components.drone import Drone
         self.protectingDrones: set[Drone] = set()
         self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 2)
         self.protectionPlaces: dict[Point2D, list[Drone]] = \

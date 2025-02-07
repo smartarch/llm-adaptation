@@ -2,10 +2,10 @@ import random
 from typing import TYPE_CHECKING
 
 from base_classes.adaptation import Adaptation
-from components.drone import DroneState
+from farm.components.drone import DroneState
 
 if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
+    from farm.simulation import SmartFarmSimulation
 
 
 class RuleBasedRandomAdaptation(Adaptation):

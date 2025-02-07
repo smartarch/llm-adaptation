@@ -5,16 +5,16 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from adaptations.rl.q_network import DoubleQNetwork
-from adaptations.rl.replay_buffer import ReplayBuffer, Transition
-from adaptations.rl.rl_common import EpsilonSchedule, getRewardDroneStateConsistence, getRewardDroneCharging, \
+from farm.adaptations.rl.q_network import DoubleQNetwork
+from farm.adaptations.rl.replay_buffer import ReplayBuffer, Transition
+from farm.adaptations.rl.rl_common import EpsilonSchedule, getRewardDroneStateConsistence, getRewardDroneCharging, \
     getRewardDroneProtecting, performDroneAction, getStateDrone, getStateField, getRewardData, epsilonGreedy, \
     initializeRewardData, droneActionsCount
 from base_classes.adaptation import Adaptation
-from components.drone import DroneState
+from farm.components.drone import DroneState
 
 if TYPE_CHECKING:
-    from simulation import SmartFarmSimulation
+    from farm.simulation import SmartFarmSimulation
 
 
 class QNetworkAdaptation(Adaptation):
