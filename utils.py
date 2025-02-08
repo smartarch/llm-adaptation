@@ -43,6 +43,15 @@ def print_config(config: dict):
     print("\n")
 
 
+def set_config_values(config: dict, class_name: str, class_type: type):
+    if class_name in config:
+        for key in config[class_name]:
+            if key in class_type.__dict__:
+                setattr(class_type, key, config[class_name][key])
+            else:
+                raise KeyError(f"Unknown {class_name} attribute: {key}")
+
+
 class Logger:
     """Prints the stdout simultaneously to the terminal and a file."""
     def __init__(self, log_file: Path | str, stream=sys.stdout, create_on_first_write=False):

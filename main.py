@@ -43,6 +43,12 @@ if example == "farm":
     from farm.visualizer import Visualizer
     from farm.stats import Stats
     from farm.plots import draw_plots
+elif example == "dragon":
+    from dragon.simulation import DragonHuntSimulation as Simulation
+    from dragon.stats import Stats
+    from dragon.plots import draw_plots
+else:
+    raise ValueError(f"Unknown example: {example}")
 
 
 adaptation = import_adaptation(config)

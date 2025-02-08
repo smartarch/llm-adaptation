@@ -1,0 +1,4 @@
+name: rule_based_mt
+log_dir.append: /rule_based_mt
+adaptation_name: dragon.adaptations.rule_based.RuleBasedMTAdaptation
+adaptation_params: {}

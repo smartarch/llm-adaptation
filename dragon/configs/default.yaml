@@ -1,0 +1,26 @@
+example: dragon
+steps: 30
+
+log_dir: logs/dragon
+
+wheat: 10
+
+farmers: 2
+warriors: 2
+
+farmer:
+  HP: 4
+  Attack: 1
+  Farming: 5
+  SpawnCost: 10
+
+warrior:
+  HP: 6
+  Attack: 3
+  Farming: 2
+  SpawnCost: 12
+
+dragon:
+  HP: 50
+  FireAttackProb: 0.4
+  EatAttackProb: 0.2
