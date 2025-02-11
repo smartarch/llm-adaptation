@@ -1,0 +1,42 @@
+{# Description (goal) #}
+{% if configuration.environment.description %}
+{{ configuration.environment.description }}
+{% endif %}
+
+{# Environment (global) attributes #}
+{% if configuration.environment.globals %}
+{% for _, attribute in configuration.environment.globals.items() %}
+- {{ attribute.name }}: {{ environment|get_attr(attribute) }}
+{% endfor %}
+{% endif %}
+{# Environment components (beyond-control) #}
+{% if configuration.environment.components %}
+{% for _, component_group in configuration.environment.components.items() %}
+{{ component_group.description }}:
+{% for component in component_group|get_components %}
+- {{ component|get_value(component_group.id) }}:
+{% for _, attribute in component_group.attributes.items() %}
+  - {{ attribute.name }}: {{ component|get_attr(attribute) }}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{# Ensemble assignments #}
+{% for _, assignment in configuration.assignments.items() %}
+---
+{# Components to be assigned #}
+{{ assignment.components.description }}:
+{% for component in assignment.components|get_components %}
+- {{ component|get_value(assignment.components.id) }}:
+{% for _, attribute in assignment.components.attributes.items() %}
+  - {{ attribute.name }}: {{ component|get_attr(attribute) }}
+{% endfor %}
+{% endfor %}
+
+Your goal is to divide the {{ assignment.components.description }} among the following groups:
+{# Ensembles #}
+{% for ensemble in assignment.ensembles|get_ensembles %}
+{{ loop.index }}. {{ ensemble }}
+{% endfor %}
+{% endfor %}

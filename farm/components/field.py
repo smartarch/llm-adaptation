@@ -7,6 +7,7 @@ from base_classes.components2d import Point2D
 
 if TYPE_CHECKING:
     from farm.components.drone import Drone
+    from farm.simulation import SmartFarmSimulation
 
 
 class Field(Component):
@@ -17,16 +18,15 @@ class Field(Component):
                |          |
                |__________|.(right,bottom)
     """
-    # Field counter
-    Count = 0
+
+    # type hint
+    simulation: "SmartFarmSimulation"
 
     def __init__(self, simulation, top, left, bottom, right):
         """
         Initiate the field with one crop per grid point.
         """
         super().__init__(simulation)
-        Field.Count = Field.Count + 1
-        self.id = f"Field_{Field.Count}"
 
         self.top = top
         self.left = left
@@ -179,6 +179,7 @@ class Field(Component):
         x, y = cropCoordinates[idx]
         return Point2D(x + self.left, y + self.top)
 
+    @property
     def threat_level(self):
         birds_inside = len([
             bird for bird in self.simulation.birds
@@ -194,6 +195,10 @@ class Field(Component):
     def remaining_drones_for_full_protection(self) -> int:
         # TODO: we might want to also consider drones moving to field here
         return len(self.protectionPlaces) - len(self.protectingDrones)
+
+    @property
+    def protecting_drones(self):
+        return len(self.protectingDrones)
 
     @property
     def isFullyProtected(self):

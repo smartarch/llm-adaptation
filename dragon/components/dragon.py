@@ -28,6 +28,7 @@ class Dragon(Component):
     def get_attacked(self, damage):
         self.hp -= damage
         self.got_attacked_this_step = True
+        # TODO: die and end simulation
 
     def attack_back(self):
         prob = random.random()

@@ -1,9 +1,13 @@
 import random
 from enum import Enum
 from math import isclose
+from typing import TYPE_CHECKING
 
 from base_classes.components import Component
 from base_classes.components2d import MovingComponent2D
+
+if TYPE_CHECKING:
+    from farm.simulation import SmartFarmSimulation
 
 
 class BirdState(Enum):
@@ -16,6 +20,9 @@ class BirdState(Enum):
 
 
 class BirdFieldProbabilityGenerator(Component):
+
+    # type hint
+    simulation: "SmartFarmSimulation"
 
     def __init__(self, simulation, birdFieldProbabilities, birdCohesion=0.5):
         super().__init__(simulation)
@@ -46,7 +53,7 @@ class BirdFieldProbabilityGenerator(Component):
         return [(1 - t) * p1 + t * p2 for p1, p2 in zip(probabilities1, probabilities2)]
 
     def birdDistributionInFields(self):
-        threatLevels = [field.threat_level() for field in self.simulation.fields]
+        threatLevels = [field.threat_level for field in self.simulation.fields]
         sumThreatLevels = sum(threatLevels)
         if sumThreatLevels == 0:
             return [1 / len(threatLevels) for _ in threatLevels]
@@ -62,6 +69,9 @@ class Bird(MovingComponent2D):
     WaitBeforeEat = 2  # steps to wait before damage is dealt
     NearbyBirdsToEat = 2  # number of other eating birds nearby to deal damage (otherwise just fly away)
     NearbyBirdsRadius = 3
+
+    # type hint
+    simulation: "SmartFarmSimulation"
 
     def __init__(self, simulation, location):
         """

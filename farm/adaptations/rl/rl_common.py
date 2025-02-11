@@ -52,7 +52,7 @@ def getStateDrone(drone: "Drone", simulation, include_battery=True):
 
 
 def getStateField(field: "Field"):
-    return [field.threat_level(), field.remaining_drones_for_full_protection / len(field.protectionPlaces)]
+    return [field.threat_level, field.remaining_drones_for_full_protection / len(field.protectionPlaces)]
 
 
 # action
@@ -121,7 +121,7 @@ def getRewardDroneProtecting(reward_shaping: dict, drone):
             reward = reward_shaping.get("reward_drone_moving_to_field", 0)
 
     if reward_shaping.get("protecting_reward_threat_level", False) and drone.target is not None:
-        reward *= drone.target.threat_level()
+        reward *= drone.target.threat_level
     return reward
 
 

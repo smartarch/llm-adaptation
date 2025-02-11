@@ -9,6 +9,7 @@ class Simulation(abc.ABC):
         self.config = config
         self.adapt = adapt
         self.components: list[Component] = []
+        self.beyond_control_components: list[Component] = []
 
         self.visualizer = None
         self.stats = None
@@ -27,7 +28,7 @@ class Simulation(abc.ABC):
     def simulation_step(self, step):
         self.adapt(self, step)
 
-        for component in self.components:
+        for component in self.components + self.beyond_control_components:
             component.actuate()
 
     def add_visualizer(self, visualizer):
@@ -35,3 +36,8 @@ class Simulation(abc.ABC):
 
     def add_stats(self, stats):
         self.stats = stats
+
+    @staticmethod
+    def get_globals():
+        """Returns the classes and global functions as a dictionary that can be used in `eval`."""
+        return {}

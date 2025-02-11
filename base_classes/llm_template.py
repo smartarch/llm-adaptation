@@ -52,7 +52,7 @@ class PromptTemplate(abc.ABC):
               - bottom: {field.bottom}
             """)
         if self.field_attributes_config["threat_level"]:
-            attributes += f"  - threat level: {field.threat_level():.2f}\n"
+            attributes += f"  - threat level: {field.threat_level:.2f}\n"
         if self.field_attributes_config["protecting_drones"]:
             attributes += f"  - protecting: {len(field.protectingDrones)} drone{'s' if len(field.protectingDrones) != 1 else ''}\n"
         if self.field_attributes_config["necessary_drones_for_full_protection"]:

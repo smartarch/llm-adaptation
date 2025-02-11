@@ -1,0 +1,68 @@
+environment:
+  description: "The goal of the game is to kill a Dragon as fast as possible."
+  components:
+    dragon:
+      type: Dragon
+      attributes:
+        hp:
+          name: "Health"
+          attribute: hp
+  globals:
+    wheat:
+      name: "Wheat"
+      attribute: wheat
+assignments:
+  assign_in_village:
+    components:
+      type: [Farmer, Warrior]
+      if: "lambda component: component.location == Map.VILLAGE"
+      description: "Villagers in the Village"
+      id: name
+      attributes:
+        role:
+          name: "Role"
+          description: "Farmer or Warrior"
+          attribute: role
+        health:
+          name: "Health"
+          attribute: hp
+    ensembles:
+      farm:
+        name: "farm"
+        description: "Stay in the Village and work on the farm"
+      cave:
+        name: "cave"
+        description: "Go to the Cave"
+      spawn_farmer:
+        name: "spawn farmer"
+        description: "Spawn a new farmer"
+      spawn_warrior:
+        name: "spawn warrior"
+        description: "Spawn a new warrior"
+  assign_in_cave:
+    components:
+      type: [ Farmer, Warrior ]
+      if: "lambda component: component.location == Map.CAVE"
+      description: "Villagers in the Cave"
+      id: name
+      attributes:
+        role:
+          name: "Role"
+          description: "Farmer or Warrior"
+          attribute: role
+        health:
+          name: "Health"
+          attribute: hp
+    ensembles:
+      attack:
+        name: "attack"
+        description: "Attack the Dragon"
+      cave:
+        name: "cave"
+        description: "Stay in the Cave"
+      village:
+        name: "village"
+        description: "Go to the Village"
+
+    strategy: ""  # TODO
+    format: "Drone_<N>: <group>"  # TODO

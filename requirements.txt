@@ -17,3 +17,6 @@ tiktoken
 
 # RL
 tensorflow==2.14.0
+
+# templates
+Jinja2

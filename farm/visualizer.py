@@ -121,7 +121,7 @@ class Visualizer:
         text = f"Step: {step}"
         text += f"\nTotal damage: {sum(field.damage for field in self.simulation.fields)}"
         for field in self.simulation.fields:
-            text += f"\n{field.id}: threat: {field.threat_level():.2f}, dmg: {field.damage}"
+            text += f"\n{field.id}: threat: {field.threat_level:.2f}, dmg: {field.damage}"
         text += f"\nBird probs: {', '.join([f'{p:.2f}' for p in self.simulation.fieldProbabilityGenerator()])}"
         for drone in self.simulation.drones:
             text += f"\n{drone.id}: bat: {drone.battery:.2f}, state: {drone.state}"

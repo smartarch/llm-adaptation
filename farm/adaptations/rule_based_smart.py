@@ -30,7 +30,7 @@ class RuleBasedFullNearestAdaptation(Adaptation):
 
     @staticmethod
     def fieldsByThreatLevel(simulation):
-        return sorted(simulation.fields, key=lambda f: f.threat_level(), reverse=True)
+        return sorted(simulation.fields, key=lambda f: f.threat_level, reverse=True)
 
 
 class RuleBasedFullNearestOracleAdaptation(RuleBasedFullNearestAdaptation):
@@ -59,7 +59,7 @@ class RuleBasedProtectOneAdaptation(Adaptation):
         self.charging = ("noCharging" not in simulation.config or not simulation.config["noCharging"])
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
-        field = max(simulation.fields, key=lambda f: f.threat_level())
+        field = max(simulation.fields, key=lambda f: f.threat_level)
 
         if field == self.currently_protecting_field:
             return

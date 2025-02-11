@@ -1,0 +1,53 @@
+{# Description (goal) #}
+{% if configuration.environment.description %}
+{{ configuration.environment.description }}
+{% endif %}
+
+{# Strategy interface #}
+Suggest an adaptation strategy.
+{% if configuration.strategy_interface %}
+{{ configuration.strategy_interface }}
+{% endif %}
+
+{# Ensemble assignments #}
+{% for assignment_name, assignment in configuration.assignments.items() %}
+---
+In `{{ assignment_name }}`, your goal is to divide the `components` ({{ assignment.components.description }}) into the following groups:
+{# Ensembles #}
+{% for ensemble in assignment.ensembles|get_ensembles %}
+{{ loop.index }}. {{ ensemble }}
+{% endfor %}
+
+For each component, the following attributes are available:
+{# Component attributes #}
+{% for _, attribute in assignment.components.attributes.items() %}
+- `{{ attribute.attribute }}`: {{ attribute.name }}{% if attribute.description %} ({{ attribute.description }}){% endif %}
+
+{% endfor %}
+
+{% endfor %}
+---
+
+To perform the group assignments, use the `assign_group(component, group_id)` function. The `group_id` must be exactly as listed above.
+
+{# Environment components (beyond-control) #}
+{% if configuration.environment.components %}
+Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups:
+
+{% for _, component_group in configuration.environment.components.items() %}
+{{ component_group.description }} with the following attributes:
+{% for _, attribute in component_group.attributes.items() %}
+- `{{ attribute.attribute }}`: {{ attribute.name }}{% if attribute.description %} ({{ attribute.description }}){% endif %}
+
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{# Environment (global) attributes #}
+{% if configuration.environment.globals %}
+Global read-only attributes of the `environment`:
+{% for _, attribute in configuration.environment.globals.items() %}
+- `{{ attribute.attribute }}`: {{ attribute.name }}{% if attribute.description %} ({{ attribute.description }}){% endif %}
+
+{% endfor %}
+{% endif %}

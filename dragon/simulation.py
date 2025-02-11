@@ -20,8 +20,8 @@ class DragonHuntSimulation(Simulation):
         self.dragon = Dragon(self)
         self.components = \
             [Farmer(self) for _ in range(config["farmers"])] + \
-            [Warrior(self) for _ in range(config["warriors"])] + \
-            [self.dragon]
+            [Warrior(self) for _ in range(config["warriors"])]
+        self.beyond_control_components = [self.dragon]
         self.wheat = int(config["wheat"])
 
     @staticmethod
@@ -62,6 +62,12 @@ class DragonHuntSimulation(Simulation):
         self.components.append(Warrior(self))
         for parent in parents:
             parent.state = VillagerState.IDLE
+
+    @staticmethod
+    def get_globals():
+        return {
+            "Map": Map
+        }
 
 
 class Map(enum.Enum):
