@@ -25,11 +25,17 @@ class Simulation(abc.ABC):
             if self.visualizer:
                 self.visualizer.drawComponents(step)
 
+            if self.should_stop():
+                break
+
     def simulation_step(self, step):
         self.adapt(self, step)
 
         for component in self.components + self.beyond_control_components:
             component.actuate()
+
+    def should_stop(self):
+        return False
 
     def add_visualizer(self, visualizer):
         self.visualizer = visualizer

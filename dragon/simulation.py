@@ -18,11 +18,15 @@ class DragonHuntSimulation(Simulation):
         from dragon.components.dragon import Dragon
 
         self.dragon = Dragon(self)
-        self.components = \
+        self.components: list["Villager"] = \
             [Farmer(self) for _ in range(config["farmers"])] + \
             [Warrior(self) for _ in range(config["warriors"])]
         self.beyond_control_components = [self.dragon]
         self.wheat = int(config["wheat"])
+
+        self.spawn_farmer_ensemble = []
+        self.spawn_warrior_ensemble = []
+        self.assigned = []
 
     @staticmethod
     def set_config_values(config: dict):
@@ -31,6 +35,21 @@ class DragonHuntSimulation(Simulation):
         set_config_values(config, "farmer", Farmer)
         set_config_values(config, "warrior", Warrior)
         set_config_values(config, "dragon", Dragon)
+
+    def simulation_step(self, step):
+        super().simulation_step(step)
+
+        # spawn new villagers
+        from dragon.components.villagers import Warrior, Farmer
+        if len(self.spawn_farmer_ensemble) >= 2:
+            self._spawn_villager(self.spawn_farmer_ensemble, Farmer)
+        if len(self.spawn_warrior_ensemble) >= 2:
+            self._spawn_villager(self.spawn_warrior_ensemble, Warrior)
+        self.spawn_farmer_ensemble = []
+        self.spawn_warrior_ensemble = []
+
+    def should_stop(self):
+        return self.dragon.hp <= 0
 
     def get_villagers_in(self, location: "Map") -> list["Villager"]:
         from dragon.components.villagers import Villager
@@ -43,31 +62,52 @@ class DragonHuntSimulation(Simulation):
     def dragon_hp(self):
         return self.dragon.hp
 
-    def spawn_farmer(self, parents: list["Villager"]):
-        # TODO: this should be an ensemble and we should check that parents are idle
-        from dragon.components.villagers import Farmer, VillagerState
-        if len(parents) < 2:
-            return
-        self.wheat -= Farmer.SpawnCost
-        self.components.append(Farmer(self))
-        for parent in parents:
-            parent.state = VillagerState.IDLE
+    def _spawn_villager(self, parents: list["Villager"], villager_type: type["Villager"]):
+        count = len(parents) // 2
+        for _ in range(count):
+            if self.wheat < villager_type.SpawnCost:
+                return
 
-    def spawn_warrior(self, parents: list["Villager"]):
-        # TODO: this should be an ensemble and we should check that parents are idle
-        from dragon.components.villagers import Warrior, VillagerState
-        if len(parents) < 2:
-            return
-        self.wheat -= Warrior.SpawnCost
-        self.components.append(Warrior(self))
-        for parent in parents:
-            parent.state = VillagerState.IDLE
+            self.wheat -= villager_type.SpawnCost
+            self.components.append(villager_type(self))
 
     @staticmethod
     def get_globals():
         return {
             "Map": Map
         }
+
+    def assign_group(self, component: "Villager", group_id: str):
+        from dragon.components.villagers import VillagerState
+
+        if component in self.assigned:
+            print(f"Already assigned: {component}")
+            return
+
+        if component.location == Map.VILLAGE:
+            match group_id.strip():
+                case "farm":
+                    component.state = VillagerState.FARMING
+                case "cave":
+                    component.state = VillagerState.MOVING_TO_CAVE
+                case "spawn farmer":
+                    component.state = VillagerState.SPAWNING
+                    self.spawn_farmer_ensemble.append(component)
+                case "spawn warrior":
+                    component.state = VillagerState.SPAWNING
+                    self.spawn_warrior_ensemble.append(component)
+                case _:
+                    print(f"Invalid group: {group_id}")
+        else:  # component.location == Map.CAVE
+            match group_id.strip():
+                case "village":
+                    component.state = VillagerState.MOVING_TO_VILLAGE
+                case "cave":
+                    component.state = VillagerState.IDLE
+                case "attack":
+                    component.state = VillagerState.ATTACKING
+                case _:
+                    print(f"Invalid group: {group_id}")
 
 
 class Map(enum.Enum):

@@ -11,6 +11,7 @@ class VillagerState(enum.Enum):
     MOVING_TO_VILLAGE = 2
     MOVING_TO_CAVE = 3
     ATTACKING = 4
+    SPAWNING = 5
 
 
 class Villager(Component):
@@ -27,11 +28,13 @@ class Villager(Component):
         super().__init__(simulation)
         self.location = Map.VILLAGE
         self.state = VillagerState.IDLE
+        self.log_state = VillagerState.IDLE  # for logging
         self.hp = self.HP
         self.name = get_name()
 
     def actuate(self):
-        if self.state == VillagerState.IDLE:
+        self.log_state = self.state
+        if self.state == VillagerState.IDLE or self.state == VillagerState.SPAWNING:
             pass
         elif self.state == VillagerState.FARMING and self.location == Map.VILLAGE:
             self.simulation.wheat += self.Farming

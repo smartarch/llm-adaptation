@@ -25,7 +25,7 @@ class Stats:
         if header:
             return ["step", "dragon_hp", "wheat"] + [state.name for state in VillagerState] + ["farmers_village", "farmers_cave", "warriors_village", "warriors_cave"] + ["dragon_attack"]
         counts_in_states = [
-            sum(1 for component in self.simulation.components if isinstance(component, Villager) and component.state == state)
+            sum(1 for component in self.simulation.components if isinstance(component, Villager) and component.log_state == state)
             for state in VillagerState
         ]
         villager_counts = [

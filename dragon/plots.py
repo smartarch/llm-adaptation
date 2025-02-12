@@ -29,6 +29,7 @@ def draw_plots(file_name: str, show=False):
     axes[2].set_frame_on(False)
     axes[2].set_xlabel('Step')
     axes[2].set_ylabel('HP')
+    axes[2].set_ylim((0, df['dragon_hp'].max()))
     ax2.set_ylabel('Damage per time step')
     axes[2].set_title('HP Over Time')
     axes[2].legend(loc='upper left')

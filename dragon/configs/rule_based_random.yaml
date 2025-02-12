@@ -1,0 +1,4 @@
+name: rule_based_random
+log_dir.append: /rule_based_random
+adaptation_name: dragon.adaptations.rule_based.RuleBasedRandomAdaptation
+adaptation_params: {}
