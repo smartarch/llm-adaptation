@@ -5,6 +5,7 @@
 
 {# Environment (global) attributes #}
 {% if configuration.environment.globals %}
+Current state of the environment:
 {% for _, attribute in configuration.environment.globals.items() %}
 - {{ attribute.name }}: {{ environment|get_attr(attribute) }}
 {% endfor %}
@@ -12,9 +13,12 @@
 {# Environment components (beyond-control) #}
 {% if configuration.environment.components %}
 {% for _, component_group in configuration.environment.components.items() %}
+
 {{ component_group.description }}:
-{% for component in component_group|get_components %}
+{% for component in component_group|get_components(beyond_control=True) %}
+{% if component_group.id %}
 - {{ component|get_value(component_group.id) }}:
+{% endif %}
 {% for _, attribute in component_group.attributes.items() %}
   - {{ attribute.name }}: {{ component|get_attr(attribute) }}
 {% endfor %}
@@ -41,4 +45,16 @@ Your goal is to divide the {{ assignment.components.description }} among the fol
 {% if ensemble.description %}   - {{ ensemble.description }}
 {% endif %}
 {% endfor %}
+{% endfor %}
+
+---
+{% if configuration.chain_of_thought %}
+Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
+
+{% endif%}
+Note that each component must be assigned to exactly one group. Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer.
+
+{% for _, assignment in configuration.assignments.items() %}
+{{ assignment.answer_format }}
+
 {% endfor %}

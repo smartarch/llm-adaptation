@@ -45,6 +45,7 @@ assignments:
       spawn_warrior:
         name: "spawn warrior"
         description: If at least two villagers are assigned to this group, a new Warrior is spawned.
+    answer_format: 'For each of Villagers in the Village, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
   assign_in_cave:
     components:
       type: [ Farmer, Warrior ]
@@ -69,9 +70,10 @@ assignments:
       village:
         name: "village"
         description: "Go to the Village"
+    answer_format: 'For each of Villagers in the Cave, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
 
-    strategy: ""  # TODO
-    format: "Drone_<N>: <group>"  # TODO
+strategy: ""  # TODO
+chain_of_thought: true
 strategy_interface: |
   The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
   ```

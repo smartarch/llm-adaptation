@@ -62,8 +62,8 @@ assignments:
       protecting:
         for: Field  # component type
         name: 'lambda component: f"protecting {component.id}"'  # name generated from component
+    answer_format: 'For each drone, write one line with the selected group (in format "Drone_<N>: <group>", the group name must be exactly as listed above).'
 strategy: ""  # TODO: should it be per-assignment?
-answer_format: "Drone_<N>: <group>"  # TODO
 chain_of_thought: true
 # Strategy interface - try two options:
 #strategy_interface: The strategy must be written as a Python class that has an `adapt` method with parameters `simulation` and `step`. To perform the group assignments, use the `self.assign_group(component, group_id)` method. The `group_id` must be exactly as listed above.  # TODO

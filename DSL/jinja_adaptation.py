@@ -6,8 +6,10 @@ from utils import read_yaml
 
 
 @pass_context
-def get_components(context, config):
+def get_components(context, config, beyond_control=False):
     components = context.get("components")
+    if beyond_control:
+        components += context.get("beyond_control_components")
     environment: Simulation = context.get("environment")
 
     if "type" in config:
@@ -74,17 +76,15 @@ class JinjaPromptGenerator(Adaptation):
         jinja_env.filters['get_value'] = get_value
         jinja_env.filters['get_attr'] = get_attr
         jinja_env.filters['get_ensembles'] = get_ensembles
-        # self.template = jinja_env.get_template("prompt.jinja")
-        self.template = jinja_env.get_template("generate.jinja")
+        self.template = jinja_env.get_template("prompt.jinja")
+        # self.template = jinja_env.get_template("generate.jinja")
         self.configuration = read_yaml("DSL/drones.yaml")
         # self.configuration = read_yaml("DSL/dragon.yaml")
 
     def adapt(self, simulation: "Simulation", step: int):
-        # components = list(simulation.availableDrones())
-        components = simulation.components
-
         print(self.template.render(
-            components=components,
+            components=simulation.components,
+            beyond_control_components=simulation.beyond_control_components,
             environment=simulation,
             configuration=self.configuration,
         ))
