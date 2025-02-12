@@ -6,6 +6,7 @@ class RuleBasedFullNearestAdaptation(Adaptation):
     """Protects the most threatened fields with nearest drones."""
 
     def __init__(self, adapt_every=1):
+        super().__init__()
         self.adapt_every = adapt_every
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
@@ -46,6 +47,7 @@ class RuleBasedProtectOneAdaptation(Adaptation):
     """Protects the most threatened field with nearest idle drones. The remaining drones are idle."""
 
     def __init__(self):
+        super().__init__()
         self.standby_drones = []
         self.active_drones = []
         self.currently_protecting_field = None

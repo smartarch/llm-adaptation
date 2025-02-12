@@ -41,3 +41,7 @@ class Simulation(abc.ABC):
     def get_globals():
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {}
+
+    @abc.abstractmethod
+    def assign_group(self, component: Component, group_id: str):
+        pass

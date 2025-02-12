@@ -42,23 +42,28 @@ def get_attr(context, component, config):
 
 
 @pass_context
-def get_ensembles(context, config):
+def get_ensembles(context, config: dict[str, str | dict]):
     components = context.get("components")
 
     for name, ensemble in config.items():
         if isinstance(ensemble, str):
-            yield ensemble
-        if isinstance(ensemble, dict):
-            yield f"{ensemble['name']}: {ensemble['description']}"
-        if "for" in ensemble:
+            yield {"name": ensemble}
+        elif "for" in ensemble:
             components = filter(lambda c: type(c).__name__ == ensemble["for"], components)
+            name_generator = eval(ensemble["name"])
             for component in components:
-                yield eval(ensemble["name"], {"component": component})
+                yield {
+                    **ensemble,
+                    "name": name_generator(component),
+                }
+        else:
+            yield ensemble
 
 
 class JinjaPromptGenerator(Adaptation):
 
     def __init__(self):
+        super().__init__()
         loader = FileSystemLoader("DSL/templates")
         jinja_env = Environment(
             loader=loader,
@@ -69,10 +74,10 @@ class JinjaPromptGenerator(Adaptation):
         jinja_env.filters['get_value'] = get_value
         jinja_env.filters['get_attr'] = get_attr
         jinja_env.filters['get_ensembles'] = get_ensembles
-        self.template = jinja_env.get_template("prompt.jinja")
-        # self.template = jinja_env.get_template("generate.jinja")
-        # self.configuration = read_yaml("DSL/drones.yaml")
-        self.configuration = read_yaml("DSL/dragon.yaml")
+        # self.template = jinja_env.get_template("prompt.jinja")
+        self.template = jinja_env.get_template("generate.jinja")
+        self.configuration = read_yaml("DSL/drones.yaml")
+        # self.configuration = read_yaml("DSL/dragon.yaml")
 
     def adapt(self, simulation: "Simulation", step: int):
         # components = list(simulation.availableDrones())

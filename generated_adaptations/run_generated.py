@@ -10,8 +10,8 @@ def run(name, repeats=10, start=1):
     for repeat in range(repeats):
         print(f"  Run #{repeat + start}/{repeats + start - 1}")
 
-        configs = ["configs/default.yaml", "generated_adaptations/configs/generated.yaml",
-                   "configs/config_no_battery.yaml", f"generated_adaptations/configs/{name}.yaml"]
+        configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml",
+                   "farm/configs/config_no_battery.yaml", f"generated_adaptations/configs/{name}.yaml"]
 
         run_args = [sys.executable, "main.py", *configs, "-s", str(repeat + start), "-e", str(repeat + start)]
         # if repeat % 10 == 0:
@@ -41,5 +41,6 @@ workdir = Path(__file__).parent.parent
 os.chdir(workdir)
 
 
-name = "gpt4o_1"
+# name = "gpt4o_1"
+name = "o3_1"
 run(name, repeats=2)

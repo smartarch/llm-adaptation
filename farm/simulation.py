@@ -60,3 +60,13 @@ class SmartFarmSimulation(Simulation):
 
     def terminatedDrones(self):
         return filter(lambda d: d.state == DroneState.TERMINATED, self.drones)
+
+    def assign_group(self, drone: Drone, group_id: str):
+        if group_id.strip() == "idle":
+            drone.assignTarget(None)
+        elif group_id.strip().startswith("protecting"):
+            field_id = group_id.strip().split()[1]
+            field_idx = int(field_id[-1]) - 1
+            drone.assignTarget(self.fields[field_idx])
+        else:
+            print(f"Unknown group: {group_id}")

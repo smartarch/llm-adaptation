@@ -3,8 +3,9 @@ environment:
   components:
     fields:
       type: Field
-      description: "Fields on the farm with their location (rectangles) and bird-threat level (0 to 1)" # TODO: this contains additional attribute info (e.g., domain of threat level)
+      description: Fields on the farm # with their location (rectangles) and bird-threat level (0 to 1)" # TODO: this contains additional attribute info (e.g., domain of threat level)
       id: id
+      access: environment.fields  # how to access the list of components
       attributes:
 #        location:
 #          description: "location (rectangles)"  # TODO: can we generate the component description from this
@@ -60,17 +61,18 @@ assignments:
       idle: "idle"
       protecting:
         for: Field  # component type
-        name: f"protecting {component.id}"  # name generated from component
+        name: 'lambda component: f"protecting {component.id}"'  # name generated from component
 strategy: ""  # TODO: should it be per-assignment?
 answer_format: "Drone_<N>: <group>"  # TODO
 chain_of_thought: true
 # Strategy interface - try two options:
-#strategy_interface: The strategy must be written as a Python class that has an `adapt` method with parameters `simulation` and `step`.
+#strategy_interface: The strategy must be written as a Python class that has an `adapt` method with parameters `simulation` and `step`. To perform the group assignments, use the `self.assign_group(component, group_id)` method. The `group_id` must be exactly as listed above.  # TODO
 strategy_interface: |
-  The strategy must be written in Python and must be derived from this base class:
+  The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
   ```
-  class Adaptation(abc.ABC):
+  class FarmAdaptation(abc.ABC):
       @abc.abstractmethod
       def assign_drones(self, components, environment, step: int):
           pass
   ```
+  To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.

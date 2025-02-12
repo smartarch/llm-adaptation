@@ -23,6 +23,7 @@ class RuleBasedField2Adaptation(Adaptation):
     DronesRequired = 6
 
     def __init__(self):
+        super().__init__()
         self.assigned = 0
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):

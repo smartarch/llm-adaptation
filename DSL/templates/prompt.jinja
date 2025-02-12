@@ -37,6 +37,8 @@
 Your goal is to divide the {{ assignment.components.description }} among the following groups:
 {# Ensembles #}
 {% for ensemble in assignment.ensembles|get_ensembles %}
-{{ loop.index }}. {{ ensemble }}
+{{ loop.index }}. {{ ensemble.name }}
+{% if ensemble.description %}   - {{ ensemble.description }}
+{% endif %}
 {% endfor %}
 {% endfor %}

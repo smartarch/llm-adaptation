@@ -8,6 +8,9 @@ if TYPE_CHECKING:
 
 class Adaptation(abc.ABC):
 
+    def __init__(self):
+        self.simulation: SmartFarmSimulation = ...
+
     @abc.abstractmethod
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
         """Called before every step of the simulation."""
@@ -15,7 +18,7 @@ class Adaptation(abc.ABC):
 
     def init(self, simulation: "SmartFarmSimulation"):
         """Called before the simulation starts."""
-        pass
+        self.simulation = simulation
 
     def end(self, simulation: "SmartFarmSimulation"):
         """Called when the simulation ends."""
