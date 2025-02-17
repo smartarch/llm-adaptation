@@ -12,11 +12,9 @@ environment:
       attributes:
         hp:
           name: "Health"
-          attribute: hp
   globals:
     wheat:
       name: "Wheat"
-      attribute: wheat
 assignments:
   assign_in_village:
     components:
@@ -28,10 +26,8 @@ assignments:
         role:
           name: "Role"
           description: "Farmer or Warrior"
-          attribute: role
-        health:
+        hp:
           name: "Health"
-          attribute: hp
     ensembles:
       farm:
         name: "farm"
@@ -56,10 +52,8 @@ assignments:
         role:
           name: "Role"
           description: "Farmer or Warrior"
-          attribute: role
-        health:
+        hp:
           name: "Health"
-          attribute: hp
     ensembles:
       attack:
         name: "attack"

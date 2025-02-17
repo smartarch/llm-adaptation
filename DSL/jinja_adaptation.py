@@ -21,20 +21,18 @@ def get_components(context, config, beyond_control=False):
 
 
 @pass_context
-def get_value(context, component, attribute):
-    # environment = context.get("environment")
-    # value = eval(getter, {"component": component, "environment": environment})
-    # if callable(value):
-    #     return value(component)
-    value = getattr(component, attribute)
-    return value
+def show_attr(context, component, config):
+    if "if" not in config:
+        return True
+
+    environment: Simulation = context.get("environment")
+    condition = eval(config["if"], environment.get_globals())
+    return condition(component)
 
 
-@pass_context
-def get_attr(context, component, config):
-    getter = config["attribute"]
+def get_attr(component, attribute, config):
     format = config.get("format", "{}")
-    value = get_value(context, component, getter)
+    value = getattr(component, attribute)
     if format.startswith('lambda'):
         format = eval(format)
         return format(value)
@@ -73,7 +71,7 @@ class JinjaPromptGenerator(Adaptation):
             trim_blocks=True,
         )
         jinja_env.filters['get_components'] = get_components
-        jinja_env.filters['get_value'] = get_value
+        jinja_env.filters['show_attr'] = show_attr
         jinja_env.filters['get_attr'] = get_attr
         jinja_env.filters['get_ensembles'] = get_ensembles
         self.template = jinja_env.get_template("prompt.jinja")

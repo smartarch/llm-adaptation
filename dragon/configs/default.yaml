@@ -6,7 +6,7 @@ log_dir: logs/dragon
 wheat: 10
 
 farmers: 2
-warriors: 2
+warriors: 1
 
 farmer:
   HP: 4

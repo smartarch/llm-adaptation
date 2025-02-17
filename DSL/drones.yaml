@@ -11,31 +11,24 @@ environment:
 #          description: "location (rectangles)"  # TODO: can we generate the component description from this
         left:
           name: left
-          attribute: left  # "component" is a placeholder for the component instance
           format: "{:d}"  # the format is optional
         top:
           name: top
-          attribute: top
         right:
           name: right
-          attribute: right
         bottom:
           name: bottom
-          attribute: bottom
         threat_level:
           name: threat level
           format: "{:.2f}"
-          attribute: threat_level
           description: "bird-threat level (0 to 1)"  # TODO: can we generate the component description from this
         protecting_drones:
           name: protecting
           format: "lambda value: f'{value:d} drone{\"s\" if value != 1 else \"\"}'"
-          attribute: protecting_drones
           description: number of protecting drones
         necessary_drones_for_full_protection:
           name: "for full protection"
           format: "{:d} drones"
-          attribute: necessary_drones_for_full_protection
 assignments:
   assign_drones:
     components:
@@ -45,17 +38,12 @@ assignments:
       attributes:
         state:
           name: state
-          attribute: state
-          # depends_on: ["target"]  # TODO
-          # format: f"{value[0]}{' ({value[1].id})' if value[1] is not None else ''}"
         target:
           name: target field
-          attribute: target
           description: None if drone is idle
-          # TODO: either don't print separately and print as part of state, or print only if state == protecting (conditional attribute)
+          if: "lambda component: component.state in [DroneState.MOVING_TO_FIELD, DroneState.PROTECTING]"
         location:
           name: location
-          attribute: location
           description: has `x` and `y` coordinates
     ensembles:
       idle: "idle"

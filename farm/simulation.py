@@ -70,3 +70,10 @@ class SmartFarmSimulation(Simulation):
             drone.assignTarget(self.fields[field_idx])
         else:
             print(f"Unknown group: {group_id}")
+
+    @staticmethod
+    def get_globals():
+        return {
+            "DroneState": DroneState
+        }
+

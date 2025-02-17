@@ -6,8 +6,10 @@
 {# Environment (global) attributes #}
 {% if configuration.environment.globals %}
 Current state of the environment:
-{% for _, attribute in configuration.environment.globals.items() %}
-- {{ attribute.name }}: {{ environment|get_attr(attribute) }}
+{% for attribute, attribute_config in configuration.environment.globals.items() %}
+{% if environment|show_attr(attribute_config) %}
+- {{ attribute_config.name }}: {{ environment|get_attr(attribute, attribute_config) }}
+{% endif %}
 {% endfor %}
 {% endif %}
 {# Environment components (beyond-control) #}
@@ -17,10 +19,12 @@ Current state of the environment:
 {{ component_group.description }}:
 {% for component in component_group|get_components(beyond_control=True) %}
 {% if component_group.id %}
-- {{ component|get_value(component_group.id) }}:
+- {{ component[component_group.id] }}:
 {% endif %}
-{% for _, attribute in component_group.attributes.items() %}
-  - {{ attribute.name }}: {{ component|get_attr(attribute) }}
+{% for attribute, attribute_config in component_group.attributes.items() %}
+{% if component|show_attr(attribute_config) %}
+  - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+{% endif %}
 {% endfor %}
 {% endfor %}
 {% endfor %}
@@ -32,9 +36,11 @@ Current state of the environment:
 {# Components to be assigned #}
 {{ assignment.components.description }}:
 {% for component in assignment.components|get_components %}
-- {{ component|get_value(assignment.components.id) }}:
-{% for _, attribute in assignment.components.attributes.items() %}
-  - {{ attribute.name }}: {{ component|get_attr(attribute) }}
+- {{ component[assignment.components.id] }}:
+{% for attribute, attribute_config in assignment.components.attributes.items() %}
+{% if component|show_attr(attribute_config) %}
+  - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+{% endif %}
 {% endfor %}
 {% endfor %}
 
