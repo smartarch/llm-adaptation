@@ -23,7 +23,7 @@ Current state of the environment:
 {% endif %}
 {% for attribute, attribute_config in component_group.attributes.items() %}
 {% if component|show_attr(attribute_config) %}
-  - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+- {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
 {% endfor %}
 {% endfor %}
@@ -31,34 +31,41 @@ Current state of the environment:
 {% endif %}
 
 {# Ensemble assignments #}
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
 {% for _, assignment in configuration.assignments.items() %}
+{% set components = assignment.components|get_components %}
 ---
 {# Components to be assigned #}
 {{ assignment.components.description }}:
-{% for component in assignment.components|get_components %}
+{% if components|length > 0 %}
+{% for component in components %}
 - {{ component[assignment.components.id] }}:
 {% for attribute, attribute_config in assignment.components.attributes.items() %}
 {% if component|show_attr(attribute_config) %}
   - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
-{% endfor %}
-{% endfor %}
+{% endfor %}{# attribute #}
+{% endfor %}{# component #}
+{% else %}
+None
+{% endif %}
 
-Your goal is to divide the {{ assignment.components.description }} among the following groups:
+Allowed groups for {{ assignment.components.description }}:
 {# Ensembles #}
 {% for ensemble in assignment.ensembles|get_ensembles %}
 {{ loop.index }}. {{ ensemble.name }}
 {% if ensemble.description %}   - {{ ensemble.description }}
 {% endif %}
-{% endfor %}
-{% endfor %}
+{% endfor %}{# ensemble #}
+{% endfor %}{# assignment #}
 
 ---
 {% if configuration.chain_of_thought %}
 Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
 
 {% endif%}
-Note that each component must be assigned to exactly one group. Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer.
+Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer. The group names must be exactly as listed above. Only use the allowed groups for each set of components.
 
 {% for _, assignment in configuration.assignments.items() %}
 {{ assignment.answer_format }}

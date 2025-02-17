@@ -3,24 +3,24 @@ import importlib
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from farm.simulation import SmartFarmSimulation
+    from base_classes.simulation import Simulation
 
 
 class Adaptation(abc.ABC):
 
     def __init__(self):
-        self.simulation: SmartFarmSimulation = ...
+        self.simulation: Simulation = ...
 
     @abc.abstractmethod
-    def adapt(self, simulation: "SmartFarmSimulation", step: int):
+    def adapt(self, simulation: "Simulation", step: int):
         """Called before every step of the simulation."""
         pass
 
-    def init(self, simulation: "SmartFarmSimulation"):
+    def init(self, simulation: "Simulation"):
         """Called before the simulation starts."""
         self.simulation = simulation
 
-    def end(self, simulation: "SmartFarmSimulation"):
+    def end(self, simulation: "Simulation"):
         """Called when the simulation ends."""
         pass
 

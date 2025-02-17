@@ -11,8 +11,7 @@ from farm.simulation import SmartFarmSimulation
 
 class LLMAdaptation(Adaptation, ABC):
 
-    def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict,
-                 message_history=False, **kwargs):
+    def __init__(self, config: dict, llm: str, prompt_template: str, prompt_template_params: dict, adapt_every=1, message_history=False, **kwargs):
         super().__init__()
         self.llm = self.create_llm(llm, config)
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)

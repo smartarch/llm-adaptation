@@ -2,11 +2,11 @@ adaptation_params:  # this is purely technical
   prompt_template_params:  # this is purely technical
 
     environment:
-      description: "The goal of the game is to kill a Dragon as fast as possible."
-    #  description: |
-    #    You play a computer game. The goal is to kill a Dragon as fast as possible.
-    #    The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm or they can go to the Cave, where they can attack the Dragon.
-    #    There are two types of villagers – farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
+#      description: "The goal of the game is to kill a Dragon as fast as possible."
+      description: |
+        You play a computer game. The goal is to kill a Dragon as fast as possible.
+        The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+        There are two types of villagers – farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
       components:
         dragon:
           type: Dragon
@@ -40,11 +40,11 @@ adaptation_params:  # this is purely technical
             description: Go to the Cave
           spawn_farmer:
             name: "spawn farmer"
-            description: If at least two villagers are assigned to this group, a new Farmer is spawned.
+            description: For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
           spawn_warrior:
             name: "spawn warrior"
-            description: If at least two villagers are assigned to this group, a new Warrior is spawned.
-        answer_format: 'For each of Villagers in the Village, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
+            description: For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+        answer_format: 'For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>".'
       assign_in_cave:
         components:
           type: [ Farmer, Warrior ]
@@ -67,7 +67,7 @@ adaptation_params:  # this is purely technical
           village:
             name: "village"
             description: "Go to the Village"
-        answer_format: 'For each of Villagers in the Cave, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
+        answer_format: 'For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>".'
 
     strategy: ""  # TODO
     chain_of_thought: true

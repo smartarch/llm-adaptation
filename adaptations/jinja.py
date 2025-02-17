@@ -5,12 +5,15 @@ from base_classes.prompt_template import PromptTemplate
 
 
 @pass_context
-def get_components(context, config, beyond_control=False):
+def get_components_ctx(context, config, beyond_control=False):
     components = context.get("components")
     if beyond_control:
-        components += context.get("beyond_control_components")
+        components = components + context.get("beyond_control_components")
     environment: Simulation = context.get("environment")
+    return get_components(config, components, environment)
 
+
+def get_components(config, components, environment):
     if "type" in config:
         components = filter(lambda c: type(c).__name__ in config["type"], components)
     if "if" in config:
@@ -66,7 +69,7 @@ def prepare_jinja_env():
         autoescape=False,
         trim_blocks=True,
     )
-    jinja_env.filters['get_components'] = get_components
+    jinja_env.filters['get_components'] = get_components_ctx
     jinja_env.filters['show_attr'] = show_attr
     jinja_env.filters['get_attr'] = get_attr
     jinja_env.filters['get_ensembles'] = get_ensembles
@@ -91,39 +94,35 @@ class JinjaPromptTemplate(PromptTemplate):
         )
 
     def process_response(self, response, simulation):
+        parts = response.split("---")
+        assignment = parts[-1] if len(parts) > 0 else ""
+        rows = assignment.split("\n")
 
-        exit()
+        components = self.load_components_for_assignments(simulation)
 
-        answer = self.extract_answer(response)
-        drone_rows = answer.split("\n")
-
-        assigned_drones = []
-
-        for row in drone_rows:
+        # TODO: this is only component-first, add also ensemble-first
+        for row in rows:
             try:
                 if row == "" or row == "```":
                     continue
                 row = row.replace("- ", "")  # remove leading hyphens
                 row = row.replace("**", "")  # remove bold
 
-                drone_id, group = row.split(":")
-                drone = simulation.dronesDict[drone_id.strip()]
-                assigned_drones.append(drone)
-                if group.strip() == "idle":
-                    drone.assignTarget(None)
-                elif group.strip() == "charging":
-                    drone.assignTarget(simulation.charger)
-                elif group.strip().startswith("protecting"):
-                    field_id = group.strip().split()[1]
-                    field_idx = int(field_id[-1]) - 1
-                    drone.assignTarget(simulation.fields[field_idx])
-                else:
-                    print(f"Unknown group: {group}")
+                component_id, group = row.split(":")
+                component = components[component_id.strip()]
+                simulation.assign_group(component, group.strip())
             except (ValueError, KeyError, IndexError) as error:
-                print(f"Invalid row ({error}): {repr(row)}")
+                print(f"Invalid row ({repr(error)}): {repr(row)}")
 
-        total_assignments = len(assigned_drones)
-        unique_drones = set(assigned_drones)
-        if len(unique_drones) != total_assignments or total_assignments != len(self.available_drones(simulation)):
-            print(
-                f"Wrong groups assignment. Unique drones: {len(unique_drones)}, total_assignments: {total_assignments}, available_drones: {len(self.available_drones(simulation))}")
+    def load_components_for_assignments(self, simulation):
+        components = {}
+
+        for assignment_config in self.configuration["assignments"].values():
+            component_config = assignment_config["components"]
+            id_attr = component_config.get("id", "id")
+
+            for component in get_components(component_config, simulation.components, simulation):
+                component_id = getattr(component, id_attr)
+                components[component_id] = component
+
+        return components

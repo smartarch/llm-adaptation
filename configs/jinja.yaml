@@ -2,5 +2,4 @@ name: jinja
 log_dir.append: /jinja
 adaptation_params:
   config: true
-  adapt_every: 10
   prompt_template: adaptations.jinja.JinjaPromptTemplate

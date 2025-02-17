@@ -29,13 +29,19 @@ class Simulation(abc.ABC):
                 break
 
     def simulation_step(self, step):
-        self.adapt(self, step)
+        if self.should_adapt():
+            self.adapt(self, step)
 
         for component in self.components + self.beyond_control_components:
             component.actuate()
 
     def should_stop(self):
+        """Simulation should stop."""
         return False
+
+    def should_adapt(self):
+        """Adaptation should be performed this step. Set to False for example when there are no adaptable components left."""
+        return True
 
     def add_visualizer(self, visualizer):
         self.visualizer = visualizer

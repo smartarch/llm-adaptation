@@ -51,6 +51,9 @@ class DragonHuntSimulation(Simulation):
     def should_stop(self):
         return self.dragon.hp <= 0
 
+    def should_adapt(self):
+        return len(self.components) > 0
+
     def get_villagers_in(self, location: "Map") -> list["Villager"]:
         from dragon.components.villagers import Villager
         return [villager for villager in self.components if isinstance(villager, Villager) and villager.location == location]
@@ -97,7 +100,7 @@ class DragonHuntSimulation(Simulation):
                     component.state = VillagerState.SPAWNING
                     self.spawn_warrior_ensemble.append(component)
                 case _:
-                    print(f"Invalid group: {group_id}")
+                    raise ValueError(f"Invalid group (for Village): {group_id}")
         else:  # component.location == Map.CAVE
             match group_id.strip():
                 case "village":
@@ -107,7 +110,7 @@ class DragonHuntSimulation(Simulation):
                 case "attack":
                     component.state = VillagerState.ATTACKING
                 case _:
-                    print(f"Invalid group: {group_id}")
+                    raise ValueError(f"Invalid group (for Cave): {group_id}")
 
 
 class Map(enum.Enum):
