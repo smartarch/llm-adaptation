@@ -1,83 +1,86 @@
-environment:
-  description: "The goal of the game is to kill a Dragon as fast as possible."
-#  description: |
-#    You play a computer game. The goal is to kill a Dragon as fast as possible.
-#    The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm or they can go to the Cave, where they can attack the Dragon.
-#    There are two types of villagers – farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
-  components:
-    dragon:
-      type: Dragon
-      description: "The Dragon"
-      access: environment.dragon
-      attributes:
-        hp:
-          name: "Health"
-  globals:
-    wheat:
-      name: "Wheat"
-assignments:
-  assign_in_village:
-    components:
-      type: [Farmer, Warrior]
-      if: "lambda component: component.location == Map.VILLAGE"
-      description: "Villagers in the Village"
-      id: name
-      attributes:
-        role:
-          name: "Role"
-          description: "Farmer or Warrior"
-        hp:
-          name: "Health"
-    ensembles:
-      farm:
-        name: "farm"
-        description: Stay in the Village and work on the farm
-      cave:
-        name: "cave"
-        description: Go to the Cave
-      spawn_farmer:
-        name: "spawn farmer"
-        description: If at least two villagers are assigned to this group, a new Farmer is spawned.
-      spawn_warrior:
-        name: "spawn warrior"
-        description: If at least two villagers are assigned to this group, a new Warrior is spawned.
-    answer_format: 'For each of Villagers in the Village, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
-  assign_in_cave:
-    components:
-      type: [ Farmer, Warrior ]
-      if: "lambda component: component.location == Map.CAVE"
-      description: "Villagers in the Cave"
-      id: name
-      attributes:
-        role:
-          name: "Role"
-          description: "Farmer or Warrior"
-        hp:
-          name: "Health"
-    ensembles:
-      attack:
-        name: "attack"
-        description: "Attack the Dragon"
-      cave:
-        name: "cave"
-        description: "Stay in the Cave"
-      village:
-        name: "village"
-        description: "Go to the Village"
-    answer_format: 'For each of Villagers in the Cave, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
 
-strategy: ""  # TODO
-chain_of_thought: true
-strategy_interface: |
-  The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
-  ```
-  class DragonHuntAdaptation(abc.ABC):
-      @abc.abstractmethod
-      def assign_in_village(self, components, environment, step: int):
-          pass
-  
-      @abc.abstractmethod
-      def assign_in_cave(self, components, environment, step: int):
-          pass
-  ```
-  To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+    environment:
+      description: "The goal of the game is to kill a Dragon as fast as possible."
+    #  description: |
+    #    You play a computer game. The goal is to kill a Dragon as fast as possible.
+    #    The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm or they can go to the Cave, where they can attack the Dragon.
+    #    There are two types of villagers – farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
+      components:
+        dragon:
+          type: Dragon
+          description: "The Dragon"
+          access: environment.dragon
+          attributes:
+            hp:
+              name: "Health"
+      globals:
+        wheat:
+          name: "Wheat"
+    assignments:
+      assign_in_village:
+        components:
+          type: [Farmer, Warrior]
+          if: "lambda component: component.location == Map.VILLAGE"
+          description: "Villagers in the Village"
+          id: name
+          attributes:
+            role:
+              name: "Role"
+              description: "Farmer or Warrior"
+            hp:
+              name: "Health"
+        ensembles:
+          farm:
+            name: "farm"
+            description: Stay in the Village and work on the farm
+          cave:
+            name: "cave"
+            description: Go to the Cave
+          spawn_farmer:
+            name: "spawn farmer"
+            description: If at least two villagers are assigned to this group, a new Farmer is spawned.
+          spawn_warrior:
+            name: "spawn warrior"
+            description: If at least two villagers are assigned to this group, a new Warrior is spawned.
+        answer_format: 'For each of Villagers in the Village, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
+      assign_in_cave:
+        components:
+          type: [ Farmer, Warrior ]
+          if: "lambda component: component.location == Map.CAVE"
+          description: "Villagers in the Cave"
+          id: name
+          attributes:
+            role:
+              name: "Role"
+              description: "Farmer or Warrior"
+            hp:
+              name: "Health"
+        ensembles:
+          attack:
+            name: "attack"
+            description: "Attack the Dragon"
+          cave:
+            name: "cave"
+            description: "Stay in the Cave"
+          village:
+            name: "village"
+            description: "Go to the Village"
+        answer_format: 'For each of Villagers in the Cave, write one line with the selected group (in format "<name>: <group>", the group name must be exactly as listed above).'
+
+    strategy: ""  # TODO
+    chain_of_thought: true
+    strategy_interface: |
+      The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
+      ```
+      class DragonHuntAdaptation(abc.ABC):
+          @abc.abstractmethod
+          def assign_in_village(self, components, environment, step: int):
+              pass
+      
+          @abc.abstractmethod
+          def assign_in_cave(self, components, environment, step: int):
+              pass
+      ```
+      To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.

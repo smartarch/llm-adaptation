@@ -1,8 +1,8 @@
-from base_classes.llm_template import BasicPromptTemplate
+from farm.adaptations.prompt_template import SmartFarmPromptTemplate
 from farm.components.drone import Drone
 
 
-class GroupsLLMTemplate(BasicPromptTemplate):
+class GroupsLLMTemplate(SmartFarmPromptTemplate):
 
     def create_prompt(self, simulation):
         prompt = super().create_prompt(simulation)

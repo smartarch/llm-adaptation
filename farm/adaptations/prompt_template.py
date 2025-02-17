@@ -1,0 +1,81 @@
+import abc
+import textwrap
+
+from base_classes.prompt_template import PromptTemplate
+from farm.components.drone import DroneState, Drone
+from farm.components.field import Field
+from farm.simulation import SmartFarmSimulation
+
+
+class SmartFarmPromptTemplate(PromptTemplate, abc.ABC):
+
+    def __init__(self, simulation_description: str, extra_goal: str, field_attributes: dict, drone_attributes: dict, config: dict):
+        self.simulation_description = simulation_description
+        self.extra_goal = extra_goal
+        self.field_attributes_config = field_attributes
+        self.drone_attributes_config = drone_attributes
+        self.charging = ("noCharging" not in config or not config["noCharging"])
+
+    def create_prompt(self, simulation: "SmartFarmSimulation") -> str:
+        prompt = self.simulation_description + "\n"
+
+        prompt += "\nFields on the farm with their location (rectangles) and bird-threat level (0 to 1):\n"
+        for field in simulation.fields:
+            prompt += self.field_attributes(field)
+
+        prompt += "\nAvailable drones:\n"
+        for drone in self.available_drones(simulation):
+            prompt += self.drone_attributes(drone)
+
+        prompt += "\nYour goal is to divide the drones among the following groups:\n"
+        groups = self.get_groups(simulation)
+        for order, group in enumerate(groups, start=1):
+            prompt += f"{order}. {group}\n"
+
+        if self.extra_goal != "":
+            prompt += f"{self.extra_goal}"
+
+        return prompt
+
+    @staticmethod
+    def available_drones(simulation):
+        return [drone for drone in simulation.drones if drone.state != DroneState.TERMINATED]
+
+    def get_groups(self, simulation):
+        groups = ["idle"]
+        if self.charging:
+            groups.append("charging")
+        for field in simulation.fields:
+            groups.append(f"protecting {field.id}")
+        return groups
+
+    def field_attributes(self, field: "Field") -> str:
+        attributes = textwrap.dedent(f"""\
+            - {field.id}
+              - left: {field.left}
+              - top: {field.top}
+              - right: {field.right}
+              - bottom: {field.bottom}
+            """)
+        if self.field_attributes_config["threat_level"]:
+            attributes += f"  - threat level: {field.threat_level:.2f}\n"
+        if self.field_attributes_config["protecting_drones"]:
+            attributes += f"  - protecting: {len(field.protectingDrones)} drone{'s' if len(field.protectingDrones) != 1 else ''}\n"
+        if self.field_attributes_config["necessary_drones_for_full_protection"]:
+            attributes += f"  - for full protection: {field.necessary_drones_for_full_protection} drones\n"
+        return attributes
+
+    def drone_attributes(self, drone: "Drone") -> str:
+        target_field = f" ({drone.target.id})" if isinstance(drone.target, Field) else ""
+        attributes = textwrap.dedent(f"""\
+            - {drone.id}
+              - state: {drone.state}{target_field}
+              - location: {drone.location}
+            """)
+        if self.drone_attributes_config["battery"]:
+            attributes += f"  - battery: {drone.battery:.2f}\n"
+        if self.drone_attributes_config["energy_to_fly_to_charger"]:
+            attributes += f"  - battery necessary to reach charger: {drone.energyToFlyToCharger():.2f}\n"
+
+        return attributes
+

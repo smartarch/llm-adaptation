@@ -23,8 +23,8 @@ In `{{ assignment_name }}`, your goal is to divide the {{ assignment.components.
 
 For each component, the following attributes are available:
 {# Component attributes #}
-{% for _, attribute in assignment.components.attributes.items() %}
-- `{{ attribute.attribute }}`: {{ attribute.name }}{% if attribute.description %} ({{ attribute.description }}){% endif %}
+{% for attribute, attribute_config in assignment.components.attributes.items() %}
+- `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}
 {% endfor %}
@@ -36,9 +36,11 @@ Further, you can access the following beyond-control components, which are only 
 
 {% for _, component_group in configuration.environment.components.items() %}
 {{ component_group.description }} (accessible via `{{ component_group.access }}`) with the following attributes:
+{% if component_group.id %}
 - `{{ component_group.id }}`: identifier
-{% for _, attribute in component_group.attributes.items() %}
-- `{{ attribute.attribute }}`: {{ attribute.name }}{% if attribute.description %} ({{ attribute.description }}){% endif %}
+{% endif %}
+{% for attribute, attribute_config in component_group.attributes.items() %}
+- `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}
 {% endfor %}
@@ -47,8 +49,8 @@ Further, you can access the following beyond-control components, which are only 
 {# Environment (global) attributes #}
 {% if configuration.environment.globals %}
 Global read-only attributes of the `environment`:
-{% for _, attribute in configuration.environment.globals.items() %}
-- `{{ attribute.attribute }}`: {{ attribute.name }}{% if attribute.description %} ({{ attribute.description }}){% endif %}
+{% for attribute, attribute_config in configuration.environment.globals.items() %}
+- `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}
 {% endif %}

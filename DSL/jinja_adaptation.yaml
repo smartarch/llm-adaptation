@@ -1,4 +1,0 @@
-name: jinja_drones
-log_dir.append: /jinja_drones
-adaptation_name: DSL.jinja_adaptation.JinjaPromptGenerator
-adaptation_params: {}

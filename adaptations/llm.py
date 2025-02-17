@@ -4,14 +4,16 @@ from collections import deque
 from langchain_core.messages import HumanMessage
 
 from base_classes.adaptation import Adaptation
-from base_classes.llm_template import import_prompt_template
+from base_classes.prompt_template import import_prompt_template
 from utils import print_prompt, print_response
 from farm.simulation import SmartFarmSimulation
 
 
 class LLMAdaptation(Adaptation, ABC):
 
-    def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict, message_history=False, **kwargs):
+    def __init__(self, config: dict, llm: str, adapt_every: int, prompt_template: str, prompt_template_params: dict,
+                 message_history=False, **kwargs):
+        super().__init__()
         self.llm = self.create_llm(llm, config)
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)
         self.adapt_every = adapt_every
@@ -34,9 +36,6 @@ class LLMAdaptation(Adaptation, ABC):
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
         if (step - 1) % self.adapt_every != 0:
-            return
-
-        if not any(simulation.notTerminatedDrones()):  # no drones to adapt
             return
 
         prompt = self.prompt_template.create_prompt(simulation)
