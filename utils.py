@@ -39,7 +39,7 @@ def read_configs(config_files):
 
 def print_config(config: dict):
     print("Config:\n")
-    yaml.dump(config, sys.stdout, sort_keys=False)
+    yaml.dump(config, sys.stdout, sort_keys=False, width=float("inf"))
     print("\n")
 
 
