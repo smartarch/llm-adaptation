@@ -1,0 +1,5 @@
+name.append: _strategy2
+log_dir.append: _strategy2
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
+    strategy: "All Warriors in the Village should go to the Cave (they can't attack from the Village). The Warriors in the Cave should attack the Dragon. All Farmers should stay in Village and spawn new villagers (if we have enough wheat) or farm."

@@ -2,7 +2,6 @@
 {% if configuration.environment.description %}
 {{ configuration.environment.description }}
 {% endif %}
-
 {# Environment (global) attributes #}
 {% if configuration.environment.globals %}
 Current state of the environment:
@@ -48,7 +47,7 @@ Your goal is to assign the following components into groups. Note that each comp
 {% endfor %}{# attribute #}
 {% endfor %}{# component #}
 {% else %}
-None
+(none)
 {% endif %}
 
 Allowed groups for {{ assignment.components.description }}:
@@ -58,13 +57,21 @@ Allowed groups for {{ assignment.components.description }}:
 {% if ensemble.description %}   - {{ ensemble.description }}
 {% endif %}
 {% endfor %}{# ensemble #}
+{% if assignment.strategy %}
+
+{{ assignment.strategy }}
+{% endif %}
 {% endfor %}{# assignment #}
 
 ---
+{% if configuration.strategy %}
+{{ configuration.strategy }}
+
+{% endif %}{# strategy #}
 {% if configuration.chain_of_thought %}
 Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
 
-{% endif%}
+{% endif%}{# chain-of-thought #}
 Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer.
 
 {% for _, assignment in configuration.assignments.items() %}

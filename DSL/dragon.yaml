@@ -6,7 +6,7 @@ adaptation_params:  # this is purely technical
       description: |
         You play a computer game. The goal is to kill a Dragon as fast as possible.
         The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
-        There are two types of villagers – farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
+        There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
       components:
         dragon:
           type: Dragon
@@ -69,7 +69,7 @@ adaptation_params:  # this is purely technical
             description: "Go to the Village"
         answer_format: component-first
 
-    strategy: ""  # TODO
+    strategy: ""  # optional
     chain_of_thought: true
     strategy_interface:
       class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation
