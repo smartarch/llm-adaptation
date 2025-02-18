@@ -44,7 +44,7 @@ adaptation_params:  # this is purely technical
           spawn_warrior:
             name: "spawn warrior"
             description: For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
-        answer_format: 'For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>".'
+        answer_format: component-first
       assign_in_cave:
         components:
           type: [ Farmer, Warrior ]
@@ -67,7 +67,7 @@ adaptation_params:  # this is purely technical
           village:
             name: "village"
             description: "Go to the Village"
-        answer_format: 'For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>".'
+        answer_format: component-first
 
     strategy: ""  # TODO
     chain_of_thought: true

@@ -65,9 +65,14 @@ Allowed groups for {{ assignment.components.description }}:
 Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
 
 {% endif%}
-Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer. The group names must be exactly as listed above. Only use the allowed groups for each set of components.
+Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer.
 
 {% for _, assignment in configuration.assignments.items() %}
+{% if assignment.answer_format == "component-first" %}
+For each of {{ assignment.components.description }}, write one line with the selected group in format "<name>: <group>". The group must be one of {% for ensemble in assignment.ensembles|get_ensembles %}"{{ ensemble.name }}"{{ ", " if not loop.last else "" }}{% endfor %}.
+{% elif assignment.answer_format == "ensemble-first" %}
+{% else %}
 {{ assignment.answer_format }}
+{% endif %}
 
 {% endfor %}
