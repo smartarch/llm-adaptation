@@ -28,6 +28,8 @@ class DragonHuntSimulation(Simulation):
         self.spawn_warrior_ensemble = []
         self.assigned = []
 
+        self.last_components = self.components[:]  # for logging
+
     @staticmethod
     def set_config_values(config: dict):
         from dragon.components.villagers import Farmer, Warrior
@@ -37,6 +39,7 @@ class DragonHuntSimulation(Simulation):
         set_config_values(config, "dragon", Dragon)
 
     def simulation_step(self, step):
+        self.last_components = self.components[:]  # for logging
         super().simulation_step(step)
 
         # spawn new villagers

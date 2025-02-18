@@ -25,14 +25,14 @@ class Stats:
         if header:
             return ["step", "dragon_hp", "wheat"] + [state.name for state in VillagerState] + ["farmers_village", "farmers_cave", "warriors_village", "warriors_cave"] + ["dragon_attack"]
         counts_in_states = [
-            sum(1 for component in self.simulation.components if isinstance(component, Villager) and component.log_state == state)
+            sum(1 for component in self.simulation.last_components if isinstance(component, Villager) and component.log_state == state)
             for state in VillagerState
         ]
         villager_counts = [
-            sum(1 for component in self.simulation.components if isinstance(component, Farmer) and component.location == Map.VILLAGE),
-            sum(1 for component in self.simulation.components if isinstance(component, Farmer) and component.location == Map.CAVE),
-            sum(1 for component in self.simulation.components if isinstance(component, Warrior) and component.location == Map.VILLAGE),
-            sum(1 for component in self.simulation.components if isinstance(component, Warrior) and component.location == Map.CAVE)
+            sum(1 for component in self.simulation.last_components if isinstance(component, Farmer) and component.location == Map.VILLAGE),
+            sum(1 for component in self.simulation.last_components if isinstance(component, Farmer) and component.location == Map.CAVE),
+            sum(1 for component in self.simulation.last_components if isinstance(component, Warrior) and component.location == Map.VILLAGE),
+            sum(1 for component in self.simulation.last_components if isinstance(component, Warrior) and component.location == Map.CAVE)
         ]
         dragon_attack = self.simulation.dragon.attack_log
         self.simulation.dragon.attack_log = ""
