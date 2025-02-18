@@ -71,16 +71,18 @@ adaptation_params:  # this is purely technical
 
     strategy: ""  # TODO
     chain_of_thought: true
-    strategy_interface: |
-      The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
-      ```
-      class DragonHuntAdaptation(abc.ABC):
-          @abc.abstractmethod
-          def assign_in_village(self, components, environment, step: int):
-              pass
-      
-          @abc.abstractmethod
-          def assign_in_cave(self, components, environment, step: int):
-              pass
-      ```
-      To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+    strategy_interface:
+      class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation
+#    strategy_interface: |
+#      The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
+#      ```
+#      class DragonHuntAdaptation(abc.ABC):
+#          @abc.abstractmethod
+#          def assign_in_village(self, components, environment, step: int):
+#              pass
+#
+#          @abc.abstractmethod
+#          def assign_in_cave(self, components, environment, step: int):
+#              pass
+#      ```
+#      To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.

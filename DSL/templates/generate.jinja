@@ -7,8 +7,24 @@ Suggest an adaptation strategy.
 
 {# Strategy interface #}
 {% if configuration.strategy_interface %}
+{% if configuration.strategy_interface.class %}
+{% set path, class = configuration.strategy_interface.class.rsplit(".", 1) %}
+The strategy must be written in Python and must be derived from this base class (which can be imported from `{{ path }}`):
+```
+class {{ class }}(abc.ABC):
+{% for assignment_name in configuration.assignments %}
+    @abc.abstractmethod
+    def {{ assignment_name }}(self, components, environment, step: int):
+        pass
+
+{% endfor %}
+```
+To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+
+{% else %}
 {{ configuration.strategy_interface }}
 
+{% endif %}
 {% endif %}
 {# Ensemble assignments #}
 {% for assignment_name, assignment in configuration.assignments.items() %}

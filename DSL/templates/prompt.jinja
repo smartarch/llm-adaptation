@@ -71,6 +71,7 @@ Prefix the final group assignment by a horizontal line (---) as a delimiter and 
 {% if assignment.answer_format == "component-first" %}
 For each of {{ assignment.components.description }}, write one line with the selected group in format "<name>: <group>". The group must be one of {% for ensemble in assignment.ensembles|get_ensembles %}"{{ ensemble.name }}"{{ ", " if not loop.last else "" }}{% endfor %}.
 {% elif assignment.answer_format == "ensemble-first" %}
+{# TODO #}
 {% else %}
 {{ assignment.answer_format }}
 {% endif %}
