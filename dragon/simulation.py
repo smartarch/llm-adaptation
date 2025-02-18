@@ -86,7 +86,7 @@ class DragonHuntSimulation(Simulation):
     def assign_group(self, component: "Villager", group_id: str):
         from dragon.components.villagers import VillagerState
 
-        if component in self.assigned:
+        if component in self.assigned:  # TODO: save to assigned
             print(f"Already assigned: {component}")
             return
 

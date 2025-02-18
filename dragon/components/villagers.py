@@ -86,4 +86,9 @@ random.shuffle(NAMES)
 
 
 def get_name():
-    return NAMES[Farmer._count + Warrior._count]  # a trick to get unique names (_count is used to assign unique IDs to components)
+    index = Farmer._count + Warrior._count
+    name = NAMES[index % len(NAMES)]
+    count = index // len(NAMES)
+    if count > 0:
+        name += str(count)
+    return name
