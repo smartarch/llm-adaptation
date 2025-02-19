@@ -74,6 +74,8 @@ class SmartFarmSimulation(Simulation):
     @staticmethod
     def get_globals():
         return {
-            "DroneState": DroneState
+            "DroneState": DroneState,
+            "Field": Field,
+            "Drone": Drone,
         }
 

@@ -1,69 +1,77 @@
 adaptation_params:  # this is purely technical
   prompt_template_params:  # this is purely technical
 
+    components:
+      Field:
+        id: id
+        attributes:
+          #        location:
+          #          description: "location (rectangles)"  # TODO: can we generate the component description from this
+          left:
+            name: left
+            format: "{:d}"  # the format is optional
+          top:
+            name: top
+          right:
+            name: right
+          bottom:
+            name: bottom
+          threat_level:
+            name: threat level
+            format: "{:.2f}"
+            description: "bird-threat level (0 to 1)"  # TODO: can we generate the component description from this
+          protecting_drones:
+            name: protecting
+            format: "lambda value: f'{value:d} drone{\"s\" if value != 1 else \"\"}'"
+            description: number of protecting drones
+          necessary_drones_for_full_protection:
+            name: "for full protection"
+            format: "{:d} drones"
+      Drone:
+        id: id
+        attributes:
+          state:
+            name: state
+          target:
+            name: target field
+            description: None if drone is idle
+            if: "lambda component: component.state in [DroneState.MOVING_TO_FIELD, DroneState.PROTECTING]"
+          location:
+            name: location
+            description: has `x` and `y` coordinates
+
+    ensembles:
+      Idle:
+        name: "idle"
+        description: "Idle drones don't protect any fields."
+      Protecting:
+        params: [Field]
+        name: 'lambda field: f"protecting {field.id}"'  # name generated from params
+        description: "Assigned drones fly to the field and protect it."
+
     environment:
       description: "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields."
-      components:
+      beyond_control_components:
         fields:
           type: Field
           description: Fields on the farm # with their location (rectangles) and bird-threat level (0 to 1)" # TODO: this contains additional attribute info (e.g., domain of threat level)
-          id: id
           access: environment.fields  # how to access the list of components
-          attributes:
-    #        location:
-    #          description: "location (rectangles)"  # TODO: can we generate the component description from this
-            left:
-              name: left
-              format: "{:d}"  # the format is optional
-            top:
-              name: top
-            right:
-              name: right
-            bottom:
-              name: bottom
-            threat_level:
-              name: threat level
-              format: "{:.2f}"
-              description: "bird-threat level (0 to 1)"  # TODO: can we generate the component description from this
-            protecting_drones:
-              name: protecting
-              format: "lambda value: f'{value:d} drone{\"s\" if value != 1 else \"\"}'"
-              description: number of protecting drones
-            necessary_drones_for_full_protection:
-              name: "for full protection"
-              format: "{:d} drones"
+
     assignments:
       assign_drones:
         components:
           type: Drone
           description: "Available drones"
-          id: id
-          attributes:
-            state:
-              name: state
-            target:
-              name: target field
-              description: None if drone is idle
-              if: "lambda component: component.state in [DroneState.MOVING_TO_FIELD, DroneState.PROTECTING]"
-            location:
-              name: location
-              description: has `x` and `y` coordinates
         ensembles:
-          idle: "idle"
-          protecting:
-            for: Field  # component type
-            name: 'lambda component: f"protecting {component.id}"'  # name generated from component
-        answer_format: 'For each drone, write one line with the selected group (in format "Drone_<N>: <group>", the group name must be exactly as listed above).'
+          - Idle
+          - type: Protecting
+            foreach: Field
+            if: "lambda field: field.threat_level > 0"
+        answer_format: component-first
+
     strategy: ""  # optional
     chain_of_thought: true
     # Strategy interface - try two options:
     #strategy_interface: The strategy must be written as a Python class that has an `adapt` method with parameters `simulation` and `step`. To perform the group assignments, use the `self.assign_group(component, group_id)` method. The `group_id` must be exactly as listed above.  # TODO
-    strategy_interface: |
-      The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
-      ```
-      class FarmAdaptation(abc.ABC):
-          @abc.abstractmethod
-          def assign_drones(self, components, environment, step: int):
-              pass
-      ```
-      To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+    strategy_interface:
+      class: generated_adaptations.base_classes.farm.FarmAdaptation

@@ -39,7 +39,7 @@ In `{{ assignment_name }}`, your goal is to divide the {{ assignment.components.
 
 For each component, the following attributes are available:
 {# Component attributes #}
-{% for attribute, attribute_config in assignment.components.attributes.items() %}
+{% for attribute, attribute_config in configuration.components[assignment.components.type].attributes.items() %}
 - `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}{# attribute #}
@@ -51,15 +51,15 @@ For each component, the following attributes are available:
 ---
 
 {# Environment components (beyond-control) #}
-{% if configuration.environment.components %}
+{% if configuration.environment.beyond_control_components %}
 Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
 
-{% for _, component_group in configuration.environment.components.items() %}
-{{ component_group.description }} (accessible via `{{ component_group.access }}`) with the following attributes:
-{% if component_group.id %}
-- `{{ component_group.id }}`: identifier
+{% for variable, component_group in configuration.environment.beyond_control_components.items() %}
+{{ component_group.description }} (accessible via `environment.{{ variable }}`) with the following attributes:
+{% if configuration.components[component_group.type].id %}
+- `{{ configuration.components[component_group.type].id }}`: identifier
 {% endif %}
-{% for attribute, attribute_config in component_group.attributes.items() %}
+{% for attribute, attribute_config in configuration.components[component_group.type].attributes.items() %}
 - `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}
@@ -67,9 +67,9 @@ Further, you can access the following beyond-control components, which are only 
 {% endif %}
 
 {# Environment (global) attributes #}
-{% if configuration.environment.globals %}
+{% if configuration.environment.global_attributes %}
 Global read-only attributes of the `environment`:
-{% for attribute, attribute_config in configuration.environment.globals.items() %}
+{% for attribute, attribute_config in configuration.environment.global_attributes.items() %}
 - `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}

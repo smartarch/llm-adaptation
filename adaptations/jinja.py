@@ -15,7 +15,8 @@ def get_components_ctx(context, config, beyond_control=False):
 
 def get_components(config, components, environment):
     if "type" in config:
-        components = filter(lambda c: type(c).__name__ in config["type"], components)
+        component_type = eval(config["type"], environment.get_globals())
+        components = filter(lambda c: isinstance(c, component_type), components)
     if "if" in config:
         condition = eval(config["if"], environment.get_globals())
         components = filter(condition, components)
@@ -44,22 +45,28 @@ def get_attr(component, attribute, config):
 
 
 @pass_context
-def get_ensembles(context, config: dict[str, str | dict]):
+def get_ensembles(context, config: list[str | dict]):
     components = context.get("components")
+    ensemble_types = context.get("configuration")["ensembles"]
 
-    for name, ensemble in config.items():
-        if isinstance(ensemble, str):
-            yield {"name": ensemble}
-        elif "for" in ensemble:
-            components = filter(lambda c: type(c).__name__ == ensemble["for"], components)
-            name_generator = eval(ensemble["name"])
+    for ensemble in config:
+        if isinstance(ensemble, str):  # singleton
+            yield ensemble_types[ensemble]
+        else:  # instance for each component
+            ensemble_type = ensemble_types[ensemble["type"]]
+            component_type = eval(ensemble["foreach"], context.get("environment").get_globals())
+            condition = eval(ensemble.get("if", "True"), context.get("environment").get_globals())
+
+            components = filter(lambda c: isinstance(c, component_type), components)
+            components = filter(condition, components)
+
+            name_generator = eval(ensemble_type["name"])
+
             for component in components:
                 yield {
-                    **ensemble,
+                    **ensemble_type,
                     "name": name_generator(component),
                 }
-        else:
-            yield ensemble
 
 
 def prepare_jinja_env():

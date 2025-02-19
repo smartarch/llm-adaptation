@@ -3,26 +3,27 @@
 {{ configuration.environment.description }}
 {% endif %}
 {# Environment (global) attributes #}
-{% if configuration.environment.globals %}
+{% if configuration.environment.global_attributes %}
 Current state of the environment:
-{% for attribute, attribute_config in configuration.environment.globals.items() %}
+{% for attribute, attribute_config in configuration.environment.global_attributes.items() %}
 {% if environment|show_attr(attribute_config) %}
 - {{ attribute_config.name }}: {{ environment|get_attr(attribute, attribute_config) }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {# Environment components (beyond-control) #}
-{% if configuration.environment.components %}
-{% for _, component_group in configuration.environment.components.items() %}
+{% if configuration.environment.beyond_control_components %}
+{% for _, component_group in configuration.environment.beyond_control_components.items() %}
 
 {{ component_group.description }}:
 {% for component in component_group|get_components(beyond_control=True) %}
-{% if component_group.id %}
-- {{ component[component_group.id] }}:
+{% if configuration.components[component_group.type].id %}
+- {{ component[configuration.components[component_group.type].id] }}:
 {% endif %}
-{% for attribute, attribute_config in component_group.attributes.items() %}
+{% for attribute, attribute_config in configuration.components[component_group.type].attributes.items() %}
 {% if component|show_attr(attribute_config) %}
-  - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+{% if configuration.components[component_group.type].id %}  {% endif %}
+- {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
 {% endfor %}
 {% endfor %}
@@ -39,8 +40,8 @@ Your goal is to assign the following components into groups. Note that each comp
 {{ assignment.components.description }}:
 {% if components|length > 0 %}
 {% for component in components %}
-- {{ component[assignment.components.id] }}:
-{% for attribute, attribute_config in assignment.components.attributes.items() %}
+- {{ component[configuration.components[assignment.components.type].id] }}:
+{% for attribute, attribute_config in configuration.components[assignment.components.type].attributes.items() %}
 {% if component|show_attr(attribute_config) %}
   - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}

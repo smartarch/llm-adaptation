@@ -79,8 +79,13 @@ class DragonHuntSimulation(Simulation):
 
     @staticmethod
     def get_globals():
+        from dragon.components.villagers import Villager
+        from dragon.components.dragon import Dragon
+
         return {
-            "Map": Map
+            "Map": Map,
+            "Dragon": Dragon,
+            "Villager": Villager,
         }
 
     def assign_group(self, component: "Villager", group_id: str):
