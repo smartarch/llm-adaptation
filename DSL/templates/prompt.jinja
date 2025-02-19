@@ -22,7 +22,7 @@ Current state of the environment:
 {% endif %}
 {% for attribute, attribute_config in component_group.attributes.items() %}
 {% if component|show_attr(attribute_config) %}
-- {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+  - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
 {% endfor %}
 {% endfor %}

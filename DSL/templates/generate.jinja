@@ -35,15 +35,19 @@ In `{{ assignment_name }}`, your goal is to divide the {{ assignment.components.
 {{ loop.index }}. {{ ensemble.name }}
 {% if ensemble.description %}   - {{ ensemble.description }}
 {% endif %}
-{% endfor %}
+{% endfor %}{# ensemble #}
 
 For each component, the following attributes are available:
 {# Component attributes #}
 {% for attribute, attribute_config in assignment.components.attributes.items() %}
 - `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
-{% endfor %}
-{% endfor %}
+{% endfor %}{# attribute #}
+{% if assignment.strategy %}
+
+{{ assignment.strategy }}
+{% endif %}{# strategy #}
+{% endfor %}{# assignment #}
 ---
 
 {# Environment components (beyond-control) #}
@@ -70,3 +74,8 @@ Global read-only attributes of the `environment`:
 
 {% endfor %}
 {% endif %}
+{% if configuration.strategy %}
+---
+{{ configuration.strategy }}
+
+{% endif %}{# strategy #}
