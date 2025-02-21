@@ -205,4 +205,7 @@ class Field(Component):
         return len(self.protectionPlaces) == len(self.protectingDrones)
 
     def __str__(self):
+        return self.id
+
+    def __repr__(self):
         return f"{self.id}({self.top},{self.left},{self.bottom},{self.right})"

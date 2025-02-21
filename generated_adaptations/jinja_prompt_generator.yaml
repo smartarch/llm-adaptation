@@ -1,4 +1,5 @@
 name: jinja_generator
 log_dir.append: /jinja_generator
 adaptation_name: generated_adaptations.jinja_prompt_generator.JinjaPromptGenerator
-adaptation_params: {}
+adaptation_params:
+  config: true

@@ -1,0 +1,47 @@
+You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.
+
+Suggest an adaptation strategy.
+
+The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
+```
+class FarmAdaptation(abc.ABC):
+    @abc.abstractmethod
+    def assign_drones(self, components, environment, step: int):
+        pass
+
+```
+To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+
+---
+In `assign_drones`, your goal is to divide the Available drones (`components`) into the following groups:
+1. idle
+   - Idle drones don't protect any fields.
+2. protecting Field_1
+   - Assigned drones fly to the field and protect it.
+3. protecting Field_2
+   - Assigned drones fly to the field and protect it.
+4. protecting Field_3
+   - Assigned drones fly to the field and protect it.
+5. protecting Field_4
+   - Assigned drones fly to the field and protect it.
+
+For each component, the following attributes are available:
+- `state`: state
+- `target`: target field (None if drone is idle)
+- `location`: location (has `x` and `y` coordinates)
+---
+
+Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
+
+Fields on the farm (accessible via `environment.fields`) with the following attributes:
+- `id`: identifier
+- `left`: left
+- `top`: top
+- `right`: right
+- `bottom`: bottom
+- `threat_level`: threat level (bird-threat level (0 to 1))
+- `protecting_drones`: protecting (number of protecting drones)
+- `necessary_drones_for_full_protection`: for full protection
+
+---
+Always fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be idle or assigned to other fields.

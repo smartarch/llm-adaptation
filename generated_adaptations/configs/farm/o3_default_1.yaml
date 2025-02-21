@@ -1,0 +1,5 @@
+name: o3_default_1
+log_dir.append: /o3_default_1
+adaptation_name: generated_adaptations.farm.o3_default_1.DroneFarmAdaptation
+adaptation_params:
+  adapt_every: 10

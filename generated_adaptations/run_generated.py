@@ -4,14 +4,11 @@ import sys
 from pathlib import Path
 
 
-def run(name, repeats=10, start=1):
-    print(name)
+def run(configs, repeats=10, start=1):
+    print(configs)
     avg_damage = 0
     for repeat in range(repeats):
         print(f"  Run #{repeat + start}/{repeats + start - 1}")
-
-        configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml",
-                   "farm/configs/config_no_battery.yaml", f"generated_adaptations/configs/{name}.yaml"]
 
         run_args = [sys.executable, "main.py", *configs, "-s", str(repeat + start), "-e", str(repeat + start)]
         # if repeat % 10 == 0:
@@ -41,6 +38,22 @@ workdir = Path(__file__).parent.parent
 os.chdir(workdir)
 
 
-# name = "gpt4o_1"
-name = "o3_1"
-run(name, repeats=2)
+# FARM
+
+farm_configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "farm/configs/config_no_battery.yaml"]
+farm_variants = [f"{llm}_{variant}_1" for llm in ("4o", "o3") for variant in ("default", "sd1", "step-by-step", "strategy")]
+# farm_variants = ["4o_default_1"]
+
+# prepare configuration files
+for variant in farm_variants:
+    variant_path = Path(f"generated_adaptations/configs/farm/{variant}.yaml")
+    if not variant_path.exists():
+        variant_path.write_text(f"""name: {variant}
+log_dir.append: /{variant}
+adaptation_name: generated_adaptations.farm.{variant}.TODO
+adaptation_params:
+  adapt_every: 10""")
+
+# for variant in farm_variants:
+#     configs = farm_configs + [f"generated_adaptations/configs/farm/{variant}.yaml"]
+#     run(configs, repeats=2)
