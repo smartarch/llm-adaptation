@@ -150,3 +150,8 @@ class Drone(MovingComponent2D):
         time = distance / self.speed
         safetyMargin = self.simulation.config.get("autoChargeSafetyMargin", 0) if includeSafetyMargin else 0
         return Drone.MovingEnergyConsumption * time + safetyMargin
+
+    @property
+    def target_id(self):
+        if self.target:
+            return self.target.id

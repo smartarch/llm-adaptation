@@ -10,7 +10,7 @@ Your goal is to divide the drones among the fields to minimize the damage dealt 
 
 Suggest an adaptation strategy.
 
-The strategy must be written in Python and must be derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
+The strategy must be written in Python and it must be a class named `SmartFarmAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
 ```
 class FarmAdaptation(abc.ABC):
     @abc.abstractmethod
@@ -35,7 +35,7 @@ In `assign_drones`, your goal is to divide the Available drones (`components`) i
 
 For each component, the following attributes are available:
 - `state`: state
-- `target`: target field (None if drone is idle)
+- `target_id`: target field (Name (str) of the target field, None if drone is idle)
 - `location`: location (has `x` and `y` coordinates)
 ---
 
@@ -48,6 +48,7 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `right`: right
 - `bottom`: bottom
 - `threat_level`: threat level (bird-threat level (0 to 1))
-- `protecting_drones`: protecting (number of protecting drones)
+- `arriving_drones`: flying to field (Number of drones flying towards the field to protect it when they arrive.)
+- `protecting_drones`: protecting (Number of drones currently protecting the field.)
 - `necessary_drones_for_full_protection`: for full protection
 

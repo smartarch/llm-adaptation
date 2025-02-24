@@ -18,4 +18,5 @@ class FarmAdaptation(Adaptation, abc.ABC):
         if (step - 1) % self.adapt_every != 0:
             return
 
-        self.assign_drones(simulation.availableDrones(), simulation, step)
+        components = list(simulation.availableDrones())
+        self.assign_drones(components, simulation, step)

@@ -20,10 +20,14 @@ adaptation_params:  # this is purely technical
             name: threat level
             format: "{:.2f}"
             description: "bird-threat level (0 to 1)"  # TODO: can we generate the component description from this
+          arriving_drones:
+            name: flying to field
+            format: "lambda value: f'{value:d} drone{\"s\" if value != 1 else \"\"}'"
+            description: Number of drones flying towards the field to protect it when they arrive.
           protecting_drones:
             name: protecting
             format: "lambda value: f'{value:d} drone{\"s\" if value != 1 else \"\"}'"
-            description: number of protecting drones
+            description: Number of drones currently protecting the field.
           necessary_drones_for_full_protection:
             name: "for full protection"
             format: "{:d} drones"
@@ -32,9 +36,9 @@ adaptation_params:  # this is purely technical
         attributes:
           state:
             name: state
-          target:
+          target_id:
             name: target field
-            description: None if drone is idle
+            description: Name (str) of the target field, None if drone is idle
             if: "lambda component: component.state in [DroneState.MOVING_TO_FIELD, DroneState.PROTECTING]"
           location:
             name: location
@@ -74,4 +78,5 @@ adaptation_params:  # this is purely technical
     # Strategy interface - try two options:
     #strategy_interface: The strategy must be written as a Python class that has an `adapt` method with parameters `simulation` and `step`. To perform the group assignments, use the `self.assign_group(component, group_id)` method. The `group_id` must be exactly as listed above.  # TODO
     strategy_interface:
-      class: generated_adaptations.base_classes.farm.FarmAdaptation
+      abstract_class: generated_adaptations.base_classes.farm.FarmAdaptation
+      class: SmartFarmAdaptation

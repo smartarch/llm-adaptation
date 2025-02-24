@@ -26,6 +26,6 @@ bird:
   MaxFleeInSameField: 3  # maximum number of scares in the same field, then fly randomly
   WaitBeforeEat: 5  # steps to wait before damage is dealt
   NearbyBirdsToEat: 2
-  NearbyBirdsRadius: 4
+  NearbyBirdsRadius: 6
 
 log_dir: logs

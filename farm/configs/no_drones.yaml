@@ -2,5 +2,5 @@ drones: 0
 
 name: no_drones
 log_dir.append: /no_drones
-adaptation_name: adaptations.rule_based.RuleBasedRandomAdaptation  # this does nothing when we have no drones
+adaptation_name: farm.adaptations.rule_based.RuleBasedRandomAdaptation  # this does nothing when we have no drones
 adaptation_params: {}
