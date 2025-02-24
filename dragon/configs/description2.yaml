@@ -1,0 +1,12 @@
+name.append: _description2
+log_dir.append: _description2
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
+    environment:
+      description: |
+        You play a computer game. The goal is to kill a Dragon as fast as possible.
+        The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+        There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers have 4 HP, Warriors have 6 HP.
+        To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+        When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. If all the villagers die, you lose the game.
+        The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game.

@@ -11,7 +11,7 @@ adaptation_params:  # this is purely technical
         attributes:
           role:
             name: "Role"
-            description: "Farmer or Warrior"
+            description: "\"Farmer\" or \"Warrior\""
           hp:
             name: "Health"
 
@@ -72,4 +72,5 @@ adaptation_params:  # this is purely technical
     strategy: ""  # optional
     chain_of_thought: true
     strategy_interface:
-      class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation
+      abstract_class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation
+      class: SmartAdaptation

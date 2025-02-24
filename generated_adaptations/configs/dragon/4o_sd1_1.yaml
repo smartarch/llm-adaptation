@@ -1,0 +1,4 @@
+name: 4o_sd1_1
+log_dir.append: /4o_sd1_1
+adaptation_name: generated_adaptations.dragon.4o_sd1_1.SmartAdaptation
+adaptation_params: {}
