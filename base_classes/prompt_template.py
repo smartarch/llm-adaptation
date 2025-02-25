@@ -1,5 +1,6 @@
 import abc
 import importlib
+from collections import namedtuple
 from typing import TYPE_CHECKING
 
 import tiktoken
@@ -10,6 +11,9 @@ if TYPE_CHECKING:
     from base_classes.simulation import Simulation
 
 
+ProcessingError = namedtuple("ProcessingError", ("row", "error"))
+
+
 class PromptTemplate(abc.ABC):
 
     @abc.abstractmethod
@@ -17,7 +21,7 @@ class PromptTemplate(abc.ABC):
         return ""
 
     @abc.abstractmethod
-    def process_response(self, response: str, simulation: "Simulation"):
+    def process_response(self, response: str, simulation: "Simulation") -> list[ProcessingError] | None:
         pass
 
     @staticmethod

@@ -1,0 +1,4 @@
+name.append: _retry1
+log_dir.append: _retry1
+adaptation_params:
+  max_retries: 1

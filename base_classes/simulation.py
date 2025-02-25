@@ -1,6 +1,11 @@
 import abc
+import sys
 
 from base_classes.components import Component
+
+
+class AssignmentError(Exception):
+    pass
 
 
 class Simulation(abc.ABC):
@@ -13,6 +18,9 @@ class Simulation(abc.ABC):
 
         self.visualizer = None
         self.stats = None
+
+        self.assignments = {}
+        self.assignment_errors = []
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):
@@ -29,8 +37,10 @@ class Simulation(abc.ABC):
                 break
 
     def simulation_step(self, step):
+        self.reset_assignments()
         if self.should_adapt():
             self.adapt(self, step)
+        self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:
             component.actuate()
@@ -54,6 +64,37 @@ class Simulation(abc.ABC):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {}
 
+    def assign_group(self, component: Component, group_id: str) -> str | None:
+        try:
+            self._check_group(component, group_id)
+            self.assignments[component] = group_id
+        except AssignmentError as error:
+            message = error.args[0]
+            self.append_assignment_error(message)
+            return message
+
+    def append_assignment_error(self, message):
+        print("Before retry:", message)
+        self.assignment_errors.append(message)
+
     @abc.abstractmethod
-    def assign_group(self, component: Component, group_id: str):
+    def _check_group(self, component: Component, group_id: str):
+        """Checks whether a component can be assigned to a group. Should throw an error if the assignment is invalid."""
         pass
+
+    def _apply_assignments(self):
+        """Apply the group assignments (self.assignments)."""
+        for message in self.assignment_errors:
+            print("Final assignment:", message)
+            print(message, file=sys.stderr)
+
+        for component, group_id in self.assignments.items():
+            self._assign_group(component, group_id)
+
+    @abc.abstractmethod
+    def _assign_group(self, component: Component, group_id: str):
+        pass
+
+    def reset_assignments(self):
+        self.assignments = {}
+        self.assignment_errors = []

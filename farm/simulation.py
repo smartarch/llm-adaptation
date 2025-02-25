@@ -1,5 +1,5 @@
 from base_classes.components2d import Point2D
-from base_classes.simulation import Simulation
+from base_classes.simulation import Simulation, AssignmentError
 from farm.components.bird import Bird, BirdFieldProbabilityGenerator
 from farm.components.charger import Charger
 from farm.components.drone import Drone, DroneState
@@ -61,15 +61,27 @@ class SmartFarmSimulation(Simulation):
     def terminatedDrones(self):
         return filter(lambda d: d.state == DroneState.TERMINATED, self.drones)
 
-    def assign_group(self, drone: Drone, group_id: str):
+    def _check_group(self, drone: Drone, group_id: str):
+        if group_id.strip() == "idle":
+            return
+        elif group_id.strip().startswith("protecting"):
+            try:
+                self._parse_field(group_id)
+            except (KeyError, IndexError):
+                raise AssignmentError(f"Invalid field in protecting group: {group_id}")
+        else:
+            raise AssignmentError(f"Unknown group: {group_id}")
+
+    def _parse_field(self, group_id):
+        field_id = group_id.strip().split()[1]
+        field_idx = int(field_id[-1]) - 1
+        return self.fields[field_idx]
+
+    def _assign_group(self, drone: Drone, group_id: str):
         if group_id.strip() == "idle":
             drone.assignTarget(None)
         elif group_id.strip().startswith("protecting"):
-            field_id = group_id.strip().split()[1]
-            field_idx = int(field_id[-1]) - 1
-            drone.assignTarget(self.fields[field_idx])
-        else:
-            print(f"Unknown group: {group_id}")
+            drone.assignTarget(self._parse_field(group_id))
 
     @staticmethod
     def get_globals():

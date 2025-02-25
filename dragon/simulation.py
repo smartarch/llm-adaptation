@@ -1,7 +1,7 @@
 import enum
 from typing import TYPE_CHECKING
 
-from base_classes.simulation import Simulation
+from base_classes.simulation import Simulation, AssignmentError
 from utils import set_config_values
 
 if TYPE_CHECKING:
@@ -26,7 +26,6 @@ class DragonHuntSimulation(Simulation):
 
         self.spawn_farmer_ensemble = []
         self.spawn_warrior_ensemble = []
-        self.assigned = []
 
         self.last_components = self.components[:]  # for logging
 
@@ -88,12 +87,23 @@ class DragonHuntSimulation(Simulation):
             "Villager": Villager,
         }
 
-    def assign_group(self, component: "Villager", group_id: str):
-        from dragon.components.villagers import VillagerState
+    def _check_group(self, component: "Villager", group_id: str):
+        if component in self.assignments:
+            raise AssignmentError(f"Component already assigned: {component}")
 
-        if component in self.assigned:  # TODO: save to assigned
-            print(f"Already assigned: {component}")
-            return
+        if component.location == Map.VILLAGE:
+            VALID_IN_VILLAGE = ["farm", "cave", "spawn farmer", "spawn warrior"]
+            if group_id not in VALID_IN_VILLAGE:
+                valid_groups = '"' + '", "'.join(VALID_IN_VILLAGE) + '"'
+                raise AssignmentError(f'Invalid group for Villager in Village: "{group_id}". It must be one of {valid_groups}.')
+        else:  # component.location == Map.CAVE
+            VALID_IN_CAVE = ["village", "cave", "attack"]
+            if group_id not in VALID_IN_CAVE:
+                valid_groups = '"' + '", "'.join(VALID_IN_CAVE) + '"'
+                raise AssignmentError(f'Invalid group for Villager in Cave: "{group_id}". It must be one of {valid_groups}.')
+
+    def _assign_group(self, component: "Villager", group_id: str):
+        from dragon.components.villagers import VillagerState
 
         if component.location == Map.VILLAGE:
             match group_id.strip():
@@ -107,8 +117,6 @@ class DragonHuntSimulation(Simulation):
                 case "spawn warrior":
                     component.state = VillagerState.SPAWNING
                     self.spawn_warrior_ensemble.append(component)
-                case _:
-                    raise ValueError(f"Invalid group (for Village): {group_id}")
         else:  # component.location == Map.CAVE
             match group_id.strip():
                 case "village":
@@ -117,8 +125,6 @@ class DragonHuntSimulation(Simulation):
                     component.state = VillagerState.IDLE
                 case "attack":
                     component.state = VillagerState.ATTACKING
-                case _:
-                    raise ValueError(f"Invalid group (for Cave): {group_id}")
 
 
 class Map(enum.Enum):

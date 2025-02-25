@@ -1,7 +1,7 @@
 from jinja2 import Environment, FileSystemLoader, pass_context
 
 from base_classes.simulation import Simulation
-from base_classes.prompt_template import PromptTemplate
+from base_classes.prompt_template import PromptTemplate, ProcessingError
 
 
 @pass_context
@@ -108,6 +108,7 @@ class JinjaPromptTemplate(PromptTemplate):
         components = self.load_components_for_assignments(simulation)
 
         # TODO: this is only component-first, add also ensemble-first
+        errors: list[ProcessingError] = []
         for row in rows:
             try:
                 if row == "" or row == "```":
@@ -116,16 +117,30 @@ class JinjaPromptTemplate(PromptTemplate):
                 row = row.replace("**", "")  # remove bold
 
                 component_id, group = row.split(":")
+                component_id = component_id.strip()
+
+                if component_id not in components:
+                    error = ProcessingError(row, f"Unknown component: {component_id}")
+                    errors.append(error)
+                    simulation.append_assignment_error(error)
+                    continue
+
                 component = components[component_id.strip()]
-                simulation.assign_group(component, group.strip())
-            except (ValueError, KeyError, IndexError) as error:
-                print(f"Invalid row ({repr(error)}): {repr(row)}")
+                error = simulation.assign_group(component, group.strip())
+                if error:
+                    errors.append(ProcessingError(row, error))
+            except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
+                print(f"Error - invalid row ({repr(error)}): {repr(row)}")
+        
+        if errors:
+            return errors
 
     def load_components_for_assignments(self, simulation):
         components = {}
 
         for assignment_config in self.configuration["assignments"].values():
-            component_config = assignment_config["components"]
+            component_type = assignment_config["components"]["type"]
+            component_config = self.configuration["components"][component_type]
             id_attr = component_config.get("id", "id")
 
             for component in get_components(component_config, simulation.components, simulation):
