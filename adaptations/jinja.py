@@ -120,8 +120,8 @@ class JinjaPromptTemplate(PromptTemplate):
                 component_id = component_id.strip()
 
                 if component_id not in components:
-                    error = ProcessingError(row, f"Unknown component: {component_id}")
-                    errors.append(error)
+                    error = f"Unknown component: {component_id}"
+                    errors.append(ProcessingError(row, error))
                     simulation.append_assignment_error(error)
                     continue
 
