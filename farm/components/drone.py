@@ -63,6 +63,7 @@ class Drone(MovingComponent2D):
                 self.state = DroneState.MOVING_TO_CHARGER
             elif isinstance(self.target, Field):
                 self.state = DroneState.MOVING_TO_FIELD
+                self.target.arrivingDrones.add(self)
                 self.targetLocation = target.assignNextPlace(self)
         else:
             self.targetLocation = None
@@ -73,6 +74,7 @@ class Drone(MovingComponent2D):
             return
         if isinstance(self.target, Field):
             self.target.protectingDrones.discard(self)
+            self.target.arrivingDrones.discard(self)
             self.target.unassignDrone(self)
         if isinstance(self.target, Charger):
             self.target.chargingDrones.discard(self)
@@ -97,6 +99,7 @@ class Drone(MovingComponent2D):
     def startProtecting(self):
         self.targetLocation = self.target.assignNextPlace(self)
         self.target.protectingDrones.add(self)
+        self.target.arrivingDrones.discard(self)
         self.state = DroneState.PROTECTING
 
     def startCharging(self):

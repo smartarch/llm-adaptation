@@ -1,5 +1,7 @@
 example: farm
 steps: 300
+adaptation_params:
+  adapt_every: 10
 
 drones: 8
 birds: 80

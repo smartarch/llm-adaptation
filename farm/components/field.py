@@ -39,6 +39,7 @@ class Field(Component):
 
         from farm.components.drone import Drone
         self.protectingDrones: set[Drone] = set()
+        self.arrivingDrones: set[Drone] = set()
         self.patrollingPlaces = self.computePatrollingPlaces(Drone.Radius - 2)
         self.protectionPlaces: dict[Point2D, list[Drone]] = \
             {place: [] for place in self.computeProtectionPlaces(Drone.Radius - 2)}
@@ -199,6 +200,10 @@ class Field(Component):
     @property
     def protecting_drones(self):
         return len(self.protectingDrones)
+
+    @property
+    def arriving_drones(self):
+        return len(self.arrivingDrones)
 
     @property
     def isFullyProtected(self):
