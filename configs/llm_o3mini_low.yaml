@@ -1,0 +1,9 @@
+name.append: _o3mini-low
+log_dir.append: _o3mini-low
+adaptation_name: adaptations.openai.OpenAIAdaptation
+adaptation_params:
+  llm: o3-mini-2025-01-31
+  temperature: 1
+  reasoning_effort: low
+  prompt_template_params:
+    chain_of_thought: false
