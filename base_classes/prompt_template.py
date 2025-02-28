@@ -17,11 +17,11 @@ ProcessingError = namedtuple("ProcessingError", ("row", "error"))
 class PromptTemplate(abc.ABC):
 
     @abc.abstractmethod
-    def create_prompt(self, simulation: "Simulation") -> str:
+    def create_prompt(self, simulation: "Simulation", memory=None) -> str:
         return ""
 
     @abc.abstractmethod
-    def process_response(self, response: str, simulation: "Simulation") -> list[ProcessingError] | None:
+    def process_response(self, response: str, simulation: "Simulation") -> tuple[list[ProcessingError] | None, str | None]:
         pass
 
     @staticmethod

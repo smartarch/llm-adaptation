@@ -1,0 +1,5 @@
+name.append: _memory
+log_dir.append: _memory
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
+    memory: true

@@ -19,6 +19,7 @@ class LLMAdaptation(Adaptation, ABC):
 
         self.message_history = self.prepare_message_history(message_history)
         self.max_retries = max_retries
+        self.memory: str | None = None
 
     @staticmethod
     def prepare_message_history(message_history_config: bool | int):
@@ -41,7 +42,7 @@ class LLMAdaptation(Adaptation, ABC):
 
         session = []
         self.message_history.append(session)
-        prompt = self.prompt_template.create_prompt(simulation)
+        prompt = self.prompt_template.create_prompt(simulation, self.memory)
 
         for _ in range(self.max_retries + 1):
             session.append(HumanMessage(prompt))
@@ -49,12 +50,14 @@ class LLMAdaptation(Adaptation, ABC):
             session.append(response)
 
             simulation.reset_assignments()
-            result = self.prompt_template.process_response(response.content, simulation)
+            errors, memory = self.prompt_template.process_response(response.content, simulation)
+            if memory is not None:
+                self.memory = memory
 
-            if result is None:  # success
+            if errors is None or errors == []:  # success
                 break
 
-            prompt = self.get_retry_prompt(result)
+            prompt = self.get_retry_prompt(errors)
 
     def prompt_llm(self):
         messages: list[BaseMessage] = []
@@ -70,11 +73,12 @@ class LLMAdaptation(Adaptation, ABC):
 
     @staticmethod
     def get_retry_prompt(errors: list[ProcessingError]):
-        prompt = "There were some errors in your final group assignment. Fix them and output the final assignment again.\n\n"
-        prompt += "Prefix the new final group assignment by a horizontal line (---) as a delimiter and adhere to the format defined earlier."
+        prompt = "There were some errors in your final group assignment. Fix them and output the final assignment again. Adhere to the format defined earlier."
 
         for row, error in errors:
-            prompt += f'\n\nError on line "{row}":\n'
+            prompt += "\n\n"
+            if row:
+                prompt += f'Error on line "{row}":\n'
             prompt += error
 
         return prompt

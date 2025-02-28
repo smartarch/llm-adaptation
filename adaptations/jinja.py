@@ -1,3 +1,5 @@
+import re
+
 from jinja2 import Environment, FileSystemLoader, pass_context
 
 from base_classes.simulation import Simulation
@@ -92,22 +94,40 @@ class JinjaPromptTemplate(PromptTemplate):
         jinja_env = prepare_jinja_env()
         self.template = jinja_env.get_template("prompt.jinja")
 
-    def create_prompt(self, simulation):
+    def create_prompt(self, simulation, memory=None):
         return self.template.render(
             components=simulation.components,
             beyond_control_components=simulation.beyond_control_components,
             environment=simulation,
             configuration=self.configuration,
+            memory=memory,
         )
 
-    def process_response(self, response, simulation):
-        parts = response.split("---")
-        assignment = parts[-1] if len(parts) > 0 else ""
-        rows = assignment.split("\n")
+    def process_response(self, response, simulation) -> tuple[list[ProcessingError] | None, str | None]:
+        answer = self.extract_tag(response, "answer")
+        if not answer:
+            return [ProcessingError(None, "Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer.")], None
+        memory = self.extract_tag(response, "memory")
 
         components = self.load_components_for_assignments(simulation)
 
         # TODO: this is only component-first, add also ensemble-first
+        errors = self.process_component_first(answer, components, simulation)
+
+        return errors, memory
+
+    @staticmethod
+    def extract_tag(response, tag):
+        # This regex looks for content between triple backticks, possibly with a language specifier.
+        pattern = rf"<{tag}>(.*?)</{tag}>"
+        matches = re.findall(pattern, response, re.DOTALL)
+        if matches:
+            return matches[0].strip()
+        return None
+
+    @staticmethod
+    def process_component_first(answer, components, simulation):
+        rows = answer.split("\n")
         errors: list[ProcessingError] = []
         for row in rows:
             try:
@@ -131,9 +151,7 @@ class JinjaPromptTemplate(PromptTemplate):
                     errors.append(ProcessingError(row, error))
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
                 print(f"Error - invalid row ({repr(error)}): {repr(row)}")
-        
-        if errors:
-            return errors
+        return errors
 
     def load_components_for_assignments(self, simulation):
         components = {}

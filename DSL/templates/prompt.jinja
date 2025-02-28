@@ -69,11 +69,26 @@ Allowed groups for {{ assignment.components.description }}:
 {{ configuration.strategy }}
 
 {% endif %}{# strategy #}
+{% if configuration.memory %}
+You have access to memory, where you can save information that might be useful for future decisions. You should summarize the thinking process and the decision you made in the memory. There is no need to saving the state of the environment as the new state will be included in the next prompt.
+
+Use the `<memory>` and `</memory>` tags to save information in the memory (there should be only one pair of the tags). Note that the new memory will replace the old memory, so if you need to keep some information from the old memory, include it in the new memory.
+
+Here is the current memory:
+<memory>
+{% if memory %}
+{{ memory }}
+{% else %}
+(empty)
+{% endif %}{# memory content #}
+</memory>
+
+{% endif%}{# memory #}
 {% if configuration.chain_of_thought %}
 Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
 
 {% endif%}{# chain-of-thought #}
-Prefix the final group assignment by a horizontal line (---) as a delimiter and do not add any additional text after it. Do not use Markdown formatting in the final answer.
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
 
 {% for _, assignment in configuration.assignments.items() %}
 {% if assignment.answer_format == "component-first" %}
