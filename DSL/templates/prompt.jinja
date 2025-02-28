@@ -75,11 +75,11 @@ Allowed groups for {{ assignment.components.description }}:
 
 {% endif %}{# strategy #}
 {% if configuration.memory %}
-You have access to memory, where you can save information that might be useful for future decisions. You should summarize the thinking process and the decision you made in the memory. There is no need to saving the state of the environment as the new state will be included in the next prompt.
+You have access to memory, where you can save information that might be useful for future decisions (e.g., save the current and past decisions, and describe the strategy that led to them). There is no need to save the state of the environment as the new state will be included in the next prompt.
 
 Use the `<memory>` and `</memory>` tags to save information in the memory (there should be only one pair of the tags). Note that the new memory will replace the old memory, so if you need to keep some information from the old memory, include it in the new memory.
 
-Here is the current memory:
+Here is the current memory that you saved in the previous step:
 <memory>
 {% if memory %}
 {{ memory }}
