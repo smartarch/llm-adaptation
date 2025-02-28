@@ -67,7 +67,7 @@ class LLMAdaptation(Adaptation, ABC):
 
         print_prompt(messages[-1].content)
         response = self.llm.invoke(messages)
-        print_response(response.content)
+        print_response(response)
 
         return response
 
