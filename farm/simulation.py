@@ -62,6 +62,8 @@ class SmartFarmSimulation(Simulation):
         return filter(lambda d: d.state == DroneState.TERMINATED, self.drones)
 
     def _check_group(self, drone: Drone, group_id: str):
+        if drone in self.assignments:
+            raise AssignmentError(f"Component already assigned: {drone.id}")
         if group_id.strip() == "idle":
             return
         elif group_id.strip().startswith("protecting"):

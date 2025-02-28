@@ -89,7 +89,7 @@ class DragonHuntSimulation(Simulation):
 
     def _check_group(self, component: "Villager", group_id: str):
         if component in self.assignments:
-            raise AssignmentError(f"Component already assigned: {component}")
+            raise AssignmentError(f"Component already assigned: {component.name}")
 
         if component.location == Map.VILLAGE:
             VALID_IN_VILLAGE = ["farm", "cave", "spawn farmer", "spawn warrior"]
