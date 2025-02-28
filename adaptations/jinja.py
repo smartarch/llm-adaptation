@@ -101,6 +101,7 @@ class JinjaPromptTemplate(PromptTemplate):
             environment=simulation,
             configuration=self.configuration,
             memory=memory,
+            step=simulation.step,
         )
 
     def process_response(self, response, simulation) -> tuple[list[ProcessingError] | None, str | None]:

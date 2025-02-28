@@ -1,7 +1,12 @@
 {# Description (goal) #}
 {% if configuration.environment.description %}
+{% if configuration.step %}
+{{ configuration.environment.description.format(step) }}
+{% else %}
 {{ configuration.environment.description }}
-{% endif %}
+{% endif %}{# step #}
+
+{% endif %}{# description #}
 {# Environment (global) attributes #}
 {% if configuration.environment.global_attributes %}
 Current state of the environment:

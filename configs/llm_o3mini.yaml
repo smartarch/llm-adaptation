@@ -4,3 +4,5 @@ adaptation_name: adaptations.openai.OpenAIAdaptation
 adaptation_params:
   llm: o3-mini-2025-01-31
   temperature: 1
+  prompt_template_params:
+    chain_of_thought: false

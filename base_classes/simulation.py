@@ -21,10 +21,12 @@ class Simulation(abc.ABC):
 
         self.assignments = {}
         self.assignment_errors = []
+        self.step = None
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):
             print(f"Step: {step}")
+            self.step = step
 
             self.simulation_step(step)
 
