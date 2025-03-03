@@ -11,7 +11,7 @@ class FarmAdaptation(Adaptation, abc.ABC):
         self.adapt_every = adapt_every
 
     @abc.abstractmethod
-    def assign_drones(self, components, environment, step: int):
+    def assign_drones(self, components, environment, group_ids, step: int):
         pass
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
@@ -19,4 +19,10 @@ class FarmAdaptation(Adaptation, abc.ABC):
             return
 
         components = list(simulation.availableDrones())
-        self.assign_drones(components, simulation, step)
+        ensembles = ["idle"] + [f"protecting {field.id}" for field in simulation.fields]
+        self.assign_drones(components, simulation, ensembles, step)
+
+        if len(simulation.assignments) < len(components):
+            missing_components = [component.id for component in components if component not in simulation.assignments]
+            error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
+            simulation.append_assignment_error(error)

@@ -3,7 +3,7 @@
 {{ configuration.environment.description }}
 {% endif %}
 
-Suggest an adaptation strategy.
+Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group.
 
 {# Strategy interface #}
 {% if configuration.strategy_interface %}
@@ -14,7 +14,7 @@ The strategy must be written in Python and it must be a class named `{{ configur
 class {{ class }}(abc.ABC):
 {% for assignment_name in configuration.assignments %}
     @abc.abstractmethod
-    def {{ assignment_name }}(self, components, environment, step: int):
+    def {{ assignment_name }}(self, components, environment, group_ids, step: int):
         pass
 
 {% endfor %}
@@ -31,11 +31,19 @@ To perform the group assignments, use the `environment.assign_group(component, g
 ---
 In `{{ assignment_name }}`, your goal is to divide the {{ assignment.components.description }} (`components`) into the following groups:
 {# Ensembles #}
-{% for ensemble in assignment.ensembles|get_ensembles %}
-{{ loop.index }}. {{ ensemble.name }}
-{% if ensemble.description %}   - {{ ensemble.description }}
+{% for ensemble in assignment.ensembles %}
+{% if ensemble is mapping %}
+{% set ensemble_config = configuration.ensembles[ensemble.type] %}
+- For each `{{ ensemble.for_str }}` in `{{ ensemble.in_str }}` if `{{ ensemble.if_str }}`, a group named `"{{ ensemble_config.name_str }}"`{% if ensemble_config.description %}: {{ ensemble_config.description }}{% endif %}
+
+{% else %}{# singleton #}
+{% set ensemble_config = configuration.ensembles[ensemble] %}
+- A group named "{{ ensemble_config.name }}"{% if ensemble_config.description %}: {{ ensemble_config.description }}{% endif %}
+
 {% endif %}
 {% endfor %}{# ensemble #}
+
+The `group_ids` argument is a list of all valid group names.
 
 For each component, the following attributes are available:
 {# Component attributes #}
@@ -78,3 +86,7 @@ Global read-only attributes of the `environment`:
 ---
 {{ configuration.strategy }}
 {% endif %}{# strategy #}
+
+{% if configuration.chain_of_thought %}
+Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the code for the adaptation strategy.
+{% endif%}{# chain-of-thought #}

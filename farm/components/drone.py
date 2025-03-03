@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 from typing import Optional
 
 from base_classes.components2d import MovingComponent2D, Point2D
@@ -6,13 +6,13 @@ from farm.components.charger import Charger
 from farm.components.field import Field
 
 
-class DroneState(Enum):
-    IDLE = 0
-    CHARGING = 1
-    PROTECTING = 2
-    MOVING_TO_CHARGER = 3
-    MOVING_TO_FIELD = 4
-    TERMINATED = 5
+class DroneState(StrEnum):
+    IDLE = "idle"
+    CHARGING = "charging"
+    PROTECTING = "protecting"
+    MOVING_TO_CHARGER = "moving_to_charger"
+    MOVING_TO_FIELD = "moving_to_field"
+    TERMINATED = "terminated"
 
     def __str__(self):
         return self.name

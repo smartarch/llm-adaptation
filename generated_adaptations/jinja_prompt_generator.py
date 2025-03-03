@@ -10,7 +10,7 @@ PROMPTS_PATH = Path("generated_adaptations/prompts/")
 
 class JinjaPromptGenerator(Adaptation):
 
-    def __init__(self, prompt_template_params, config):
+    def __init__(self, prompt_template_params, config, **kwargs):
         super().__init__()
 
         self.configuration = prompt_template_params

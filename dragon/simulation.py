@@ -8,6 +8,10 @@ if TYPE_CHECKING:
     from dragon.components.villagers import Villager
 
 
+VALID_IN_VILLAGE = ["farm", "cave", "spawn farmer", "spawn warrior"]
+VALID_IN_CAVE = ["village", "cave", "attack"]
+
+
 class DragonHuntSimulation(Simulation):
 
     def __init__(self, adapt: callable, config: dict):
@@ -92,12 +96,10 @@ class DragonHuntSimulation(Simulation):
             raise AssignmentError(f"Component already assigned: {component.name}")
 
         if component.location == Map.VILLAGE:
-            VALID_IN_VILLAGE = ["farm", "cave", "spawn farmer", "spawn warrior"]
             if group_id not in VALID_IN_VILLAGE:
                 valid_groups = '"' + '", "'.join(VALID_IN_VILLAGE) + '"'
                 raise AssignmentError(f'Invalid group for Villager in Village: "{group_id}". It must be one of {valid_groups}.')
         else:  # component.location == Map.CAVE
-            VALID_IN_CAVE = ["village", "cave", "attack"]
             if group_id not in VALID_IN_CAVE:
                 valid_groups = '"' + '", "'.join(VALID_IN_CAVE) + '"'
                 raise AssignmentError(f'Invalid group for Villager in Cave: "{group_id}". It must be one of {valid_groups}.')

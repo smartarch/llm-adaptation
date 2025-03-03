@@ -6,7 +6,7 @@ The strategy must be written in Python and it must be a class named `SmartFarmAd
 ```
 class FarmAdaptation(abc.ABC):
     @abc.abstractmethod
-    def assign_drones(self, components, environment, step: int):
+    def assign_drones(self, components, environment, group_ids, step: int):
         pass
 
 ```
@@ -14,16 +14,10 @@ To perform the group assignments, use the `environment.assign_group(component, g
 
 ---
 In `assign_drones`, your goal is to divide the Available drones (`components`) into the following groups:
-1. idle
-   - Idle drones don't protect any fields.
-2. protecting Field_1
-   - Assigned drones fly to the field and protect it.
-3. protecting Field_2
-   - Assigned drones fly to the field and protect it.
-4. protecting Field_3
-   - Assigned drones fly to the field and protect it.
-5. protecting Field_4
-   - Assigned drones fly to the field and protect it.
+- A group named "idle": Idle drones don't protect any fields.
+- For each `field` in `environment.fields` if `field.threat_level > 0`, a group named `"protecting {field.id}"`: Assigned drones fly to the field and protect it.
+
+The `group_ids` argument is a list of all valid group names.
 
 For each component, the following attributes are available:
 - `state`: state
