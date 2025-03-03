@@ -1,0 +1,5 @@
+name: o3_sd2_step-by-step_3
+log_dir.append: /o3_sd2_step-by-step_3
+adaptation_name: generated_adaptations.farm.o3_sd2_step-by-step_3.SmartFarmAdaptation
+adaptation_params:
+  adapt_every: 10
