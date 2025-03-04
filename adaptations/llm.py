@@ -1,7 +1,8 @@
 from abc import abstractmethod, ABC
 from collections import deque
 
-from langchain_core.messages import HumanMessage, BaseMessage
+from colorama import Fore, Style
+from langchain_core.messages import HumanMessage, BaseMessage, AIMessage
 
 from base_classes.adaptation import Adaptation
 from base_classes.prompt_template import import_prompt_template, ProcessingError
@@ -20,6 +21,8 @@ class LLMAdaptation(Adaptation, ABC):
         self.message_history = self.prepare_message_history(message_history)
         self.max_retries = max_retries
         self.memory: str | None = None
+
+        self.token_usages: list[LLMTokenUsage] = []
 
     @staticmethod
     def prepare_message_history(message_history_config: bool | int):
@@ -68,6 +71,8 @@ class LLMAdaptation(Adaptation, ABC):
         print_prompt(messages[-1].content)
         response = self.llm.invoke(messages)
         print_response(response)
+        self.token_usages.append(LLMTokenUsage(response))
+        self.token_usages[-1].print()
 
         return response
 
@@ -82,3 +87,30 @@ class LLMAdaptation(Adaptation, ABC):
             prompt += error
 
         return prompt
+
+    def end(self, simulation: "Simulation"):
+        total_usage = sum(self.token_usages, LLMTokenUsage(None))
+        total_usage.print()
+
+
+class LLMTokenUsage:
+
+    def __init__(self, response: AIMessage | None, input_tokens=0, output_tokens=0, reasoning_tokens=0):
+        if response is None or response.usage_metadata is None:
+            self.input_tokens = input_tokens
+            self.output_tokens = output_tokens
+            self.reasoning_tokens = reasoning_tokens
+        else:
+            self.input_tokens = response.usage_metadata.get('input_tokens', 0)
+            self.output_tokens = response.usage_metadata.get('output_tokens', 0)
+            self.reasoning_tokens = response.usage_metadata.get('output_token_details', {}).get('reasoning', 0)
+
+    def __add__(self, other):
+        return LLMTokenUsage(None, self.input_tokens + other.input_tokens, self.output_tokens + other.output_tokens, self.reasoning_tokens + other.reasoning_tokens)
+
+    def print(self):
+        print(Fore.YELLOW, end="")
+        print("TOKENS USED:")
+        print(f"Input: {self.input_tokens}, ", end="")
+        print(f"Output: {self.output_tokens} (reasoning: {self.reasoning_tokens})")
+        print(Style.RESET_ALL)

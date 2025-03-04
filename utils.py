@@ -109,11 +109,4 @@ def print_response(response: AIMessage):
     print(Fore.CYAN, end="")
     print("RESPONSE:")
     print(response.content)
-
-    if response.usage_metadata is not None:
-        print(Fore.YELLOW, end="")
-        print("TOKENS USED:")
-        print(f"Input: {response.usage_metadata.get('input_tokens', 0)}, ", end="")
-        print(f"Output: {response.usage_metadata.get('output_tokens', 0)} (reasoning: {response.usage_metadata.get('output_token_details', {}).get('reasoning', 0)})")
-
     print(Style.RESET_ALL)
