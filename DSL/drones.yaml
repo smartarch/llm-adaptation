@@ -36,7 +36,7 @@ adaptation_params:  # this is purely technical
         attributes:
           state:
             name: state
-            description: "idle", "moving_to_field", or "protecting"
+            description: '"idle", "moving_to_field", or "protecting"'
           target_id:
             name: target field
             description: Name (str) of the target field, None if drone is idle
@@ -78,6 +78,7 @@ adaptation_params:  # this is purely technical
             in_str: environment.fields
             if_str: field.threat_level > 0
         answer_format: component-first
+        # answer_format: ensemble-first
 
     strategy: ""  # optional
     chain_of_thought: true
