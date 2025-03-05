@@ -41,7 +41,7 @@ class EpsilonSchedule:
 def getStateDrone(drone: "Drone", simulation, include_battery=True):
     """drone.state (one-hot), drone.battery, drone.location (x, y)"""
     drone_state = np.zeros(len(DroneState))
-    drone_state[drone.state.value] = 1
+    drone_state[DroneState.get_index(drone.state)] = 1
     x = drone.location.x / simulation.mapWidth
     y = drone.location.y / simulation.mapHeight
     target_field = [1 if drone.target == field else 0 for field in simulation.fields]

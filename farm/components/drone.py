@@ -14,6 +14,10 @@ class DroneState(StrEnum):
     MOVING_TO_FIELD = "moving_to_field"
     TERMINATED = "terminated"
 
+    @classmethod
+    def get_index(cls, state):
+        return list(cls).index(state)
+
     def __str__(self):
         return self.name
 
