@@ -19,15 +19,21 @@ Current state of the environment:
 {# Environment components (beyond-control) #}
 {% if configuration.environment.beyond_control_components %}
 {% for _, component_group in configuration.environment.beyond_control_components.items() %}
+{% set components = component_group|get_components(beyond_control=True) %}
+{% set component_type = configuration.components[component_group.type] %}
 
-{{ component_group.description }}:
+{{ component_group.description }} with their attributes {% for attribute, attribute_config in component_type.attributes.items() %}
+{% if attribute_config.description %}
+{{ attribute_config.name }} ({{ attribute_config.description }}){{ ", " if not loop.last else "" -}}
+{% endif %}{% endfor %}{# attribute type #}:
+
 {% for component in component_group|get_components(beyond_control=True) %}
-{% if configuration.components[component_group.type].id %}
-- {{ component[configuration.components[component_group.type].id] }}:
+{% if component_type.id %}
+- {{ component[component_type.id] }}:
 {% endif %}
-{% for attribute, attribute_config in configuration.components[component_group.type].attributes.items() %}
+{% for attribute, attribute_config in component_type.attributes.items() %}
 {% if component|show_attr(attribute_config) %}
-{% if configuration.components[component_group.type].id %}  {% endif %}
+{% if component_type.id %}  {% endif %}
 - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
 {% endfor %}
@@ -40,13 +46,18 @@ Your goal is to assign the following components into groups. Note that each comp
 
 {% for _, assignment in configuration.assignments.items() %}
 {% set components = assignment.components|get_components %}
+{% set component_type = configuration.components[assignment.components.type] %}
 ---
 {# Components to be assigned #}
-{{ assignment.components.description }}:
+{{ assignment.components.description }} with their attributes {% for attribute, attribute_config in component_type.attributes.items() %}
+{% if attribute_config.description %}
+{{ attribute_config.name }} ({{ attribute_config.description }}){{ ", " if not loop.last else "" -}}
+{% endif %}{% endfor %}{# attribute type #}:
+
 {% if components|length > 0 %}
 {% for component in components %}
-- {{ component[configuration.components[assignment.components.type].id] }}:
-{% for attribute, attribute_config in configuration.components[assignment.components.type].attributes.items() %}
+- {{ component[component_type.id] }}:
+{% for attribute, attribute_config in component_type.attributes.items() %}
 {% if component|show_attr(attribute_config) %}
   - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
