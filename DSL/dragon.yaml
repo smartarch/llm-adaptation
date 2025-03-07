@@ -6,6 +6,10 @@ adaptation_params:  # this is purely technical
         attributes:
           hp:
             name: "Health"
+      Farm:
+        attributes:
+          wheat:
+            name: "Current wheat amount"
       Villager:
         id: name
         attributes:
@@ -43,15 +47,17 @@ adaptation_params:  # this is purely technical
       The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
       There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
 
-    environment:
-      beyond_control_components:
-        dragon:
-          type: Dragon
-          description: "The Dragon"
-          access: environment.dragon
-      global_attributes:  # TODO: remove global attributes
-        wheat:
-          name: "Wheat"
+    beyond_control_components:
+      dragon:
+        type: Dragon
+        singleton: true
+        description: "The Dragon"
+        access: environment.dragon
+      farm:
+        type: Farm
+        singleton: true
+        description: "The Farm"
+        access: environment.farm
 
     assignments:
       assign_in_village:

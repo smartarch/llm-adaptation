@@ -28,8 +28,8 @@ In `assign_drones`, your goal is to divide the Drones (`components`) into the fo
 The `group_ids` argument is a list of all valid group names.
 
 For each component, the following attributes are available:
-- `state`: state (idle, moving to field, or protecting)
-- `target_id`: target field (Name (str) of the target field, None if drone is idle)
+- `state`: state ("idle", "moving_to_field", or "protecting")
+- `target_id`: target field (name (str) of the target field, None if drone is idle)
 - `location`: location (has `x` and `y` coordinates)
 ---
 
@@ -41,10 +41,10 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `top`: top
 - `right`: right
 - `bottom`: bottom
-- `threat_level`: threat level (bird-threat level (0 to 1))
-- `arriving_drones`: flying to field (Number of drones flying towards the field to protect it when they arrive.)
-- `protecting_drones`: protecting (Number of drones currently protecting the field.)
+- `threat_level`: threat level (bird-threat level between 0 and 1)
 - `necessary_drones_for_full_protection`: for full protection
+- `arriving_drones`: flying to field (number of drones flying towards the field to protect it when they arrive)
+- `protecting_drones`: protecting (number of drones currently protecting the field)
 
 ---
 Follow these step-by-step instructions when assigning the groups:
@@ -58,4 +58,3 @@ Follow these step-by-step instructions when assigning the groups:
 7. Provide the answer in the format described below. Don't forget to include the drones already protecting the most threatened field.
 
 Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the code for the adaptation strategy.
-

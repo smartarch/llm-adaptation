@@ -6,7 +6,7 @@ When the Dragon is attacked, it can attack back. With 40% probability, it will c
 The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step {}.
 
 
-Suggest an adaptation strategy.
+Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group.
 
 The strategy must be written in Python and it must be a class named `SmartAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
 ```
@@ -51,8 +51,10 @@ Further, you can access the following beyond-control components, which are only 
 
 The Dragon (accessible via `environment.dragon`) with the following attributes:
 - `hp`: Health
+The Farm (accessible via `environment.farm`) with the following attributes:
+- `wheat`: Current wheat amount
 
-Global read-only attributes of the `environment`:
-- `wheat`: Wheat
 ---
 All Warriors should go to the Cave, and then attack the Dragon. All Farmers should stay in Village and spawn new villagers (if we have enough wheat) or farm.
+
+Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the code for the adaptation strategy.

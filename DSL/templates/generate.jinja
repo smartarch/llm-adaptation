@@ -59,29 +59,21 @@ For each component, the following attributes are available:
 ---
 
 {# Environment components (beyond-control) #}
-{% if configuration.environment.beyond_control_components %}
+{% if configuration.beyond_control_components %}
 Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
 
-{% for variable, component_group in configuration.environment.beyond_control_components.items() %}
+{% for variable, component_group in configuration.beyond_control_components.items() %}
 {{ component_group.description }} (accessible via `environment.{{ variable }}`) with the following attributes:
 {% if configuration.components[component_group.type].id %}
 - `{{ configuration.components[component_group.type].id }}`: identifier
 {% endif %}
-{% for attribute, attribute_config in configuration.components[component_group.type].attributes.items() %}
+{% for attribute, attribute_config in configuration.components[component_group.type].attributes.items() if not attribute_config.hide_in_generate %}
 - `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
 
 {% endfor %}
 {% endfor %}
 {% endif %}
 
-{# Environment (global) attributes #}
-{% if configuration.environment.global_attributes %}
-Global read-only attributes of the `environment`:
-{% for attribute, attribute_config in configuration.environment.global_attributes.items() %}
-- `{{ attribute }}`: {{ attribute_config.name }}{% if attribute_config.description %} ({{ attribute_config.description }}){% endif %}
-
-{% endfor %}
-{% endif %}
 {% if configuration.strategy %}
 ---
 {{ configuration.strategy }}

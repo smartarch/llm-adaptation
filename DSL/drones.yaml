@@ -9,6 +9,7 @@ adaptation_params:  # this is purely technical
             name: "top, bottom, left, right"
             description: "rectangle"
             if: "lambda component: False"  # hide among attributes, only use for description
+            hide_in_generate: true  # hide in offline, only use in online prompt
           left:
             name: left
             format: "{:d}"  # the format is optional
@@ -60,12 +61,11 @@ adaptation_params:  # this is purely technical
 
     domain_description: "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields."
 
-    environment:
-      beyond_control_components:
-        fields:
-          type: Field
-          description: Fields on the farm
-          access: environment.fields  # how to access the list of components
+    beyond_control_components:
+      fields:
+        type: Field
+        description: Fields on the farm
+        access: environment.fields  # how to access the list of components
 
     assignments:
       assign_drones:

@@ -1,6 +1,7 @@
 import enum
 from typing import TYPE_CHECKING
 
+from base_classes.components import Component
 from base_classes.simulation import Simulation, AssignmentError
 from utils import set_config_values
 
@@ -22,10 +23,11 @@ class DragonHuntSimulation(Simulation):
         from dragon.components.dragon import Dragon
 
         self.dragon = Dragon(self)
+        self.farm = Farm(self)
         self.components: list["Villager"] = \
             [Farmer(self) for _ in range(config["farmers"])] + \
             [Warrior(self) for _ in range(config["warriors"])]
-        self.beyond_control_components = [self.dragon]
+        self.beyond_control_components = [self.dragon, self.farm]
         self.wheat = int(config["wheat"])
 
         self.spawn_farmer_ensemble = []
@@ -89,6 +91,7 @@ class DragonHuntSimulation(Simulation):
             "Map": Map,
             "Dragon": Dragon,
             "Villager": Villager,
+            "Farm": Farm,
         }
 
     def _check_group(self, component: "Villager", group_id: str):
@@ -132,3 +135,12 @@ class DragonHuntSimulation(Simulation):
 class Map(enum.Enum):
     VILLAGE = enum.auto()
     CAVE = enum.auto()
+
+
+class Farm(Component):
+
+    simulation: DragonHuntSimulation
+
+    @property
+    def wheat(self):
+        return self.simulation.wheat

@@ -7,18 +7,9 @@
 {% endif %}{# step #}
 
 {% endif %}{# description #}
-{# Environment (global) attributes #}
-{% if configuration.environment.global_attributes %}
-Current state of the environment:
-{% for attribute, attribute_config in configuration.environment.global_attributes.items() %}
-{% if environment|show_attr(attribute_config) %}
-- {{ attribute_config.name }}: {{ environment|get_attr(attribute, attribute_config) }}
-{% endif %}
-{% endfor %}
-{% endif %}
-{# Environment components (beyond-control) #}
-{% if configuration.environment.beyond_control_components %}
-{% for _, component_group in configuration.environment.beyond_control_components.items() %}
+{# Beyond-control components #}
+{% if configuration.beyond_control_components %}
+{% for _, component_group in configuration.beyond_control_components.items() %}
 {% set components = component_group|get_components(beyond_control=True) %}
 {% set component_type = configuration.components[component_group.type] %}
 
@@ -28,12 +19,12 @@ Current state of the environment:
 {% endif %}{% endfor %}{# attribute type #}:
 
 {% for component in component_group|get_components(beyond_control=True) %}
-{% if component_type.id %}
+{% if not component_group.singleton %}
 - {{ component[component_type.id] }}:
 {% endif %}
 {% for attribute, attribute_config in component_type.attributes.items() %}
 {% if component|show_attr(attribute_config) %}
-{% if component_type.id %}  {% endif %}
+{% if not component_group.singleton %}  {% endif %}
 - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
 {% endif %}
 {% endfor %}
