@@ -1,4 +1,4 @@
 name: rule_based_full_nearest
 log_dir.append: /rule_based_full_nearest
-adaptation_name: farm.adaptations.rule_based_smart.RuleBasedFullNearestAdaptation  # TODO: fix path (add "farm.")... everywhere
+adaptation_name: farm.adaptations.rule_based_smart.RuleBasedFullNearestAdaptation
 adaptation_params: {}

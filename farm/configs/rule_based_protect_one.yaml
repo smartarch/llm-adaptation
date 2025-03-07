@@ -1,4 +1,4 @@
 name: rule_based_protect_one
 log_dir.append: /rule_based_protect_one
-adaptation_name: adaptations.rule_based_smart.RuleBasedProtectOneAdaptation
+adaptation_name: farm.adaptations.rule_based_smart.RuleBasedProtectOneAdaptation
 adaptation_params: {}

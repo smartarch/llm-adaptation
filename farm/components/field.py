@@ -194,7 +194,6 @@ class Field(Component):
 
     @property
     def remaining_drones_for_full_protection(self) -> int:
-        # TODO: we might want to also consider drones moving to field here
         return len(self.protectionPlaces) - len(self.protectingDrones)
 
     @property

@@ -1,6 +1,6 @@
 name: q_network_all
 log_dir.append: /q_network_all
-adaptation_name: adaptations.rl.q_network_adaptation.QNetworkAdaptation
+adaptation_name: farm.adaptations.rl.q_network_adaptation.QNetworkAdaptation
 adaptation_params:
   epsilon: 0.3
   epsilon_final: 0.01
