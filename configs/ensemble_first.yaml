@@ -1,0 +1,5 @@
+name.append: _ef
+log_dir.append: _ef
+adaptation_params:
+  prompt_template_params:
+    answer_format: ensemble-first

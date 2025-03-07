@@ -87,7 +87,7 @@ class Simulation(abc.ABC):
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
         for message in self.assignment_errors:
-            print("Final assignment:", message)
+            print("Error in final assignment:", message)
             print(message, file=sys.stderr)
 
         for component, group_id in self.assignments.items():
