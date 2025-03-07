@@ -38,18 +38,18 @@ adaptation_params:  # this is purely technical
         name: "village"
         description: "Go to the Village"
 
+    domain_description: |
+      You play a computer game. The goal is to kill a Dragon as fast as possible.
+      The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+      There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
+
     environment:
-#      description: "The goal of the game is to kill a Dragon as fast as possible."
-      description: |
-        You play a computer game. The goal is to kill a Dragon as fast as possible.
-        The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
-        There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
       beyond_control_components:
         dragon:
           type: Dragon
           description: "The Dragon"
           access: environment.dragon
-      global_attributes:
+      global_attributes:  # TODO: remove global attributes
         wheat:
           name: "Wheat"
 

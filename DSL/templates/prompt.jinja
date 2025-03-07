@@ -1,9 +1,9 @@
 {# Description (goal) #}
-{% if configuration.environment.description %}
+{% if configuration.domain_description %}
 {% if configuration.step %}
-{{ configuration.environment.description.format(step) }}
+{{ configuration.domain_description.format(step) }}
 {% else %}
-{{ configuration.environment.description }}
+{{ configuration.domain_description }}
 {% endif %}{# step #}
 
 {% endif %}{# description #}

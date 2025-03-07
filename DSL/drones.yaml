@@ -58,8 +58,9 @@ adaptation_params:  # this is purely technical
         name_str: protecting {field.id}
         description: "Assigned drones fly to the field and protect it."
 
+    domain_description: "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields."
+
     environment:
-      description: "You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields."
       beyond_control_components:
         fields:
           type: Field
