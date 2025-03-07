@@ -66,17 +66,17 @@ adaptation_params:  # this is purely technical
           if: "lambda component: component.location == Map.VILLAGE"
           description: "Villagers in the Village"
         ensembles: [Farm, GoToCave, SpawnFarmer, SpawnWarrior]
-        answer_format: component-first
       assign_in_cave:
         components:
           type: Villager
           if: "lambda component: component.location == Map.CAVE"
           description: "Villagers in the Cave"
         ensembles: [Attack, StayInCave, GoToVillage]
-        answer_format: component-first
 
     strategy: ""  # optional
-    chain_of_thought: true
     strategy_interface:
       abstract_class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation
       class: SmartAdaptation
+
+    chain_of_thought: true
+    answer_format: component-first

@@ -98,12 +98,12 @@ Think step by step. First, reason about the question and write a short explanati
 Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
 
 {% for _, assignment in configuration.assignments.items() %}
-{% if assignment.answer_format == "component-first" %}
+{% if configuration.answer_format == "component-first" %}
 For each of {{ assignment.components.description }}, write one line with the selected group in format "<name>: <group>". The group must be one of {% for ensemble in assignment.ensembles|get_ensembles %}"{{ ensemble.name }}"{{ ", " if not loop.last else "" }}{% endfor %}.
-{% elif assignment.answer_format == "ensemble-first" %}
+{% elif configuration.answer_format == "ensemble-first" %}
 For each group, write one line. The line must start with the group name followed by a colon (':') and then a comma-separated list of {{ assignment.components.description }} (their names) assigned to the group.
 {% else %}
-{{ assignment.answer_format }}
+{{ configuration.answer_format }}
 {% endif %}
 
 {% endfor %}

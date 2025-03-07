@@ -81,11 +81,12 @@ adaptation_params:  # this is purely technical
             for_str: field
             in_str: environment.fields
             if_str: field.threat_level > 0
-        answer_format: component-first
-        # answer_format: ensemble-first
 
     strategy: ""  # optional
-    chain_of_thought: true
     strategy_interface:
       abstract_class: generated_adaptations.base_classes.farm.FarmAdaptation
       class: SmartFarmAdaptation
+
+    chain_of_thought: true
+    answer_format: component-first
+    # answer_format: ensemble-first

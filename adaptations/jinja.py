@@ -117,11 +117,12 @@ class JinjaPromptTemplate(PromptTemplate):
 
         components = self.load_components_for_assignments(simulation)
 
-        # TODO: this is defined by the first assignment, we need to change the DSL to have global answer format
-        if next(iter(self.configuration["assignments"].values()))["answer_format"] == "component-first":
+        if self.configuration["answer_format"] == "component-first":
             errors = self.process_component_first(answer, components, simulation)
-        else:
+        elif self.configuration["answer_format"] == "ensemble-first":
             errors = self.process_ensemble_first(answer, components, simulation)
+        else:
+            raise NotImplementedError("Unsupported answer format")
 
         return errors, memory
 
