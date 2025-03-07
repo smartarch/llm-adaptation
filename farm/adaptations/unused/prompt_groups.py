@@ -1,4 +1,4 @@
-from farm.adaptations.prompt_template import SmartFarmPromptTemplate
+from farm.adaptations.unused.prompt_template import SmartFarmPromptTemplate
 from farm.components.drone import Drone
 
 
