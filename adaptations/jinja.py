@@ -112,7 +112,9 @@ class JinjaPromptTemplate(PromptTemplate):
     def process_response(self, response, simulation) -> tuple[list[ProcessingError] | None, str | None]:
         answer = self.extract_tag(response, "answer")
         if not answer:
-            return [ProcessingError(None, "Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer.")], None
+            error = "Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer."
+            simulation.append_assignment_error(error)
+            return [ProcessingError(None, error)], None
         memory = self.extract_tag(response, "memory")
 
         components = self.load_components_for_assignments(simulation)
