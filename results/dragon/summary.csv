@@ -1,0 +1,23 @@
+llm,params,steps,hp
+baseline,Rule-based MT,11,-7
+baseline,Rule-based MT,9,-4
+baseline,Rule-based MT,16,-7
+baseline,Rule-based MT,12,-1
+baseline,Rule-based MT,9,-4
+baseline,Rule-based MT,13,-1
+baseline,Rule-based MT,15,-10
+baseline,Rule-based MT,14,-1
+baseline,Rule-based MT,10,-4
+baseline,Rule-based MT,11,-4
+gpt4omini,Default,30,28
+gpt4omini,Default,19,0
+gpt4omini,Default,30,35
+gpt4omini,strategy,30,47
+gpt4omini,strategy,30,17
+gpt4omini,strategy,30,38
+o3mini,Default,30,17
+o3mini,Default,11,0
+o3mini,Default,30,31
+o3mini,strategy,13,-4
+o3mini,strategy,11,-7
+o3mini,strategy,18,-7

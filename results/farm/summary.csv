@@ -1,0 +1,77 @@
+llm,params,damage
+baseline,Rule-based Smart,31.0
+baseline,Rule-based Smart,31.0
+baseline,Rule-based Smart,27.0
+baseline,Rule-based Smart,32.0
+baseline,Rule-based Smart,24.0
+baseline,Rule-based Smart,29.0
+baseline,Rule-based Smart,17.0
+baseline,Rule-based Smart,25.0
+baseline,Rule-based Smart,30.0
+baseline,Rule-based Smart,34.0
+ppo_10steps,RL,226.2
+ppo_10steps_rs5,RL,151.9
+q_network_10steps,RL,196.2
+q_network_10steps_rs5,RL,104.0
+ppo_10steps,RL,220.0
+ppo_10steps_rs5,RL,188.0
+q_network_10steps,RL,190.7
+q_network_10steps_rs5,RL,127.2
+ppo_10steps,RL,272.9
+ppo_10steps_rs5,RL,173.0
+q_network_10steps,RL,176.6
+q_network_10steps_rs5,RL,100.7
+claude37sonnet,Default,86.0
+claude37sonnet,Default,139.0
+claude37sonnet,Default,116.0
+claude37sonnet,Hinted,88.0
+claude37sonnet,Hinted,52.0
+claude37sonnet,Hinted,63.0
+gemini20flash,Default,160.0
+gemini20flash,Default,161.0
+gemini20flash,Default,147.0
+gemini20flash,Hinted,81.0
+gemini20flash,Hinted,57.0
+gemini20flash,Hinted,90.0
+gpt4o,Default,205.0
+gpt4o,Default,101.0
+gpt4o,Default,277.0
+gpt4o,Hinted,104.0
+gpt4o,Hinted,57.0
+gpt4o,Hinted,107.0
+gpt4omini,Default,223.0
+gpt4omini,Default,151.0
+gpt4omini,Default,236.0
+gpt4omini,Ensemble-First,248.0
+gpt4omini,Ensemble-First,213.0
+gpt4omini,Ensemble-First,214.0
+gpt4omini,History,306.0
+gpt4omini,History,176.0
+gpt4omini,History,211.0
+gpt4omini,Memory,352.0
+gpt4omini,Memory,263.0
+gpt4omini,Memory,216.0
+gpt4omini,Step-by-Step,111.0
+gpt4omini,Step-by-Step,71.0
+gpt4omini,Step-by-Step,113.0
+gpt4omini,Hinted,126.0
+gpt4omini,Hinted,117.0
+gpt4omini,Hinted,117.0
+o3mini,Default,46.0
+o3mini,Default,34.0
+o3mini,Default,33.0
+o3mini,Ensemble-First,85.0
+o3mini,Ensemble-First,67.0
+o3mini,Ensemble-First,84.0
+o3mini,History,68.0
+o3mini,History,39.0
+o3mini,History,29.0
+o3mini,Memory,39.0
+o3mini,Memory,36.0
+o3mini,Memory,38.0
+o3mini,Step-by-Step,51.0
+o3mini,Step-by-Step,44.0
+o3mini,Step-by-Step,48.0
+o3mini,Hinted,30.0
+o3mini,Hinted,34.0
+o3mini,Hinted,20.0

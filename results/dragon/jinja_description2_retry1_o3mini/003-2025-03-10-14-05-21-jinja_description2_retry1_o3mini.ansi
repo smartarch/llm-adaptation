@@ -1,0 +1,612 @@
+Config:
+
+example: dragon
+steps: 30
+log_dir: ../0310/logs/dragon/jinja_description2_retry1_o3mini
+wheat: 10
+farmers: 2
+warriors: 1
+farmer:
+  HP: 4
+  Attack: 1
+  Farming: 5
+  SpawnCost: 10
+warrior:
+  HP: 6
+  Attack: 3
+  Farming: 2
+  SpawnCost: 12
+dragon:
+  HP: 50
+  FireAttackProb: 0.4
+  EatAttackProb: 0.2
+name: jinja_description2_retry1_o3mini
+adaptation_params:
+  config: true
+  prompt_template: adaptations.jinja.JinjaPromptTemplate
+  prompt_template_params:
+    components:
+      Dragon:
+        attributes:
+          hp:
+            name: Health
+      Farm:
+        attributes:
+          wheat:
+            name: Current wheat amount
+      Villager:
+        id: name
+        attributes:
+          role:
+            name: Role
+            description: '"Farmer" or "Warrior"'
+          hp:
+            name: Health
+    ensembles:
+      Farm:
+        name: farm
+        description: Stay in the Village and work on the farm
+      GoToCave:
+        name: cave
+        description: Go to the Cave
+      SpawnFarmer:
+        name: spawn farmer
+        description: For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+      SpawnWarrior:
+        name: spawn warrior
+        description: For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+      Attack:
+        name: attack
+        description: Attack the Dragon
+      StayInCave:
+        name: cave
+        description: Stay in the Cave
+      GoToVillage:
+        name: village
+        description: Go to the Village
+    domain_description: 'You play a computer game. The goal is to kill a Dragon as fast as possible.
+
+      The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+
+      There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+
+      To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+
+      When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+
+      The Dragon starts with 50 HP and you win the game when it dies. If you don''t kill the Dragon within 30 steps, you lose the game. This is step {}.
+
+      '
+    beyond_control_components:
+      dragon:
+        type: Dragon
+        singleton: true
+        description: The Dragon
+        access: environment.dragon
+      farm:
+        type: Farm
+        singleton: true
+        description: The Farm
+        access: environment.farm
+    assignments:
+      assign_in_village:
+        components:
+          type: Villager
+          if: 'lambda component: component.location == Map.VILLAGE'
+          description: Villagers in the Village
+        ensembles:
+        - Farm
+        - GoToCave
+        - SpawnFarmer
+        - SpawnWarrior
+      assign_in_cave:
+        components:
+          type: Villager
+          if: 'lambda component: component.location == Map.CAVE'
+          description: Villagers in the Cave
+        ensembles:
+        - Attack
+        - StayInCave
+        - GoToVillage
+    strategy: ''
+    strategy_interface:
+      abstract_class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation
+      class: SmartAdaptation
+    chain_of_thought: false
+    answer_format: component-first
+    step: true
+  max_retries: 1
+  llm: o3-mini-2025-01-31
+  temperature: 1
+adaptation_name: adaptations.openai.OpenAIAdaptation
+log_file_name: 003-2025-03-10-14-05-21-jinja_description2_retry1_o3mini
+log_file_path: ../0310/logs/dragon/jinja_description2_retry1_o3mini/003-2025-03-10-14-05-21-jinja_description2_retry1_o3mini.ansi
+
+
+Loading adaptation OpenAIAdaptation from module adaptations.openai
+LLM model: o3-mini-2025-01-31
+Loading prompt template JinjaPromptTemplate from module adaptations.jinja
+
+Running simulation...
+
+Step: 1
+[35mPROMPT:
+You play a computer game. The goal is to kill a Dragon as fast as possible.
+The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step 1.
+
+
+
+The Dragon with their attributes :
+
+- Health: 50
+
+The Farm with their attributes :
+
+- Current wheat amount: 10
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Villagers in the Village with their attributes Role ("Farmer" or "Warrior"), :
+
+- Deborah:
+  - Role: Farmer
+  - Health: 4
+- Charles:
+  - Role: Farmer
+  - Health: 4
+- Mark:
+  - Role: Warrior
+  - Health: 6
+
+Allowed groups for Villagers in the Village:
+1. farm
+   - Stay in the Village and work on the farm
+2. cave
+   - Go to the Cave
+3. spawn farmer
+   - For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+4. spawn warrior
+   - For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+---
+Villagers in the Cave with their attributes Role ("Farmer" or "Warrior"), :
+
+(none)
+
+Allowed groups for Villagers in the Cave:
+1. attack
+   - Attack the Dragon
+2. cave
+   - Stay in the Cave
+3. village
+   - Go to the Village
+
+---
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>". The group must be one of "farm", "cave", "spawn farmer", "spawn warrior".
+
+For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>". The group must be one of "attack", "cave", "village".
+
+
+[0m
+[36mRESPONSE:
+<answer>
+Deborah: cave
+Charles: cave
+Mark: cave
+</answer>
+[0m
+[33mTOKENS USED:
+Input: 690, Output: 4254 (reasoning: 4224)
+[0m
+Step: 2
+[35mPROMPT:
+You play a computer game. The goal is to kill a Dragon as fast as possible.
+The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step 2.
+
+
+
+The Dragon with their attributes :
+
+- Health: 50
+
+The Farm with their attributes :
+
+- Current wheat amount: 10
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Villagers in the Village with their attributes Role ("Farmer" or "Warrior"), :
+
+(none)
+
+Allowed groups for Villagers in the Village:
+1. farm
+   - Stay in the Village and work on the farm
+2. cave
+   - Go to the Cave
+3. spawn farmer
+   - For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+4. spawn warrior
+   - For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+---
+Villagers in the Cave with their attributes Role ("Farmer" or "Warrior"), :
+
+- Deborah:
+  - Role: Farmer
+  - Health: 4
+- Charles:
+  - Role: Farmer
+  - Health: 4
+- Mark:
+  - Role: Warrior
+  - Health: 6
+
+Allowed groups for Villagers in the Cave:
+1. attack
+   - Attack the Dragon
+2. cave
+   - Stay in the Cave
+3. village
+   - Go to the Village
+
+---
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>". The group must be one of "farm", "cave", "spawn farmer", "spawn warrior".
+
+For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>". The group must be one of "attack", "cave", "village".
+
+
+[0m
+[36mRESPONSE:
+<answer>
+Deborah: attack
+Charles: attack
+Mark: attack
+</answer>
+[0m
+[33mTOKENS USED:
+Input: 690, Output: 478 (reasoning: 448)
+[0m
+Step: 3
+[35mPROMPT:
+You play a computer game. The goal is to kill a Dragon as fast as possible.
+The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step 3.
+
+
+
+The Dragon with their attributes :
+
+- Health: 45
+
+The Farm with their attributes :
+
+- Current wheat amount: 10
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Villagers in the Village with their attributes Role ("Farmer" or "Warrior"), :
+
+(none)
+
+Allowed groups for Villagers in the Village:
+1. farm
+   - Stay in the Village and work on the farm
+2. cave
+   - Go to the Cave
+3. spawn farmer
+   - For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+4. spawn warrior
+   - For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+---
+Villagers in the Cave with their attributes Role ("Farmer" or "Warrior"), :
+
+- Deborah:
+  - Role: Farmer
+  - Health: 3
+- Charles:
+  - Role: Farmer
+  - Health: 3
+- Mark:
+  - Role: Warrior
+  - Health: 5
+
+Allowed groups for Villagers in the Cave:
+1. attack
+   - Attack the Dragon
+2. cave
+   - Stay in the Cave
+3. village
+   - Go to the Village
+
+---
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>". The group must be one of "farm", "cave", "spawn farmer", "spawn warrior".
+
+For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>". The group must be one of "attack", "cave", "village".
+
+
+[0m
+[36mRESPONSE:
+<answer>
+Deborah: attack
+Charles: attack
+Mark: attack
+</answer>
+[0m
+[33mTOKENS USED:
+Input: 690, Output: 2142 (reasoning: 2112)
+[0m
+Step: 4
+[35mPROMPT:
+You play a computer game. The goal is to kill a Dragon as fast as possible.
+The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step 4.
+
+
+
+The Dragon with their attributes :
+
+- Health: 40
+
+The Farm with their attributes :
+
+- Current wheat amount: 10
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Villagers in the Village with their attributes Role ("Farmer" or "Warrior"), :
+
+(none)
+
+Allowed groups for Villagers in the Village:
+1. farm
+   - Stay in the Village and work on the farm
+2. cave
+   - Go to the Cave
+3. spawn farmer
+   - For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+4. spawn warrior
+   - For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+---
+Villagers in the Cave with their attributes Role ("Farmer" or "Warrior"), :
+
+- Deborah:
+  - Role: Farmer
+  - Health: 3
+- Mark:
+  - Role: Warrior
+  - Health: 5
+
+Allowed groups for Villagers in the Cave:
+1. attack
+   - Attack the Dragon
+2. cave
+   - Stay in the Cave
+3. village
+   - Go to the Village
+
+---
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>". The group must be one of "farm", "cave", "spawn farmer", "spawn warrior".
+
+For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>". The group must be one of "attack", "cave", "village".
+
+
+[0m
+[36mRESPONSE:
+<answer>
+Deborah: attack
+Mark: attack
+</answer>
+[0m
+[33mTOKENS USED:
+Input: 674, Output: 1754 (reasoning: 1728)
+[0m
+Step: 5
+[35mPROMPT:
+You play a computer game. The goal is to kill a Dragon as fast as possible.
+The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step 5.
+
+
+
+The Dragon with their attributes :
+
+- Health: 36
+
+The Farm with their attributes :
+
+- Current wheat amount: 10
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Villagers in the Village with their attributes Role ("Farmer" or "Warrior"), :
+
+(none)
+
+Allowed groups for Villagers in the Village:
+1. farm
+   - Stay in the Village and work on the farm
+2. cave
+   - Go to the Cave
+3. spawn farmer
+   - For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+4. spawn warrior
+   - For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+---
+Villagers in the Cave with their attributes Role ("Farmer" or "Warrior"), :
+
+- Deborah:
+  - Role: Farmer
+  - Health: 3
+- Mark:
+  - Role: Warrior
+  - Health: 5
+
+Allowed groups for Villagers in the Cave:
+1. attack
+   - Attack the Dragon
+2. cave
+   - Stay in the Cave
+3. village
+   - Go to the Village
+
+---
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>". The group must be one of "farm", "cave", "spawn farmer", "spawn warrior".
+
+For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>". The group must be one of "attack", "cave", "village".
+
+
+[0m
+[36mRESPONSE:
+<answer>
+Deborah: attack
+Mark: attack
+</answer>
+[0m
+[33mTOKENS USED:
+Input: 674, Output: 1498 (reasoning: 1472)
+[0m
+Step: 6
+[35mPROMPT:
+You play a computer game. The goal is to kill a Dragon as fast as possible.
+The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
+To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step 6.
+
+
+
+The Dragon with their attributes :
+
+- Health: 32
+
+The Farm with their attributes :
+
+- Current wheat amount: 10
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Villagers in the Village with their attributes Role ("Farmer" or "Warrior"), :
+
+(none)
+
+Allowed groups for Villagers in the Village:
+1. farm
+   - Stay in the Village and work on the farm
+2. cave
+   - Go to the Cave
+3. spawn farmer
+   - For every two villagers assigned to this group and 10 wheat, a new Farmer is spawned.
+4. spawn warrior
+   - For every two villagers assigned to this group and 12 wheat, a new Warrior is spawned.
+---
+Villagers in the Cave with their attributes Role ("Farmer" or "Warrior"), :
+
+- Deborah:
+  - Role: Farmer
+  - Health: 3
+
+Allowed groups for Villagers in the Cave:
+1. attack
+   - Attack the Dragon
+2. cave
+   - Stay in the Cave
+3. village
+   - Go to the Village
+
+---
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Villagers in the Village, write one line with the selected group in format "<name>: <group>". The group must be one of "farm", "cave", "spawn farmer", "spawn warrior".
+
+For each of Villagers in the Cave, write one line with the selected group in format "<name>: <group>". The group must be one of "attack", "cave", "village".
+
+
+[0m
+[36mRESPONSE:
+<answer>
+Deborah: attack
+</answer>
+[0m
+[33mTOKENS USED:
+Input: 658, Output: 662 (reasoning: 640)
+[0m
+Step: 7
+Step: 8
+Step: 9
+Step: 10
+Step: 11
+Step: 12
+Step: 13
+Step: 14
+Step: 15
+Step: 16
+Step: 17
+Step: 18
+Step: 19
+Step: 20
+Step: 21
+Step: 22
+Step: 23
+Step: 24
+Step: 25
+Step: 26
+Step: 27
+Step: 28
+Step: 29
+Step: 30
+
+Simulation done
+[33mTOKENS USED:
+Input: 4076, Output: 10788 (reasoning: 10624)
+[0m
+
+Statistics:
+step: None
+dragon_hp: 31
+wheat: 10
+IDLE: 0
+FARMING: 0
+MOVING_TO_VILLAGE: 0
+MOVING_TO_CAVE: 0
+ATTACKING: 0
+SPAWNING: 0
+farmers_village: 0
+farmers_cave: 0
+warriors_village: 0
+warriors_cave: 0
+dragon_attack: 
+
+Saving plot... Done

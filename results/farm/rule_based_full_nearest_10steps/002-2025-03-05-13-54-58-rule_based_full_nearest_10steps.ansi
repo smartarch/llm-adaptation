@@ -1,0 +1,974 @@
+Config:
+
+example: farm
+steps: 300
+adaptation_params:
+  adapt_every: 10
+drones: 8
+birds: 80
+charger:
+- 22
+- 21
+fields:
+- - 3
+  - 4
+  - 18
+  - 19
+- - 30
+  - 6
+  - 45
+  - 22
+- - 32
+  - 35
+  - 48
+  - 43
+- - 4
+  - 37
+  - 27
+  - 44
+mapWidth: 50
+mapHeight: 50
+patrolling: false
+birdFieldProbabilities:
+  0:
+  - 0.85
+  - 0.05
+  - 0.05
+  - 0.05
+  100:
+  - 0.1
+  - 0.7
+  - 0.1
+  - 0.1
+  200:
+  - 0
+  - 0
+  - 0.5
+  - 0.5
+birdCohesion: 0.5
+bird:
+  IdleToAttackProb: 0.2
+  AttackToAttackProb: 0.6
+  MaxFleeInSameField: 3
+  WaitBeforeEat: 5
+  NearbyBirdsToEat: 2
+  NearbyBirdsRadius: 6
+log_dir: ../0305/logs/no_battery/rule_based_full_nearest_10steps
+drone:
+  MovingEnergyConsumption: 0
+  HoveringEnergyConsumption: 0
+noCharging: true
+name: rule_based_full_nearest_10steps
+adaptation_name: farm.adaptations.rule_based_smart.RuleBasedFullNearestAdaptation
+log_file_name: 002-2025-03-05-13-54-58-rule_based_full_nearest_10steps
+log_file_path: ../0305/logs/no_battery/rule_based_full_nearest_10steps/002-2025-03-05-13-54-58-rule_based_full_nearest_10steps.ansi
+
+
+Loading adaptation RuleBasedFullNearestAdaptation from module farm.adaptations.rule_based_smart
+
+Running simulation...
+
+Step: 1
+Assigning new target to Drone_1(IDLE, bat=1.000): Field_1
+Assigning new target to Drone_2(IDLE, bat=1.000): Field_1
+Assigning new target to Drone_7(IDLE, bat=1.000): Field_1
+Assigning new target to Drone_5(IDLE, bat=1.000): Field_1
+Assigning new target to Drone_8(IDLE, bat=1.000): Field_4
+Assigning new target to Drone_4(IDLE, bat=1.000): Field_4
+Assigning new target to Drone_6(IDLE, bat=1.000): Field_4
+Assigning new target to Drone_3(IDLE, bat=1.000): Field_2
+Step: 2
+Step: 3
+Step: 4
+Step: 5
+Step: 6
+Step: 7
+Step: 8
+Step: 9
+Step: 10
+Step: 11
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Step: 12
+Step: 13
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 14
+Step: 15
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 16
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 17
+Could not find unprotected crop
+Step: 18
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 19
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 20
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 21
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Step: 22
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 23
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 24
+Could not find unprotected crop
+Step: 25
+Could not find unprotected crop
+Step: 26
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 27
+Could not find unprotected crop
+Step: 28
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 29
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 30
+Could not find unprotected crop
+Step: 31
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_8(PROTECTING, bat=1.000): Field_2
+Step: 32
+Step: 33
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 34
+Could not find unprotected crop
+Step: 35
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 36
+Could not find unprotected crop
+Step: 37
+Could not find unprotected crop
+Step: 38
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 39
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 40
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 41
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=1.000): Field_2
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_2
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=1.000): Field_2
+Step: 42
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 43
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 44
+Could not find unprotected crop
+Step: 45
+Step: 46
+Could not find unprotected crop
+Step: 47
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 48
+Step: 49
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 50
+Could not find unprotected crop
+Step: 51
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=1.000): Field_2
+Assigning new target to Drone_7(PROTECTING, bat=1.000): Field_3
+Assigning new target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Step: 52
+Step: 53
+Could not find unprotected crop
+Step: 54
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 55
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 56
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 57
+Step: 58
+Could not find unprotected crop
+Step: 59
+Step: 60
+Could not find unprotected crop
+Step: 61
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning new target to Drone_1(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_2(PROTECTING, bat=1.000): Field_4
+Step: 62
+Step: 63
+Could not find unprotected crop
+Step: 64
+Could not find unprotected crop
+Step: 65
+Step: 66
+Could not find unprotected crop
+Step: 67
+Could not find unprotected crop
+Step: 68
+Step: 69
+Step: 70
+Step: 71
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning new target to Drone_2(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_2
+Step: 72
+Could not find unprotected crop
+Step: 73
+Could not find unprotected crop
+Step: 74
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 75
+Could not find unprotected crop
+Step: 76
+Could not find unprotected crop
+Step: 77
+Step: 78
+Step: 79
+Could not find unprotected crop
+Step: 80
+Could not find unprotected crop
+Step: 81
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_6(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 82
+Could not find unprotected crop
+Step: 83
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 84
+Step: 85
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 86
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 87
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 88
+Could not find unprotected crop
+Step: 89
+Step: 90
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 91
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_5(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 92
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 93
+Could not find unprotected crop
+Step: 94
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 95
+Could not find unprotected crop
+Step: 96
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 97
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 98
+Could not find unprotected crop
+Step: 99
+Could not find unprotected crop
+Step: 100
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 101
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Step: 102
+Step: 103
+Could not find unprotected crop
+Step: 104
+Step: 105
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 106
+Step: 107
+Step: 108
+Step: 109
+Could not find unprotected crop
+Step: 110
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 111
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 112
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 113
+Step: 114
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 115
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 116
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 117
+Could not find unprotected crop
+Step: 118
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 119
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 120
+Could not find unprotected crop
+Step: 121
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Step: 122
+Could not find unprotected crop
+Step: 123
+Could not find unprotected crop
+Step: 124
+Step: 125
+Step: 126
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 127
+Could not find unprotected crop
+Step: 128
+Step: 129
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 130
+Step: 131
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_7(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_1(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Step: 132
+Step: 133
+Step: 134
+Step: 135
+Step: 136
+Step: 137
+Step: 138
+Step: 139
+Step: 140
+Step: 141
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=1.000): Field_2
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_1(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_5(PROTECTING, bat=1.000): Field_1
+Step: 142
+Step: 143
+Could not find unprotected crop
+Step: 144
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 145
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 146
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 147
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 148
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 149
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 150
+Step: 151
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning new target to Drone_1(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_1
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 152
+Step: 153
+Step: 154
+Could not find unprotected crop
+Step: 155
+Could not find unprotected crop
+Step: 156
+Step: 157
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 158
+Could not find unprotected crop
+Step: 159
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 160
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 161
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 162
+Step: 163
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 164
+Could not find unprotected crop
+Step: 165
+Step: 166
+Step: 167
+Step: 168
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 169
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 170
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 171
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 172
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 173
+Step: 174
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 175
+Could not find unprotected crop
+Step: 176
+Step: 177
+Could not find unprotected crop
+Step: 178
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 179
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 180
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 181
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_2(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_3(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Step: 182
+Could not find unprotected crop
+Step: 183
+Step: 184
+Step: 185
+Step: 186
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 187
+Step: 188
+Could not find unprotected crop
+Step: 189
+Step: 190
+Could not find unprotected crop
+Step: 191
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning new target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_3
+Step: 192
+Step: 193
+Step: 194
+Step: 195
+Step: 196
+Step: 197
+Could not find unprotected crop
+Step: 198
+Step: 199
+Step: 200
+Could not find unprotected crop
+Step: 201
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_1(PROTECTING, bat=1.000): Field_2
+Step: 202
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 203
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 204
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 205
+Step: 206
+Could not find unprotected crop
+Step: 207
+Step: 208
+Could not find unprotected crop
+Step: 209
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 210
+Step: 211
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=1.000): Field_2
+Assigning new target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_7(PROTECTING, bat=1.000): Field_1
+Step: 212
+Step: 213
+Step: 214
+Step: 215
+Step: 216
+Step: 217
+Step: 218
+Step: 219
+Step: 220
+Step: 221
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=1.000): Field_2
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_1
+Step: 222
+Step: 223
+Step: 224
+Could not find unprotected crop
+Step: 225
+Step: 226
+Step: 227
+Could not find unprotected crop
+Step: 228
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 229
+Step: 230
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 231
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 232
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 233
+Could not find unprotected crop
+Step: 234
+Could not find unprotected crop
+Step: 235
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 236
+Could not find unprotected crop
+Step: 237
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 238
+Step: 239
+Could not find unprotected crop
+Step: 240
+Step: 241
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_3
+Assigning new target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning new target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_8(PROTECTING, bat=1.000): Field_4
+Could not find unprotected crop
+Step: 242
+Step: 243
+Step: 244
+Step: 245
+Step: 246
+Could not find unprotected crop
+Step: 247
+Step: 248
+Step: 249
+Step: 250
+Could not find unprotected crop
+Step: 251
+Assigning same target to Drone_4(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_8(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning same target to Drone_7(MOVING_TO_FIELD, bat=1.000): Field_4
+Step: 252
+Could not find unprotected crop
+Step: 253
+Step: 254
+Step: 255
+Could not find unprotected crop
+Step: 256
+Step: 257
+Step: 258
+Step: 259
+Could not find unprotected crop
+Step: 260
+Step: 261
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_5(MOVING_TO_FIELD, bat=1.000): Field_3
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_3(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_1(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning same target to Drone_2(PROTECTING, bat=1.000): Field_2
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 262
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 263
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 264
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 265
+Step: 266
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 267
+Could not find unprotected crop
+Step: 268
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 269
+Could not find unprotected crop
+Step: 270
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 271
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_3(MOVING_TO_FIELD, bat=1.000): Field_4
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_1(PROTECTING, bat=1.000): Field_1
+Assigning new target to Drone_2(PROTECTING, bat=1.000): Field_1
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 272
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 273
+Could not find unprotected crop
+Step: 274
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 275
+Could not find unprotected crop
+Step: 276
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 277
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 278
+Step: 279
+Could not find unprotected crop
+Step: 280
+Step: 281
+Assigning same target to Drone_4(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_5(PROTECTING, bat=1.000): Field_3
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_6(PROTECTING, bat=1.000): Field_1
+Assigning same target to Drone_1(MOVING_TO_FIELD, bat=1.000): Field_1
+Assigning same target to Drone_2(MOVING_TO_FIELD, bat=1.000): Field_1
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 282
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 283
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 284
+Could not find unprotected crop
+Step: 285
+Step: 286
+Could not find unprotected crop
+Step: 287
+Could not find unprotected crop
+Step: 288
+Could not find unprotected crop
+Step: 289
+Could not find unprotected crop
+Step: 290
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 291
+Assigning same target to Drone_3(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_7(PROTECTING, bat=1.000): Field_4
+Assigning same target to Drone_8(PROTECTING, bat=1.000): Field_4
+Assigning new target to Drone_1(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_6(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_4(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_5(PROTECTING, bat=1.000): Field_2
+Assigning new target to Drone_2(PROTECTING, bat=1.000): Field_3
+Step: 292
+Could not find unprotected crop
+Step: 293
+Step: 294
+Could not find unprotected crop
+Step: 295
+Could not find unprotected crop
+Step: 296
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 297
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 298
+Could not find unprotected crop
+Step: 299
+Could not find unprotected crop
+Could not find unprotected crop
+Could not find unprotected crop
+Step: 300
+
+Simulation done
+
+Statistics:
+step: None
+damage: 31
+IDLE: 0
+CHARGING: 0
+PROTECTING: 5
+MOVING_TO_CHARGER: 0
+MOVING_TO_FIELD: 3
+TERMINATED: 0
+
+Saving plot... Done
