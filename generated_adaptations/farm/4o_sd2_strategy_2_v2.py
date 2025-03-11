@@ -11,7 +11,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
         # Categorize drones
         idle_drones = [drone for drone in components if drone.state == "idle"]
-        moving_drones = [drone for drone in components if drone.state == "moving to field"]
+        moving_drones = [drone for drone in components if drone.state == "moving_to_field"]
         protecting_drones = [drone for drone in components if drone.state == "protecting"]
 
         # Dictionary to track drones already assigned to fields

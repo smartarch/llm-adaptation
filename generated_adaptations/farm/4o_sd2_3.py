@@ -17,7 +17,7 @@ class SmartFarmAdaptation(FarmAdaptation):
                     drones_assigned[drone.target_id] += 1
                 continue
 
-            if drone.state == "moving to field":
+            if drone.state == "moving_to_field":
                 # Count drones that are already en route
                 if drone.target_id:
                     drones_assigned[drone.target_id] += 1

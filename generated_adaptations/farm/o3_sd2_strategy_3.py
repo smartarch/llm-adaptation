@@ -26,7 +26,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # keep the drones protecting it and assign the rest as "idle".
         if additional_required <= 0:
             for drone in components:
-                if drone.target_id == highest_field.id and drone.state in ["moving to field", "protecting"]:
+                if drone.target_id == highest_field.id and drone.state in ["moving_to_field", "protecting"]:
                     environment.assign_group(drone, target_group)
                 else:
                     environment.assign_group(drone, "idle")
