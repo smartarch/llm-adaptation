@@ -166,7 +166,6 @@ cython_debug/
 /logs/*.gif
 /rl_models/
 /logs
-/DSL/examples/
 /results/**/*.gif
 /results/**/*.png
 /results/**/RL*/**/*.err

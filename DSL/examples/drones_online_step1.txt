@@ -1,0 +1,106 @@
+You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.
+
+The birds initially fly randomly around the farm. Sometimes, they decide they want to eat and then they target a field and fly towards it. The birds' preference among the fields changes over time. They also prefer fields with more birds already in them. When a bird lands on a field, it waits for a certain amount of time before damage is dealt. After the damage is dealt, the bird either attacks another crop within the same field or it flies away.
+
+Each field is equipped with sensors that can detect the birds. The more birds are in the field, the higher the "threat level" value is for that field.
+
+Drones can be used to protect the fields. When a drone is assigned a target field, it flies towards it and then hovers above it. The drone speed is 2 so it takes some time before the drone reaches the field ands starts protecting it. The drone scares all the birds in a certain radius around it, however, multiple drones are necessary to fully protect a field. The scared birds try to flee to a different location within the same field and eat crops there. Only if the field is fully protected, the birds flee away, so a partial protection is not very effective (but still better than no protection).
+
+Your goal is to divide the drones among the fields to minimize the damage dealt by the birds. You will be periodically presented with the current situation (drone locations, threat levels, ...) and you will be asked to assign the drones to the fields.
+
+
+Fields on the farm with their attributes top, bottom, left, right (rectangle), threat level (bird-threat level between 0 and 1), flying to field (number of drones flying towards the field to protect it when they arrive), protecting (number of drones currently protecting the field):
+
+- Field_1:
+  - left: 4
+  - top: 3
+  - right: 19
+  - bottom: 18
+  - threat level: 0.09
+  - for full protection: 4 drones
+  - flying to field: 0 drones
+  - protecting: 1 drone
+- Field_2:
+  - left: 6
+  - top: 30
+  - right: 22
+  - bottom: 45
+  - threat level: 0.12
+  - for full protection: 4 drones
+  - flying to field: 0 drones
+  - protecting: 2 drones
+- Field_3:
+  - left: 35
+  - top: 32
+  - right: 43
+  - bottom: 48
+  - threat level: 0.07
+  - for full protection: 2 drones
+  - flying to field: 0 drones
+  - protecting: 2 drones
+- Field_4:
+  - left: 37
+  - top: 4
+  - right: 44
+  - bottom: 27
+  - threat level: 0.07
+  - for full protection: 3 drones
+  - flying to field: 0 drones
+  - protecting: 3 drones
+
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+---
+Drones with their attributes state ("idle", "moving_to_field", or "protecting"), target field (name (str) of the target field, None if drone is idle), location (has `x` and `y` coordinates):
+
+- Drone_1:
+  - state: protecting
+  - target field: Field_2
+  - location: 10, 34
+- Drone_2:
+  - state: protecting
+  - target field: Field_4
+  - location: 41, 8
+- Drone_3:
+  - state: protecting
+  - target field: Field_1
+  - location: 16, 7
+- Drone_4:
+  - state: protecting
+  - target field: Field_3
+  - location: 39, 44
+- Drone_5:
+  - state: protecting
+  - target field: Field_3
+  - location: 39, 36
+- Drone_6:
+  - state: protecting
+  - target field: Field_4
+  - location: 41, 24
+- Drone_7:
+  - state: protecting
+  - target field: Field_4
+  - location: 41, 16
+- Drone_8:
+  - state: protecting
+  - target field: Field_2
+  - location: 10, 42
+
+Allowed groups for Drones:
+1. idle
+   - Idle drones don't protect any fields.
+2. protecting Field_1
+   - Assigned drones fly to the field and protect it.
+3. protecting Field_2
+   - Assigned drones fly to the field and protect it.
+4. protecting Field_3
+   - Assigned drones fly to the field and protect it.
+5. protecting Field_4
+   - Assigned drones fly to the field and protect it.
+
+---
+Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
+
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+
+For each of Drones, write one line with the selected group in format "<name>: <group>". The group must be one of "idle", "protecting Field_1", "protecting Field_2", "protecting Field_3", "protecting Field_4".
