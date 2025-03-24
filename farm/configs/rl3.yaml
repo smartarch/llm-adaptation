@@ -1,0 +1,3 @@
+log_dir.append: "/rl3"
+adaptation_params:
+  save_path.append: "/rl3"
