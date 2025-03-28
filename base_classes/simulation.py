@@ -41,7 +41,10 @@ class Simulation(abc.ABC):
     def simulation_step(self, step):
         self.reset_assignments()
         if self.should_adapt():
-            self.adapt(self, step)
+            try:
+                self.adapt(self, step)
+            except Exception as error:
+                print(error, file=sys.stderr)
         self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:
