@@ -170,3 +170,4 @@ cython_debug/
 /results/**/*.png
 /results/**/*.pdf
 /results/**/RL*
+generated_adaptations/results/**/*.png

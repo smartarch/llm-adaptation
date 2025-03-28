@@ -14,6 +14,8 @@ We have three repetitions for each run, suffixed by 2, 3, 4 (note that suffix 1 
 
 ### Results
 
+The results in the plots are an average of five runs of the simulation (with different seeds) with the same LLM-generated AUC.
+
 #### Common mistakes of LLMs
 
 We noticed several mistakes that were common among the generated strategies. Here is a list of them with the prompts that we used to point these mistakes out to the LLM to fix the strategy.
