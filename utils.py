@@ -16,22 +16,23 @@ def read_yaml(file):
             raise e
 
 
-def read_configs(config_files):
-    def nested_update(old_dict, new_dict):
-        for key, value in new_dict.items():
-            if isinstance(value, dict):
-                old_dict[key] = nested_update(old_dict.get(key, {}), value)
+def nested_update(old_dict, new_dict):
+    for key, value in new_dict.items():
+        if isinstance(value, dict):
+            old_dict[key] = nested_update(old_dict.get(key, {}), value)
+        else:
+            if isinstance(key, str) and key[-7:] == ".append":
+                if key[:-7] in old_dict:
+                    old_dict[key[:-7]] = old_dict[key[:-7]] + value
+            elif isinstance(key, str) and key[-8:] == ".prepend":
+                if key[:-8] in old_dict:
+                    old_dict[key[:-8]] = value + old_dict[key[:-8]]
             else:
-                if isinstance(key, str) and key[-7:] == ".append":
-                    if key[:-7] in old_dict:
-                        old_dict[key[:-7]] = old_dict[key[:-7]] + value
-                elif isinstance(key, str) and key[-8:] == ".prepend":
-                    if key[:-8] in old_dict:
-                        old_dict[key[:-8]] = value + old_dict[key[:-8]]
-                else:
-                    old_dict[key] = value
-        return old_dict
+                old_dict[key] = value
+    return old_dict
 
+
+def read_configs(config_files):
     config = {}
     for file in config_files:
         config = nested_update(config, read_yaml(file))

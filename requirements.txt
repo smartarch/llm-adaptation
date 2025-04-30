@@ -7,6 +7,8 @@ colorama
 pandas
 numpy
 seaborn
+pytest
+pytest-dependency
 
 # LLMs
 langchain
