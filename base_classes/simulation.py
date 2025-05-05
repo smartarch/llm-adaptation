@@ -5,7 +5,23 @@ from base_classes.components import Component
 
 
 class AssignmentError(Exception):
-    pass
+
+    @property
+    def message(self):
+        return self.args[0]
+
+
+class ComponentAlreadyAssignedError(AssignmentError):
+
+    def __init__(self, component_id: str):
+        self.component = component_id
+        super().__init__(f"Component already assigned: {component_id}")
+
+
+class InvalidGroupError(AssignmentError):
+    def __init__(self, group_id):
+        self.group_id = group_id
+        super().__init__(f"Invalid group: {group_id}")
 
 
 class Simulation(abc.ABC):
@@ -20,7 +36,7 @@ class Simulation(abc.ABC):
         self.stats = None
 
         self.assignments = {}
-        self.assignment_errors = []
+        self.assignment_errors: list[AssignmentError] = []
         self.step = None
 
     def run_simulation(self, steps: int):
@@ -55,7 +71,7 @@ class Simulation(abc.ABC):
         return False
 
     def should_adapt(self):
-        """Adaptation should be performed this step. Set to False for example when there are no adaptable components left."""
+        """Adaptation should be performed at this step. Set to False, for example, when there are no adaptable components left."""
         return True
 
     def add_visualizer(self, visualizer):
@@ -73,14 +89,14 @@ class Simulation(abc.ABC):
         try:
             self._check_group(component, group_id)
             self.assignments[component] = group_id
+            return None
         except AssignmentError as error:
-            message = error.args[0]
-            self.append_assignment_error(message)
-            return message
+            self.append_assignment_error(error)
+            return error.message
 
-    def append_assignment_error(self, message):
-        print("Before retry:", message)
-        self.assignment_errors.append(message)
+    def append_assignment_error(self, error):
+        print("Before retry:", error.message)
+        self.assignment_errors.append(error)
 
     @abc.abstractmethod
     def _check_group(self, component: Component, group_id: str):
@@ -89,9 +105,9 @@ class Simulation(abc.ABC):
 
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
-        for message in self.assignment_errors:
-            print("Error in final assignment:", message)
-            print(message, file=sys.stderr)
+        for error in self.assignment_errors:
+            print("Error in final assignment:", error.message)
+            print(error.message, file=sys.stderr)
 
         for component, group_id in self.assignments.items():
             self._assign_group(component, group_id)

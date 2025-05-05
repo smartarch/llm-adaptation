@@ -2,7 +2,7 @@ import enum
 from typing import TYPE_CHECKING
 
 from base_classes.components import Component
-from base_classes.simulation import Simulation, AssignmentError
+from base_classes.simulation import Simulation, AssignmentError, ComponentAlreadyAssignedError
 from utils import set_config_values
 
 if TYPE_CHECKING:
@@ -96,7 +96,7 @@ class DragonHuntSimulation(Simulation):
 
     def _check_group(self, component: "Villager", group_id: str):
         if component in self.assignments:
-            raise AssignmentError(f"Component already assigned: {component.name}")
+            raise ComponentAlreadyAssignedError(component.name)
 
         if component.location == Map.VILLAGE:
             if group_id not in VALID_IN_VILLAGE:
