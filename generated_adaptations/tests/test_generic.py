@@ -41,14 +41,10 @@ class TestAdapt:
     def filter_errors(errors: list[AssignmentError], error_class: type[T]) -> list[T]:
         return [error for error in errors if isinstance(error, error_class)]
 
-    @staticmethod
-    def filter_assignment_errors_by_type(assignment_errors, error_type):
-        return list(filter(lambda error: isinstance(error, error_type), assignment_errors))
-
     def test_no_repeated_assignments(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
 
-        # run one step
+        # adapt once
         simulation.reset_assignments()
         simulation.adapt(simulation, 1)
 
@@ -58,7 +54,7 @@ class TestAdapt:
     def test_no_invalid_groups(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
 
-        # run one step 
+        # adapt once
         simulation.reset_assignments()
         simulation.adapt(simulation, 1)
 

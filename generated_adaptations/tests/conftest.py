@@ -1,4 +1,10 @@
+import random
+
 import pytest
+
+
+# set random seed for tests
+random.seed(42)
 
 
 def pytest_addoption(parser):
@@ -45,3 +51,10 @@ def adaptation_config(adaptation_name, example):
         "log_dir.append": f"/{adaptation_name}",
         "adaptation_name": f"generated_adaptations.{example}.{adaptation_name}.SmartFarmAdaptation",
     }
+
+
+def pytest_collection_modifyitems(items):
+    # Move test_generic.py items to the front of the test queue before use-case-specific tests
+    generic_items = [item for item in items if "test_generic.py" in str(item.fspath)]
+    other_items = [item for item in items if "test_generic.py" not in str(item.fspath)]
+    items[:] = generic_items + other_items
