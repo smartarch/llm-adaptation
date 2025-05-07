@@ -14,6 +14,7 @@ def skip_if_not_farm(example):
 
 
 STEPS = 20  # this has to be a multiple of 10 for the `adapt` call to work
+helpers = Helpers()
 
 
 @pytest.mark.dependency(depends=["generated_adaptations/tests/test_generic.py::TestConfiguration::test_adaptation_exists"], scope='session')
@@ -22,7 +23,7 @@ class TestFarm:
     @pytest.mark.parametrize("seed", [1, 2, 3])
     def test_all_assigned_when_all_protecting(self, adaptation_config, simulation_class, simulation_configs, seed):
         random.seed(seed)
-        simulation: SmartFarmSimulation = Helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)
+        simulation: SmartFarmSimulation = helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)
 
         # assign drones to fields randomly
         for drone in simulation.drones:
@@ -36,5 +37,4 @@ class TestFarm:
         simulation.reset_assignments()
         simulation.adapt(simulation, STEPS + 1)
 
-        missing_assignments = Helpers.filter_errors(simulation.assignment_errors, MissingAssignmentError)
-        assert missing_assignments == [], f"The following components have not been assigned to a group: {[error.component for error in missing_assignments]}."
+        helpers.assert_no_missing_assignments(simulation.assignment_errors)

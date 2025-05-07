@@ -42,6 +42,18 @@ class TestAdapt:
     def filter_errors(errors: list[AssignmentError], error_class: type[T]) -> list[T]:
         return [error for error in errors if isinstance(error, error_class)]
 
+    def assert_no_repeated_assignments(self, assignment_errors):
+        repeatedly_assigned = self.filter_errors(assignment_errors, ComponentAlreadyAssignedError)
+        assert repeatedly_assigned == [], f"{len(repeatedly_assigned)} components were assigned more than once. Each component must be assigned exactly once."
+
+    def assert_no_invalid_groups(self, assignment_errors):
+        invalid_groups = self.filter_errors(assignment_errors, InvalidGroupError)
+        assert invalid_groups == [], f"Invalid groups: {[group.group_id for group in invalid_groups]}."
+
+    def assert_no_missing_assignments(self, assignment_errors):
+        missing_assignments = self.filter_errors(assignment_errors, MissingAssignmentError)
+        assert missing_assignments == [], f"{missing_assignments} components have not been assigned to a group. Each component must be assigned exactly once."
+
     def test_no_repeated_assignments(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
 
@@ -49,8 +61,7 @@ class TestAdapt:
         simulation.reset_assignments()
         simulation.adapt(simulation, 1)
 
-        repeatedly_assigned = self.filter_errors(simulation.assignment_errors, ComponentAlreadyAssignedError)
-        assert repeatedly_assigned == [], f"{len(repeatedly_assigned)} components were assigned more than once. Each component must be assigned exactly once."
+        self.assert_no_repeated_assignments(simulation.assignment_errors)
 
     def test_no_invalid_groups(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
@@ -59,8 +70,7 @@ class TestAdapt:
         simulation.reset_assignments()
         simulation.adapt(simulation, 1)
 
-        invalid_groups = self.filter_errors(simulation.assignment_errors, InvalidGroupError)
-        assert invalid_groups == [], f"Invalid groups: {[group.group_id for group in invalid_groups]}."
+        self.assert_no_invalid_groups(simulation.assignment_errors)
 
     def test_all_assigned(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
@@ -69,5 +79,4 @@ class TestAdapt:
         simulation.reset_assignments()
         simulation.adapt(simulation, 1)
 
-        missing_assignments = self.filter_errors(simulation.assignment_errors, MissingAssignmentError)
-        assert missing_assignments == [], f"The following components have not been assigned to a group: {[error.component for error in missing_assignments]}."
+        self.assert_no_missing_assignments(simulation.assignment_errors)
