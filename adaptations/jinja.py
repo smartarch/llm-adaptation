@@ -2,6 +2,7 @@ import re
 
 from jinja2 import Environment, FileSystemLoader, pass_context
 
+from DSL.dsl_utils import get_components_for_assignment, get_attr, get_ensembles_for_assignment, DSLConfiguration
 from base_classes.simulation import Simulation
 from base_classes.prompt_template import PromptTemplate, ProcessingError
 
@@ -12,17 +13,7 @@ def get_components_ctx(context, config, beyond_control=False):
     if beyond_control:
         components = components + context.get("beyond_control_components")
     environment: Simulation = context.get("environment")
-    return get_components(config, components, environment)
-
-
-def get_components(config, components, environment):
-    if "type" in config:
-        component_type = eval(config["type"], environment.get_globals())
-        components = filter(lambda c: isinstance(c, component_type), components)
-    if "if" in config:
-        condition = eval(config["if"], environment.get_globals())
-        components = filter(condition, components)
-    return list(components)
+    return get_components_for_assignment(config, components, environment)
 
 
 @pass_context
@@ -35,45 +26,13 @@ def show_attr(context, component, config):
     return condition(component)
 
 
-def get_attr(component, attribute, config):
-    format = config.get("format", "{}")
-    value = getattr(component, attribute)
-    if format.startswith('lambda'):
-        format = eval(format)
-        return format(value)
-    if format.startswith('f"') or format.startswith("f'"):
-        return eval(format, {"value": value})
-    return format.format(value)
-
-
 @pass_context
 def get_ensembles_ctx(context, config: list[str | dict]):
     components = context.get("components")
     ensemble_types = context.get("configuration")["ensembles"]
     environment = context.get("environment")
 
-    yield from get_ensembles(components, config, ensemble_types, environment)
-
-
-def get_ensembles(components, config, ensemble_types, environment):
-    for ensemble in config:
-        if isinstance(ensemble, str):  # singleton
-            yield ensemble_types[ensemble]
-        else:  # instance for each component
-            ensemble_type = ensemble_types[ensemble["type"]]
-            component_type = eval(ensemble["foreach"], environment.get_globals())
-            condition = eval(ensemble.get("if", "True"), environment.get_globals())
-
-            components = filter(lambda c: isinstance(c, component_type), components)
-            components = filter(condition, components)
-
-            name_generator = eval(ensemble_type["name"])
-
-            for component in components:
-                yield {
-                    **ensemble_type,
-                    "name": name_generator(component),
-                }
+    yield from get_ensembles_for_assignment(config, ensemble_types, components, environment)
 
 
 def prepare_jinja_env():
@@ -94,7 +53,7 @@ class JinjaPromptTemplate(PromptTemplate):
 
     def __init__(self, **configuration):
         super().__init__()
-        self.configuration = configuration
+        self.configuration = DSLConfiguration(configuration)
 
         jinja_env = prepare_jinja_env()
         self.template = jinja_env.get_template("prompt.jinja")
@@ -117,7 +76,7 @@ class JinjaPromptTemplate(PromptTemplate):
             return [ProcessingError(None, error)], None
         memory = self.extract_tag(response, "memory")
 
-        components = self.load_components_for_assignments(simulation)
+        components = self.configuration.load_components_for_assignments(simulation)
 
         if self.configuration["answer_format"] == "component-first":
             errors = self.process_component_first(answer, components, simulation)
@@ -210,33 +169,10 @@ class JinjaPromptTemplate(PromptTemplate):
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
 
-        all_groups = self.load_ensembles_for_assignments(simulation)
+        all_groups = self.configuration.load_ensembles_for_assignments(simulation)
         if len(assigned_groups) < len(all_groups):
             missing_groups = [group for group in all_groups if group not in assigned_groups]
             error = "The following groups are missing in the assignment: " + ", ".join(missing_groups)
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
         return errors
-
-    def load_components_for_assignments(self, simulation):
-        components = {}
-
-        for assignment_config in self.configuration["assignments"].values():
-            component_config = assignment_config["components"]
-            component_type_config = self.configuration["components"][component_config["type"]]
-            id_attr = component_type_config.get("id", "id")
-
-            for component in get_components(component_config, simulation.components, simulation):
-                component_id = getattr(component, id_attr)
-                components[component_id] = component
-
-        return components
-
-    def load_ensembles_for_assignments(self, simulation):
-        ensembles = set()
-
-        for assignment_config in self.configuration["assignments"].values():
-            assignment_ensembles = get_ensembles(simulation.components, assignment_config["ensembles"], self.configuration["ensembles"], simulation)
-            ensembles.update([ensemble["name"] for ensemble in assignment_ensembles])
-
-        return ensembles

@@ -24,6 +24,12 @@ class InvalidGroupError(AssignmentError):
         super().__init__(f"Invalid group: {group_id}")
 
 
+class MissingAssignmentError(AssignmentError):
+    def __init__(self, component_id):
+        self.component_id = component_id
+        super().__init__(f"Missing assignment for: {component_id}")
+
+
 class Simulation(abc.ABC):
 
     def __init__(self, adapt: callable, config: dict):
@@ -111,6 +117,12 @@ class Simulation(abc.ABC):
 
         for component, group_id in self.assignments.items():
             self._assign_group(component, group_id)
+
+    def check_missing_assignments(self, components_to_be_assigned):
+        if len(self.assignments) < len(components_to_be_assigned):
+            for component in components_to_be_assigned:
+                if component not in self.assignments:
+                    self.append_assignment_error(MissingAssignmentError(component.id))  # TODO: replace id with str()
 
     @abc.abstractmethod
     def _assign_group(self, component: Component, group_id: str):

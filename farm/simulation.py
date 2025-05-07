@@ -76,8 +76,10 @@ class SmartFarmSimulation(Simulation):
 
     def _parse_field(self, group_id):
         field_id = group_id.strip().split()[1]
-        field_idx = int(field_id[-1]) - 1
-        return self.fields[field_idx]
+        for field in self.fields:
+            if field.id == field_id:
+                return field
+        raise KeyError
 
     def _assign_group(self, drone: Drone, group_id: str):
         if group_id.strip() == "idle":

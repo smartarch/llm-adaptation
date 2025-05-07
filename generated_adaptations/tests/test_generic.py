@@ -4,7 +4,8 @@ from typing import TypeVar
 import pytest
 
 from base_classes.adaptation import import_adaptation
-from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError
+from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError, \
+    MissingAssignmentError
 from utils import read_configs, nested_update
 
 T = TypeVar('T', bound=AssignmentError)
@@ -61,4 +62,12 @@ class TestAdapt:
         invalid_groups = self.filter_errors(simulation.assignment_errors, InvalidGroupError)
         assert invalid_groups == [], f"Invalid groups: {[group.group_id for group in invalid_groups]}."
 
-    # TODO: test_all_assigned -- it is necessary to detect which components should be assigned (from the DSL)
+    def test_all_assigned(self, adaptation_config, simulation_class, simulation_configs):
+        simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+
+        # adapt once
+        simulation.reset_assignments()
+        simulation.adapt(simulation, 1)
+
+        missing_assignments = self.filter_errors(simulation.assignment_errors, MissingAssignmentError)
+        assert missing_assignments == [], f"The following components have not been assigned to a group: {[error.component_id for error in missing_assignments]}."

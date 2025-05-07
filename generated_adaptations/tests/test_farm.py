@@ -2,6 +2,7 @@ import random
 
 import pytest
 
+from base_classes.simulation import MissingAssignmentError
 from farm.simulation import SmartFarmSimulation
 from generated_adaptations.tests.test_generic import TestAdapt as Helpers
 
@@ -10,6 +11,9 @@ from generated_adaptations.tests.test_generic import TestAdapt as Helpers
 def skip_if_not_farm(example):
     if example != "farm":
         pytest.skip("Tests only for farm example")
+
+
+STEPS = 20  # this has to be a multiple of 10 for the `adapt` call to work
 
 
 @pytest.mark.dependency(depends=["generated_adaptations/tests/test_generic.py::TestConfiguration::test_adaptation_exists"], scope='session')
@@ -26,10 +30,11 @@ class TestFarm:
 
         # run a few steps of the simulation without adapting to let the drones arrive to their fields
         simulation.should_adapt = lambda: False
-        simulation.run_simulation(20)
+        simulation.run_simulation(STEPS)
 
         # adapt once
         simulation.reset_assignments()
-        simulation.adapt(simulation, 1)
+        simulation.adapt(simulation, STEPS + 1)
 
-        # TODO: assert
+        missing_assignments = Helpers.filter_errors(simulation.assignment_errors, MissingAssignmentError)
+        assert missing_assignments == [], f"The following components have not been assigned to a group: {[error.component_id for error in missing_assignments]}."

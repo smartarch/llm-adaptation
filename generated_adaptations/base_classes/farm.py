@@ -18,11 +18,10 @@ class FarmAdaptation(Adaptation, abc.ABC):
         if (step - 1) % self.adapt_every != 0:
             return
 
+        # TODO: this could be possibly replaced by loading from the DSL
         components = list(simulation.availableDrones())
         ensembles = ["idle"] + [f"protecting {field.id}" for field in simulation.fields]
+
         self.assign_drones(components, simulation, ensembles, step)
 
-        if len(simulation.assignments) < len(components):
-            missing_components = [component.id for component in components if component not in simulation.assignments]
-            error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
-            simulation.append_assignment_error(error)
+        self.simulation.check_missing_assignments(components)
