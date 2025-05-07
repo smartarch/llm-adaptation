@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         farmers = [c for c in components if c.role == "Farmer"]
         warriors = [c for c in components if c.role == "Warrior"]
 
@@ -31,7 +31,7 @@ class SmartAdaptation(DragonHuntAdaptation):
         for i in range(farmers_assigned, len(farmers)):
             environment.assign_group(farmers[i], "farm")
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         for component in components:
             if component.role == "Warrior":
                 environment.assign_group(component, "attack")

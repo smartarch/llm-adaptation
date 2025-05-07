@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         """
         Heuristic strategy in the village:
          - In early steps (step < 10), focus on accumulating wheat and building up forces.
@@ -47,7 +47,7 @@ class SmartAdaptation(DragonHuntAdaptation):
                 environment.assign_group(comp, "cave")
             idx += 1
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         """
         Heuristic strategy in the cave:
          - Warriors are best suited for attacking, so they are sent to the "attack" group.

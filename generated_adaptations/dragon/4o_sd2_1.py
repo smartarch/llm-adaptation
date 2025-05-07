@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         farmers = [c for c in components if c.role == "Farmer"]
         warriors = [c for c in components if c.role == "Warrior"]
 
@@ -26,7 +26,7 @@ class SmartAdaptation(DragonHuntAdaptation):
             else:
                 environment.assign_group(c, "cave")  # Send the rest to attack
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         # Keep track of who is weak and who is strong
         weak_villagers = [c for c in components if c.hp <= 2]  # Critically low HP
         healthy_villagers = [c for c in components if c.hp > 2]

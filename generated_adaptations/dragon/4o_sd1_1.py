@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         # Strategy parameters
         min_wheat_to_spawn = 12  # Minimum wheat required to spawn a warrior
         min_farmers = 4  # Ensure at least 4 farmers for wheat production
@@ -31,7 +31,7 @@ class SmartAdaptation(DragonHuntAdaptation):
                 environment.assign_group(components[0], "spawn farmer")
                 environment.assign_group(components[1], "spawn farmer")
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         # Strategy parameters
         retreat_threshold = 2  # Health threshold for retreating villagers
 

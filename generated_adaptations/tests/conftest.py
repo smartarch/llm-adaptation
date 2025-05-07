@@ -46,10 +46,17 @@ def simulation_configs(example):
 
 @pytest.fixture(scope="session")
 def adaptation_config(adaptation_name, example):
+    if example == "farm":
+        class_name = "SmartFarmAdaptation"
+    elif example == "dragon":
+        class_name = "SmartAdaptation"
+    else:
+        raise ValueError(f"Unknown example: {example}")
+
     return {
         "name": adaptation_name,
         "log_dir.append": f"/{adaptation_name}",
-        "adaptation_name": f"generated_adaptations.{example}.{adaptation_name}.SmartFarmAdaptation",
+        "adaptation_name": f"generated_adaptations.{example}.{adaptation_name}.{class_name}",
     }
 
 

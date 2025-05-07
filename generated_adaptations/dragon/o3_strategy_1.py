@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         """
         In the Village, our goal is to use each villager optimally:
 
@@ -25,7 +25,7 @@ class SmartAdaptation(DragonHuntAdaptation):
                 else:
                     environment.assign_group(comp, "farm")
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         """
         In the Cave, the assignment is straightforward:
 

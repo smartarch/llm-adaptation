@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         # Get the current state
         num_farmers = sum(1 for c in components if c.role == "Farmer")
         num_warriors = sum(1 for c in components if c.role == "Warrior")
@@ -21,7 +21,7 @@ class SmartAdaptation(DragonHuntAdaptation):
                 # Default case: assign to farm
                 environment.assign_group(component, "farm")
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         for component in components:
             if component.hp < 20:  # If low HP, send back to village
                 environment.assign_group(component, "village")

@@ -2,7 +2,7 @@ import abc
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         """
         In the village we balance wheat production with the need to ramp up our warrior force.
         Early on when the dragon is still strong, we:
@@ -36,7 +36,7 @@ class SmartAdaptation(DragonHuntAdaptation):
                 # In the endgame, send everyone to the cave to concentrate fire on the dragon.
                 environment.assign_group(villager, "cave")
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         """
         In the cave we balance aggression with caution.
         Warriors are assigned to 'attack' for maximum damage,

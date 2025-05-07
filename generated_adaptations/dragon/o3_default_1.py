@@ -1,7 +1,7 @@
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
-    def assign_in_village(self, components, environment, step: int):
+    def assign_in_village(self, components, environment, group_ids, step: int):
         # Total villagers available in the village
         total = len(components)
         wheat = environment.wheat
@@ -51,7 +51,7 @@ class SmartAdaptation(DragonHuntAdaptation):
                 environment.assign_group(comp, "farm")
                 farm_count -= 1
 
-    def assign_in_cave(self, components, environment, step: int):
+    def assign_in_cave(self, components, environment, group_ids, step: int):
         dragon_hp = environment.dragon.hp
 
         # In the cave, we want Warriors to actively attack when the Dragon is still strong.

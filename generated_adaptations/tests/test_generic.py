@@ -54,6 +54,15 @@ class TestAdapt:
         missing_assignments = self.filter_errors(assignment_errors, MissingAssignmentError)
         assert missing_assignments == [], f"{missing_assignments} components have not been assigned to a group. Each component must be assigned exactly once."
 
+    def test_no_assignment_errors(self, adaptation_config, simulation_class, simulation_configs):
+        simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+
+        # adapt once
+        simulation.reset_assignments()
+        simulation.adapt(simulation, 1)
+
+        assert simulation.assignment_errors == []
+
     def test_no_repeated_assignments(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
 
