@@ -13,9 +13,9 @@ class AssignmentError(Exception):
 
 class ComponentAlreadyAssignedError(AssignmentError):
 
-    def __init__(self, component_id: str):
-        self.component = component_id
-        super().__init__(f"Component already assigned: {component_id}")
+    def __init__(self, component: Component):
+        self.component = component
+        super().__init__(f"Component already assigned: {component}")
 
 
 class InvalidGroupError(AssignmentError):
@@ -25,9 +25,9 @@ class InvalidGroupError(AssignmentError):
 
 
 class MissingAssignmentError(AssignmentError):
-    def __init__(self, component_id):
-        self.component_id = component_id
-        super().__init__(f"Missing assignment for: {component_id}")
+    def __init__(self, component: Component):
+        self.component = component
+        super().__init__(f"Missing assignment for: {component}")
 
 
 class Simulation(abc.ABC):
@@ -122,7 +122,7 @@ class Simulation(abc.ABC):
         if len(self.assignments) < len(components_to_be_assigned):
             for component in components_to_be_assigned:
                 if component not in self.assignments:
-                    self.append_assignment_error(MissingAssignmentError(component.id))  # TODO: replace id with str()
+                    self.append_assignment_error(MissingAssignmentError(component))
 
     @abc.abstractmethod
     def _assign_group(self, component: Component, group_id: str):

@@ -58,6 +58,9 @@ class Villager(Component):
     def __repr__(self):
         return f"{self.id}({self.state})"
 
+    def __str__(self):
+        return self.name
+
 
 class Farmer(Villager):
     HP = 0

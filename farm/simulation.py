@@ -63,7 +63,7 @@ class SmartFarmSimulation(Simulation):
 
     def _check_group(self, drone: Drone, group_id: str):
         if drone in self.assignments:
-            raise ComponentAlreadyAssignedError(drone.id)
+            raise ComponentAlreadyAssignedError(drone)
         if group_id.strip() == "idle":
             return
         elif group_id.strip().startswith("protecting"):

@@ -70,4 +70,4 @@ class TestAdapt:
         simulation.adapt(simulation, 1)
 
         missing_assignments = self.filter_errors(simulation.assignment_errors, MissingAssignmentError)
-        assert missing_assignments == [], f"The following components have not been assigned to a group: {[error.component_id for error in missing_assignments]}."
+        assert missing_assignments == [], f"The following components have not been assigned to a group: {[error.component for error in missing_assignments]}."
