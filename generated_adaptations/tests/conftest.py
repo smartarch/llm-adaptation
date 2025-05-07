@@ -65,3 +65,18 @@ def pytest_collection_modifyitems(items):
     generic_items = [item for item in items if "test_generic.py" in str(item.fspath)]
     other_items = [item for item in items if "test_generic.py" not in str(item.fspath)]
     items[:] = generic_items + other_items
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    # remove file name from nodeid
+    report.nodeid = report.nodeid.removeprefix(report.fspath + "::")
+
+    # # replace the test name with its docstring
+    # test_fn = item.obj
+    # docstring = getattr(test_fn, '__doc__')
+    # if docstring:
+    #     report.nodeid = docstring

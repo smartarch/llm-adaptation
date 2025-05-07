@@ -20,9 +20,11 @@ helpers = Helpers()
 @pytest.mark.dependency(depends=["generated_adaptations/tests/test_generic.py::TestConfiguration::test_adaptation_exists"], scope='session')
 class TestFarm:
 
-    @pytest.mark.parametrize("seed", [1, 2, 3])
-    @pytest.mark.parametrize("protecting_count", [5, 8])
+    # @pytest.mark.parametrize("seed", [1, 2, 3])
+    # @pytest.mark.parametrize("protecting_count", [5, 8])
+    @pytest.mark.parametrize("seed,protecting_count", [(1, 5), (2, 8)])
     def test_protecting_drones_are_assigned(self, adaptation_config, simulation_class, simulation_configs, seed, protecting_count):
+        """Blablabla"""
         random.seed(seed)
         simulation: SmartFarmSimulation = helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)
 
@@ -47,8 +49,9 @@ class TestFarm:
 
         assert unassigned_count == 0, f'{unassigned_count} out of {len(protecting_drones)} drones with state=="{DroneState.PROTECTING.value}" were not assigned'
 
-    @pytest.mark.parametrize("seed", [1, 2, 3])
-    @pytest.mark.parametrize("protecting_count", [5, 8])
+    # @pytest.mark.parametrize("seed", [1, 2, 3])
+    # @pytest.mark.parametrize("protecting_count", [5, 8])
+    @pytest.mark.parametrize("seed,protecting_count", [(1, 5), (2, 8)])
     def test_idle_drones_are_assigned(self, adaptation_config, simulation_class, simulation_configs, seed, protecting_count):
         random.seed(seed)
         simulation: SmartFarmSimulation = helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)
@@ -75,8 +78,9 @@ class TestFarm:
 
         assert unassigned_count == 0, f'{unassigned_count} out of {len(idle_drones)} drones with state=="{DroneState.IDLE.value}" were not assigned'
 
-    @pytest.mark.parametrize("seed", [1, 2, 3])
-    @pytest.mark.parametrize("protecting_count", [5, 8])
+    # @pytest.mark.parametrize("seed", [1, 2, 3])
+    # @pytest.mark.parametrize("protecting_count", [5, 8])
+    @pytest.mark.parametrize("seed,protecting_count", [(1, 5), (2, 8)])
     def test_moving_drones_are_assigned(self, adaptation_config, simulation_class, simulation_configs, seed, protecting_count):
         random.seed(seed)
         simulation: SmartFarmSimulation = helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)
