@@ -46,6 +46,7 @@ def prepare_jinja_env():
     jinja_env.filters['show_attr'] = show_attr
     jinja_env.filters['get_attr'] = get_attr
     jinja_env.filters['get_ensembles'] = get_ensembles_ctx
+    jinja_env.filters['userepr'] = repr
     return jinja_env
 
 

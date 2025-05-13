@@ -1,0 +1,52 @@
+### Example of state
+
+{# Ensemble assignments #}
+{% for assignment_name, assignment in configuration.assignments.items() %}
+{% set components = assignment.components|get_components %}
+{% set component_type = configuration.components[assignment.components.type] %}
+#### `{{ assignment_name }}` method
+
+{# Components to be assigned #}
+##### {{ assignment.components.description }} (`components`)
+
+{% if components|length > 0 %}
+{% for component in components %}
+- {{ component[component_type.id] }}:
+{% for attribute, attribute_config in component_type.attributes.items() %}
+{% if component|show_attr(attribute_config) %}
+  - {{ attribute }}: {{ component[attribute]|userepr }}
+{% endif %}
+{% endfor %}{# attribute #}
+{% endfor %}{# component #}
+{% else %}
+(none)
+{% endif %}
+
+##### Valid groups (`group_ids`)
+
+{# Ensembles #}
+{% for ensemble in assignment.ensembles|get_ensembles %}
+- "{{ ensemble.name }}"
+{% endfor %}{# ensemble #}
+
+---
+{% endfor %}{# assignment #}
+
+#### Beyond-control components
+{# Beyond-control components #}
+{% if configuration.beyond_control_components %}
+{% for _, component_group in configuration.beyond_control_components.items() %}
+{% set components = component_group|get_components(beyond_control=True) %}
+{% set component_type = configuration.components[component_group.type] %}
+
+{% for component in component_group|get_components(beyond_control=True) %}
+{% if not component_group.singleton %}
+- {{ component[component_type.id] }}:
+{% endif %}
+{% for attribute, attribute_config in component_type.attributes.items() if not attribute_config.hide_in_generate %}
+{% if not component_group.singleton %}  {% endif %}
+- {{ attribute }}: {{ component[attribute]|userepr }}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}

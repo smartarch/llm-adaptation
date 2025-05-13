@@ -1,0 +1,85 @@
+### Example of state
+
+#### `assign_drones` method
+
+##### Drones (`components`)
+
+- Drone_1:
+  - state: "protecting"
+  - target_id: 'Field_2'
+  - location: Point2D(x=18.00, y=42.00)
+- Drone_2:
+  - state: "moving_to_field"
+  - target_id: 'Field_1'
+  - location: Point2D(x=27.00, y=7.00)
+- Drone_3:
+  - state: "moving_to_field"
+  - target_id: 'Field_3'
+  - location: Point2D(x=38.62, y=23.99)
+- Drone_4:
+  - state: "moving_to_field"
+  - target_id: 'Field_1'
+  - location: Point2D(x=4.46, y=30.50)
+- Drone_5:
+  - state: "protecting"
+  - target_id: 'Field_4'
+  - location: Point2D(x=41.00, y=8.00)
+- Drone_6:
+  - state: "moving_to_field"
+  - target_id: 'Field_1'
+  - location: Point2D(x=26.26, y=31.13)
+- Drone_7:
+  - state: "idle"
+  - location: Point2D(x=31.00, y=3.00)
+- Drone_8:
+  - state: "idle"
+  - location: Point2D(x=11.00, y=49.00)
+
+##### Valid groups (`group_ids`)
+
+- "idle"
+- "protecting Field_1"
+- "protecting Field_2"
+- "protecting Field_3"
+- "protecting Field_4"
+
+---
+
+#### Beyond-control components
+
+- Field_1:
+  - left: 4
+  - top: 3
+  - right: 19
+  - bottom: 18
+  - threat_level: 0.1375
+  - drones_for_full_protection: 4
+  - arriving_drones: 3
+  - protecting_drones: 0
+- Field_2:
+  - left: 6
+  - top: 30
+  - right: 22
+  - bottom: 45
+  - threat_level: 0.1375
+  - drones_for_full_protection: 4
+  - arriving_drones: 0
+  - protecting_drones: 1
+- Field_3:
+  - left: 35
+  - top: 32
+  - right: 43
+  - bottom: 48
+  - threat_level: 0.05
+  - drones_for_full_protection: 2
+  - arriving_drones: 1
+  - protecting_drones: 0
+- Field_4:
+  - left: 37
+  - top: 4
+  - right: 44
+  - bottom: 27
+  - threat_level: 0.05
+  - drones_for_full_protection: 3
+  - arriving_drones: 0
+  - protecting_drones: 1
