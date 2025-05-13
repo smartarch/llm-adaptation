@@ -189,7 +189,8 @@ class Field(Component):
         return birds_inside / len(self.simulation.birds)
 
     @property
-    def necessary_drones_for_full_protection(self) -> int:
+    def drones_for_full_protection(self) -> int:
+        """Total number of drones necessary for full protection."""
         return len(self.protectionPlaces)
 
     @property

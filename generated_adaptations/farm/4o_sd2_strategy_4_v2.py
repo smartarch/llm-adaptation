@@ -23,7 +23,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         for field in threat_fields:
             # Calculate how many more drones are needed
             needed_drones = (
-                    field.necessary_drones_for_full_protection - field.protecting_drones - field.arriving_drones
+                    field.drones_for_full_protection - field.protecting_drones - field.arriving_drones
             )
 
             # If the field is fully protected, continue
@@ -45,7 +45,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             if field not in [f.id for f in threat_fields]:
                 continue  # Skip fields that are no longer under threat
 
-            excess_drones = max(0, len(protecting_drones[field]) - field.necessary_drones_for_full_protection)
+            excess_drones = max(0, len(protecting_drones[field]) - field.drones_for_full_protection)
             if excess_drones > 0:
                 for _ in range(excess_drones):
                     drone = protecting_drones[field].pop()

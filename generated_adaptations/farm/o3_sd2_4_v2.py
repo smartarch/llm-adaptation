@@ -31,7 +31,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         for field in field_by_id.values():
             # current drones protecting this field are those already assigned plus the ones arriving.
             current = field.protecting_drones + field.arriving_drones + assigned_counts[field.id]
-            missing = max(0, field.necessary_drones_for_full_protection - current)
+            missing = max(0, field.drones_for_full_protection - current)
             # Only consider fields that still require additional drones.
             if missing > 0:
                 fields_to_protect.append((field, missing))
@@ -54,7 +54,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         fields_remaining = []
         for field, _ in fields_to_protect:
             current = field.protecting_drones + field.arriving_drones + assigned_counts[field.id]
-            missing = max(0, field.necessary_drones_for_full_protection - current)
+            missing = max(0, field.drones_for_full_protection - current)
             if missing > 0:
                 fields_remaining.append((field, missing))
 

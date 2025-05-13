@@ -8,7 +8,7 @@ class AdaptiveFarm(FarmAdaptation):
 
         Strategy:
         1. For each field in environment.fields, compute the deficit of drones
-           needed for full protection (i.e. necessary_drones_for_full_protection minus the current protecting_drones).
+           needed for full protection (i.e. drones_for_full_protection minus the current protecting_drones).
         2. Only consider fields that are not yet fully protected and that have a nonzero threat level.
         3. Prioritize fields by a score = threat_level * deficit.
         4. Sort fields by descending score.
@@ -23,7 +23,7 @@ class AdaptiveFarm(FarmAdaptation):
         field_needs = []
         for field in environment.fields:
             # Calculate how many drones are needed to fully protect the field.
-            deficit = field.necessary_drones_for_full_protection - field.protecting_drones
+            deficit = field.drones_for_full_protection - field.protecting_drones
             # Only consider fields that still need additional drones and have a nonzero threat.
             if deficit > 0 and field.threat_level > 0:
                 priority_score = field.threat_level * deficit

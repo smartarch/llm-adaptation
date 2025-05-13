@@ -28,7 +28,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             if field.threat_level == 0:
                 continue  # No need to protect this field
 
-            needed_drones = field.necessary_drones_for_full_protection - (
+            needed_drones = field.drones_for_full_protection - (
                     field.protecting_drones + field.arriving_drones + drones_assigned[field.id]
             )
 

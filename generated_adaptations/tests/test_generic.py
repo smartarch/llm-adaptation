@@ -61,7 +61,7 @@ class TestAdapt:
         simulation.reset_assignments()
         simulation.adapt(simulation, 1)
 
-        assert simulation.assignment_errors == []
+        assert simulation.assignment_errors == [], f"There were {len(simulation.assignment_errors)} assignment errors: {[error.message for error in simulation.assignment_errors]}"
 
     def test_no_repeated_assignments(self, adaptation_config, simulation_class, simulation_configs):
         simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)

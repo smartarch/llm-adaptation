@@ -20,7 +20,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # Compute the additional drones needed to fully protect the field.
         # Note: highest_field.arriving_drones and highest_field.protecting_drones represent drones already heading for or protecting the field.
         drones_already_assigned = highest_field.arriving_drones + highest_field.protecting_drones
-        additional_required = highest_field.necessary_drones_for_full_protection - drones_already_assigned
+        additional_required = highest_field.drones_for_full_protection - drones_already_assigned
 
         # If the field is already fully protected (or over-protected),
         # keep the drones protecting it and assign the rest as "idle".

@@ -10,7 +10,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             if field.threat_level > 0:
                 # Determine how many drones are still needed for full protection
                 already_assigned = field.arriving_drones + field.protecting_drones
-                drones_needed = max(0, field.necessary_drones_for_full_protection - already_assigned)
+                drones_needed = max(0, field.drones_for_full_protection - already_assigned)
 
                 # Create the group id for protecting this field
                 group_name = f"protecting {field.id}"

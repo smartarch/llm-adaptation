@@ -28,7 +28,7 @@ class DroneFarmAdaptation(FarmAdaptation):
         # Count how many drones are currently protecting.
         current_count = len(already_protecting)
         # Calculate how many more drones are needed.
-        additional_needed = max(0, most_threatened_field.necessary_drones_for_full_protection - current_count)
+        additional_needed = max(0, most_threatened_field.drones_for_full_protection - current_count)
 
         # 3. The drones already protecting the field will continue in their group.
         # (Assignment below ensures consistency in group naming.)

@@ -61,8 +61,8 @@ class SmartFarmPromptTemplate(PromptTemplate, abc.ABC):
             attributes += f"  - threat level: {field.threat_level:.2f}\n"
         if self.field_attributes_config["protecting_drones"]:
             attributes += f"  - protecting: {len(field.protectingDrones)} drone{'s' if len(field.protectingDrones) != 1 else ''}\n"
-        if self.field_attributes_config["necessary_drones_for_full_protection"]:
-            attributes += f"  - for full protection: {field.necessary_drones_for_full_protection} drones\n"
+        if self.field_attributes_config["drones_for_full_protection"]:
+            attributes += f"  - for full protection: {field.drones_for_full_protection} drones\n"
         return attributes
 
     def drone_attributes(self, drone: "Drone") -> str:

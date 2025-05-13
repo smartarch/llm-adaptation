@@ -11,7 +11,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
         # Step 3: Allocate drones to each field based on threat level
         for field in fields:
-            required_drones = field.necessary_drones_for_full_protection
+            required_drones = field.drones_for_full_protection
             assigned_drones = []
 
             # Sort drones by proximity to the field

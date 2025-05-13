@@ -7,7 +7,7 @@ class SmartFarmDroneCoordinator(FarmAdaptation):
 
         # Create a mapping for easier assignment
         field_drone_counts = {field.id: field.protecting_drones for field in fields}
-        necessary_drones = {field.id: field.necessary_drones_for_full_protection for field in fields}
+        necessary_drones = {field.id: field.drones_for_full_protection for field in fields}
 
         # Assign drones dynamically
         for drone in components:

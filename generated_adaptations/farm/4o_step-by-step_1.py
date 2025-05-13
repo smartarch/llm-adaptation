@@ -17,7 +17,7 @@ class SmartFarmDroneAssignment(FarmAdaptation):
 
         # Assign drones to the most threatened field first
         for field in fields:
-            required_drones = field.necessary_drones_for_full_protection - field.protecting_drones
+            required_drones = field.drones_for_full_protection - field.protecting_drones
             if required_drones > 0:
                 # Get drones currently protecting this field
                 current_drones = [d for d in available_drones if d.target == field.id]

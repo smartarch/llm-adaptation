@@ -17,7 +17,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         for field in threatened_fields:
             # Calculate how many drones are still needed for full protection
             needed_drones = (
-                    field.necessary_drones_for_full_protection
+                    field.drones_for_full_protection
                     - field.protecting_drones
                     - field.arriving_drones
             )

@@ -28,7 +28,7 @@ class SmartFarmAdaptation(FarmAdaptation):
                     if drone.state == "protecting" and drone.target_id == field.id
                 )
                 # Additional drones needed: required minus those already protecting and drones arriving.
-                needed = field.necessary_drones_for_full_protection - already_protecting - field.arriving_drones
+                needed = field.drones_for_full_protection - already_protecting - field.arriving_drones
                 additional_needed[field.id] = max(0, needed)
 
         # Sort the fields by descending threat level (fields with higher threat get priority).

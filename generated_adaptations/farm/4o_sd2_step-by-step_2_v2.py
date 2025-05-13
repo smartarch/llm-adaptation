@@ -21,7 +21,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         for field in fields:
             if field.threat_level > 0:
                 field_id = field.id
-                required = (field.necessary_drones_for_full_protection
+                required = (field.drones_for_full_protection
                             - field.protecting_drones
                             - field.arriving_drones)
 

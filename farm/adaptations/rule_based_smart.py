@@ -25,7 +25,7 @@ class RuleBasedFullNearestAdaptation(Adaptation):
                 break
 
             closest_drones = sorted(available_drones, key=lambda d: d.location.distance(field.closestPlaceToDrone(d)))
-            for drone in closest_drones[:field.necessary_drones_for_full_protection]:
+            for drone in closest_drones[:field.drones_for_full_protection]:
                 drone.assignTarget(field)
                 available_drones.remove(drone)
 
