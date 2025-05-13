@@ -42,7 +42,7 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `right`: right
 - `bottom`: bottom
 - `threat_level`: threat level (bird-threat level between 0 and 1)
-- `necessary_drones_for_full_protection`: for full protection
+- `drones_for_full_protection`: for full protection
 - `arriving_drones`: flying to field (number of drones flying towards the field to protect it when they arrive)
 - `protecting_drones`: protecting (number of drones currently protecting the field)
 

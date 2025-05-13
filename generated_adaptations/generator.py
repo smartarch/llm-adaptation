@@ -1,9 +1,13 @@
 import argparse
-from pathlib import Path
+import os
 import re
-from langchain_openai import ChatOpenAI
-from langchain.schema import SystemMessage, HumanMessage, AIMessage, BaseMessage
+import subprocess
+from pathlib import Path
+
 from dotenv import find_dotenv, load_dotenv
+from langchain.prompts import PromptTemplate, load_prompt
+from langchain.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
+from langchain_openai import ChatOpenAI
 
 load_dotenv(find_dotenv(), override=True)  # take environment variables from .env
 
@@ -18,11 +22,11 @@ def parse_arguments():
 
 def load_system_prompt():
     system_prompt_path = Path("generated_adaptations/prompts/system.md")
-    if not system_prompt_path.is_file():
-        print(f"Error: System prompt file '{system_prompt_path}' does not exist.")
-        exit(1)
-    with system_prompt_path.open("r", encoding="utf-8") as f:
-        return f.read()
+    return system_prompt_path.read_text(encoding="utf-8")
+
+
+def load_test_prompt_template():
+    return PromptTemplate.from_file("generated_adaptations/prompts/test.md", encoding="utf-8")
 
 
 def load_messages(folder: Path):
@@ -71,6 +75,20 @@ def extract_code_block(response_text):
     return None
 
 
+def test_code(folder, code_file):
+    example = folder.parent.stem
+    adaptation_name = folder.stem + "/" + code_file.stem
+    cmd = [
+        "pytest", "generated_adaptations/tests", "-q", "--tb=no",
+        f"--example={example}", f"--adaptation_name={adaptation_name}"
+    ]
+    env = os.environ.copy()
+    env["PYTHONPATH"] = env.get("PYTHONPATH", "") + os.pathsep + os.getcwd()
+    env['COLUMNS'] = '160'
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False, env=env)
+    return result.returncode, result.stdout + result.stderr
+
+
 def main():
     args = parse_arguments()
     folder = Path(args.folder)
@@ -81,8 +99,15 @@ def main():
         print(f"Error: Prompt is missing in {folder}.")
         return
 
-    llm = ChatOpenAI(model="gpt-4o-mini")
-    query_llm(folder, messages, last, llm)
+    # llm = ChatOpenAI(model="gpt-4o-mini")
+    # query_llm(folder, messages, last, llm)
+
+    # TODO: generalize (replace numbers with variables), run in a loop with max args.retries_test iterations
+    result, test_report = test_code(folder, folder / "code_1.py")
+    print(f"Test exit code: {result}")
+
+    test_prompt = load_test_prompt_template().format(test_report=test_report)
+    (folder / f"{3}_test.md").write_text(test_prompt, encoding="utf-8")
 
 
 if __name__ == "__main__":

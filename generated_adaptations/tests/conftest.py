@@ -56,7 +56,7 @@ def adaptation_config(adaptation_name, example):
     return {
         "name": adaptation_name,
         "log_dir.append": f"/{adaptation_name}",
-        "adaptation_name": f"generated_adaptations.{example}.{adaptation_name}.{class_name}",
+        "adaptation_name": f"generated_adaptations.{example}.{adaptation_name.replace('/', '.')}.{class_name}",
     }
 
 

@@ -4,7 +4,7 @@ Here's the strategy broken down into steps:
 
 1. **Initialization**: Create a default assignment for all drones, initially setting all of them to the "idle" group since they do not protect any fields by default.
 
-2. **Evaluate Fields**: Loop through the fields in the environment to check their threat levels. For each field that has a `threat_level` greater than zero, determine how many drones are necessary to fully protect it (`necessary_drones_for_full_protection`).
+2. **Evaluate Fields**: Loop through the fields in the environment to check their threat levels. For each field that has a `threat_level` greater than zero, determine how many drones are necessary to fully protect it (`drones_for_full_protection`).
 
 3. **Assign Drones to Fields**: Attempt to assign the available drones to the fields requiring protection. If a field needs protecting and there are idle drones available, assign the drones to the "protecting {field.id}" group.
 
@@ -24,7 +24,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # Evaluate fields and assign necessary drones
         for field in environment.fields:
             if field.threat_level > 0:
-                necessary_drones = field.necessary_drones_for_full_protection
+                necessary_drones = field.
                 protecting_drones = field.protecting_drones
                 arriving_drones = field.arriving_drones
                     

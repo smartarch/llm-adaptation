@@ -31,7 +31,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         for field in threatened_fields:
             # How many drones are already on the way or protecting?
             assigned = field.arriving_drones + field.protecting_drones
-            needed = field.necessary_drones_for_full_protection - assigned
+            needed = field.drones_for_full_protection - assigned
             if needed <= 0 or not available:
                 continue
 

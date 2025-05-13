@@ -9,7 +9,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # Evaluate fields and assign necessary drones
         for field in environment.fields:
             if field.threat_level > 0:
-                necessary_drones = field.necessary_drones_for_full_protection
+                necessary_drones = field.drones_for_full_protection
                 protecting_drones = field.protecting_drones
                 arriving_drones = field.arriving_drones
                     
