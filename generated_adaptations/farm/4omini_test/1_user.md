@@ -1,0 +1,50 @@
+You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.
+
+The birds initially fly randomly around the farm. Sometimes, they decide they want to eat and then they target a field and fly towards it. The birds' preference among the fields changes over time. They also prefer fields with more birds already in them. When a bird lands on a field, it waits for a certain amount of time before damage is dealt. After the damage is dealt, the bird either attacks another crop within the same field or it flies away.
+
+Each field is equipped with sensors that can detect the birds. The more birds are in the field, the higher the "threat level" value is for that field.
+
+Drones can be used to protect the fields. When a drone is assigned a target field, it flies towards it and then hovers above it. The drone speed is 2 so it takes some time before the drone reaches the field ands starts protecting it. The drone scares all the birds in a certain radius around it, however, multiple drones are necessary to fully protect a field. The scared birds try to flee to a different location within the same field and eat crops there. Only if the field is fully protected, the birds flee away, so a partial protection is not very effective (but still better than no protection).
+
+Your goal is to divide the drones among the fields to minimize the damage dealt by the birds. You will be periodically presented with the current situation (drone locations, threat levels, ...) and you will be asked to assign the drones to the fields.
+
+Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group.
+
+The strategy must be written in Python and it must be a class named `SmartFarmAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
+```
+class FarmAdaptation(abc.ABC):
+    @abc.abstractmethod
+    def assign_drones(self, components, environment, group_ids, step: int):
+        pass
+
+```
+To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+
+---
+In `assign_drones`, your goal is to divide the Drones (`components`) into the following groups:
+- A group named "idle": Idle drones don't protect any fields.
+- For each `field` in `environment.fields` if `field.threat_level > 0`, a group named `"protecting {field.id}"`: Assigned drones fly to the field and protect it.
+
+The `group_ids` argument is a list of all valid group names.
+
+For each component, the following attributes are available:
+- `state`: state ("idle", "moving_to_field", or "protecting")
+- `target_id`: target field (name (str) of the target field, None if drone is idle)
+- `location`: location (has `x` and `y` coordinates)
+---
+
+Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
+
+Fields on the farm (accessible via `environment.fields`) with the following attributes:
+- `id`: identifier
+- `left`: left
+- `top`: top
+- `right`: right
+- `bottom`: bottom
+- `threat_level`: threat level (bird-threat level between 0 and 1)
+- `necessary_drones_for_full_protection`: for full protection
+- `arriving_drones`: flying to field (number of drones flying towards the field to protect it when they arrive)
+- `protecting_drones`: protecting (number of drones currently protecting the field)
+
+
+Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the code for the adaptation strategy.
