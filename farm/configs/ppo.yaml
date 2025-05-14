@@ -18,3 +18,5 @@ adaptation_params:
   learning_rate: 0.001
   entropy_regularization: 0.1
   clip_epsilon: 0.2
+
+tensorflow_needed: true

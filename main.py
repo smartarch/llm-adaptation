@@ -1,10 +1,11 @@
 import argparse
+import json
 import os
 import sys
 from datetime import datetime
 
 from base_classes.adaptation import import_adaptation
-from utils import read_configs, Logger, print_config
+from utils import nested_update, read_configs, Logger, print_config
 
 
 from dotenv import find_dotenv, load_dotenv
@@ -15,12 +16,15 @@ parser.add_argument("--animation", "-a", default=False, action="store_true")
 parser.add_argument("config_files", type=str, nargs='+', help="Configuration yaml files.")
 parser.add_argument('--episode', '-e', type=int, help="Episode (iteration) number. It is used as part of the log file name.")
 parser.add_argument('--seed', '-s', type=int, help="Seed for random number generator.")
+parser.add_argument('--extra_config', type=str, help="Extra configuration as JSON string (serialized dict).")
 args = parser.parse_args()
 
 # set_verbose(True)
 # set_debug(True)
 
 config = read_configs(args.config_files)
+if args.extra_config is not None:
+    config = nested_update(config, json.loads(args.extra_config))
 name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S-") + config["name"]
 if args.episode is not None:
     name = f"{args.episode:03}-{name}"
@@ -29,7 +33,10 @@ sys.stdout = Logger(f"{log_dir}/{name}.ansi")
 sys.stderr = Logger(f"{log_dir}/{name}.err", sys.stderr, create_on_first_write=True)
 
 if args.seed is not None:
-    from keras.utils import set_random_seed
+    if config.get("tensorflow_needed", False):
+        from keras.utils import set_random_seed
+    else:
+        from utils import set_random_seed
     set_random_seed(args.seed)
 
 config["log_dir"] = log_dir

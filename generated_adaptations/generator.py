@@ -1,8 +1,11 @@
 import argparse
+import json
 import os
 import re
 import subprocess
 from pathlib import Path
+import sys
+import textwrap
 
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
@@ -10,6 +13,7 @@ from langchain.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
 from adaptations.llm import LLMTokenUsage
+from generated_adaptations.generator_utils import adaptation_config, simulation_configs
 
 load_dotenv(find_dotenv(), override=True)  # take environment variables from .env
 
@@ -20,6 +24,9 @@ def parse_arguments():
     parser.add_argument("--retries_test", type=int, default=3, help="Number of retries for failing unit tests.")
     parser.add_argument("--retries_simulation", type=int, default=1, help="Number of retries for simulation results.")
     return parser.parse_args()
+
+
+### LLM querying
 
 
 def load_system_prompt():
@@ -78,6 +85,9 @@ def extract_code_block(response_text):
     return None
 
 
+### Unit tests
+
+
 def test_code(folder, code_file):
     example = folder.parent.stem
     adaptation_name = folder.stem + "/" + code_file.stem
@@ -101,6 +111,63 @@ def append_test_report(folder, test_report, messages):
     messages.append(HumanMessage(content=test_prompt))
 
 
+### Simulation running
+
+
+def prepare_config(folder, code_file):
+    example = folder.parent.stem
+    adaptation_name = folder.stem + "/" + code_file.stem
+    return adaptation_config(adaptation_name, example)
+
+
+def run_simulation(folder, code_file, repeats=2, start=1):
+    print(f"Running simulation for {folder} with code file {code_file}.")
+
+    configs = simulation_configs(example=folder.parent.stem)
+    extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
+
+    damages = []
+    for repeat in range(repeats):
+        print(f"  Run #{repeat + start}/{repeats + start - 1}")
+
+        run_args = [sys.executable, "main.py", *configs, extra_config, "-s", str(repeat + start), "-e", str(repeat + start)]
+
+        # disable TF errors, set python path
+        env = os.environ.copy()
+        env["PYTHONPATH"] = env.get("PYTHONPATH", "") + os.pathsep + os.getcwd()
+
+        result = subprocess.run(run_args, capture_output=True, env=env, check=False)
+        stdout = result.stdout.decode("utf-8")
+        stderr = result.stderr.decode("utf-8")
+
+        if stderr:
+            stderr_lines = stderr.splitlines()
+            stderr = '\n'.join(stderr_lines[-3:])
+            print(f"    StdErr: {len(stderr_lines)} lines")
+            print(textwrap.indent(stderr, "    "))
+
+        try:
+            damage = stdout.partition("damage: ")[2].partition("\n")[0]
+            print(f"    Damage: {damage}")
+            damages.append(int(damage))
+        except ValueError:
+            pass
+
+    if len(damages) > 0:
+        avg_damage = sum(damages) / len(damages)
+        print(f"Average damage: {avg_damage:.1f}")
+    else:
+        avg_damage = None
+    if repeats != len(damages):
+        print(f"Errors: {repeats - len(damages)}")
+    print()
+
+    return avg_damage
+
+
+### Main
+
+
 def main():
     args = parse_arguments()
     folder = Path(args.folder)
@@ -114,12 +181,17 @@ def main():
     llm = ChatOpenAI(model="gpt-4o-mini")
 
     existing_tests = len(list(folder.glob("*_test.md")))
+    code_file = max(folder.glob("code_*.py"))
     for _ in range(existing_tests, args.retries_test):
         code_file = query_llm(folder, messages, llm)
         result, test_report = test_code(folder, code_file)
         if result == 0:
             break
         append_test_report(folder, test_report, messages)
+
+    run_simulation(folder, code_file)
+
+    # TODO: use the simulation results to improve the code
 
 
 if __name__ == "__main__":

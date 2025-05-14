@@ -111,3 +111,10 @@ def print_response(response: AIMessage):
     print("RESPONSE:")
     print(response.content)
     print(Style.RESET_ALL)
+
+
+def set_random_seed(seed):
+    import random
+    import numpy as np
+    random.seed(seed)
+    np.random.seed(seed)
