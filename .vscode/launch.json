@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "name": "Debug generator.py",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/generated_adaptations/generator.py",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--folder=generated_adaptations/farm/4omini_test", "--retries_test=5"
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import abc
 import sys
+from typing import Callable, Optional
 
 from base_classes.components import Component
 
@@ -32,7 +33,7 @@ class MissingAssignmentError(AssignmentError):
 
 class Simulation(abc.ABC):
 
-    def __init__(self, adapt: callable, config: dict):
+    def __init__(self, adapt: Callable[["Simulation", int], None], config: dict):
         self.config = config
         self.adapt = adapt
         self.components: list[Component] = []
@@ -41,9 +42,9 @@ class Simulation(abc.ABC):
         self.visualizer = None
         self.stats = None
 
-        self.assignments = {}
+        self.assignments: dict[Component, str] = {}
         self.assignment_errors: list[AssignmentError] = []
-        self.step = None
+        self.step: Optional[int] = None
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):
@@ -76,7 +77,7 @@ class Simulation(abc.ABC):
         """Simulation should stop."""
         return False
 
-    def should_adapt(self):
+    def should_adapt(self) -> bool:
         """Adaptation should be performed at this step. Set to False, for example, when there are no adaptable components left."""
         return True
 

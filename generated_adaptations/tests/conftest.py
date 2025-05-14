@@ -75,6 +75,14 @@ def pytest_runtest_makereport(item, call):
     # remove file name from nodeid
     report.nodeid = report.nodeid.removeprefix(report.fspath + "::")
 
+    # add names to the test parameters
+    if hasattr(item, "callspec"):
+        params = dict(item.callspec.params)
+        params.pop("seed")
+        if params:
+            report.nodeid = report.nodeid.split("[")[0]
+            report.nodeid += f"[{', '.join(f'{k}={v}' for k, v in params.items())}]"
+
     # # replace the test name with its docstring
     # test_fn = item.obj
     # docstring = getattr(test_fn, '__doc__')
