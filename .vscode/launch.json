@@ -11,7 +11,7 @@
       "program": "${workspaceFolder}/generated_adaptations/generator.py",
       "cwd": "${workspaceFolder}",
       "args": [
-        "--folder=generated_adaptations/farm/4omini_test", "--retries_test=5"
+        "--folder=generated_adaptations/farm/4omini_test"
       ],
       "console": "integratedTerminal"
     }

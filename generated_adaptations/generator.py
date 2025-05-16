@@ -38,20 +38,22 @@ def load_messages(folder: Path):
     files = sorted(folder.glob("*.md"))
 
     messages: list[BaseMessage] = [SystemMessage(content=load_system_prompt())]
+    last_was_llm = False
 
-    for number, file in enumerate(files, start=1):
+    for file in files:
         content = file.read_text(encoding="utf-8")
-        if number % 2 == 1:
-            messages.append(HumanMessage(content=content))
-        else:
+        last_was_llm = "llm" in file.stem
+        if last_was_llm:
             messages.append(AIMessage(content=content))
+        else:
+            messages.append(HumanMessage(content=content))
 
-    return messages
+    return messages, last_was_llm
 
 
 def query_llm(folder, messages, llm):
     next_num = len(messages)
-    next_llm_file = folder / f"{next_num}_llm.md"
+    next_llm_file = folder / f"{next_num:02d}_llm.md"
     if next_llm_file.is_file():
         print(f"LLM response file '{next_llm_file}' already exists. Refusing to overwrite.")
         return
@@ -107,7 +109,7 @@ def test_code(folder, code_file):
 def append_test_report(folder, test_report, messages):
     prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/test.md", encoding="utf-8")
     test_prompt = prompt_template.format(test_report=test_report)
-    (folder / f"{len(messages)}_test.md").write_text(test_prompt, encoding="utf-8")
+    (folder / f"{len(messages):02d}_test.md").write_text(test_prompt, encoding="utf-8")
     messages.append(HumanMessage(content=test_prompt))
 
 
@@ -165,6 +167,13 @@ def run_simulation(folder, code_file, repeats=2, start=1):
     return avg_damage
 
 
+def append_simulation_report(folder, avg_damage, messages):
+    prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation.md", encoding="utf-8")
+    simulation_prompt = prompt_template.format(avg_damage=avg_damage)
+    (folder / f"{len(messages):02d}_simulation.md").write_text(simulation_prompt, encoding="utf-8")
+    messages.append(HumanMessage(content=simulation_prompt))
+
+
 ### Main
 
 
@@ -172,14 +181,15 @@ def main():
     args = parse_arguments()
     folder = Path(args.folder)
 
-    messages = load_messages(folder)
+    messages, last_was_llm = load_messages(folder)
     print(f"Loaded {len(messages)} messages from {folder}.")
-    if len(messages) < 2 or len(messages) % 2 != 0:
+    if len(messages) < 2 or last_was_llm:
         print(f"Error: Prompt is missing in {folder}.")
         return
 
     llm = ChatOpenAI(model="gpt-4o-mini")
 
+    # run tests and retry generation if they fail
     existing_tests = len(list(folder.glob("*_test.md")))
     code_file = max(folder.glob("code_*.py"))
     for _ in range(existing_tests, args.retries_test):
@@ -188,10 +198,20 @@ def main():
         if result == 0:
             break
         append_test_report(folder, test_report, messages)
+        # TODO: should we include also the positive test report?
 
-    run_simulation(folder, code_file)
+    # run simulation and improve the generated code
+    existing_simulations = len(list(folder.glob("*_simulation.md")))
+    code_file = max(folder.glob("code_*.py"))
+    for _ in range(existing_simulations, args.retries_simulation):
+        avg_damage = run_simulation(folder, code_file)
+        append_simulation_report(folder, avg_damage, messages)
+        code_file = query_llm(folder, messages, llm)
+        # TODO: should we run the tests again?
 
-    # TODO: use the simulation results to improve the code
+    # final result
+    avg_damage = run_simulation(folder, code_file)
+    print(f"Final average damage: {avg_damage:.1f}")
 
 
 if __name__ == "__main__":
