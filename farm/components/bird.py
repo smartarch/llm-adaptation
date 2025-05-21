@@ -29,7 +29,7 @@ class BirdFieldProbabilityGenerator(Component):
 
         for step, probabilities in birdFieldProbabilities.items():
             assert isclose(sum(probabilities), 1), f"Probabilities for step {step} must sum to 1"
-            assert len(probabilities) == len(self.simulation.fields), f"Number of probabilities for step {step} must match number of fields"
+            # assert len(probabilities) == len(self.simulation.fields), f"Number of probabilities for step {step} must match number of fields"
         self.birdFieldProbabilities = birdFieldProbabilities
         self.step = 0
         self.birdCohesion = birdCohesion
@@ -37,10 +37,10 @@ class BirdFieldProbabilityGenerator(Component):
     def actuate(self):
         self.step += 1
 
-    def __call__(self):
+    def __call__(self, fields):
         return self.interpolateProbabilities(
             self.computeStepProbabilities(),
-            self.birdDistributionInFields(),
+            self.birdDistributionInFields(fields),
             t=self.birdCohesion)
 
     def computeStepProbabilities(self):
@@ -52,8 +52,8 @@ class BirdFieldProbabilityGenerator(Component):
     def interpolateProbabilities(probabilities1, probabilities2, t=0.5):
         return [(1 - t) * p1 + t * p2 for p1, p2 in zip(probabilities1, probabilities2)]
 
-    def birdDistributionInFields(self):
-        threatLevels = [field.threat_level for field in self.simulation.fields]
+    def birdDistributionInFields(self, fields):
+        threatLevels = [field.threat_level for field in fields]
         sumThreatLevels = sum(threatLevels)
         if sumThreatLevels == 0:
             return [1 / len(threatLevels) for _ in threatLevels]
@@ -87,6 +87,12 @@ class Bird(MovingComponent2D):
         self.fleeCounter = 0
         self.eatWaitCounter = 0
         super().__init__(simulation, location, Bird.BirdSpeed)
+
+        # pick the 4 closest fields and only attack them
+        # FIXME: the 4 is hard coded (it must be equal to birdFieldProbabilities)
+        self.fields = sorted(self.simulation.fields, key=lambda f: self.location.distance(f.closestPlaceToDrone(self)))[:4]
+        for field in self.fields:
+            field.birds.append(self)
 
     def actuate(self):
         if self.state == BirdState.IDLE:
@@ -136,7 +142,7 @@ class Bird(MovingComponent2D):
             self.flyRandomly(BirdState.FLEEING_OUTSIDE)
 
     def attackNewField(self):
-        self.field = random.choices(self.simulation.fields, weights=self.simulation.fieldProbabilityGenerator())[0]
+        self.field = random.choices(self.fields, weights=self.simulation.fieldProbabilityGenerator(self.fields))[0]
         self.fleeCounter = 0
         self.target = self.field.randomUndamagedCrop()
         if self.target is not None:

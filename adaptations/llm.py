@@ -27,9 +27,9 @@ class LLMAdaptation(Adaptation, ABC):
 
         self.token_usages: list[LLMTokenUsage] = []
 
-        self._csv_file = open(f'{config["log_dir"]}/{config["log_file_name"]}.tokens.csv', "w", newline="")
+        self._csv_file = open(f'{config["log_dir"]}/{config["log_file_name"]}.llm.csv', "w", newline="")
         self.csv_writer = csv.writer(self._csv_file)
-        self.csv_writer.writerow(["input_tokens", "output_tokens", "reasoning_tokens", "response_time"])
+        self.csv_writer.writerow(["step", "try", "errors", "input_tokens", "output_tokens", "reasoning_tokens", "response_time"])
 
     @staticmethod
     def prepare_message_history(message_history_config: bool | int):
@@ -54,7 +54,7 @@ class LLMAdaptation(Adaptation, ABC):
         self.message_history.append(session)
         prompt = self.prompt_template.create_prompt(simulation, self.memory)
 
-        for _ in range(self.max_retries + 1):
+        for retry in range(self.max_retries + 1):
             session.append(HumanMessage(prompt))
             response = self.prompt_llm()
             session.append(response)
@@ -63,6 +63,8 @@ class LLMAdaptation(Adaptation, ABC):
             errors, memory = self.prompt_template.process_response(response.content, simulation)
             if memory is not None:
                 self.memory = memory
+
+            self.csv_writer.writerow([step, retry, len(errors) if errors else 0] + self.token_usages[-1].to_csv())
 
             if errors is None or errors == []:  # success
                 break
@@ -82,7 +84,6 @@ class LLMAdaptation(Adaptation, ABC):
         print_response(response)
         self.token_usages.append(LLMTokenUsage(response, response_time=end_time - start_time))
         self.token_usages[-1].print()
-        self.csv_writer.writerow(self.token_usages[-1].to_csv())
 
         return response
 
@@ -118,7 +119,13 @@ class LLMTokenUsage:
         self.response_time = response_time
 
     def __add__(self, other):
-        return LLMTokenUsage(None, self.input_tokens + other.input_tokens, self.output_tokens + other.output_tokens, self.reasoning_tokens + other.reasoning_tokens)
+        return LLMTokenUsage(
+            None,
+            self.input_tokens + other.input_tokens,
+            self.output_tokens + other.output_tokens,
+            self.reasoning_tokens + other.reasoning_tokens,
+            (self.response_time or 0) + (other.response_time or 0)
+        )
 
     def print(self):
         print(Fore.YELLOW, end="")
@@ -126,7 +133,7 @@ class LLMTokenUsage:
         print(f"Input: {self.input_tokens}, ", end="")
         print(f"Output: {self.output_tokens} (reasoning: {self.reasoning_tokens})")
         if self.response_time is not None:
-            print(f"Response time (seconds): {self.response_time:d}")
+            print(f"Response time (seconds): {self.response_time:.1f}")
         print(Style.RESET_ALL)
 
     def to_csv(self):
