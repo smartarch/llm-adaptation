@@ -1,8 +1,11 @@
+import csv
 from abc import abstractmethod, ABC
 from collections import deque
+import time
 
 from colorama import Fore, Style
 from langchain_core.messages import HumanMessage, BaseMessage, AIMessage
+from langchain_core.language_models.chat_models import BaseChatModel
 
 from base_classes.adaptation import Adaptation
 from base_classes.prompt_template import import_prompt_template, ProcessingError
@@ -24,6 +27,10 @@ class LLMAdaptation(Adaptation, ABC):
 
         self.token_usages: list[LLMTokenUsage] = []
 
+        self._csv_file = open(f'{config["log_dir"]}/{config["log_file_name"]}.tokens.csv', "w", newline="")
+        self.csv_writer = csv.writer(self._csv_file)
+        self.csv_writer.writerow(["input_tokens", "output_tokens", "reasoning_tokens", "response_time"])
+
     @staticmethod
     def prepare_message_history(message_history_config: bool | int):
         if not message_history_config:
@@ -35,9 +42,9 @@ class LLMAdaptation(Adaptation, ABC):
 
     @staticmethod
     @abstractmethod
-    def create_llm(model="gpt-4o-mini-2024-07-18", config=None):
+    def create_llm(model="gpt-4o-mini-2024-07-18", config=None) -> BaseChatModel:
         print("LLM model:", model)
-        return ...
+        raise NotImplementedError()
 
     def adapt(self, simulation: "Simulation", step: int):
         if (step - 1) % self.adapt_every != 0:
@@ -69,10 +76,13 @@ class LLMAdaptation(Adaptation, ABC):
                 messages.append(message)
 
         print_prompt(messages[-1].content)
+        start_time = time.time()
         response = self.llm.invoke(messages)
+        end_time = time.time()
         print_response(response)
-        self.token_usages.append(LLMTokenUsage(response))
+        self.token_usages.append(LLMTokenUsage(response, response_time=end_time - start_time))
         self.token_usages[-1].print()
+        self.csv_writer.writerow(self.token_usages[-1].to_csv())
 
         return response
 
@@ -91,11 +101,12 @@ class LLMAdaptation(Adaptation, ABC):
     def end(self, simulation: "Simulation"):
         total_usage = sum(self.token_usages, LLMTokenUsage(None))
         total_usage.print()
+        self._csv_file.close()
 
 
 class LLMTokenUsage:
 
-    def __init__(self, response: AIMessage | None, input_tokens=0, output_tokens=0, reasoning_tokens=0):
+    def __init__(self, response: AIMessage | None, input_tokens=0, output_tokens=0, reasoning_tokens=0, response_time=None):
         if response is None or response.usage_metadata is None:
             self.input_tokens = input_tokens
             self.output_tokens = output_tokens
@@ -104,6 +115,7 @@ class LLMTokenUsage:
             self.input_tokens = response.usage_metadata.get('input_tokens', 0)
             self.output_tokens = response.usage_metadata.get('output_tokens', 0)
             self.reasoning_tokens = response.usage_metadata.get('output_token_details', {}).get('reasoning', 0)
+        self.response_time = response_time
 
     def __add__(self, other):
         return LLMTokenUsage(None, self.input_tokens + other.input_tokens, self.output_tokens + other.output_tokens, self.reasoning_tokens + other.reasoning_tokens)
@@ -113,4 +125,9 @@ class LLMTokenUsage:
         print("TOKENS USED:")
         print(f"Input: {self.input_tokens}, ", end="")
         print(f"Output: {self.output_tokens} (reasoning: {self.reasoning_tokens})")
+        if self.response_time is not None:
+            print(f"Response time (seconds): {self.response_time:d}")
         print(Style.RESET_ALL)
+
+    def to_csv(self):
+        return [self.input_tokens, self.output_tokens, self.reasoning_tokens, self.response_time]
