@@ -13,7 +13,7 @@ class SmartFarmDroneAdaptation(FarmAdaptation):
         assigned_drones = {field.id: field.protecting_drones for field in fields}
 
         for field in fields:
-            required_drones = field.necessary_drones_for_full_protection - assigned_drones[field.id]
+            required_drones = field.drones_for_full_protection - assigned_drones[field.id]
 
             if required_drones > 0:
                 # Sort available drones by distance to the field (closest first)

@@ -21,7 +21,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         assigned_drones = set()
         for field in threat_fields:
             needed_drones = (
-                    field.necessary_drones_for_full_protection - field.protecting_drones - field.arriving_drones
+                    field.drones_for_full_protection - field.protecting_drones - field.arriving_drones
             )
             if needed_drones <= 0:
                 continue  # Field is already fully protected

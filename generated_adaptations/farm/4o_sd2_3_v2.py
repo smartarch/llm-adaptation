@@ -6,7 +6,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         fields_by_threat = sorted(environment.fields, key=lambda f: f.threat_level, reverse=True)
 
         # Track required drones per field
-        drones_needed = {field.id: max(0, field.necessary_drones_for_full_protection - (field.protecting_drones + field.arriving_drones)) for field in environment.fields}
+        drones_needed = {field.id: max(0, field.drones_for_full_protection - (field.protecting_drones + field.arriving_drones)) for field in environment.fields}
 
         # Create lists of drones by state
         idle_drones = []
@@ -20,7 +20,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
         # Reassign drones from overprotected fields
         for field in fields_by_threat:
-            excess_drones = max(0, len(assigned_drones[field.id]) - field.necessary_drones_for_full_protection)
+            excess_drones = max(0, len(assigned_drones[field.id]) - field.drones_for_full_protection)
             if excess_drones > 0:
                 for _ in range(excess_drones):
                     drone = assigned_drones[field.id].pop()

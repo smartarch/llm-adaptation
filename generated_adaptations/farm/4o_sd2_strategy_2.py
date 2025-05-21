@@ -20,7 +20,7 @@ class SmartFarmAdaptation(FarmAdaptation):
                 continue  # Skip if the group is not valid
 
             # Calculate how many more drones are needed
-            needed_drones = max(0, field.necessary_drones_for_full_protection -
+            needed_drones = max(0, field.drones_for_full_protection -
                                 (field.arriving_drones + field.protecting_drones))
 
             if needed_drones > 0:

@@ -28,7 +28,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             # Already en route or protecting drones (assigned in our pass above) plus those reported as arriving
             current_assigned = len(assigned_protectors[field_id])
             # Calculate drones missing to reach full protection (considering arriving drones reported by sensors)
-            drones_needed = max(0, field.necessary_drones_for_full_protection - (field.arriving_drones + current_assigned))
+            drones_needed = max(0, field.drones_for_full_protection - (field.arriving_drones + current_assigned))
 
             for _ in range(drones_needed):
                 if available_drones:

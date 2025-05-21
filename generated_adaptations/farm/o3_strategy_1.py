@@ -7,7 +7,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         This strategy focuses on always fully protecting the field with the highest bird-threat.
         It first identifies the field with the highest threat level. Then it ensures that this field
         receives the nearest drones until it reaches full protection (i.e. until the number of drones
-        protecting it equals its necessary_drones_for_full_protection). Any drones that are already assigned
+        protecting it equals its drones_for_full_protection). Any drones that are already assigned
         to that field are kept there, and any drones not needed for the highest-threat field are assigned
         to idle—unless they are already protecting a field that is fully secured, in which case their
         assignment is preserved.
@@ -30,7 +30,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         assigned_count = len(already_assigned)
 
         # Compute how many additional drones are needed for full protection.
-        additional_needed = highest_field.necessary_drones_for_full_protection - assigned_count
+        additional_needed = highest_field.drones_for_full_protection - assigned_count
         additional_needed = max(0, additional_needed)
 
         # 3. For drones not already protecting the highest-threat field, sort them by distance to its center.
@@ -54,7 +54,7 @@ class SmartFarmAdaptation(FarmAdaptation):
                 # Priority 2: If the drone is already protecting a field that is fully secured, keep it there.
                 if drone.target is not None:
                     field = next((f for f in environment.fields if f.id == drone.target), None)
-                    if field and field.protecting_drones >= field.necessary_drones_for_full_protection:
+                    if field and field.protecting_drones >= field.drones_for_full_protection:
                         group_id = f"protecting {field.id}"
                     else:
                         group_id = "idle"

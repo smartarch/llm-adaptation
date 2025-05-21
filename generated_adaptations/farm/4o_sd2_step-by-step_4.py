@@ -17,7 +17,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
         # Step 3: Assign drones to the most threatened fields
         for field in fields:
-            required_drones = max(0, field.necessary_drones_for_full_protection - len(protecting_drones[field.id]))
+            required_drones = max(0, field.drones_for_full_protection - len(protecting_drones[field.id]))
 
             if required_drones > 0:
                 # Sort idle drones by distance to the field

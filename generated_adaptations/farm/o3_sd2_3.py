@@ -10,7 +10,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             if field.threat_level > 0 and group_name in group_ids:
                 # Calculate additional drones needed for full protection.
                 # It is possible that some drones are already arriving or protecting.
-                needed = field.necessary_drones_for_full_protection - field.protecting_drones - field.arriving_drones
+                needed = field.drones_for_full_protection - field.protecting_drones - field.arriving_drones
                 field_demands[field.id] = max(0, needed)
 
         # Sort the fields in descending order by threat level (fields with higher threat get priority)

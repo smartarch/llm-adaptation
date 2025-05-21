@@ -20,7 +20,7 @@ class DroneFarmAdaptation(FarmAdaptation):
             # Compute the ideal number of drones required based on threat level.
             # For instance, if threat_level is 0.8 and full protection needs 5 drones,
             # we aim for ceil(0.8 * 5) drones for protection.
-            ideal_drones = math.ceil(field.necessary_drones_for_full_protection * field.threat_level)
+            ideal_drones = math.ceil(field.drones_for_full_protection * field.threat_level)
             additional_needed = max(ideal_drones - field.protecting_drones, 0)
 
             # Assign drones to the field as long as drones are available and the field still needs protection.

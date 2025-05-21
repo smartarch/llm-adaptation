@@ -30,7 +30,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
             # Compute total drones already assigned to this field
             total_assigned = len(field_drones[field.id]) + field.arriving_drones + field.protecting_drones
-            needed_drones = max(0, field.necessary_drones_for_full_protection - total_assigned)
+            needed_drones = max(0, field.drones_for_full_protection - total_assigned)
 
             # Get closest idle/moving drones
             available_drones = sorted(
@@ -51,7 +51,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
             # Compute excess drones
             total_assigned = len(field_drones[field.id]) + field.arriving_drones + field.protecting_drones
-            excess_drones = max(0, total_assigned - field.necessary_drones_for_full_protection)
+            excess_drones = max(0, total_assigned - field.drones_for_full_protection)
 
             if excess_drones > 0:
                 excess_list = sorted(

@@ -23,7 +23,7 @@ adaptation_params:  # this is purely technical
             name: threat level
             format: "{:.2f}"
             description: "bird-threat level between 0 and 1"
-          necessary_drones_for_full_protection:
+          drones_for_full_protection:
             name: "for full protection"
             format: "{:d} drones"
           arriving_drones:

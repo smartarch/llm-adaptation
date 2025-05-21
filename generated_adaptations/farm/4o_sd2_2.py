@@ -13,7 +13,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
         # Assign drones to fields
         for field in threatened_fields:
-            needed_drones = field.necessary_drones_for_full_protection - (field.arriving_drones + field.protecting_drones)
+            needed_drones = field.drones_for_full_protection - (field.arriving_drones + field.protecting_drones)
             if needed_drones > 0:
                 assigned_drones = min(needed_drones, len(idle_drones))
                 for _ in range(assigned_drones):

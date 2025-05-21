@@ -26,7 +26,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         sorted_fields = sorted(threat_fields, key=lambda f: f.threat_level, reverse=True)
         for field in sorted_fields:
             group_name = f"protecting {field.id}"
-            required_drones = field.necessary_drones_for_full_protection
+            required_drones = field.drones_for_full_protection
 
             # Drones already heading toward or protecting the field.
             current_assigned = field_to_initial[field.id]

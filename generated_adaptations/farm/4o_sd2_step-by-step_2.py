@@ -9,7 +9,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # Grouping available drones
         protecting_drones = {field.id: field.protecting_drones for field in fields}
         arriving_drones = {field.id: field.arriving_drones for field in fields}
-        necessary_drones = {field.id: field.necessary_drones_for_full_protection for field in fields}
+        necessary_drones = {field.id: field.drones_for_full_protection for field in fields}
 
         # Track assignments
         assignments = {drone: "idle" for drone in drones}

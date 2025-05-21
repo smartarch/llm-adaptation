@@ -24,7 +24,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         already_protecting = top_field.protecting_drones + top_field.arriving_drones
 
         # Calculate additional drones needed.
-        additional_needed = max(0, top_field.necessary_drones_for_full_protection - already_protecting)
+        additional_needed = max(0, top_field.drones_for_full_protection - already_protecting)
 
         # Compute the center of the top field.
         top_center_x = (top_field.left + top_field.right) / 2
@@ -50,7 +50,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # Now process the other threatened fields.
         for field in threatened_fields[1:]:
             field_group = f"protecting {field.id}"
-            required = field.necessary_drones_for_full_protection
+            required = field.drones_for_full_protection
             already = field.protecting_drones + field.arriving_drones
             needed = max(0, required - already)
 

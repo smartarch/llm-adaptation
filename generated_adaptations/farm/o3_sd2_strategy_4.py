@@ -18,7 +18,7 @@ class SmartFarmAdaptation(FarmAdaptation):
 
         # Determine how many drones are required for full protection.
         # The field provides the number needed for full protection.
-        required_drones = primary_field.necessary_drones_for_full_protection
+        required_drones = primary_field.drones_for_full_protection
 
         # Count drones already heading to or protecting the primary field.
         current_assigned = [comp for comp in components if comp.target_id == primary_field.id]

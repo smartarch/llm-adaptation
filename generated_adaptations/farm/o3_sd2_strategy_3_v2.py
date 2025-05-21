@@ -29,7 +29,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             drones_already_assigned = field.arriving_drones + field.protecting_drones
 
             # Determine how many additional drones are needed for full protection.
-            additional_required = field.necessary_drones_for_full_protection - drones_already_assigned
+            additional_required = field.drones_for_full_protection - drones_already_assigned
 
             if additional_required <= 0:
                 # If the field is already fully protected, skip assignment.

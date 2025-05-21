@@ -21,7 +21,7 @@ class SmartFarmAdaptation(FarmAdaptation):
         # Step 2: Determine how many additional drones are needed for full protection.
         # Combine the counts of protecting and arriving drones.
         already_assigned_main = main_field.protecting_drones + main_field.arriving_drones
-        additional_needed_main = max(main_field.necessary_drones_for_full_protection - already_assigned_main, 0)
+        additional_needed_main = max(main_field.drones_for_full_protection - already_assigned_main, 0)
 
         # Step 3: Identify drones already assigned to the main field.
         # This now includes both drones that are currently "protecting" and those "moving to field".
@@ -61,7 +61,7 @@ class SmartFarmAdaptation(FarmAdaptation):
             center_y = (field.top + field.bottom) / 2.0
             # Determine how many additional drones are needed.
             already_assigned_field = field.protecting_drones + field.arriving_drones
-            additional_needed_field = max(field.necessary_drones_for_full_protection - already_assigned_field, 0)
+            additional_needed_field = max(field.drones_for_full_protection - already_assigned_field, 0)
             if additional_needed_field <= 0:
                 continue
 
