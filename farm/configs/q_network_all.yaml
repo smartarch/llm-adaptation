@@ -15,3 +15,5 @@ adaptation_params:
   target_update_every: 1
   save_path.append: /q_network_all
   config: true
+
+tensorflow_needed: true
