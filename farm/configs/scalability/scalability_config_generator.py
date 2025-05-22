@@ -75,5 +75,5 @@ if __name__ == '__main__':
     parser.add_argument('--scale', type=int, default=1, help='Scale factor for the simulation')
     args = parser.parse_args()
 
-    # main(args.scale)
-    main(206)
+    main(args.scale)
+    # main(323)

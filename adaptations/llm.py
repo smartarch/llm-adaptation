@@ -13,6 +13,13 @@ from base_classes.simulation import Simulation
 from utils import print_prompt, print_response
 
 
+def count_tokens_and_exit(text: str):
+    import tiktoken
+    encoding = tiktoken.encoding_for_model("gpt-4")
+    print("Tokens:", len(encoding.encode(text)))
+    exit()
+
+
 class LLMAdaptation(Adaptation, ABC):
 
     def __init__(self, config: dict, llm: str, prompt_template: str, prompt_template_params: dict, adapt_every=1, message_history=False, max_retries=0, **kwargs):
@@ -78,6 +85,7 @@ class LLMAdaptation(Adaptation, ABC):
                 messages.append(message)
 
         print_prompt(messages[-1].content)
+        # count_tokens_and_exit(messages[-1].content)
         start_time = time.time()
         response = self.llm.invoke(messages)
         end_time = time.time()
