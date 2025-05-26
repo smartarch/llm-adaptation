@@ -5,7 +5,7 @@ import re
 
 import yaml
 from colorama import Fore, Style
-from langchain_core.messages import AIMessage
+from langchain_core.messages import BaseMessage
 
 
 def read_yaml(file):
@@ -107,7 +107,14 @@ def print_prompt(prompt):
     print(Style.RESET_ALL)
 
 
-def print_response(response: AIMessage):
+def print_response(response: BaseMessage):
+    reasoning = response.additional_kwargs.get("reasoning", None)
+    if reasoning is not None:
+        print(Fore.GREEN, end="")
+        print("REASONING:")
+        for block in reasoning["summary"]:
+            print(block["text"])
+        print(Style.RESET_ALL)
     print(Fore.CYAN, end="")
     print("RESPONSE:")
     print(response.content)

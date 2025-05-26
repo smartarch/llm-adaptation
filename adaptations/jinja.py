@@ -148,7 +148,10 @@ class JinjaPromptTemplate(PromptTemplate):
                 row = row.replace("- ", "")  # remove leading hyphens
                 row = row.replace("**", "")  # remove bold
 
-                component_id, group = row.split(":")
+                tokens = row.split(":")
+                if len(tokens) != 2:
+                    raise ValueError('Invalid row format, expected "<name>: <group>"')
+                component_id, group = tokens
                 component_id = component_id.strip()
 
                 if component_id not in components:
@@ -162,7 +165,7 @@ class JinjaPromptTemplate(PromptTemplate):
                 if error:
                     errors.append(ProcessingError(row, error))
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
-                print(f"Error - invalid row ({repr(error)}): {repr(row)}")
+                print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
             error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
