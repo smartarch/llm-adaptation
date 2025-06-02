@@ -96,7 +96,7 @@ Think step by step. First, reason about the question and write a short explanati
 {#Think step by step. Reason about the problem and output all the intermediate steps. Then, write the final group assignments.#}
 
 {% endif%}{# chain-of-thought #}
-Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting in the final answer.
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting or any additional comments in the final answer.
 
 {% for _, assignment in configuration.assignments.items() %}
 {% if configuration.answer_format == "component-first" %}
