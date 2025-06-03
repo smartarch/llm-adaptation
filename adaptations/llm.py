@@ -96,20 +96,25 @@ class LLMAdaptation(Adaptation, ABC):
         return response
 
     def get_retry_prompt(self, errors: list[ProcessingError]):
-        retry_format = self.prompt_template.configuration.get("retry_prompt", None)
+        retry_format = self.prompt_template.configuration.get("retry_format", None)
+
+        prompt = "There were some errors in your final group assignment. Fix them and output the final assignment again."
+
+        for processing_error in errors:
+            prompt += "\n\n"
+            if processing_error.row:
+                prompt += f'Error on line "{processing_error.row}":\n'
+            prompt += processing_error.error.message
+
+        prompt += "\n\n"
         if retry_format is not None:
             if retry_format == "component-first":
-                prompt = 'There were some errors in your final group assignment. Fix them and output the final assignment again. Again, use the `<answer>` and `</answer>` tags to mark the final answer.\nFor each of incorrectly assigned components, write one line with the selected group in format "<name>: <group>". Only include the component that were not assigned correctly that are listed below.'
+                # FIXME: this should be moved to the prompt template
+                prompt += 'To fix the errors, output a group assignment for the incorrectly assigned components. This time, use the `<correction>` and `</correction>` tags to mark the answer (instead of `<answer>`). Note that the output format for corrections is different than for the previous answer.\nFor each of the incorrectly assigned components, write one line with the selected group in format "<name>: <group>". Only include the components that were not assigned correctly (they are listed in the errors above).'
             else:
                 raise NotImplementedError()
         else:
-            prompt = "There were some errors in your final group assignment. Fix them and output the final assignment again. Adhere to the format defined earlier."
-
-        for row, error in errors:
-            prompt += "\n\n"
-            if row:
-                prompt += f'Error on line "{row}":\n'
-            prompt += error
+            prompt += "Fix the errors and output the final group assignment again. Adhere to the format defined earlier."
 
         return prompt
 

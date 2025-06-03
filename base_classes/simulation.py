@@ -1,16 +1,44 @@
 import abc
 import sys
+from typing import Callable, Optional
 
 from base_classes.components import Component
 
 
 class AssignmentError(Exception):
-    pass
+
+    @property
+    def message(self):
+        return self.args[0]
+
+
+class ComponentAlreadyAssignedError(AssignmentError):
+
+    def __init__(self, component: Component):
+        self.component = component
+        super().__init__(f"Component assigned into multiple groups: {component}")
+
+
+class InvalidGroupError(AssignmentError):
+    def __init__(self, group_id):
+        self.group_id = group_id
+        super().__init__(f"Invalid group: {group_id}")
+
+
+class UnknownComponentError(AssignmentError):
+    def __init__(self, component_id: str):
+        super().__init__(f"Unknown component: {component_id}")
+
+
+class MissingAssignmentError(AssignmentError):
+    def __init__(self, component: Component):
+        self.component = component
+        super().__init__(f"Missing assignment for: {component}")
 
 
 class Simulation(abc.ABC):
 
-    def __init__(self, adapt: callable, config: dict):
+    def __init__(self, adapt: Callable[["Simulation", int], None], config: dict):
         self.config = config
         self.adapt = adapt
         self.components: list[Component] = []
@@ -19,9 +47,9 @@ class Simulation(abc.ABC):
         self.visualizer = None
         self.stats = None
 
-        self.assignments = {}
-        self.assignment_errors = []
-        self.step = None
+        self.assignments: dict[Component, str] = {}
+        self.assignment_errors: list[AssignmentError] = []
+        self.step: Optional[int] = None
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):
@@ -54,8 +82,8 @@ class Simulation(abc.ABC):
         """Simulation should stop."""
         return False
 
-    def should_adapt(self):
-        """Adaptation should be performed this step. Set to False for example when there are no adaptable components left."""
+    def should_adapt(self) -> bool:
+        """Adaptation should be performed at this step. Set to False, for example, when there are no adaptable components left."""
         return True
 
     def add_visualizer(self, visualizer):
@@ -69,18 +97,18 @@ class Simulation(abc.ABC):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {}
 
-    def assign_group(self, component: Component, group_id: str) -> str | None:
+    def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
         try:
             self._check_group(component, group_id)
             self.assignments[component] = group_id
+            return None
         except AssignmentError as error:
-            message = error.args[0]
-            self.append_assignment_error(message)
-            return message
+            self.append_assignment_error(error)
+            return error
 
-    def append_assignment_error(self, message):
-        print("Before retry:", message)
-        self.assignment_errors.append(message)
+    def append_assignment_error(self, error):
+        print("Before retry:", error.message)
+        self.assignment_errors.append(error)
 
     @abc.abstractmethod
     def _check_group(self, component: Component, group_id: str):
@@ -89,12 +117,18 @@ class Simulation(abc.ABC):
 
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
-        for message in self.assignment_errors:
-            print("Error in final assignment:", message)
-            print(message, file=sys.stderr)
+        for error in self.assignment_errors:
+            print("Error in final assignment:", error.message)
+            print(error.message, file=sys.stderr)
 
         for component, group_id in self.assignments.items():
             self._assign_group(component, group_id)
+
+    def check_missing_assignments(self, components_to_be_assigned):
+        if len(self.assignments) < len(components_to_be_assigned):
+            for component in components_to_be_assigned:
+                if component not in self.assignments:
+                    self.append_assignment_error(MissingAssignmentError(component))
 
     @abc.abstractmethod
     def _assign_group(self, component: Component, group_id: str):

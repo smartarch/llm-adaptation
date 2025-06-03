@@ -1,9 +1,12 @@
 from enum import StrEnum
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from base_classes.components2d import MovingComponent2D, Point2D
 from farm.components.charger import Charger
 from farm.components.field import Field
+
+if TYPE_CHECKING:
+    from farm.simulation import SmartFarmSimulation
 
 
 class DroneState(StrEnum):
@@ -21,8 +24,14 @@ class DroneState(StrEnum):
     def __str__(self):
         return self.name
 
+    def __repr__(self):
+        return f'"{self.value}"'
+
 
 class Drone(MovingComponent2D):
+
+    # type hint
+    simulation: "SmartFarmSimulation"
 
     Speed = 2
     Radius = 6
@@ -44,7 +53,7 @@ class Drone(MovingComponent2D):
         if self.autoCharge and self.energyToFlyToCharger(includeSafetyMargin=True) >= self.battery:
             self.assignTarget(self.simulation.charger)
 
-        # fly towards assigned target
+        # fly towards the assigned target
         if self.targetLocation is not None:
             self.flyTowardsTarget()
 
@@ -55,10 +64,10 @@ class Drone(MovingComponent2D):
 
     def assignTarget(self, target: Optional[Field | Charger]):
         if self.target == target:
-            print(f"Assigning same target to {self}: {target}")
+            print(f"Assigning same target to {repr(self)}: {target}")
             return
 
-        print(f"Assigning new target to {self}: {target}")
+        print(f"Assigning new target to {repr(self)}: {target}")
         self.unassignPreviousTarget()
         self.target = target
         if target is not None:
@@ -152,6 +161,9 @@ class Drone(MovingComponent2D):
     def __repr__(self):
         return f"{self.id}({str(self.state)}, bat={self.battery:.3f})"
 
+    def __str__(self):
+        return self.id
+
     def energyToFlyToCharger(self, includeSafetyMargin=True) -> float:
         distance = self.location.distance(self.simulation.charger.location)
         time = distance / self.speed
@@ -162,3 +174,4 @@ class Drone(MovingComponent2D):
     def target_id(self):
         if self.target:
             return self.target.id
+        return None

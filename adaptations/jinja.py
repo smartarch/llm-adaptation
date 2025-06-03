@@ -2,7 +2,8 @@ import re
 
 from jinja2 import Environment, FileSystemLoader, pass_context
 
-from base_classes.simulation import Simulation
+from base_classes.components import Component
+from base_classes.simulation import Simulation, AssignmentError, UnknownComponentError, ComponentAlreadyAssignedError
 from base_classes.prompt_template import PromptTemplate, ProcessingError
 
 
@@ -98,7 +99,7 @@ class JinjaPromptTemplate(PromptTemplate):
         jinja_env = prepare_jinja_env()
         self.template = jinja_env.get_template("prompt.jinja")
 
-        self.correct_assignments = {}
+        self.correct_assignments: dict[Component, str] = {}
 
     def create_prompt(self, simulation, memory=None):
         return self.template.render(
@@ -114,9 +115,14 @@ class JinjaPromptTemplate(PromptTemplate):
         if not is_retry:
             self.correct_assignments = {}
 
-        answer = self.extract_tag(response, "answer")
+        if "retry_format" in self.configuration and is_retry:
+            tag = "correction"
+        else:
+            tag = "answer"
+
+        answer = self.extract_tag(response, tag)
         if not answer:
-            error = "Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer."
+            error = AssignmentError(f"Final group assignment not found. You must use the `<{tag}>` and `</{tag}>` tags to mark the final answer.")
             simulation.append_assignment_error(error)
             return [ProcessingError(None, error)], None
         memory = self.extract_tag(response, "memory")
@@ -168,7 +174,7 @@ class JinjaPromptTemplate(PromptTemplate):
                 component_id = component_id.strip()
 
                 if component_id not in components:
-                    error = f"Unknown component: {component_id}"
+                    error = UnknownComponentError(component_id)
                     errors.append(ProcessingError(row, error))
                     simulation.append_assignment_error(error)
                     continue
@@ -176,14 +182,17 @@ class JinjaPromptTemplate(PromptTemplate):
                 component = components[component_id]
                 error = simulation.assign_group(component, group.strip())
                 if error:
-                    errors.append(ProcessingError(row, error))
+                    if isinstance(error, ComponentAlreadyAssignedError):
+                        errors.append(ProcessingError(None, error))
+                    else:
+                        errors.append(ProcessingError(row, error))
                 else:
-                    self.correct_assignments[component_id] = group.strip()
+                    self.correct_assignments[component] = group.strip()
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
                 print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
-            error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
+            error = AssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
         return errors
@@ -199,11 +208,14 @@ class JinjaPromptTemplate(PromptTemplate):
                     continue
                 row = row.replace("- ", "")  # remove leading hyphens
                 row = row.replace("**", "")  # remove bold
+                row = row.rstrip("., ")      # remove trailing punctuation and spaces
 
                 group, components_list = row.split(":")
                 group = group.strip()
                 assigned_groups.add(group)
                 component_ids = components_list.strip().split(",")
+                if len(component_ids) == 1 and component_ids[0].lower() == "none":
+                    continue
 
                 for component_id in component_ids:
                     component_id = component_id.strip()
@@ -211,7 +223,7 @@ class JinjaPromptTemplate(PromptTemplate):
                     if component_id == "":
                         continue
                     if component_id not in components:
-                        error = f"Unknown component: {component_id}"
+                        error = UnknownComponentError(component_id)
                         errors.append(ProcessingError(row, error))
                         simulation.append_assignment_error(error)
                         continue
@@ -221,20 +233,21 @@ class JinjaPromptTemplate(PromptTemplate):
                     if error:
                         errors.append(ProcessingError(row, error))
                     else:
-                        self.correct_assignments[component_id] = group.strip()
+                        self.correct_assignments[component] = group.strip()
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
                 print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
-            error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
+            error = AssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
 
         all_groups = self.load_ensembles_for_assignments(simulation)
         if len(assigned_groups) < len(all_groups):
             missing_groups = [group for group in all_groups if group not in assigned_groups]
-            error = "The following groups are missing in the assignment: " + ", ".join(missing_groups)
-            errors.append(ProcessingError(None, error))
+            error = AssignmentError("The following groups are missing in the assignment: " + ", ".join(missing_groups))
+            if not self.configuration.get("retry_format") == "component-first":
+                errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
         return errors
 
@@ -262,11 +275,10 @@ class JinjaPromptTemplate(PromptTemplate):
         return ensembles
 
     def clean_up_correct_assignments(self, errors):
-        for row, error in errors:
-            # TODO: remove incorrectly assigned components from correct_assignments
-            pass
+        for processing_error in errors:
+            if isinstance(processing_error.error, ComponentAlreadyAssignedError):
+                del self.correct_assignments[processing_error.error.component]
 
     def apply_correct_assignments(self, components, simulation):
-        for component_id, group in self.correct_assignments.items():
-            component = components[component_id]
+        for component, group in self.correct_assignments.items():
             simulation.assign_group(component, group)
