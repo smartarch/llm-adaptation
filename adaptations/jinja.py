@@ -93,11 +93,12 @@ def prepare_jinja_env():
 class JinjaPromptTemplate(PromptTemplate):
 
     def __init__(self, **configuration):
-        super().__init__()
-        self.configuration = configuration
+        super().__init__(**configuration)
 
         jinja_env = prepare_jinja_env()
         self.template = jinja_env.get_template("prompt.jinja")
+
+        self.correct_assignments = {}
 
     def create_prompt(self, simulation, memory=None):
         return self.template.render(
@@ -109,7 +110,10 @@ class JinjaPromptTemplate(PromptTemplate):
             step=simulation.step,
         )
 
-    def process_response(self, response, simulation) -> tuple[list[ProcessingError] | None, str | None]:
+    def process_response(self, response, simulation, is_retry) -> tuple[list[ProcessingError] | None, str | None]:
+        if not is_retry:
+            self.correct_assignments = {}
+
         answer = self.extract_tag(response, "answer")
         if not answer:
             error = "Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer."
@@ -119,13 +123,23 @@ class JinjaPromptTemplate(PromptTemplate):
 
         components = self.load_components_for_assignments(simulation)
 
-        if self.configuration["answer_format"] == "component-first":
-            errors = self.process_component_first(answer, components, simulation)
-        elif self.configuration["answer_format"] == "ensemble-first":
-            errors = self.process_ensemble_first(answer, components, simulation)
+        if is_retry and "retry_format" in self.configuration:
+            self.apply_correct_assignments(components, simulation)
+            if self.configuration["retry_format"] == "component-first":
+                errors = self.process_component_first(answer, components, simulation)
+            elif self.configuration["retry_format"] == "ensemble-first":
+                errors = self.process_ensemble_first(answer, components, simulation)
+            else:
+                raise NotImplementedError("Unsupported retry format")
         else:
-            raise NotImplementedError("Unsupported answer format")
+            if self.configuration["answer_format"] == "component-first":
+                errors = self.process_component_first(answer, components, simulation)
+            elif self.configuration["answer_format"] == "ensemble-first":
+                errors = self.process_ensemble_first(answer, components, simulation)
+            else:
+                raise NotImplementedError("Unsupported answer format")
 
+        self.clean_up_correct_assignments(errors)
         return errors, memory
 
     @staticmethod
@@ -137,8 +151,7 @@ class JinjaPromptTemplate(PromptTemplate):
             return matches[0].strip()
         return None
 
-    @staticmethod
-    def process_component_first(answer, components, simulation):
+    def process_component_first(self, answer, components, simulation):
         rows = answer.split("\n")
         errors: list[ProcessingError] = []
         for row in rows:
@@ -160,10 +173,12 @@ class JinjaPromptTemplate(PromptTemplate):
                     simulation.append_assignment_error(error)
                     continue
 
-                component = components[component_id.strip()]
+                component = components[component_id]
                 error = simulation.assign_group(component, group.strip())
                 if error:
                     errors.append(ProcessingError(row, error))
+                else:
+                    self.correct_assignments[component_id] = group.strip()
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
                 print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
@@ -205,8 +220,10 @@ class JinjaPromptTemplate(PromptTemplate):
                     error = simulation.assign_group(component, group.strip())
                     if error:
                         errors.append(ProcessingError(row, error))
+                    else:
+                        self.correct_assignments[component_id] = group.strip()
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
-                print(f"Error - invalid row ({repr(error)}): {repr(row)}")
+                print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
             error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
@@ -243,3 +260,13 @@ class JinjaPromptTemplate(PromptTemplate):
             ensembles.update([ensemble["name"] for ensemble in assignment_ensembles])
 
         return ensembles
+
+    def clean_up_correct_assignments(self, errors):
+        for row, error in errors:
+            # TODO: remove incorrectly assigned components from correct_assignments
+            pass
+
+    def apply_correct_assignments(self, components, simulation):
+        for component_id, group in self.correct_assignments.items():
+            component = components[component_id]
+            simulation.assign_group(component, group)

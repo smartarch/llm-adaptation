@@ -67,7 +67,7 @@ class LLMAdaptation(Adaptation, ABC):
             session.append(response)
 
             simulation.reset_assignments()
-            errors, memory = self.prompt_template.process_response(response.content, simulation)
+            errors, memory = self.prompt_template.process_response(response.content, simulation, retry > 0)
             if memory is not None:
                 self.memory = memory
 
@@ -95,9 +95,15 @@ class LLMAdaptation(Adaptation, ABC):
 
         return response
 
-    @staticmethod
-    def get_retry_prompt(errors: list[ProcessingError]):
-        prompt = "There were some errors in your final group assignment. Fix them and output the final assignment again. Adhere to the format defined earlier."
+    def get_retry_prompt(self, errors: list[ProcessingError]):
+        retry_format = self.prompt_template.configuration.get("retry_prompt", None)
+        if retry_format is not None:
+            if retry_format == "component-first":
+                prompt = 'There were some errors in your final group assignment. Fix them and output the final assignment again. Again, use the `<answer>` and `</answer>` tags to mark the final answer.\nFor each of incorrectly assigned components, write one line with the selected group in format "<name>: <group>". Only include the component that were not assigned correctly that are listed below.'
+            else:
+                raise NotImplementedError()
+        else:
+            prompt = "There were some errors in your final group assignment. Fix them and output the final assignment again. Adhere to the format defined earlier."
 
         for row, error in errors:
             prompt += "\n\n"
