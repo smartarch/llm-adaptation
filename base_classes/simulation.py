@@ -13,7 +13,6 @@ class AssignmentError(Exception):
 
 
 class ComponentAlreadyAssignedError(AssignmentError):
-
     def __init__(self, component: Component):
         self.component = component
         super().__init__(f"Component assigned into multiple groups: {component}")
@@ -72,7 +71,7 @@ class Simulation(abc.ABC):
             try:
                 self.adapt(self, step)
             except Exception as error:
-                print(error, file=sys.stderr)
+                print(repr(error), file=sys.stderr)
         self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:

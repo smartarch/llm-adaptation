@@ -150,7 +150,6 @@ class JinjaPromptTemplate(PromptTemplate):
 
     @staticmethod
     def extract_tag(response, tag):
-        # This regex looks for content between triple backticks, possibly with a language specifier.
         pattern = rf"<{tag}>(.*?)</{tag}>"
         matches = re.findall(pattern, response, re.DOTALL)
         if matches:
@@ -277,7 +276,8 @@ class JinjaPromptTemplate(PromptTemplate):
     def clean_up_correct_assignments(self, errors):
         for processing_error in errors:
             if isinstance(processing_error.error, ComponentAlreadyAssignedError):
-                del self.correct_assignments[processing_error.error.component]
+                if processing_error.error.component in self.correct_assignments:
+                    del self.correct_assignments[processing_error.error.component]
 
     def apply_correct_assignments(self, components, simulation):
         for component, group in self.correct_assignments.items():
