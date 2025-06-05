@@ -1,0 +1,790 @@
+The following components have not been assigned to a group: Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer.
+The following components have not been assigned to a group: Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_391, Drone_464, Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_343, Drone_347, Drone_348, Drone_352, Drone_355, Drone_356, Drone_361, Drone_364, Drone_367, Drone_369, Drone_373, Drone_383, Drone_386, Drone_387, Drone_391, Drone_401, Drone_411, Drone_417, Drone_424, Drone_427, Drone_430, Drone_434, Drone_446, Drone_462, Drone_463, Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+Unknown component: Drone_882
+Unknown component: Drone_883
+Unknown component: Drone_884
+Unknown component: Drone_885
+Unknown component: Drone_886
+Unknown component: Drone_887
+Unknown component: Drone_888
+Unknown component: Drone_889
+Unknown component: Drone_890
+Unknown component: Drone_891
+Unknown component: Drone_892
+Unknown component: Drone_893
+Unknown component: Drone_894
+Unknown component: Drone_895
+Unknown component: Drone_896
+Unknown component: Drone_897
+Unknown component: Drone_898
+Unknown component: Drone_899
+Unknown component: Drone_900
+Unknown component: Drone_901
+Unknown component: Drone_902
+Unknown component: Drone_903
+Unknown component: Drone_904
+Unknown component: Drone_905
+Unknown component: Drone_906
+Unknown component: Drone_907
+Unknown component: Drone_908
+Unknown component: Drone_909
+Unknown component: Drone_910
+Unknown component: Drone_911
+Unknown component: Drone_912
+Unknown component: Drone_913
+Unknown component: Drone_914
+Unknown component: Drone_915
+Unknown component: Drone_916
+Unknown component: Drone_917
+Unknown component: Drone_918
+Unknown component: Drone_919
+Unknown component: Drone_920
+Unknown component: Drone_921
+Unknown component: Drone_922
+Unknown component: Drone_923
+Unknown component: Drone_924
+Unknown component: Drone_925
+Unknown component: Drone_926
+Unknown component: Drone_927
+Unknown component: Drone_928
+Unknown component: Drone_929
+Unknown component: Drone_930
+Unknown component: Drone_931
+Unknown component: Drone_932
+Unknown component: Drone_933
+Unknown component: Drone_934
+Unknown component: Drone_935
+Unknown component: Drone_936
+Unknown component: Drone_937
+Unknown component: Drone_938
+Unknown component: Drone_939
+Unknown component: Drone_940
+Unknown component: Drone_941
+Unknown component: Drone_942
+Unknown component: Drone_943
+Unknown component: Drone_944
+Unknown component: Drone_945
+Unknown component: Drone_946
+Unknown component: Drone_947
+Unknown component: Drone_948
+Unknown component: Drone_949
+Unknown component: Drone_950
+Unknown component: Drone_951
+Unknown component: Drone_952
+Unknown component: Drone_953
+Unknown component: Drone_954
+Unknown component: Drone_955
+Unknown component: Drone_956
+Unknown component: Drone_957
+Unknown component: Drone_958
+Unknown component: Drone_959
+Unknown component: Drone_960
+Unknown component: Drone_961
+Unknown component: Drone_962
+Unknown component: Drone_963
+Unknown component: Drone_964
+Unknown component: Drone_965
+Unknown component: Drone_966
+Unknown component: Drone_967
+Unknown component: Drone_968
+Unknown component: Drone_969
+Unknown component: Drone_970
+Unknown component: Drone_971
+Unknown component: Drone_972
+Unknown component: Drone_973
+Unknown component: Drone_974
+Unknown component: Drone_975
+Unknown component: Drone_976
+Unknown component: Drone_977
+Unknown component: Drone_978
+Unknown component: Drone_979
+Unknown component: Drone_980
+Unknown component: Drone_981
+Unknown component: Drone_982
+Unknown component: Drone_983
+Unknown component: Drone_984
+Unknown component: Drone_985
+Unknown component: Drone_986
+Unknown component: Drone_987
+Unknown component: Drone_988
+Unknown component: Drone_989
+Unknown component: Drone_990
+Unknown component: Drone_991
+Unknown component: Drone_992
+Unknown component: Drone_993
+Unknown component: Drone_994
+Unknown component: Drone_995
+Unknown component: Drone_996
+Unknown component: Drone_997
+Unknown component: Drone_998
+Unknown component: Drone_999
+Unknown component: Drone_1000
+The following components have not been assigned to a group: Drone_355, Drone_361, Drone_364, Drone_367, Drone_373, Drone_378, Drone_383, Drone_384, Drone_386, Drone_391, Drone_399, Drone_400, Drone_401, Drone_403, Drone_404, Drone_411, Drone_416, Drone_417, Drone_420, Drone_421, Drone_425, Drone_427, Drone_430, Drone_432, Drone_435, Drone_437, Drone_442, Drone_446, Drone_449, Drone_457, Drone_459, Drone_462, Drone_463, Drone_464, Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+Unknown component: Drone_882
+Unknown component: Drone_883
+Unknown component: Drone_884
+Unknown component: Drone_885
+Unknown component: Drone_886
+Unknown component: Drone_887
+Unknown component: Drone_888
+Unknown component: Drone_889
+Unknown component: Drone_890
+Unknown component: Drone_891
+Unknown component: Drone_892
+Unknown component: Drone_893
+Unknown component: Drone_894
+Unknown component: Drone_895
+Unknown component: Drone_896
+Unknown component: Drone_897
+Unknown component: Drone_898
+Unknown component: Drone_899
+Unknown component: Drone_900
+Unknown component: Drone_901
+Unknown component: Drone_902
+Unknown component: Drone_903
+Unknown component: Drone_904
+Unknown component: Drone_905
+Unknown component: Drone_906
+Unknown component: Drone_907
+Unknown component: Drone_908
+Unknown component: Drone_909
+Unknown component: Drone_910
+Unknown component: Drone_911
+Unknown component: Drone_912
+Unknown component: Drone_913
+Unknown component: Drone_914
+Unknown component: Drone_915
+Unknown component: Drone_916
+Unknown component: Drone_917
+Unknown component: Drone_918
+Unknown component: Drone_919
+Unknown component: Drone_920
+Unknown component: Drone_921
+Unknown component: Drone_922
+Unknown component: Drone_923
+Unknown component: Drone_924
+Unknown component: Drone_925
+Unknown component: Drone_926
+Unknown component: Drone_927
+Unknown component: Drone_928
+Unknown component: Drone_929
+Unknown component: Drone_930
+Unknown component: Drone_931
+Unknown component: Drone_932
+Unknown component: Drone_933
+Unknown component: Drone_934
+Unknown component: Drone_935
+Unknown component: Drone_936
+Unknown component: Drone_937
+Unknown component: Drone_938
+Unknown component: Drone_939
+Unknown component: Drone_940
+Unknown component: Drone_941
+Unknown component: Drone_942
+Unknown component: Drone_943
+Unknown component: Drone_944
+Unknown component: Drone_945
+Unknown component: Drone_946
+Unknown component: Drone_947
+Unknown component: Drone_948
+Unknown component: Drone_949
+Unknown component: Drone_950
+Unknown component: Drone_951
+Unknown component: Drone_952
+Unknown component: Drone_953
+Unknown component: Drone_954
+Unknown component: Drone_955
+Unknown component: Drone_956
+Unknown component: Drone_957
+Unknown component: Drone_958
+Unknown component: Drone_959
+Unknown component: Drone_960
+Unknown component: Drone_961
+Unknown component: Drone_962
+Unknown component: Drone_963
+Unknown component: Drone_964
+Unknown component: Drone_965
+Unknown component: Drone_966
+Unknown component: Drone_967
+Unknown component: Drone_968
+Unknown component: Drone_969
+Unknown component: Drone_970
+Unknown component: Drone_971
+Unknown component: Drone_972
+Unknown component: Drone_973
+Unknown component: Drone_974
+Unknown component: Drone_975
+Unknown component: Drone_976
+Unknown component: Drone_977
+Unknown component: Drone_978
+Unknown component: Drone_979
+Unknown component: Drone_980
+Unknown component: Drone_981
+Unknown component: Drone_982
+Unknown component: Drone_983
+Unknown component: Drone_984
+Unknown component: Drone_985
+Unknown component: Drone_986
+Unknown component: Drone_987
+Unknown component: Drone_988
+Unknown component: Drone_989
+Unknown component: Drone_990
+Unknown component: Drone_991
+Unknown component: Drone_992
+Unknown component: Drone_993
+Unknown component: Drone_994
+Unknown component: Drone_995
+Unknown component: Drone_996
+Unknown component: Drone_997
+Unknown component: Drone_998
+Unknown component: Drone_999
+Unknown component: Drone_1000
+The following components have not been assigned to a group: Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_391, Drone_393, Drone_394, Drone_395, Drone_396, Drone_397, Drone_398, Drone_399, Drone_400, Drone_401, Drone_402, Drone_403, Drone_404, Drone_405, Drone_406, Drone_407, Drone_408, Drone_409, Drone_410, Drone_411, Drone_412, Drone_413, Drone_414, Drone_415, Drone_416, Drone_417, Drone_418, Drone_419, Drone_420, Drone_421, Drone_422, Drone_423, Drone_424, Drone_425, Drone_426, Drone_427, Drone_428, Drone_429, Drone_430, Drone_431, Drone_432, Drone_433, Drone_434, Drone_435, Drone_436, Drone_437, Drone_438, Drone_439, Drone_440, Drone_441, Drone_442, Drone_443, Drone_444, Drone_445, Drone_446, Drone_447, Drone_448, Drone_449, Drone_450, Drone_451, Drone_452, Drone_453, Drone_454, Drone_455, Drone_456, Drone_457, Drone_458, Drone_459, Drone_460, Drone_461, Drone_462, Drone_463, Drone_464, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+Unknown component: Drone_882
+Unknown component: Drone_883
+Unknown component: Drone_884
+Unknown component: Drone_885
+Unknown component: Drone_886
+Unknown component: Drone_887
+Unknown component: Drone_888
+Unknown component: Drone_889
+Unknown component: Drone_890
+Unknown component: Drone_891
+Unknown component: Drone_892
+Unknown component: Drone_893
+Unknown component: Drone_894
+Unknown component: Drone_895
+Unknown component: Drone_896
+Unknown component: Drone_897
+Unknown component: Drone_898
+Unknown component: Drone_899
+Unknown component: Drone_900
+Unknown component: Drone_901
+Unknown component: Drone_902
+Unknown component: Drone_903
+Unknown component: Drone_904
+Unknown component: Drone_905
+Unknown component: Drone_906
+Unknown component: Drone_907
+Unknown component: Drone_908
+Unknown component: Drone_909
+Unknown component: Drone_910
+Unknown component: Drone_911
+Unknown component: Drone_912
+Unknown component: Drone_913
+Unknown component: Drone_914
+Unknown component: Drone_915
+Unknown component: Drone_916
+Unknown component: Drone_917
+Unknown component: Drone_918
+Unknown component: Drone_919
+Unknown component: Drone_920
+Unknown component: Drone_921
+Unknown component: Drone_922
+Unknown component: Drone_923
+Unknown component: Drone_924
+Unknown component: Drone_925
+Unknown component: Drone_926
+Unknown component: Drone_927
+Unknown component: Drone_928
+Unknown component: Drone_929
+Unknown component: Drone_930
+Unknown component: Drone_931
+Unknown component: Drone_932
+Unknown component: Drone_933
+Unknown component: Drone_934
+Unknown component: Drone_935
+Unknown component: Drone_936
+Unknown component: Drone_937
+Unknown component: Drone_938
+Unknown component: Drone_939
+Unknown component: Drone_940
+Unknown component: Drone_941
+Unknown component: Drone_942
+Unknown component: Drone_943
+Unknown component: Drone_944
+Unknown component: Drone_945
+Unknown component: Drone_946
+Unknown component: Drone_947
+Unknown component: Drone_948
+Unknown component: Drone_949
+Unknown component: Drone_950
+Unknown component: Drone_951
+Unknown component: Drone_952
+Unknown component: Drone_953
+Unknown component: Drone_954
+Unknown component: Drone_955
+Unknown component: Drone_956
+Unknown component: Drone_957
+Unknown component: Drone_958
+Unknown component: Drone_959
+Unknown component: Drone_960
+Unknown component: Drone_961
+Unknown component: Drone_962
+Unknown component: Drone_963
+Unknown component: Drone_964
+Unknown component: Drone_965
+Unknown component: Drone_966
+Unknown component: Drone_967
+Unknown component: Drone_968
+Unknown component: Drone_969
+Unknown component: Drone_970
+Unknown component: Drone_971
+Unknown component: Drone_972
+Unknown component: Drone_973
+Unknown component: Drone_974
+Unknown component: Drone_975
+Unknown component: Drone_976
+Unknown component: Drone_977
+Unknown component: Drone_978
+Unknown component: Drone_979
+Unknown component: Drone_980
+Unknown component: Drone_981
+Unknown component: Drone_982
+Unknown component: Drone_983
+Unknown component: Drone_984
+Unknown component: Drone_985
+Unknown component: Drone_986
+Unknown component: Drone_987
+Unknown component: Drone_988
+Unknown component: Drone_989
+Unknown component: Drone_990
+Unknown component: Drone_991
+Unknown component: Drone_992
+Unknown component: Drone_993
+Unknown component: Drone_994
+Unknown component: Drone_995
+Unknown component: Drone_996
+Unknown component: Drone_997
+Unknown component: Drone_998
+Unknown component: Drone_999
+Unknown component: Drone_1000
+The following components have not been assigned to a group: Drone_249, Drone_250, Drone_251, Drone_252, Drone_253, Drone_254, Drone_255, Drone_256, Drone_257, Drone_258, Drone_259, Drone_260, Drone_261, Drone_262, Drone_263, Drone_264, Drone_265, Drone_266, Drone_267, Drone_268, Drone_269, Drone_270, Drone_271, Drone_272, Drone_273, Drone_274, Drone_275, Drone_276, Drone_277, Drone_278, Drone_279, Drone_280, Drone_281, Drone_282, Drone_283, Drone_284, Drone_285, Drone_286, Drone_287, Drone_288, Drone_289, Drone_290, Drone_291, Drone_292, Drone_293, Drone_294, Drone_295, Drone_296, Drone_297, Drone_298, Drone_299, Drone_300, Drone_301, Drone_302, Drone_303, Drone_304, Drone_305, Drone_306, Drone_307, Drone_308, Drone_309, Drone_310, Drone_311, Drone_312, Drone_313, Drone_314, Drone_315, Drone_316, Drone_317, Drone_318, Drone_319, Drone_320, Drone_321, Drone_322, Drone_323, Drone_324, Drone_325, Drone_326, Drone_327, Drone_328, Drone_329, Drone_330, Drone_331, Drone_332, Drone_333, Drone_334, Drone_335, Drone_336, Drone_337, Drone_338, Drone_339, Drone_340, Drone_341, Drone_342, Drone_343, Drone_344, Drone_345, Drone_346, Drone_347, Drone_348, Drone_358, Drone_359, Drone_361, Drone_367, Drone_372, Drone_373, Drone_434, Drone_435, Drone_439, Drone_446, Drone_457, Drone_459, Drone_462, Drone_463, Drone_464, Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_464, Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+The following components have not been assigned to a group: Drone_355, Drone_360, Drone_363, Drone_365, Drone_366, Drone_368, Drone_369, Drone_370, Drone_371, Drone_373, Drone_374, Drone_375, Drone_376, Drone_377, Drone_378, Drone_379, Drone_380, Drone_381, Drone_382, Drone_383, Drone_384, Drone_385, Drone_386, Drone_387, Drone_388, Drone_389, Drone_390, Drone_391, Drone_392, Drone_393, Drone_394, Drone_395, Drone_396, Drone_397, Drone_398, Drone_399, Drone_400, Drone_401, Drone_402, Drone_403, Drone_404, Drone_405, Drone_406, Drone_407, Drone_408, Drone_409, Drone_410, Drone_411, Drone_412, Drone_413, Drone_414, Drone_416, Drone_417, Drone_418, Drone_419, Drone_421, Drone_422, Drone_424, Drone_425, Drone_426, Drone_428, Drone_429, Drone_430, Drone_431, Drone_432, Drone_433, Drone_434, Drone_437, Drone_438, Drone_439, Drone_440, Drone_441, Drone_442, Drone_443, Drone_445, Drone_447, Drone_448, Drone_449, Drone_450, Drone_451, Drone_452, Drone_453, Drone_455, Drone_456, Drone_457, Drone_458, Drone_460, Drone_461, Drone_463
+Component already assigned: Drone_465
+Component already assigned: Drone_466
+Component already assigned: Drone_467
+Component already assigned: Drone_468
+Component already assigned: Drone_469
+Component already assigned: Drone_470
+Component already assigned: Drone_471
+Component already assigned: Drone_472
+Component already assigned: Drone_473
+Component already assigned: Drone_474
+Component already assigned: Drone_475
+Component already assigned: Drone_476
+Component already assigned: Drone_477
+Component already assigned: Drone_478
+Component already assigned: Drone_479
+Component already assigned: Drone_480
+Component already assigned: Drone_481
+Component already assigned: Drone_482
+Component already assigned: Drone_483
+Component already assigned: Drone_484
+Component already assigned: Drone_485
+Component already assigned: Drone_486
+Component already assigned: Drone_487
+Component already assigned: Drone_488
+Component already assigned: Drone_489
+Component already assigned: Drone_490
+Component already assigned: Drone_491
+Component already assigned: Drone_492
+Component already assigned: Drone_493
+Component already assigned: Drone_494
+Component already assigned: Drone_495
+Component already assigned: Drone_496
+Component already assigned: Drone_497
+Component already assigned: Drone_498
+Component already assigned: Drone_499
+Component already assigned: Drone_500
+Component already assigned: Drone_501
+Component already assigned: Drone_502
+Component already assigned: Drone_503
+Component already assigned: Drone_504
+Component already assigned: Drone_505
+Component already assigned: Drone_506
+Component already assigned: Drone_507
+Component already assigned: Drone_508
+Component already assigned: Drone_509
+Component already assigned: Drone_510
+Component already assigned: Drone_511
+Component already assigned: Drone_512
+Component already assigned: Drone_513
+Component already assigned: Drone_514
+Component already assigned: Drone_515
+Component already assigned: Drone_516
+Component already assigned: Drone_517
+Component already assigned: Drone_518
+Component already assigned: Drone_519
+Component already assigned: Drone_520
+Component already assigned: Drone_521
+Component already assigned: Drone_522
+Component already assigned: Drone_523
+Component already assigned: Drone_524
+Component already assigned: Drone_525
+Component already assigned: Drone_526
+Component already assigned: Drone_527
+Component already assigned: Drone_528
+Component already assigned: Drone_529
+Component already assigned: Drone_530
+Component already assigned: Drone_531
+Component already assigned: Drone_532
+Component already assigned: Drone_533
+Component already assigned: Drone_534
+Component already assigned: Drone_535
+Component already assigned: Drone_536
+Component already assigned: Drone_537
+Component already assigned: Drone_538
+Component already assigned: Drone_539
+Component already assigned: Drone_540
+Component already assigned: Drone_541
+Component already assigned: Drone_542
+Component already assigned: Drone_543
+Component already assigned: Drone_544
+Component already assigned: Drone_545
+Component already assigned: Drone_546
+Component already assigned: Drone_547
+Component already assigned: Drone_548
+Component already assigned: Drone_549
+Component already assigned: Drone_550
+Component already assigned: Drone_551
+Component already assigned: Drone_552
+Component already assigned: Drone_553
+Component already assigned: Drone_554
+Component already assigned: Drone_555
+Component already assigned: Drone_556
+Component already assigned: Drone_557
+Component already assigned: Drone_558
+Component already assigned: Drone_559
+Component already assigned: Drone_560
+Component already assigned: Drone_561
+Component already assigned: Drone_562
+Component already assigned: Drone_563
+Component already assigned: Drone_564
+Component already assigned: Drone_565
+Component already assigned: Drone_566
+Component already assigned: Drone_567
+Component already assigned: Drone_568
+Component already assigned: Drone_569
+Component already assigned: Drone_570
+Component already assigned: Drone_571
+Component already assigned: Drone_572
+Component already assigned: Drone_573
+Component already assigned: Drone_574
+Component already assigned: Drone_575
+Component already assigned: Drone_576
+Component already assigned: Drone_577
+Component already assigned: Drone_578
+Component already assigned: Drone_579
+Component already assigned: Drone_580
+Component already assigned: Drone_581
+Component already assigned: Drone_582
+Component already assigned: Drone_583
+Component already assigned: Drone_584
+Component already assigned: Drone_585
+Component already assigned: Drone_586
+Component already assigned: Drone_587
+Component already assigned: Drone_588
+Component already assigned: Drone_589
+Component already assigned: Drone_590
+Component already assigned: Drone_591
+Component already assigned: Drone_592
+Component already assigned: Drone_593
+Component already assigned: Drone_594
+Component already assigned: Drone_595
+Component already assigned: Drone_596
+Component already assigned: Drone_597
+Component already assigned: Drone_598
+Component already assigned: Drone_599
+Component already assigned: Drone_600
+Component already assigned: Drone_601
+Component already assigned: Drone_602
+Component already assigned: Drone_603
+Component already assigned: Drone_604
+Component already assigned: Drone_605
+Component already assigned: Drone_606
+Component already assigned: Drone_607
+Component already assigned: Drone_608
+Component already assigned: Drone_609
+Component already assigned: Drone_610
+Component already assigned: Drone_611
+Component already assigned: Drone_612
+Component already assigned: Drone_613
+Component already assigned: Drone_614
+Component already assigned: Drone_615
+Component already assigned: Drone_616
+Component already assigned: Drone_617
+Component already assigned: Drone_618
+Component already assigned: Drone_619
+Component already assigned: Drone_620
+Component already assigned: Drone_621
+Component already assigned: Drone_622
+Component already assigned: Drone_623
+Component already assigned: Drone_624
+Component already assigned: Drone_625
+Component already assigned: Drone_626
+Component already assigned: Drone_627
+Component already assigned: Drone_628
+Component already assigned: Drone_629
+Component already assigned: Drone_630
+Component already assigned: Drone_631
+Component already assigned: Drone_632
+Component already assigned: Drone_633
+Component already assigned: Drone_634
+Component already assigned: Drone_635
+Component already assigned: Drone_636
+Component already assigned: Drone_637
+Component already assigned: Drone_638
+Component already assigned: Drone_639
+Component already assigned: Drone_640
+Component already assigned: Drone_641
+Component already assigned: Drone_642
+Component already assigned: Drone_643
+Component already assigned: Drone_644
+Component already assigned: Drone_645
+Component already assigned: Drone_646
+Component already assigned: Drone_647
+Component already assigned: Drone_648
+Component already assigned: Drone_649
+Component already assigned: Drone_650
+Component already assigned: Drone_651
+Component already assigned: Drone_652
+Component already assigned: Drone_653
+Component already assigned: Drone_654
+Component already assigned: Drone_655
+Component already assigned: Drone_656
+Component already assigned: Drone_657
+Component already assigned: Drone_658
+Component already assigned: Drone_659
+Component already assigned: Drone_660
+Component already assigned: Drone_661
+Component already assigned: Drone_662
+Component already assigned: Drone_663
+Component already assigned: Drone_664
+Component already assigned: Drone_665
+Component already assigned: Drone_666
+Component already assigned: Drone_667
+Component already assigned: Drone_668
+Component already assigned: Drone_669
+Component already assigned: Drone_670
+Component already assigned: Drone_671
+Component already assigned: Drone_672
+Component already assigned: Drone_673
+Component already assigned: Drone_674
+Component already assigned: Drone_675
+Component already assigned: Drone_676
+Component already assigned: Drone_677
+Component already assigned: Drone_678
+Component already assigned: Drone_679
+Component already assigned: Drone_680
+Component already assigned: Drone_681
+Component already assigned: Drone_682
+Component already assigned: Drone_683
+Component already assigned: Drone_684
+Component already assigned: Drone_685
+Component already assigned: Drone_686
+Component already assigned: Drone_687
+Component already assigned: Drone_688
+Component already assigned: Drone_689
+Component already assigned: Drone_690
+Component already assigned: Drone_691
+Component already assigned: Drone_692
+Component already assigned: Drone_693
+Component already assigned: Drone_694
+Component already assigned: Drone_695
+Component already assigned: Drone_696
+Component already assigned: Drone_697
+Component already assigned: Drone_698
+Component already assigned: Drone_699
+Component already assigned: Drone_700
+Component already assigned: Drone_701
+Component already assigned: Drone_702
+Component already assigned: Drone_703
+Component already assigned: Drone_704
+Component already assigned: Drone_705
+Component already assigned: Drone_706
+Component already assigned: Drone_707
+Component already assigned: Drone_708
+Component already assigned: Drone_709
+Component already assigned: Drone_710
+Component already assigned: Drone_711
+Component already assigned: Drone_712
+Component already assigned: Drone_713
+Component already assigned: Drone_714
+Component already assigned: Drone_715
+Component already assigned: Drone_716
+Component already assigned: Drone_717
+Component already assigned: Drone_718
+Component already assigned: Drone_719
+Component already assigned: Drone_720
+Component already assigned: Drone_721
+Component already assigned: Drone_722
+Component already assigned: Drone_723
+Component already assigned: Drone_724
+Component already assigned: Drone_725
+Component already assigned: Drone_726
+Component already assigned: Drone_727
+Component already assigned: Drone_728
+Component already assigned: Drone_729
+Component already assigned: Drone_730
+Component already assigned: Drone_731
+Component already assigned: Drone_732
+Component already assigned: Drone_733
+Component already assigned: Drone_734
+Component already assigned: Drone_735
+Component already assigned: Drone_736
+Component already assigned: Drone_737
+Component already assigned: Drone_738
+Component already assigned: Drone_739
+Component already assigned: Drone_740
+Component already assigned: Drone_741
+Component already assigned: Drone_742
+Component already assigned: Drone_743
+Component already assigned: Drone_744
+Component already assigned: Drone_745
+Component already assigned: Drone_746
+Component already assigned: Drone_747
+Component already assigned: Drone_748
+Component already assigned: Drone_749
+Component already assigned: Drone_750
+Component already assigned: Drone_751
+Component already assigned: Drone_752
+Component already assigned: Drone_753
+Component already assigned: Drone_754
+Component already assigned: Drone_755
+Component already assigned: Drone_756
+Component already assigned: Drone_757
+Component already assigned: Drone_758
+Component already assigned: Drone_759
+Component already assigned: Drone_760
+Component already assigned: Drone_761
+Component already assigned: Drone_762
+Component already assigned: Drone_763
+Component already assigned: Drone_764
+Component already assigned: Drone_765
+Component already assigned: Drone_766
+Component already assigned: Drone_767
+Component already assigned: Drone_768
+Component already assigned: Drone_769
+Component already assigned: Drone_770
+Component already assigned: Drone_771
+Component already assigned: Drone_772
+Component already assigned: Drone_773
+Component already assigned: Drone_774
+Component already assigned: Drone_775
+Component already assigned: Drone_776
+Component already assigned: Drone_777
+Component already assigned: Drone_778
+Component already assigned: Drone_779
+Component already assigned: Drone_780
+Component already assigned: Drone_781
+Component already assigned: Drone_782
+Component already assigned: Drone_783
+Component already assigned: Drone_784
+Component already assigned: Drone_785
+Component already assigned: Drone_786
+Component already assigned: Drone_787
+Component already assigned: Drone_788
+Component already assigned: Drone_789
+Component already assigned: Drone_790
+Component already assigned: Drone_791
+Component already assigned: Drone_792
+Component already assigned: Drone_793
+Component already assigned: Drone_794
+Component already assigned: Drone_795
+Component already assigned: Drone_796
+Component already assigned: Drone_797
+Component already assigned: Drone_798
+Component already assigned: Drone_799
+Component already assigned: Drone_800
+Component already assigned: Drone_801
+Component already assigned: Drone_802
+Component already assigned: Drone_803
+Component already assigned: Drone_804
+Component already assigned: Drone_805
+Component already assigned: Drone_806
+Component already assigned: Drone_807
+Component already assigned: Drone_808
+Component already assigned: Drone_809
+Component already assigned: Drone_810
+Component already assigned: Drone_811
+Component already assigned: Drone_812
+Component already assigned: Drone_813
+Component already assigned: Drone_814
+Component already assigned: Drone_815
+Component already assigned: Drone_816
+Component already assigned: Drone_817
+Component already assigned: Drone_818
+Component already assigned: Drone_819
+Component already assigned: Drone_820
+Component already assigned: Drone_821
+Component already assigned: Drone_822
+Component already assigned: Drone_823
+Component already assigned: Drone_824
+Component already assigned: Drone_825
+Component already assigned: Drone_826
+Component already assigned: Drone_827
+Component already assigned: Drone_828
+Component already assigned: Drone_829
+Component already assigned: Drone_830
+Component already assigned: Drone_831
+Component already assigned: Drone_832
+Component already assigned: Drone_833
+Component already assigned: Drone_834
+Component already assigned: Drone_835
+Component already assigned: Drone_836
+Component already assigned: Drone_837
+Component already assigned: Drone_838
+Component already assigned: Drone_839
+Component already assigned: Drone_840
+Component already assigned: Drone_841
+Component already assigned: Drone_842
+Component already assigned: Drone_843
+Component already assigned: Drone_844
+Component already assigned: Drone_845
+Component already assigned: Drone_846
+Component already assigned: Drone_847
+Component already assigned: Drone_848
+Component already assigned: Drone_849
+Component already assigned: Drone_850
+Component already assigned: Drone_851
+Component already assigned: Drone_852
+Component already assigned: Drone_853
+Component already assigned: Drone_854
+Component already assigned: Drone_855
+Component already assigned: Drone_856
+Component already assigned: Drone_857
+Component already assigned: Drone_858
+Component already assigned: Drone_859
+Component already assigned: Drone_860
+Component already assigned: Drone_861
+Component already assigned: Drone_862
+Component already assigned: Drone_863
+Component already assigned: Drone_864
+Component already assigned: Drone_865
+Component already assigned: Drone_866
+Component already assigned: Drone_867
+Component already assigned: Drone_868
+Component already assigned: Drone_869
+Component already assigned: Drone_870
+Component already assigned: Drone_871
+Component already assigned: Drone_872
+Component already assigned: Drone_873
+Component already assigned: Drone_874
+Component already assigned: Drone_875
+Component already assigned: Drone_876
+Component already assigned: Drone_877
+Component already assigned: Drone_878
+Component already assigned: Drone_879
+Component already assigned: Drone_880
+Component already assigned: Drone_881
+The following components have not been assigned to a group: Drone_462, Drone_463, Drone_464, Drone_465, Drone_466, Drone_467, Drone_468, Drone_469, Drone_470, Drone_471, Drone_472, Drone_473, Drone_474, Drone_475, Drone_476, Drone_477, Drone_478, Drone_479, Drone_480, Drone_481, Drone_482, Drone_483, Drone_484, Drone_485, Drone_486, Drone_487, Drone_488, Drone_489, Drone_490, Drone_491, Drone_492, Drone_493, Drone_494, Drone_495, Drone_496, Drone_497, Drone_498, Drone_499, Drone_500, Drone_501, Drone_502, Drone_503, Drone_504, Drone_505, Drone_506, Drone_507, Drone_508, Drone_509, Drone_510, Drone_511, Drone_512, Drone_513, Drone_514, Drone_515, Drone_516, Drone_517, Drone_518, Drone_519, Drone_520, Drone_521, Drone_522, Drone_523, Drone_524, Drone_525, Drone_526, Drone_527, Drone_528, Drone_529, Drone_530, Drone_531, Drone_532, Drone_533, Drone_534, Drone_535, Drone_536, Drone_537, Drone_538, Drone_539, Drone_540, Drone_541, Drone_542, Drone_543, Drone_544, Drone_545, Drone_546, Drone_547, Drone_548, Drone_549, Drone_550, Drone_551, Drone_552, Drone_553, Drone_554, Drone_555, Drone_556, Drone_557, Drone_558, Drone_559, Drone_560, Drone_561, Drone_562, Drone_563, Drone_564, Drone_565, Drone_566, Drone_567, Drone_568, Drone_569, Drone_570, Drone_571, Drone_572, Drone_573, Drone_574, Drone_575, Drone_576, Drone_577, Drone_578, Drone_579, Drone_580, Drone_581, Drone_582, Drone_583, Drone_584, Drone_585, Drone_586, Drone_587, Drone_588, Drone_589, Drone_590, Drone_591, Drone_592, Drone_593, Drone_594, Drone_595, Drone_596, Drone_597, Drone_598, Drone_599, Drone_600, Drone_601, Drone_602, Drone_603, Drone_604, Drone_605, Drone_606, Drone_607, Drone_608, Drone_609, Drone_610, Drone_611, Drone_612, Drone_613, Drone_614, Drone_615, Drone_616, Drone_617, Drone_618, Drone_619, Drone_620, Drone_621, Drone_622, Drone_623, Drone_624, Drone_625, Drone_626, Drone_627, Drone_628, Drone_629, Drone_630, Drone_631, Drone_632, Drone_633, Drone_634, Drone_635, Drone_636, Drone_637, Drone_638, Drone_639, Drone_640, Drone_641, Drone_642, Drone_643, Drone_644, Drone_645, Drone_646, Drone_647, Drone_648, Drone_649, Drone_650, Drone_651, Drone_652, Drone_653, Drone_654, Drone_655, Drone_656, Drone_657, Drone_658, Drone_659, Drone_660, Drone_661, Drone_662, Drone_663, Drone_664, Drone_665, Drone_666, Drone_667, Drone_668, Drone_669, Drone_670, Drone_671, Drone_672, Drone_673, Drone_674, Drone_675, Drone_676, Drone_677, Drone_678, Drone_679, Drone_680, Drone_681, Drone_682, Drone_683, Drone_684, Drone_685, Drone_686, Drone_687, Drone_688, Drone_689, Drone_690, Drone_691, Drone_692, Drone_693, Drone_694, Drone_695, Drone_696, Drone_697, Drone_698, Drone_699, Drone_700, Drone_701, Drone_702, Drone_703, Drone_704, Drone_705, Drone_706, Drone_707, Drone_708, Drone_709, Drone_710, Drone_711, Drone_712, Drone_713, Drone_714, Drone_715, Drone_716, Drone_717, Drone_718, Drone_719, Drone_720, Drone_721, Drone_722, Drone_723, Drone_724, Drone_725, Drone_726, Drone_727, Drone_728, Drone_729, Drone_730, Drone_731, Drone_732, Drone_733, Drone_734, Drone_735, Drone_736, Drone_737, Drone_738, Drone_739, Drone_740, Drone_741, Drone_742, Drone_743, Drone_744, Drone_745, Drone_746, Drone_747, Drone_748, Drone_749, Drone_750, Drone_751, Drone_752, Drone_753, Drone_754, Drone_755, Drone_756, Drone_757, Drone_758, Drone_759, Drone_760, Drone_761, Drone_762, Drone_763, Drone_764, Drone_765, Drone_766, Drone_767, Drone_768, Drone_769, Drone_770, Drone_771, Drone_772, Drone_773, Drone_774, Drone_775, Drone_776, Drone_777, Drone_778, Drone_779, Drone_780, Drone_781, Drone_782, Drone_783, Drone_784, Drone_785, Drone_786, Drone_787, Drone_788, Drone_789, Drone_790, Drone_791, Drone_792, Drone_793, Drone_794, Drone_795, Drone_796, Drone_797, Drone_798, Drone_799, Drone_800, Drone_801, Drone_802, Drone_803, Drone_804, Drone_805, Drone_806, Drone_807, Drone_808, Drone_809, Drone_810, Drone_811, Drone_812, Drone_813, Drone_814, Drone_815, Drone_816, Drone_817, Drone_818, Drone_819, Drone_820, Drone_821, Drone_822, Drone_823, Drone_824, Drone_825, Drone_826, Drone_827, Drone_828, Drone_829, Drone_830, Drone_831, Drone_832, Drone_833, Drone_834, Drone_835, Drone_836, Drone_837, Drone_838, Drone_839, Drone_840, Drone_841, Drone_842, Drone_843, Drone_844, Drone_845, Drone_846, Drone_847, Drone_848, Drone_849, Drone_850, Drone_851, Drone_852, Drone_853, Drone_854, Drone_855, Drone_856, Drone_857, Drone_858, Drone_859, Drone_860, Drone_861, Drone_862, Drone_863, Drone_864, Drone_865, Drone_866, Drone_867, Drone_868, Drone_869, Drone_870, Drone_871, Drone_872, Drone_873, Drone_874, Drone_875, Drone_876, Drone_877, Drone_878, Drone_879, Drone_880, Drone_881
+/datasets/_deepnote_work/llm_adaptation/farm/plots.py:9: DtypeWarning: Columns (13,28,40,43,46,52,76,79,85,94,97,100,103,106,109,112,115,118,121,124,127,130,133,136,139,142,145,148,232,235,238,247,349,370,382,409,457,526,529,532,547,568,571,589,649,658,661,664,676,754,811,820,883,904,1012,1051,1087,1129,1132,1135,1144,1147,1150,1153,1162,1171,1177,1180,1183,1186,1192,1198,1204,1213,1219,1228,1231,1234,1237,1243,1246,1249,1252,1261,1264,1273,1276,1285,1291,1294,1300,1303,1306,1309,1315,1324,1327,1330,1333,1339,1342,1348,1351,1354,1357,1360,1363,1366,1372,1375,1378,1381,1390,1399) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file_name if file_name.endswith(".csv") else file_name + ".csv")
