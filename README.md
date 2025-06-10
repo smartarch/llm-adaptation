@@ -1,6 +1,6 @@
 # Dynamic Ensemble-Based Architectures Controlled by LLMs
 
-This is a replication package for the paper *Dynamic Ensemble-Based Architectures Controlled by LLMs* submitted to ECSA 2025.
+This is a replication package for the paper *Dynamic Ensemble-Based Architectures Controlled by LLMs* submitted to the Future Generation Computer Systems journal.
 
 ## Contents
 
