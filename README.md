@@ -1,6 +1,6 @@
 # Dynamic Ensemble-Based Architectures Controlled by LLMs
 
-This is a replication package for the paper *On Limits of LLMs in Adaptation of Ensemble-based Architectures* submitted to FGCS.
+This is a replication package for the paper *On Limits of LLMs in Adaptation of Ensemble-based Architectures* submitted to the Future Generation Computer Systems journal.
 
 ## Contents
 
