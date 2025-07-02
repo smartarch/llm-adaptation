@@ -1,0 +1,24 @@
+Component assigned into multiple groups: Drone_1
+Component assigned into multiple groups: Drone_5
+Invalid field in protecting group: protecting Field_2,
+The following components have not been assigned to a group: Drone_7
+Invalid field in protecting group: protecting Field_2,
+Component assigned into multiple groups: Drone_4
+Component assigned into multiple groups: Drone_7
+Component assigned into multiple groups: Drone_2
+Component assigned into multiple groups: Drone_3
+Component assigned into multiple groups: Drone_6
+Component assigned into multiple groups: Drone_1
+Component assigned into multiple groups: Drone_5
+The following components have not been assigned to a group: Drone_8
+The following components have not been assigned to a group: Drone_1, Drone_2, Drone_3, Drone_4, Drone_5, Drone_6, Drone_7, Drone_8
+The following groups are missing in the assignment: protecting Field_3
+Unknown component: protecting Field_3
+The following groups are missing in the assignment: protecting Field_2
+The following groups are missing in the assignment: protecting Field_2, protecting Field_3
+Unknown component: protecting Field_4
+Unknown component: protecting Field_3
+The following groups are missing in the assignment: protecting Field_3
+The following groups are missing in the assignment: protecting Field_3
+The following groups are missing in the assignment: protecting Field_2, protecting Field_3
+The following groups are missing in the assignment: protecting Field_2, protecting Field_3

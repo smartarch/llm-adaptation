@@ -44,6 +44,8 @@ class Field(Component):
         self.protectionPlaces: dict[Point2D, list[Drone]] = \
             {place: [] for place in self.computeProtectionPlaces(Drone.Radius - 2)}
 
+        self.birds = []
+
     def patrollingProtection(self) -> bool:
         return self.simulation.config.get("patrolling", False)
 
@@ -182,11 +184,14 @@ class Field(Component):
 
     @property
     def threat_level(self):
+        if len(self.birds) == 0:
+            return 0
+
         birds_inside = len([
-            bird for bird in self.simulation.birds
+            bird for bird in self.birds
             if bird.location.is_inside(self.left, self.top, self.right, self.bottom)
         ])
-        return birds_inside / len(self.simulation.birds)
+        return birds_inside / len(self.birds)
 
     @property
     def drones_for_full_protection(self) -> int:

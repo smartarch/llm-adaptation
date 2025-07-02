@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 class Adaptation(abc.ABC):
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.simulation: Simulation = ...
 
     @abc.abstractmethod

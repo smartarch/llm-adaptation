@@ -3,7 +3,8 @@ import re
 from jinja2 import Environment, FileSystemLoader, pass_context
 
 from DSL.dsl_utils import get_components_for_assignment, get_attr, get_ensembles_for_assignment, DSLConfiguration
-from base_classes.simulation import Simulation
+from base_classes.components import Component
+from base_classes.simulation import Simulation, AssignmentError, UnknownComponentError, ComponentAlreadyAssignedError
 from base_classes.prompt_template import PromptTemplate, ProcessingError
 
 
@@ -53,11 +54,13 @@ def prepare_jinja_env():
 class JinjaPromptTemplate(PromptTemplate):
 
     def __init__(self, **configuration):
-        super().__init__()
+        super().__init__(**configuration)
         self.configuration = DSLConfiguration(configuration)
 
         jinja_env = prepare_jinja_env()
         self.template = jinja_env.get_template("prompt.jinja")
+
+        self.correct_assignments: dict[Component, str] = {}
 
     def create_prompt(self, simulation, memory=None):
         return self.template.render(
@@ -69,36 +72,52 @@ class JinjaPromptTemplate(PromptTemplate):
             step=simulation.step,
         )
 
-    def process_response(self, response, simulation) -> tuple[list[ProcessingError] | None, str | None]:
-        answer = self.extract_tag(response, "answer")
+    def process_response(self, response, simulation, is_retry) -> tuple[list[ProcessingError] | None, str | None]:
+        if not is_retry:
+            self.correct_assignments = {}
+
+        if "retry_format" in self.configuration and is_retry:
+            tag = "correction"
+        else:
+            tag = "answer"
+
+        answer = self.extract_tag(response, tag)
         if not answer:
-            error = "Final group assignment not found. You must use the `<answer>` and `</answer>` tags to mark the final answer."
+            error = AssignmentError(f"Final group assignment not found. You must use the `<{tag}>` and `</{tag}>` tags to mark the final answer.")
             simulation.append_assignment_error(error)
             return [ProcessingError(None, error)], None
         memory = self.extract_tag(response, "memory")
 
         components = self.configuration.load_components_for_assignments(simulation)
 
-        if self.configuration["answer_format"] == "component-first":
-            errors = self.process_component_first(answer, components, simulation)
-        elif self.configuration["answer_format"] == "ensemble-first":
-            errors = self.process_ensemble_first(answer, components, simulation)
+        if is_retry and "retry_format" in self.configuration:
+            self.apply_correct_assignments(components, simulation)
+            if self.configuration["retry_format"] == "component-first":
+                errors = self.process_component_first(answer, components, simulation)
+            elif self.configuration["retry_format"] == "ensemble-first":
+                errors = self.process_ensemble_first(answer, components, simulation)
+            else:
+                raise NotImplementedError("Unsupported retry format")
         else:
-            raise NotImplementedError("Unsupported answer format")
+            if self.configuration["answer_format"] == "component-first":
+                errors = self.process_component_first(answer, components, simulation)
+            elif self.configuration["answer_format"] == "ensemble-first":
+                errors = self.process_ensemble_first(answer, components, simulation)
+            else:
+                raise NotImplementedError("Unsupported answer format")
 
+        self.clean_up_correct_assignments(errors)
         return errors, memory
 
     @staticmethod
     def extract_tag(response, tag):
-        # This regex looks for content between triple backticks, possibly with a language specifier.
         pattern = rf"<{tag}>(.*?)</{tag}>"
         matches = re.findall(pattern, response, re.DOTALL)
         if matches:
             return matches[0].strip()
         return None
 
-    @staticmethod
-    def process_component_first(answer, components, simulation):
+    def process_component_first(self, answer, components, simulation):
         rows = answer.split("\n")
         errors: list[ProcessingError] = []
         for row in rows:
@@ -108,24 +127,32 @@ class JinjaPromptTemplate(PromptTemplate):
                 row = row.replace("- ", "")  # remove leading hyphens
                 row = row.replace("**", "")  # remove bold
 
-                component_id, group = row.split(":")
+                tokens = row.split(":")
+                if len(tokens) != 2:
+                    raise ValueError('Invalid row format, expected "<name>: <group>"')
+                component_id, group = tokens
                 component_id = component_id.strip()
 
                 if component_id not in components:
-                    error = f"Unknown component: {component_id}"
+                    error = UnknownComponentError(component_id)
                     errors.append(ProcessingError(row, error))
                     simulation.append_assignment_error(error)
                     continue
 
-                component = components[component_id.strip()]
+                component = components[component_id]
                 error = simulation.assign_group(component, group.strip())
                 if error:
-                    errors.append(ProcessingError(row, error))
+                    if isinstance(error, ComponentAlreadyAssignedError):
+                        errors.append(ProcessingError(None, error))
+                    else:
+                        errors.append(ProcessingError(row, error))
+                else:
+                    self.correct_assignments[component] = group.strip()
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
-                print(f"Error - invalid row ({repr(error)}): {repr(row)}")
+                print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
-            error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
+            error = AssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
         return errors
@@ -141,11 +168,14 @@ class JinjaPromptTemplate(PromptTemplate):
                     continue
                 row = row.replace("- ", "")  # remove leading hyphens
                 row = row.replace("**", "")  # remove bold
+                row = row.rstrip("., ")      # remove trailing punctuation and spaces
 
                 group, components_list = row.split(":")
                 group = group.strip()
                 assigned_groups.add(group)
                 component_ids = components_list.strip().split(",")
+                if len(component_ids) == 1 and component_ids[0].lower() == "none":
+                    continue
 
                 for component_id in component_ids:
                     component_id = component_id.strip()
@@ -153,7 +183,7 @@ class JinjaPromptTemplate(PromptTemplate):
                     if component_id == "":
                         continue
                     if component_id not in components:
-                        error = f"Unknown component: {component_id}"
+                        error = UnknownComponentError(component_id)
                         errors.append(ProcessingError(row, error))
                         simulation.append_assignment_error(error)
                         continue
@@ -162,18 +192,54 @@ class JinjaPromptTemplate(PromptTemplate):
                     error = simulation.assign_group(component, group.strip())
                     if error:
                         errors.append(ProcessingError(row, error))
+                    else:
+                        self.correct_assignments[component] = group.strip()
             except (ValueError, KeyError, IndexError) as error:  # if error is not caught inside assign_group, we don't retry
-                print(f"Error - invalid row ({repr(error)}): {repr(row)}")
+                print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
-            error = "The following components have not been assigned to a group: " + ", ".join(missing_components)
+            error = AssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
 
         all_groups = self.configuration.load_ensembles_for_assignments(simulation)
         if len(assigned_groups) < len(all_groups):
             missing_groups = [group for group in all_groups if group not in assigned_groups]
-            error = "The following groups are missing in the assignment: " + ", ".join(missing_groups)
-            errors.append(ProcessingError(None, error))
+            error = AssignmentError("The following groups are missing in the assignment: " + ", ".join(missing_groups))
+            if not self.configuration.get("retry_format") == "component-first":
+                errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
         return errors
+
+    def load_components_for_assignments(self, simulation):
+        components = {}
+
+        for assignment_config in self.configuration["assignments"].values():
+            component_config = assignment_config["components"]
+            component_type_config = self.configuration["components"][component_config["type"]]
+            id_attr = component_type_config.get("id", "id")
+
+            for component in get_components_for_assignment(component_config, simulation.components, simulation):
+                component_id = getattr(component, id_attr)
+                components[component_id] = component
+
+        return components
+
+    def load_ensembles_for_assignments(self, simulation):
+        ensembles = set()
+
+        for assignment_config in self.configuration["assignments"].values():
+            assignment_ensembles = get_ensembles_for_assignment(simulation.components, assignment_config["ensembles"], self.configuration["ensembles"], simulation)
+            ensembles.update([ensemble["name"] for ensemble in assignment_ensembles])
+
+        return ensembles
+
+    def clean_up_correct_assignments(self, errors):
+        for processing_error in errors:
+            if isinstance(processing_error.error, ComponentAlreadyAssignedError):
+                if processing_error.error.component in self.correct_assignments:
+                    del self.correct_assignments[processing_error.error.component]
+
+    def apply_correct_assignments(self, components, simulation):
+        for component, group in self.correct_assignments.items():
+            simulation.assign_group(component, group)

@@ -1,0 +1,6 @@
+name.append: _efcr
+log_dir.append: _efcr
+adaptation_params:
+  prompt_template_params:
+    answer_format: ensemble-first
+    retry_format: component-first

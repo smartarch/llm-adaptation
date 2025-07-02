@@ -1,27 +1,33 @@
 import abc
+from dataclasses import dataclass
 import importlib
-from collections import namedtuple
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 import tiktoken
 
 from utils import case_insensitive_partition
 
 if TYPE_CHECKING:
-    from base_classes.simulation import Simulation
+    from base_classes.simulation import Simulation, AssignmentError
 
 
-ProcessingError = namedtuple("ProcessingError", ("row", "error"))
+@dataclass
+class ProcessingError:
+    row: Optional[str]
+    error: "AssignmentError"
 
 
 class PromptTemplate(abc.ABC):
+
+    def __init__(self, **configuration):
+        self.configuration = configuration
 
     @abc.abstractmethod
     def create_prompt(self, simulation: "Simulation", memory=None) -> str:
         return ""
 
     @abc.abstractmethod
-    def process_response(self, response: str, simulation: "Simulation") -> tuple[list[ProcessingError] | None, str | None]:
+    def process_response(self, response: str, simulation: "Simulation", is_retry: bool) -> tuple[list[ProcessingError] | None, str | None]:
         pass
 
     @staticmethod

@@ -1,0 +1,5 @@
+name.append: _strategyMultiple
+log_dir.append: _strategyMultiple
+adaptation_params:
+  prompt_template_params:
+    strategy: "Prefer protection of the fields with the highest threat level. Use as many drones as is required for full protection (partial protection isn't very effective). For the protection, use the drones that are closest to the field. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be assigned to other fields."

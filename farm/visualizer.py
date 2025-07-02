@@ -122,7 +122,8 @@ class Visualizer:
         text += f"\nTotal damage: {sum(field.damage for field in self.simulation.fields)}"
         for field in self.simulation.fields:
             text += f"\n{field.id}: threat: {field.threat_level:.2f}, dmg: {field.damage}"
-        text += f"\nBird probs: {', '.join([f'{p:.2f}' for p in self.simulation.fieldProbabilityGenerator()])}"
+        if len(self.simulation.fields) == 4:  # FIXME: the 4 is hard coded (it must be equal to birdFieldProbabilities)
+            text += f"\nBird probs: {', '.join([f'{p:.2f}' for p in self.simulation.fieldProbabilityGenerator(self.simulation.fields)])}"
         for drone in self.simulation.drones:
             text += f"\n{drone.id}: bat: {drone.battery:.2f}, state: {drone.state}"
             if isinstance(drone.target, Field):
@@ -207,7 +208,7 @@ if __name__ == "__main__":
     visualizer = Visualizer(simulation)
     visualizer.drawFields()
     visualizer.drawComponents(0)
-    visualizer.createAnimation("animations/test.png")
+    visualizer.createAnimation(f"animations/{config['name']}.png")
 
     field_sizes = [field.crops.size for field in simulation.fields]
     print(field_sizes)

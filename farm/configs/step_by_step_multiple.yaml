@@ -1,0 +1,13 @@
+name.append: _step-by-stepMultipleV2
+log_dir.append: _step-by-stepMultipleV2
+adaptation_params:
+  prompt_template_params:
+    strategy: |
+      Think step by step. First, reason about the task and explain your reasoning. Follow these step-by-step instructions when assigning the drones into groups. Provide output for each of the steps. In each step, go field by field and write down your answer for each field.
+      
+      1. For each field, identify drones that are already protecting it and determine how many additional drones are necessary for full protection.
+      2. For each field, decide whether it needs protection or not based on its threat level. Keep in mind that there are not enough drones to protect all field and prefer protection of the most threatened fields.
+      3. For each field that needs protection, assign the drones already protecting it or moving towards it to continue protection.
+      4. For each field that needs protection, add as many drones as necessary to ensure full protection, using the drones that are closest to the field.
+      5. Give the final group assignments in the format described below.
+    chain_of_thought: false  # already included in the strategy

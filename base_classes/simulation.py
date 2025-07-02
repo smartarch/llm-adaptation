@@ -13,16 +13,20 @@ class AssignmentError(Exception):
 
 
 class ComponentAlreadyAssignedError(AssignmentError):
-
     def __init__(self, component: Component):
         self.component = component
-        super().__init__(f"Component already assigned: {component}")
+        super().__init__(f"Component assigned into multiple groups: {component}")
 
 
 class InvalidGroupError(AssignmentError):
     def __init__(self, group_id):
         self.group_id = group_id
         super().__init__(f"Invalid group: {group_id}")
+
+
+class UnknownComponentError(AssignmentError):
+    def __init__(self, component_id: str):
+        super().__init__(f"Unknown component: {component_id}")
 
 
 class MissingAssignmentError(AssignmentError):
@@ -67,7 +71,7 @@ class Simulation(abc.ABC):
             try:
                 self.adapt(self, step)
             except Exception as error:
-                print(error, file=sys.stderr)
+                print(repr(error), file=sys.stderr)
         self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:
@@ -92,14 +96,14 @@ class Simulation(abc.ABC):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {}
 
-    def assign_group(self, component: Component, group_id: str) -> str | None:
+    def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
         try:
             self._check_group(component, group_id)
             self.assignments[component] = group_id
             return None
         except AssignmentError as error:
             self.append_assignment_error(error)
-            return error.message
+            return error
 
     def append_assignment_error(self, error):
         print("Before retry:", error.message)
