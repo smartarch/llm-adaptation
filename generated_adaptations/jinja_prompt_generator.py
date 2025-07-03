@@ -5,6 +5,7 @@ from adaptations.jinja import prepare_jinja_env
 from base_classes.adaptation import Adaptation
 from base_classes.simulation import Simulation
 from utils import print_prompt
+from farm.simulation import SmartFarmSimulation
 
 PROMPTS_PATH = Path("generated_adaptations/prompts/")
 
@@ -24,10 +25,9 @@ class JinjaPromptGenerator(Adaptation):
 
     def adapt(self, simulation: "Simulation", step: int):
         # move from initial state
-        if step == 1:
-            self.random_adapt(simulation)
-        if step <= 10:
-            return
+        if self.example == "farm" and isinstance(simulation, SmartFarmSimulation):
+            # assign 6/8 drones to fields and simulate for 10 steps
+            simulation.random_assign_and_simulate(6, 10)
 
         self.render_prompt(simulation)
 
@@ -44,10 +44,3 @@ class JinjaPromptGenerator(Adaptation):
         (PROMPTS_PATH / f"{self.example}{self.name}.txt").write_text(prompt)
 
         exit()
-
-    def random_adapt(self, simulation):
-        # TODO: this only works for farm -- we can generalize it (move this method to simulation) and use it also in tests
-        # assign some drones to fields randomly
-        protecting_drones = simulation.drones[:6]
-        for drone in protecting_drones:
-            drone.assignTarget(random.choice(simulation.fields))

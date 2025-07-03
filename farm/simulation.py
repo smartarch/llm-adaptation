@@ -1,3 +1,5 @@
+import random
+
 from base_classes.components2d import Point2D
 from base_classes.simulation import Simulation, AssignmentError, ComponentAlreadyAssignedError, InvalidGroupError
 from farm.components.bird import Bird, BirdFieldProbabilityGenerator
@@ -95,3 +97,17 @@ class SmartFarmSimulation(Simulation):
             "Drone": Drone,
         }
 
+    def random_assign_and_simulate(self, protecting_count, steps):
+        drones = self.drones[:protecting_count]
+        self.random_assign_drones(drones)
+
+        should_adapt = self.should_adapt
+        self.should_adapt = lambda: False
+        self.run_simulation(steps)
+        self.should_adapt = should_adapt
+
+    def random_assign_drones(self, drones=None):
+        if drones is None:
+            drones = self.availableDrones()
+        for drone in drones:
+            drone.assignTarget(random.choice(self.fields))
