@@ -3,10 +3,13 @@ from collections import UserDict
 
 class DSLConfiguration(UserDict):
 
+    def load_assignments(self):
+        return self.data["assignments"].values()
+
     def load_components_for_assignments(self, simulation):
         components = {}
 
-        for assignment_config in self.data["assignments"].values():
+        for assignment_config in self.load_assignments():
             components_config = assignment_config["components"]
             components_type_config = self.data["components"][components_config["type"]]
             id_attr = components_type_config.get("id", "id")
@@ -20,11 +23,24 @@ class DSLConfiguration(UserDict):
     def load_ensembles_for_assignments(self, simulation):
         ensembles = set()
 
-        for assignment_config in self.data["assignments"].values():
+        for assignment_config in self.load_assignments():
             assignment_ensembles = get_ensembles_for_assignment(assignment_config["ensembles"], self.data["ensembles"], simulation.components, simulation)
             ensembles.update([ensemble["name"] for ensemble in assignment_ensembles])
 
         return ensembles
+
+    def load_constraints_for_assignment(self, simulation, assignment_config):
+        assignment_ensembles = list(get_ensembles_for_assignment(assignment_config["ensembles"], self.data["ensembles"], simulation.components, simulation))
+
+        for constraint in assignment_config.get("constraints", []):
+            relevant_ensembles = assignment_ensembles
+            if "foreach" in constraint:
+                relevant_ensembles = list(filter(lambda e: e["type"] == constraint["foreach"], assignment_ensembles))
+            yield {
+                "constraint": eval(constraint["constraint"], simulation.get_globals()),
+                "ensembles": relevant_ensembles,
+                "reason": eval(constraint["reason"], simulation.get_globals()),
+            }
 
 
 def get_components_for_assignment(components_config, components, environment):
@@ -49,13 +65,16 @@ def get_attr(component, attribute, config):
 
 
 def get_ensembles_for_assignment(ensembles_config, ensemble_types, components, environment):
-    for ensemble in ensembles_config:
-        if isinstance(ensemble, str):  # singleton
-            yield ensemble_types[ensemble]
+    for ensemble_config in ensembles_config:
+        if isinstance(ensemble_config, str):  # singleton
+            yield {
+                **ensemble_types[ensemble_config],
+                "type": ensemble_config,
+            }
         else:  # instance for each component
-            ensemble_type = ensemble_types[ensemble["type"]]
-            component_type = eval(ensemble["foreach"], environment.get_globals())
-            condition = eval(ensemble.get("if", "True"), environment.get_globals())
+            ensemble_type = ensemble_types[ensemble_config["type"]]
+            component_type = eval(ensemble_config["foreach"], environment.get_globals())
+            condition = eval(ensemble_config.get("if", "True"), environment.get_globals())  # TODO: the condition only work for one parameter
 
             components = filter(lambda c: isinstance(c, component_type), components)
             components = filter(condition, components)
@@ -63,7 +82,14 @@ def get_ensembles_for_assignment(ensembles_config, ensemble_types, components, e
             name_generator = eval(ensemble_type["name"])
 
             for component in components:
-                yield {
-                    **ensemble_type,
+                ensemble = {
+                    "type": ensemble_config["type"],
                     "name": name_generator(component),
                 }
+                if "description" in ensemble_type:
+                    ensemble["description"] = ensemble_type["description"]
+                # if the ensemble has parameters, the component is the first parameter
+                if "params" in ensemble_type:
+                    first_param = next(iter(ensemble_type["params"]))  # TODO: how to handle multiple parameters?
+                    ensemble[first_param] = component
+                yield ensemble

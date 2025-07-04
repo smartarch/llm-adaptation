@@ -54,7 +54,8 @@ adaptation_params:  # this is purely technical
         name: "idle"
         description: "Idle drones don't protect any fields."
       Protecting:
-        params: [Field]
+        params:
+          field: Field
         name: 'lambda field: f"protecting {field.id}"'  # name generated from params
         name_str: protecting {field.id}
         description: "Assigned drones fly to the field and protect it."
@@ -81,6 +82,10 @@ adaptation_params:  # this is purely technical
             for_str: field
             in_str: environment.fields
             if_str: field.threat_level > 0
+        constraints:
+          - foreach: Protecting
+            constraint: "lambda e: len(e) <= e.field.drones_for_full_protection"
+            reason: "lambda e: f'Field {e.field.id} is overprotected, use the drones elsewhere.'"
 
     strategy: ""  # optional
     strategy_interface:

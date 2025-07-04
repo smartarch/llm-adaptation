@@ -1,8 +1,11 @@
 import abc
 import sys
 from typing import Callable, Optional
+import traceback
 
+from DSL.dsl_utils import DSLConfiguration
 from base_classes.components import Component
+from base_classes.ensembles import Ensemble
 
 
 class AssignmentError(Exception):
@@ -35,6 +38,11 @@ class MissingAssignmentError(AssignmentError):
         super().__init__(f"Missing assignment for: {component}")
 
 
+class UserConstraintError(AssignmentError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
 class Simulation(abc.ABC):
 
     def __init__(self, adapt: Callable[["Simulation", int], None], config: dict):
@@ -49,6 +57,8 @@ class Simulation(abc.ABC):
         self.assignments: dict[Component, str] = {}
         self.assignment_errors: list[AssignmentError] = []
         self.step: Optional[int] = None
+
+        self.dsl_config = DSLConfiguration(config.get("adaptation_params", {}).get("prompt_template_params", {}))
 
     def run_simulation(self, steps: int):
         for step in range(1, steps + 1):
@@ -71,7 +81,7 @@ class Simulation(abc.ABC):
             try:
                 self.adapt(self, step)
             except Exception as error:
-                print(repr(error), file=sys.stderr)
+                print(traceback.format_exc(), file=sys.stderr)
         self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:
@@ -116,6 +126,8 @@ class Simulation(abc.ABC):
 
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
+        self._check_user_constraints()
+
         for error in self.assignment_errors:
             print("Error in final assignment:", error.message)
             print(error.message, file=sys.stderr)
@@ -128,6 +140,24 @@ class Simulation(abc.ABC):
             for component in components_to_be_assigned:
                 if component not in self.assignments:
                     self.append_assignment_error(MissingAssignmentError(component))
+
+    def _check_user_constraints(self):
+        for assignment_config in self.dsl_config.load_assignments():
+            for constraint_config in self.dsl_config.load_constraints_for_assignment(self, assignment_config):
+                self._check_user_constraint(**constraint_config)
+
+    # TODO: the attribute names here depend on the dict keys returned from `dsl_utils.load_constraints_for_assignment`. We should probably replace the dict with a proper class.
+    def _check_user_constraint(self, constraint, ensembles, reason):
+        ensemble_instances = []
+        # load members for each ensemble
+        for ensemble_config in ensembles:
+            members = [c for c, e in self.assignments.items() if e == ensemble_config["name"]]
+            ensemble_instances.append(Ensemble(ensemble_config, members))
+        # check the constraint for each ensemble
+        for ensemble in ensemble_instances:
+            if not constraint(ensemble):
+                reason = reason(ensemble)
+                self.append_assignment_error(UserConstraintError(reason))
 
     @abc.abstractmethod
     def _assign_group(self, component: Component, group_id: str):

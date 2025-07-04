@@ -15,7 +15,9 @@ class RuleBasedRandomAdaptation(Adaptation):
             if drone.battery < 0.25:
                 drone.assignTarget(simulation.charger)
             elif drone.target is None:
-                drone.assignTarget(random.choice(simulation.fields))
+                field = random.choice(simulation.fields)
+                # drone.assignTarget(field)
+                simulation.assign_group(drone, f"protecting {field.id}")
 
 
 class RuleBasedField2Adaptation(Adaptation):
