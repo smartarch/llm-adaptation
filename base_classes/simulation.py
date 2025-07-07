@@ -126,7 +126,7 @@ class Simulation(abc.ABC):
 
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
-        self._check_user_constraints()
+        self.check_user_constraints()
 
         for error in self.assignment_errors:
             print("Error in final assignment:", error.message)
@@ -141,7 +141,7 @@ class Simulation(abc.ABC):
                 if component not in self.assignments:
                     self.append_assignment_error(MissingAssignmentError(component))
 
-    def _check_user_constraints(self):
+    def check_user_constraints(self):
         for assignment_config in self.dsl_config.load_assignments():
             for constraint_config in self.dsl_config.load_constraints_for_assignment(self, assignment_config):
                 self._check_user_constraint(**constraint_config)

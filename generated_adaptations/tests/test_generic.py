@@ -5,7 +5,7 @@ import pytest
 
 from base_classes.adaptation import import_adaptation
 from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError, \
-    MissingAssignmentError
+    MissingAssignmentError, UserConstraintError
 from utils import read_configs, nested_update
 
 T = TypeVar('T', bound=AssignmentError)
@@ -89,3 +89,14 @@ class TestAdapt:
         simulation.adapt(simulation, 1)
 
         self.assert_no_missing_assignments(simulation.assignment_errors)
+
+    def test_no_user_constraints_violated(self, adaptation_config, simulation_class, simulation_configs):
+        simulation = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+
+        # adapt once
+        simulation.reset_assignments()
+        simulation.adapt(simulation, 1)
+        simulation.check_user_constraints()
+
+        user_constraint_violations = self.filter_errors(simulation.assignment_errors, UserConstraintError)
+        assert user_constraint_violations == [], f"User constraints were violated: " + ", ".join([error.message for error in user_constraint_violations])

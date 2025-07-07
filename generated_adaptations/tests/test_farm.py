@@ -14,6 +14,8 @@ def skip_if_not_farm(example):
 
 
 STEPS = 20  # this has to be a multiple of 10 for the `adapt` call to work
+TEST_STEP = STEPS + 1
+assert TEST_STEP % 10 == 1, "TEST_STEP must be a multiple of 10 + 1 for the adapt call to work (since adapt is called every 10 steps)"
 helpers = Helpers()
 
 
@@ -49,7 +51,7 @@ class TestFarm:
 
         # adapt once
         simulation.reset_assignments()
-        simulation.adapt(simulation, STEPS + 1)
+        simulation.adapt(simulation, TEST_STEP)
 
         self.assert_no_drones_without_assignment(simulation, DroneState.PROTECTING)
 
@@ -63,7 +65,7 @@ class TestFarm:
 
         # adapt once
         simulation.reset_assignments()
-        simulation.adapt(simulation, STEPS + 1)
+        simulation.adapt(simulation, TEST_STEP)
 
         self.assert_no_drones_without_assignment(simulation, DroneState.IDLE)
 
@@ -77,7 +79,7 @@ class TestFarm:
 
         # adapt once
         simulation.reset_assignments()
-        simulation.adapt(simulation, 2)
+        simulation.adapt(simulation, TEST_STEP)
 
         self.assert_no_drones_without_assignment(simulation, DroneState.MOVING_TO_FIELD)
 
@@ -90,7 +92,7 @@ class TestFarm:
 
         # adapt once
         simulation.reset_assignments()
-        simulation.adapt(simulation, STEPS + 1)
+        simulation.adapt(simulation, TEST_STEP)
 
         # count idle drones
         idle_drones = sum(1 for group_id in simulation.assignments.values() if group_id == "idle")

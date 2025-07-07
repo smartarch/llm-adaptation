@@ -6,8 +6,8 @@ from farm.simulation import SmartFarmSimulation
 
 class FarmAdaptation(Adaptation, abc.ABC):
 
-    def __init__(self, adapt_every=1):
-        super().__init__()
+    def __init__(self, adapt_every=1, **kwargs):
+        super().__init__(**kwargs)
         self.adapt_every = adapt_every
 
     @abc.abstractmethod

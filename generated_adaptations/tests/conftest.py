@@ -39,6 +39,12 @@ def adaptation_config(adaptation_name, example):
     return generator_utils.adaptation_config(adaptation_name, example)
 
 
+@pytest.fixture(autouse=True)
+def reset_component_counters(example):
+    """Automatically reset component counters before each test."""
+    return generator_utils.reset_component_counters(example)
+
+
 def pytest_collection_modifyitems(items):
     # Move test_generic.py items to the front of the test queue before use-case-specific tests
     generic_items = [item for item in items if "test_generic.py" in str(item.fspath)]
