@@ -4,7 +4,7 @@ import pytest
 
 from farm.components.drone import DroneState
 from farm.simulation import SmartFarmSimulation
-from generated_adaptations.tests.test_generic import TestAdapt as Helpers
+from generated_adaptations.tests.test_generic import TestAdapt as Helpers, assert_no_user_constraints_violated
 
 
 @pytest.fixture(autouse=True)
@@ -98,3 +98,16 @@ class TestFarm:
         idle_drones = sum(1 for group_id in simulation.assignments.values() if group_id == "idle")
 
         assert idle_drones != len(simulation.drones), f'All {len(simulation.drones)} drones were assigned to the "idle" group, no drones were assigned to protect fields.'
+
+    @pytest.mark.parametrize("seed,previously_protecting", [(1, "5/8"), (2, "8/8")])
+    def test_no_user_constraints_violated(self, adaptation_config, simulation_class, simulation_configs, seed, previously_protecting):
+        protecting_count, simulation = self.initialize(adaptation_config, previously_protecting, seed, simulation_class, simulation_configs)
+        # run a few steps of the simulation to move from the initial state
+        simulation.random_assign_and_simulate(protecting_count, STEPS)
+
+        # adapt once
+        simulation.reset_assignments()
+        simulation.adapt(simulation, TEST_STEP)
+        simulation.check_user_constraints()
+
+        assert_no_user_constraints_violated(simulation.assignment_errors)
