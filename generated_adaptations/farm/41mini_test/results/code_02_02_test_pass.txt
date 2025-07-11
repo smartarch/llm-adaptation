@@ -1,0 +1,39 @@
+0
+..................                                                       [100%]
+=================================== PASSES ====================================
+_____________________ TestAdapt.test_no_assignment_errors _____________________
+___________________ TestAdapt.test_no_repeated_assignments ____________________
+______________________ TestAdapt.test_no_invalid_groups _______________________
+_________________________ TestAdapt.test_all_assigned _________________________
+_________________ TestAdapt.test_no_user_constraints_violated _________________
+_____________ TestFarm.test_protecting_drones_are_assigned[1-5/8] _____________
+_____________ TestFarm.test_protecting_drones_are_assigned[2-8/8] _____________
+________________ TestFarm.test_idle_drones_are_assigned[1-5/8] ________________
+________________ TestFarm.test_idle_drones_are_assigned[2-8/8] ________________
+_______________ TestFarm.test_moving_drones_are_assigned[1-5/8] _______________
+_______________ TestFarm.test_moving_drones_are_assigned[2-8/8] _______________
+________________ TestFarm.test_not_all_drones_are_idle[0-0/8] _________________
+________________ TestFarm.test_not_all_drones_are_idle[1-5/8] _________________
+________________ TestFarm.test_not_all_drones_are_idle[2-8/8] _________________
+______________ TestFarm.test_no_user_constraints_violated[1-5/8] ______________
+______________ TestFarm.test_no_user_constraints_violated[2-8/8] ______________
+=========================== short test summary info ===========================
+PASSED TestConfiguration::test_example_is_correct
+PASSED TestConfiguration::test_adaptation_exists
+PASSED TestAdapt::test_no_assignment_errors
+PASSED TestAdapt::test_no_repeated_assignments
+PASSED TestAdapt::test_no_invalid_groups
+PASSED TestAdapt::test_all_assigned
+PASSED TestAdapt::test_no_user_constraints_violated
+PASSED TestFarm::test_protecting_drones_are_assigned[previously_protecting=5/8]
+PASSED TestFarm::test_protecting_drones_are_assigned[previously_protecting=8/8]
+PASSED TestFarm::test_idle_drones_are_assigned[previously_protecting=5/8]
+PASSED TestFarm::test_idle_drones_are_assigned[previously_protecting=8/8]
+PASSED TestFarm::test_moving_drones_are_assigned[previously_protecting=5/8]
+PASSED TestFarm::test_moving_drones_are_assigned[previously_protecting=8/8]
+PASSED TestFarm::test_not_all_drones_are_idle[previously_protecting=0/8]
+PASSED TestFarm::test_not_all_drones_are_idle[previously_protecting=5/8]
+PASSED TestFarm::test_not_all_drones_are_idle[previously_protecting=8/8]
+PASSED TestFarm::test_no_user_constraints_violated[previously_protecting=5/8]
+PASSED TestFarm::test_no_user_constraints_violated[previously_protecting=8/8]
+18 passed in 0.57s

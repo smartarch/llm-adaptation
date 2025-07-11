@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 from pathlib import Path
 import sys
@@ -97,6 +98,8 @@ def test_code(folder, code_file):
     # env['COLUMNS'] = '160'  # make output wider to avoid truncation of pytest short summary
     result = subprocess.run(cmd, capture_output=True, text=True, check=False, env=env)
     print(f"Test exit code: {result.returncode}")
+    (folder / "results" / f"{code_file.stem}_test_{'pass' if result.returncode == 0 else 'fail'}.txt")\
+        .write_text(str(result.returncode) + "\n" + result.stdout + result.stderr, encoding="utf-8")
     return result.returncode, result.stdout + result.stderr
 
 
@@ -146,6 +149,12 @@ def run_simulation(folder, code_file, repeats=2, start=1):
             damage = stdout.partition("damage: ")[2].partition("\n")[0]
             print(f"    Damage: {damage}")
             damages.append(int(damage))
+
+            if repeat == 0:
+                # TODO: this works only for farm
+                log_file = stdout.partition("log_file_path: ")[2].partition("\n")[0].strip()
+                plot_file = log_file.replace(".ansi", ".png")
+                shutil.copy(plot_file, folder / "results" / f"{code_file.stem}_plot.png")
         except ValueError:
             pass
 
@@ -157,6 +166,8 @@ def run_simulation(folder, code_file, repeats=2, start=1):
     if repeats != len(damages):
         print(f"Errors: {repeats - len(damages)}")
     print()
+
+    (folder / "results" / f"{code_file.stem}_simulation_result.txt").write_text(f"Average damage: {avg_damage:.1f}", encoding="utf-8")  # TODO: this works only for farm
 
     return avg_damage
 
@@ -174,7 +185,7 @@ def append_simulation_report(avg_damage, messages, folder, report_file):
 def main():
     args = parse_arguments()
     folder = Path(args.folder)
-    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "results").mkdir(parents=True, exist_ok=True)
 
     messages = load_messages(folder)
     print(f"Loaded {len(messages)} messages from {folder}.")

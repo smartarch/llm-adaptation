@@ -1,0 +1,88 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Identify fields with threat_level > 0
+        threat_fields = [field for field in environment.fields if field.threat_level > 0]
+
+        # Calculate drones needed per field for full protection
+        field_needs = {}
+        for field in threat_fields:
+            assigned = field.arriving_drones + field.protecting_drones
+            need = max(0, field.drones_for_full_protection - assigned)
+            field_needs[field.id] = need
+
+        total_drones = len(components)
+        total_need = sum(field_needs.values())
+
+        # Sort fields by threat_level descending for priority
+        threat_fields.sort(key=lambda f: f.threat_level, reverse=True)
+
+        # Allocate drones optimally
+        drones_allocation = {field.id: 0 for field in threat_fields}
+
+        if total_need == 0:
+            # No drones needed, all drones idle
+            for drone in components:
+                environment.assign_group(drone, "idle")
+            return
+
+        if total_need <= total_drones:
+            # Enough drones to fully protect all fields needing protection
+            for field in threat_fields:
+                drones_allocation[field.id] = field_needs[field.id]
+        else:
+            # Not enough drones for full protection of all fields
+            # Allocate drones proportionally to threat_level * need to prioritize high threat fields effectively
+            # Calculate weights for allocation
+            weights = []
+            for field in threat_fields:
+                # weight based on threat_level and drones needed, emphasize threat_level but limited by need
+                weights.append(field.threat_level * field_needs[field.id])
+            total_weight = sum(weights)
+            if total_weight == 0:
+                # Defensive fallback: assign drones to highest threat field only
+                drones_allocation[threat_fields[0].id] = min(total_drones, field_needs[threat_fields[0].id])
+            else:
+                # Distribute drones proportionally by weight, ensuring no over-allocation beyond need
+                remaining_drones = total_drones
+                # First assign floor allocations
+                for i, field in enumerate(threat_fields):
+                    alloc = int(total_drones * weights[i] / total_weight)
+                    alloc = min(alloc, field_needs[field.id])
+                    drones_allocation[field.id] = alloc
+                    remaining_drones -= alloc
+
+                # Distribute remaining drones one by one to highest weighted fields still needing drones
+                while remaining_drones > 0:
+                    # Find field with highest weight that still needs drones
+                    candidates = [f for f in threat_fields if drones_allocation[f.id] < field_needs[f.id]]
+                    if not candidates:
+                        break
+                    candidates.sort(key=lambda f: f.threat_level * field_needs[f.id], reverse=True)
+                    for c_field in candidates:
+                        if remaining_drones == 0:
+                            break
+                        if drones_allocation[c_field.id] < field_needs[c_field.id]:
+                            drones_allocation[c_field.id] += 1
+                            remaining_drones -= 1
+
+        # Assign drones per calculated allocation
+        # Assign drones in order of drone list
+        drone_idx = 0
+        # Assign to protecting groups first
+        for field in threat_fields:
+            count = drones_allocation[field.id]
+            for _ in range(count):
+                if drone_idx < total_drones:
+                    drone = components[drone_idx]
+                    environment.assign_group(drone, f"protecting {field.id}")
+                    drone_idx += 1
+                else:
+                    break
+
+        # Remaining drones idle
+        while drone_idx < total_drones:
+            drone = components[drone_idx]
+            environment.assign_group(drone, "idle")
+            drone_idx += 1

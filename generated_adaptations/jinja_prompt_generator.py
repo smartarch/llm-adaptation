@@ -20,8 +20,8 @@ class JinjaPromptGenerator(Adaptation):
         self.example = config["example"]
 
         jinja_env = prepare_jinja_env()
-        # self.template = jinja_env.get_template("generate.jinja")
-        self.template = jinja_env.get_template("state_example.jinja")
+        self.template = jinja_env.get_template("generate.jinja")
+        # self.template = jinja_env.get_template("state_example.jinja")
 
     def adapt(self, simulation: "Simulation", step: int):
         # move from initial state
