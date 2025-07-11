@@ -11,6 +11,10 @@ from utils import read_configs, nested_update
 T = TypeVar('T', bound=AssignmentError)
 
 
+def fail(message: str):
+    pytest.fail(message, pytrace=False)
+
+
 class TestConfiguration:
     """Checks that test parameters are set correctly."""
 
@@ -30,22 +34,26 @@ def filter_errors(errors: list[AssignmentError], error_class: type[T]) -> list[T
 
 def assert_no_repeated_assignments(assignment_errors):
     repeatedly_assigned = filter_errors(assignment_errors, ComponentAlreadyAssignedError)
-    assert repeatedly_assigned == [], f"{len(repeatedly_assigned)} components were assigned more than once. Each component must be assigned exactly once."
+    if repeatedly_assigned:
+        fail(f"{len(repeatedly_assigned)} components were assigned more than once. Each component must be assigned exactly once.")
 
 
 def assert_no_invalid_groups(assignment_errors):
     invalid_groups = filter_errors(assignment_errors, InvalidGroupError)
-    assert invalid_groups == [], f"Invalid groups: {[group.group_id for group in invalid_groups]}."
+    if invalid_groups:
+        fail(f"Invalid groups: {[group.group_id for group in invalid_groups]}.")
 
 
 def assert_no_missing_assignments(assignment_errors):
     missing_assignments = filter_errors(assignment_errors, MissingAssignmentError)
-    assert missing_assignments == [], f"{missing_assignments} components have not been assigned to a group. Each component must be assigned exactly once."
+    if missing_assignments:
+        fail(f"{missing_assignments} components have not been assigned to a group. Each component must be assigned exactly once.")
 
 
 def assert_no_user_constraints_violated(assignment_errors):
     user_constraint_violations = filter_errors(assignment_errors, UserConstraintError)
-    assert user_constraint_violations == [], f"User constraints were violated: " + ", ".join([error.message for error in user_constraint_violations])
+    if user_constraint_violations:
+        fail("User constraints violated.\n\n" + "\n".join([error.message for error in user_constraint_violations]))
 
 
 @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_exists"])

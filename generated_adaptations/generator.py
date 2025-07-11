@@ -34,42 +34,36 @@ def load_system_prompt():
     return system_prompt_path.read_text(encoding="utf-8")
 
 
-def load_messages(folder: Path):
+def load_messages(folder: Path) -> dict[str, BaseMessage]:
     files = sorted(folder.glob("*.md"))
 
-    messages: list[BaseMessage] = [SystemMessage(content=load_system_prompt())]
-    last_was_llm = False
+    messages: dict[str, BaseMessage] = {
+        "00-system": SystemMessage(content=load_system_prompt())
+    }
 
     for file in files:
         content = file.read_text(encoding="utf-8")
-        last_was_llm = "llm" in file.stem
-        if last_was_llm:
-            messages.append(AIMessage(content=content))
+        if "llm" in file.stem:
+            messages[file.stem] = AIMessage(content=content)
         else:
-            messages.append(HumanMessage(content=content))
+            messages[file.stem] = HumanMessage(content=content)
 
-    return messages, last_was_llm
+    return messages
 
 
-def query_llm(folder, messages, llm):
-    next_num = len(messages)
-    next_llm_file = folder / f"{next_num:02d}_llm.md"
-    if next_llm_file.is_file():
-        print(f"LLM response file '{next_llm_file}' already exists. Refusing to overwrite.")
-        return
+def query_llm(llm, messages, folder, llm_response_file):
+    print(f"Querying LLM with prompt {list(messages)[-1]}.")
+    response = llm.invoke(list(messages.values()))
+    messages[llm_response_file] = AIMessage(content=response.content)
 
-    print(f"Querying LLM with prompt {len(messages) - 1}.")
-    response = llm.invoke(messages)
-    messages.append(AIMessage(content=response.content))
-
-    next_llm_file.write_text(response.content, encoding="utf-8")
-    print(f"LLM response saved to '{next_llm_file}'.")
+    (folder / f"{llm_response_file}.md").write_text(response.content, encoding="utf-8")
+    print(f"LLM response saved to '{llm_response_file}.md'.")
 
     code_block = extract_code_block(response.content)
     if not code_block:
         raise ValueError("No code block found in the LLM response.")
     
-    code_file = folder / f"code_{next_num // 2}.py"
+    code_file = folder / f"code_{llm_response_file.removesuffix('_llm')}.py"
     code_file.write_text(code_block, encoding="utf-8")
     print(f"Code block saved to '{code_file}'.")
 
@@ -94,23 +88,23 @@ def test_code(folder, code_file):
     example = folder.parent.stem
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
-        "pytest", "generated_adaptations/tests", "-q", "--tb=no", "-rA",
+        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rA", "--show-capture=no",
         f"--example={example}", f"--adaptation_name={adaptation_name}"
     ]
     print("Running tests:", " ".join(cmd))
     env = os.environ.copy()
     env["PYTHONPATH"] = env.get("PYTHONPATH", "") + os.pathsep + os.getcwd()
-    env['COLUMNS'] = '160'
+    # env['COLUMNS'] = '160'  # make output wider to avoid truncation of pytest short summary
     result = subprocess.run(cmd, capture_output=True, text=True, check=False, env=env)
     print(f"Test exit code: {result.returncode}")
     return result.returncode, result.stdout + result.stderr
 
 
-def append_test_report(folder, test_report, messages):
+def append_test_report(test_report, messages, folder, test_report_file):
     prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/test.md", encoding="utf-8")
     test_prompt = prompt_template.format(test_report=test_report)
-    (folder / f"{len(messages):02d}_test.md").write_text(test_prompt, encoding="utf-8")
-    messages.append(HumanMessage(content=test_prompt))
+    (folder / f"{test_report_file}.md").write_text(test_prompt, encoding="utf-8")
+    messages[test_report_file] = HumanMessage(content=test_prompt)
 
 
 ### Simulation running
@@ -123,7 +117,7 @@ def prepare_config(folder, code_file):
 
 
 def run_simulation(folder, code_file, repeats=2, start=1):
-    print(f"Running simulation for {folder} with code file {code_file}.")
+    print(f"Running simulation for '{code_file}'.")
 
     configs = simulation_configs(example=folder.parent.stem)
     extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
@@ -134,7 +128,7 @@ def run_simulation(folder, code_file, repeats=2, start=1):
 
         run_args = [sys.executable, "main.py", *configs, extra_config, "-s", str(repeat + start), "-e", str(repeat + start)]
 
-        # disable TF errors, set python path
+        # set the Python path
         env = os.environ.copy()
         env["PYTHONPATH"] = env.get("PYTHONPATH", "") + os.pathsep + os.getcwd()
 
@@ -167,11 +161,11 @@ def run_simulation(folder, code_file, repeats=2, start=1):
     return avg_damage
 
 
-def append_simulation_report(folder, avg_damage, messages):
+def append_simulation_report(avg_damage, messages, folder, report_file):
     prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation.md", encoding="utf-8")
     simulation_prompt = prompt_template.format(avg_damage=avg_damage)
-    (folder / f"{len(messages):02d}_simulation.md").write_text(simulation_prompt, encoding="utf-8")
-    messages.append(HumanMessage(content=simulation_prompt))
+    (folder / f"{report_file}.md").write_text(simulation_prompt, encoding="utf-8")
+    messages[report_file] = HumanMessage(content=simulation_prompt)
 
 
 ### Main
@@ -180,38 +174,48 @@ def append_simulation_report(folder, avg_damage, messages):
 def main():
     args = parse_arguments()
     folder = Path(args.folder)
+    folder.mkdir(parents=True, exist_ok=True)
 
-    messages, last_was_llm = load_messages(folder)
+    messages = load_messages(folder)
     print(f"Loaded {len(messages)} messages from {folder}.")
-    if len(messages) < 2 or last_was_llm:
-        print(f"Error: Prompt is missing in {folder}.")
+    if "01_01_user" not in messages:
+        print(f"Error: Prompt is missing in {folder}. Create a prompt file named '01_01_user.md' in the folder.")
+        return
+    if len(messages) > 2:
+        print(f"Error: experiment in {folder} was already ran. Aborting.")
+        # TODO: the message-existence checks below do not work correctly. For now, we just prohibit running the experiment again (or continuing). This can be removed if the checks are fixed (including correctly handling passing tests, etc.).
         return
 
-    llm = ChatOpenAI(model="gpt-4o-mini")
+    llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14")
 
-    # run tests and retry generation if they fail
-    existing_tests = len(list(folder.glob("*_test.md")))
-    code_file = max(folder.glob("code_*.py"))
-    for _ in range(existing_tests, args.retries_test):
-        code_file = query_llm(folder, messages, llm)
-        result, test_report = test_code(folder, code_file)
-        if result == 0:
-            break
-        append_test_report(folder, test_report, messages)
-        # TODO: should we include also the positive test report?
+    for iteration in range(1, args.retries_simulation + 2):
+        for test in range(1, args.retries_test + 2):
+            # query LLM for code generation
+            llm_response_file = f"{iteration:02d}_{test * 2:02d}_llm"
+            if llm_response_file in messages:
+                print(f"LLM response file '{llm_response_file}' already exists. Skipping LLM query.")
+                continue
+            code_file = query_llm(llm, messages, folder, llm_response_file)
 
-    # run simulation and improve the generated code
-    existing_simulations = len(list(folder.glob("*_simulation.md")))
-    code_file = max(folder.glob("code_*.py"))
-    for _ in range(existing_simulations, args.retries_simulation):
+            # run unit tests on the generated code
+            test_report_file = f"{iteration:02d}_{test * 2 + 1:02d}_test"
+            if test_report_file in messages:
+                print(f"Test report file '{test_report_file}' already exists. Skipping tests.")
+                continue
+            result, test_report = test_code(folder, code_file)
+            if result == 0:
+                break
+            append_test_report(test_report, messages, folder, test_report_file)
+        else:
+            print(f"Tests failed {args.retries_test} times. Exiting.")
+            return
+
+        simulation_report_file = f"{iteration + 1:02d}_01_simulation"
+        if simulation_report_file in messages:
+            print(f"Simulation report file '{simulation_report_file}' already exists. Skipping simulation.")
+            continue
         avg_damage = run_simulation(folder, code_file)
-        append_simulation_report(folder, avg_damage, messages)
-        code_file = query_llm(folder, messages, llm)
-        # TODO: should we run the tests again?
-
-    # final result
-    avg_damage = run_simulation(folder, code_file)
-    print(f"Final average damage: {avg_damage:.1f}")
+        append_simulation_report(avg_damage, messages, folder, simulation_report_file)
 
 
 if __name__ == "__main__":
