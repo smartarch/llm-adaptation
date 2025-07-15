@@ -102,7 +102,7 @@ class SmartFarmSimulation(Simulation):
         self.random_assign_drones(drones)
 
         should_adapt = self.should_adapt
-        self.should_adapt = lambda: False
+        self.should_adapt = lambda _step: False
         self.run_simulation(steps)
         self.should_adapt = should_adapt
 

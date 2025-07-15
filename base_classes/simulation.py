@@ -57,6 +57,7 @@ class Simulation(abc.ABC):
         self.assignments: dict[Component, str] = {}
         self.assignment_errors: list[AssignmentError] = []
         self.step: Optional[int] = None
+        self.adapt_every = self.config.get("adaptation_params", {}).get("adapt_every", 1)
 
         self.dsl_config = DSLConfiguration(config.get("adaptation_params", {}).get("prompt_template_params", {}))
 
@@ -77,12 +78,12 @@ class Simulation(abc.ABC):
 
     def simulation_step(self, step):
         self.reset_assignments()
-        if self.should_adapt():
+        if self.should_adapt(step):
             try:
                 self.adapt(self, step)
             except Exception as error:
                 print(traceback.format_exc(), file=sys.stderr)
-        self._apply_assignments()
+            self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:
             component.actuate()
@@ -91,9 +92,9 @@ class Simulation(abc.ABC):
         """Simulation should stop."""
         return False
 
-    def should_adapt(self) -> bool:
+    def should_adapt(self, step) -> bool:
         """Adaptation should be performed at this step. Set to False, for example, when there are no adaptable components left."""
-        return True
+        return (step - 1) % self.adapt_every == 0
 
     def add_visualizer(self, visualizer):
         self.visualizer = visualizer

@@ -59,8 +59,8 @@ class DragonHuntSimulation(Simulation):
     def should_stop(self):
         return self.dragon.hp <= 0
 
-    def should_adapt(self):
-        return len(self.components) > 0
+    def should_adapt(self, step):
+        return super().should_adapt(step) and len(self.components) > 0
 
     def get_villagers_in(self, location: "Map") -> list["Villager"]:
         from dragon.components.villagers import Villager

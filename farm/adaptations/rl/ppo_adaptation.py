@@ -111,7 +111,7 @@ class PPOAdaptation(Adaptation):
 
         policy, value = self.network.predict(state)
 
-        if (step - 1) % self.adapt_every == 0:
+        if (step - 1) % self.adapt_every == 0:  # TODO: this might not work correctly as it is already checked by the simulation, possibly rename "adapt_every" to something else
             action = [np.random.choice(self.Actions, p=p) for p in policy]
         else:
             # repeat last action

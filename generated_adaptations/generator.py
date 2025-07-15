@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 import sys
 import textwrap
+import time
 
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
@@ -15,6 +16,7 @@ from langchain_openai import ChatOpenAI
 
 from adaptations.llm import LLMTokenUsage
 from generated_adaptations.generator_utils import adaptation_config, simulation_configs
+from utils import Logger
 
 load_dotenv(find_dotenv(), override=True)  # take environment variables from .env
 
@@ -54,7 +56,9 @@ def load_messages(folder: Path) -> dict[str, BaseMessage]:
 
 def query_llm(llm, messages, folder, llm_response_file):
     print(f"Querying LLM with prompt {list(messages)[-1]}.")
+    start_time = time.time()
     response = llm.invoke(list(messages.values()))
+    end_time = time.time()
     messages[llm_response_file] = AIMessage(content=response.content)
 
     (folder / f"{llm_response_file}.md").write_text(response.content, encoding="utf-8")
@@ -63,12 +67,12 @@ def query_llm(llm, messages, folder, llm_response_file):
     code_block = extract_code_block(response.content)
     if not code_block:
         raise ValueError("No code block found in the LLM response.")
-    
+
     code_file = folder / f"code_{llm_response_file.removesuffix('_llm')}.py"
     code_file.write_text(code_block, encoding="utf-8")
     print(f"Code block saved to '{code_file}'.")
 
-    LLMTokenUsage(response).print()
+    LLMTokenUsage(response, response_time=end_time - start_time).print()
 
     return code_file
 
@@ -187,6 +191,7 @@ def main():
     args = parse_arguments()
     folder = Path(args.folder)
     (folder / "results").mkdir(parents=True, exist_ok=True)
+    sys.stdout = Logger(folder / "results" / "log.ansi")
 
     messages = load_messages(folder)
     print(f"Loaded {len(messages)} messages from {folder}.")

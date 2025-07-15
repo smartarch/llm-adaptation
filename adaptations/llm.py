@@ -22,11 +22,10 @@ def count_tokens_and_exit(text: str):
 
 class LLMAdaptation(Adaptation, ABC):
 
-    def __init__(self, config: dict, llm: str, prompt_template: str, prompt_template_params: dict, adapt_every=1, message_history=False, max_retries=0, **kwargs):
+    def __init__(self, config: dict, llm: str, prompt_template: str, prompt_template_params: dict, message_history=False, max_retries=0, **kwargs):
         super().__init__()
         self.llm = self.create_llm(llm, config)
         self.prompt_template = import_prompt_template(prompt_template, prompt_template_params, config)
-        self.adapt_every = adapt_every
 
         self.message_history = self.prepare_message_history(message_history)
         self.max_retries = max_retries
@@ -54,9 +53,6 @@ class LLMAdaptation(Adaptation, ABC):
         raise NotImplementedError()
 
     def adapt(self, simulation: "Simulation", step: int):
-        if (step - 1) % self.adapt_every != 0:
-            return
-
         session = []
         self.message_history.append(session)
         prompt = self.prompt_template.create_prompt(simulation, self.memory)
