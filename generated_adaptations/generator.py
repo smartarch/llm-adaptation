@@ -127,9 +127,10 @@ def run_simulation(folder, code_file, repeats=2, start=1):
 
     damages = []
     for repeat in range(repeats):
-        print(f"  Run #{repeat + start}/{repeats + start - 1}")
+        print(f"  Run #{repeat + start}/{repeats + start - 1}", end=': ')
 
         run_args = [sys.executable, "main.py", *configs, extra_config, "-s", str(repeat + start), "-e", str(repeat + start)]
+        print(" ".join(["python"] + run_args[1:]))
 
         # set the Python path
         env = os.environ.copy()

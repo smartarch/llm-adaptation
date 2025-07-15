@@ -214,6 +214,11 @@ class Field(Component):
     def isFullyProtected(self):
         return len(self.protectionPlaces) == len(self.protectingDrones)
 
+    @property
+    def isFullyAssigned(self):
+        """As isFullyProtected but including arriving drones."""
+        return len(self.protectionPlaces) == (len(self.protectingDrones) + len(self.arrivingDrones))
+
     def __str__(self):
         return self.id
 

@@ -101,8 +101,7 @@ class Simulation(abc.ABC):
     def add_stats(self, stats):
         self.stats = stats
 
-    @staticmethod
-    def get_globals():
+    def get_globals(self):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {}
 
@@ -154,10 +153,10 @@ class Simulation(abc.ABC):
             members = [c for c, e in self.assignments.items() if e == ensemble_config["name"]]
             ensemble_instances.append(Ensemble(ensemble_config, members))
         # check the constraint for each ensemble
+        # TODO: handle global constraints (not foreach individually but for all)
         for ensemble in ensemble_instances:
             if not constraint(ensemble):
-                reason = reason(ensemble)
-                self.append_assignment_error(UserConstraintError(reason))
+                self.append_assignment_error(UserConstraintError(reason(ensemble)))
 
     @abc.abstractmethod
     def _assign_group(self, component: Component, group_id: str):

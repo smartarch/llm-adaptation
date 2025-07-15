@@ -89,12 +89,12 @@ class SmartFarmSimulation(Simulation):
         elif group_id.strip().startswith("protecting"):
             drone.assignTarget(self._parse_field(group_id))
 
-    @staticmethod
-    def get_globals():
+    def get_globals(self):
         return {
             "DroneState": DroneState,
             "Field": Field,
             "Drone": Drone,
+            "environment": self,
         }
 
     def random_assign_and_simulate(self, protecting_count, steps):
@@ -110,4 +110,5 @@ class SmartFarmSimulation(Simulation):
         if drones is None:
             drones = self.availableDrones()
         for drone in drones:
-            drone.assignTarget(random.choice(self.fields))
+            fields = [f for f in self.fields if f.threat_level > 0 and not f.isFullyAssigned]
+            drone.assignTarget(random.choice(fields))

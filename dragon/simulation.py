@@ -82,8 +82,7 @@ class DragonHuntSimulation(Simulation):
             self.wheat -= villager_type.SpawnCost
             self.components.append(villager_type(self))
 
-    @staticmethod
-    def get_globals():
+    def get_globals(self):
         from dragon.components.villagers import Villager
         from dragon.components.dragon import Dragon
 

@@ -86,6 +86,9 @@ adaptation_params:  # this is purely technical
           - foreach: Protecting
             constraint: "lambda e: len(e) <= e.field.drones_for_full_protection"
             reason: "lambda e: f'Field {e.field.id} is overprotected ({e.field.drones_for_full_protection} drones for full protection, {len(e)} assigned), use the drones elsewhere.'"
+          - foreach: Protecting
+            constraint: "lambda e: e.field.threat_level != max([f.threat_level for f in environment.fields]) or len(e) == e.field.drones_for_full_protection"
+            reason: "lambda e: f'The most threatened field should be fully protected ({e.field.id}, threat level {e.field.threat_level:.2f}, {e.field.drones_for_full_protection} drones for full protection, {len(e)} assigned).'"
 
     strategy: ""  # optional
     strategy_interface:
