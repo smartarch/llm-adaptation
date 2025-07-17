@@ -4,11 +4,11 @@ The birds initially fly randomly around the farm. Sometimes, they decide they wa
 
 Each field is equipped with sensors that can detect the birds. The more birds are in the field, the higher the "threat level" value is for that field.
 
-Drones can be used to protect the fields. When a drone is assigned a target field, it flies towards it and then hovers above it. The drone speed is 2 so it takes some time before the drone reaches the field ands starts protecting it. The drone scares all the birds in a certain radius around it, however, multiple drones are necessary to fully protect a field. The scared birds try to flee to a different location within the same field and eat crops there. Only if the field is fully protected, the birds flee away, so a partial protection is not very effective (but still better than no protection).
+Drones can be used to protect the fields. When a drone is assigned a target field, it flies towards it and then hovers above it. The drone speed is 2 so it takes some time before the drone reaches the field and starts protecting it. The drone scares all the birds in a certain radius around it, however, multiple drones are necessary to fully protect a field. The scared birds try to flee to a different location within the same field and eat crops there. Only if the field is fully protected, the birds flee away, so a partial protection is not very effective (but still better than no protection).
 
 Your goal is to divide the drones among the fields to minimize the damage dealt by the birds. You will be periodically presented with the current situation (drone locations, threat levels, ...) and you will be asked to assign the drones to the fields.
 
-Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group. If a component is supposed to remain in the same group (continue performing the same action), it must always be explicitly re-assigned to that group.
+Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group.
 
 The strategy must be written in Python and it must be a class named `SmartFarmAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
 ```
@@ -46,5 +46,15 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `arriving_drones`: flying to field (number of drones flying towards the field to protect it when they arrive)
 - `protecting_drones`: protecting (number of drones currently protecting the field)
 
+---
+Follow these step-by-step instructions when assigning the groups:
+
+1. Sort the fields by threat level from highest to lowest.
+2. For the most threatened field, determine how many additional drones are necessary for its full protection.
+3. Identify the drones currently protecting the most threatened field. They should continue protecting it.
+4. Sort the remaining drones by distance to the most threatened field from nearest to furthest.
+5. Add as many drones as necessary to the protection of the most threatened field.
+6. Distribute the remaining drones to the other fields.
+7. Provide the answer in the format described below. Don't forget to include the drones already protecting the most threatened field.
 
 Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the code for the adaptation strategy.

@@ -47,7 +47,7 @@ class Point2D:
         return f"{self.x:.0f}, {self.y:.0f}"
 
     def __repr__(self):
-        return f"Point2D(x={self.x:.2f}, y={self.y:.2f})"
+        return f"x={self.x:.2f}, y={self.y:.2f}"
 
     def distance(self, other: 'Point2D') -> float:
         """Distance between the current point and other point."""

@@ -9,6 +9,7 @@ import sys
 import textwrap
 import time
 
+import pytest
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
 from langchain.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
@@ -21,12 +22,16 @@ from utils import Logger
 load_dotenv(find_dotenv(), override=True)  # take environment variables from .env
 
 
-def parse_arguments():
+def parse_arguments(cmdline_args=None):
     parser = argparse.ArgumentParser(description="Command-line arguments for the generator.")
     parser.add_argument("--folder", type=str, required=True, help="Path to the folder.")
     parser.add_argument("--retries_test", type=int, default=3, help="Number of retries for failing unit tests.")
-    parser.add_argument("--retries_simulation", type=int, default=1, help="Number of retries for simulation results.")
-    return parser.parse_args()
+    parser.add_argument("--retries_simulation", type=int, default=2, help="Number of retries for simulation results.")
+    parser.add_argument("--llm", type=str, default="gpt-4.1-mini-2025-04-14", help="LLM to use.")
+    if cmdline_args is None:
+        return parser.parse_args()
+    else:
+        return parser.parse_args(cmdline_args)
 
 
 ### LLM querying
@@ -93,7 +98,7 @@ def test_code(folder, code_file):
     example = folder.parent.stem
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
-        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rA", "--show-capture=no",
+        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rA", "--show-capture=no", "--color=no",
         f"--example={example}", f"--adaptation_name={adaptation_name}"
     ]
     print("Running tests:", " ".join(cmd))
@@ -104,6 +109,8 @@ def test_code(folder, code_file):
     print(f"Test exit code: {result.returncode}")
     (folder / "results" / f"{code_file.stem}_test_{'pass' if result.returncode == 0 else 'fail'}.txt")\
         .write_text(str(result.returncode) + "\n" + result.stdout + result.stderr, encoding="utf-8")
+    if result.returncode not in [pytest.ExitCode.OK, pytest.ExitCode.TESTS_FAILED]:
+        raise RuntimeError(f"Error in running tests:\n{result.stderr}")
     return result.returncode, result.stdout + result.stderr
 
 
@@ -187,8 +194,8 @@ def append_simulation_report(avg_damage, messages, folder, report_file):
 ### Main
 
 
-def main():
-    args = parse_arguments()
+def main(cmdline_args=None):
+    args = parse_arguments(cmdline_args)
     folder = Path(args.folder)
     (folder / "results").mkdir(parents=True, exist_ok=True)
     sys.stdout = Logger(folder / "results" / "log.ansi")
@@ -203,7 +210,7 @@ def main():
         # TODO: the message-existence checks below do not work correctly. For now, we just prohibit running the experiment again (or continuing). This can be removed if the checks are fixed (including correctly handling passing tests, etc.).
         return
 
-    llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14")
+    llm = ChatOpenAI(model=args.llm)
 
     for iteration in range(1, args.retries_simulation + 2):
         for test in range(1, args.retries_test + 2):
@@ -224,7 +231,7 @@ def main():
                 break
             append_test_report(test_report, messages, folder, test_report_file)
         else:
-            print(f"Tests failed {args.retries_test} times. Exiting.")
+            print(f"Tests failed {args.retries_test + 1} times. Exiting.")
             return
 
         simulation_report_file = f"{iteration + 1:02d}_01_simulation"

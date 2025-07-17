@@ -1,4 +1,4 @@
-### Example of state
+### Example of the situation
 
 #### `assign_drones` method
 
@@ -7,33 +7,33 @@
 - Drone_1:
   - state: "protecting"
   - target_id: 'Field_2'
-  - location: Point2D(x=18.00, y=42.00)
+  - location: x=18.00, y=42.00
 - Drone_2:
   - state: "moving_to_field"
   - target_id: 'Field_1'
-  - location: Point2D(x=27.00, y=7.00)
+  - location: x=27.00, y=7.00
 - Drone_3:
   - state: "moving_to_field"
   - target_id: 'Field_3'
-  - location: Point2D(x=38.62, y=23.99)
+  - location: x=38.62, y=23.99
 - Drone_4:
   - state: "moving_to_field"
   - target_id: 'Field_1'
-  - location: Point2D(x=4.46, y=30.50)
+  - location: x=4.46, y=30.50
 - Drone_5:
   - state: "protecting"
   - target_id: 'Field_4'
-  - location: Point2D(x=41.00, y=8.00)
+  - location: x=41.00, y=8.00
 - Drone_6:
   - state: "moving_to_field"
   - target_id: 'Field_1'
-  - location: Point2D(x=26.26, y=31.13)
+  - location: x=26.26, y=31.13
 - Drone_7:
   - state: "idle"
-  - location: Point2D(x=31.00, y=3.00)
+  - location: x=31.00, y=3.00
 - Drone_8:
   - state: "idle"
-  - location: Point2D(x=11.00, y=49.00)
+  - location: x=11.00, y=49.00
 
 ##### Valid groups (`group_ids`)
 

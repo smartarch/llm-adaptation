@@ -6,9 +6,9 @@
 
 ### Variants
 
-* [farm_sd2](prompts/farm_sd2.txt) -- default
-* [farm_sd2_strategy](prompts/farm_sd2_strategy.txt) -- hinted strategy (in natural language)
-* [farm_sd2_step-by-step](prompts/farm_sd2_step-by-step.txt) -- step by step strategy
+* [farm_sd2](prompts/farm.txt) -- default
+* [farm_sd2_strategy](prompts/farm_strategy.txt) -- hinted strategy (in natural language)
+* [farm_sd2_step-by-step](prompts/farm_step-by-step.txt) -- step by step strategy
 
 We have three repetitions for each run, suffixed by 2, 3, 4 (note that suffix 1 refers to an early experimentation).
 

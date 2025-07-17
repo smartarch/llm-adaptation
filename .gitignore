@@ -170,4 +170,7 @@ cython_debug/
 /results/**/*.png
 /results/**/*.pdf
 /results/**/RL*
-generated_adaptations/results/**/*.png
+/generated_adaptations/**/*.png
+# ignore the results while experimenting
+/generated_adaptations/farm/
+!/generated_adaptations/farm/mock
