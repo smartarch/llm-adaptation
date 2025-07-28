@@ -9,6 +9,8 @@ import sys
 import textwrap
 import time
 
+import numpy as np
+import pandas as pd
 import pytest
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
@@ -130,13 +132,13 @@ def prepare_config(folder, code_file):
     return adaptation_config(adaptation_name, example)
 
 
-def run_simulation(folder, code_file, repeats=2, start=1):
+def run_simulation(folder, code_file, repeats=3, start=1):
     print(f"Running simulation for '{code_file}'.")
 
     configs = simulation_configs(example=folder.parent.stem)
     extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
 
-    damages = []
+    log_files = []
     for repeat in range(repeats):
         print(f"  Run #{repeat + start}/{repeats + start - 1}", end=': ')
 
@@ -158,35 +160,54 @@ def run_simulation(folder, code_file, repeats=2, start=1):
             print(textwrap.indent(stderr, "    "))
 
         try:
-            damage = stdout.partition("damage: ")[2].partition("\n")[0]
-            print(f"    Damage: {damage}")
-            damages.append(int(damage))
-
+            log_file = stdout.partition("log_file_path: ")[2].partition("\n")[0].strip()
+            log_files.append(log_file)
             if repeat == 0:
                 # TODO: this works only for farm
-                log_file = stdout.partition("log_file_path: ")[2].partition("\n")[0].strip()
                 plot_file = log_file.replace(".ansi", ".png")
                 shutil.copy(plot_file, folder / "results" / f"{code_file.stem}_plot.png")
         except ValueError:
             pass
 
-    if len(damages) > 0:
-        avg_damage = sum(damages) / len(damages)
-        print(f"Average damage: {avg_damage:.1f}")
-    else:
-        avg_damage = None
-    if repeats != len(damages):
-        print(f"Errors: {repeats - len(damages)}")
-    print()
-
-    (folder / "results" / f"{code_file.stem}_simulation_result.txt").write_text(f"Average damage: {avg_damage:.1f}", encoding="utf-8")  # TODO: this works only for farm
-
-    return avg_damage
+    return analyze_farm_simulation_results(log_files, folder, code_file)
 
 
-def append_simulation_report(avg_damage, messages, folder, report_file):
-    prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation.md", encoding="utf-8")
-    simulation_prompt = prompt_template.format(avg_damage=avg_damage)
+def analyze_farm_simulation_results(log_files, folder, code_file):
+    results = pd.DataFrame(columns=["damage", "protecting", "moving", "coverage"])
+
+    for log_file in log_files:
+        try:
+            log = Path(log_file).read_text(encoding="utf-8")
+            damage = log.partition("damage: ")[2].partition("\n")[0]
+
+            csv_file = log_file.replace(".ansi", ".csv")
+            csv_data = pd.read_csv(csv_file, encoding="utf-8")
+
+            def coverage_of_most_threatened(row):
+                most_threatened = np.argmax([row[f"Field_{f}_threat_level"] for f in range(1, 5)]) + 1
+                return row[f"Field_{most_threatened}_protecting_drones"] / (row[f"Field_{most_threatened}_protecting_drones"] + row[f"Field_{most_threatened}_drones_for_full_protection"])
+
+            most_threatened_coverage = csv_data.apply(coverage_of_most_threatened, axis=1)
+
+            results.loc[len(results)] = [int(damage), csv_data["PROTECTING"].mean(), csv_data["MOVING_TO_FIELD"].mean(), most_threatened_coverage.mean()]
+        except (FileNotFoundError, ValueError):
+            pass
+
+    (folder / "results" / f"{code_file.stem}_simulation_result.txt").write_text(
+        f"Average damage: {results['damage'].mean():.1f}\n"
+        f"Protecting: {results['protecting'].mean():.1f}\n"
+        f"Moving: {results['moving'].mean():.1f}\n"
+        f"Coverage of most threatened field: {results['coverage'].mean():.1f}\n"
+        , encoding="utf-8")
+
+    print(f"Average damage: {results['damage'].mean():.1f}")
+    return results.mean().to_dict()
+
+
+def append_simulation_report(results, messages, folder, report_file):
+    prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation.md", encoding="utf-8")  # TODO: this is a template for farm
+    verdict = "is a good result. Good job!" if results["damage"] < 60 else "is not a good result and needs improvement."
+    simulation_prompt = prompt_template.format(**results, verdict=verdict)
     (folder / f"{report_file}.md").write_text(simulation_prompt, encoding="utf-8")
     messages[report_file] = HumanMessage(content=simulation_prompt)
 
@@ -227,6 +248,8 @@ def main(cmdline_args=None):
                 print(f"Test report file '{test_report_file}' already exists. Skipping tests.")
                 continue
             result, test_report = test_code(folder, code_file)
+            results = run_simulation(folder, code_file)
+
             if result == 0:
                 break
             append_test_report(test_report, messages, folder, test_report_file)
@@ -238,8 +261,7 @@ def main(cmdline_args=None):
         if simulation_report_file in messages:
             print(f"Simulation report file '{simulation_report_file}' already exists. Skipping simulation.")
             continue
-        avg_damage = run_simulation(folder, code_file)
-        append_simulation_report(avg_damage, messages, folder, simulation_report_file)
+        append_simulation_report(results, messages, folder, simulation_report_file)
 
 
 if __name__ == "__main__":

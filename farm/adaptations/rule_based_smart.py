@@ -9,12 +9,12 @@ class RuleBasedFullNearestAdaptation(Adaptation):
         super().__init__()
 
     def adapt(self, simulation: "SmartFarmSimulation", step: int):
-        available_drones = set(simulation.availableDrones())
-        drones_to_charge = [d for d in available_drones if d.battery < 0.25]
+        available_drones = list(simulation.availableDrones())
+        # drones_to_charge = [d for d in available_drones if d.battery < 0.25]
 
-        for drone in drones_to_charge:
-            drone.assignTarget(simulation.charger)
-            available_drones.remove(drone)
+        # for drone in drones_to_charge:
+        #     drone.assignTarget(simulation.charger)
+        #     available_drones.remove(drone)
 
         for field in self.fieldsByThreatLevel(simulation):
             if len(available_drones) == 0:
@@ -22,7 +22,8 @@ class RuleBasedFullNearestAdaptation(Adaptation):
 
             closest_drones = sorted(available_drones, key=lambda d: d.location.distance(field.closestPlaceToDrone(d)))
             for drone in closest_drones[:field.drones_for_full_protection]:
-                drone.assignTarget(field)
+                # drone.assignTarget(field)
+                simulation.assign_group(drone, f"protecting {field.id}")
                 available_drones.remove(drone)
 
     @staticmethod
