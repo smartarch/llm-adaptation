@@ -14,7 +14,7 @@ def draw_plots(file_name: str, show=False):
     # Area Chart of Villager counts and locations
     area_cols = ['farmers_village', 'warriors_village', 'farmers_cave',  'warriors_cave']
     colors = ['green', 'lightgreen', 'red', 'pink']
-    df[area_cols].plot.area(ax=axes[0], color=colors)
+    df[area_cols + ['step']].plot.area(ax=axes[0], color=colors, x='step')
     axes[0].set_ylabel('Villager Count')
     axes[0].set_title('Villager Locations')
     axes[0].legend(loc='upper right')
@@ -22,15 +22,15 @@ def draw_plots(file_name: str, show=False):
     # Area Chart of Villager states
     area_cols = ["FARMING", "SPAWNING", "IDLE", "ATTACKING", "MOVING_TO_VILLAGE", "MOVING_TO_CAVE"]
     colors = ["tab:green", "tab:blue", "tab:gray", "tab:red", "tab:olive", "tab:brown"]
-    df[area_cols].plot.area(ax=axes[1], color=colors)
+    df[area_cols + ['step']].plot.area(ax=axes[1], color=colors, x='step')
     axes[1].set_ylabel('Villager Count')
     axes[1].set_title('Villager States')
     axes[1].legend(loc='upper right')
 
-    # Line Chart of Dragon HP
+    # # Line Chart of Dragon HP
     df['hp_diff'] = -df['dragon_hp'].diff().fillna(0)  # fill NaN with 0 for the first step
     ax2 = axes[2].twinx()  # Create a secondary axis
-    df['hp_diff'].plot.bar(ax=ax2, label='Damage dealt', color='pink')
+    ax2.bar(df['step'], df['hp_diff'], label='Damage dealt', color='pink')
     # ax2.set_ylim((0, 10))
     ax2.set_zorder(-1)
     axes[2].plot(df['step'], df['dragon_hp'], label='Dragon HP', color='red')

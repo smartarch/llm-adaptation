@@ -13,6 +13,9 @@ Suggest an adaptation strategy. The goal is to assign the components into groups
 The strategy must be written in Python and it must be a class named `SmartFarmAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
 ```
 class FarmAdaptation(abc.ABC):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
     @abc.abstractmethod
     def assign_drones(self, components, environment, group_ids, step: int):
         pass

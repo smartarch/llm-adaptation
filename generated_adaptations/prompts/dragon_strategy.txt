@@ -3,14 +3,17 @@ The Dragon lives in a Cave near a Village. The player controls villagers. The vi
 There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
 To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
 When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
-The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step {}.
+The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game.
 
 
-Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group.
+Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group. If a component is supposed to remain in the same group (continue performing the same action), it must always be explicitly re-assigned to that group.
 
 The strategy must be written in Python and it must be a class named `SmartAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.dragon`):
 ```
 class DragonHuntAdaptation(abc.ABC):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     @abc.abstractmethod
     def assign_in_village(self, components, environment, group_ids, step: int):
         pass
@@ -31,7 +34,7 @@ In `assign_in_village`, your goal is to divide the Villagers in the Village (`co
 
 The `group_ids` argument is a list of all valid group names.
 
-For each component, the following attributes are available:
+For each component, the following attributes are available (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `role`: Role ("Farmer" or "Warrior")
 - `hp`: Health
 ---
@@ -42,19 +45,19 @@ In `assign_in_cave`, your goal is to divide the Villagers in the Cave (`componen
 
 The `group_ids` argument is a list of all valid group names.
 
-For each component, the following attributes are available:
+For each component, the following attributes are available (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `role`: Role ("Farmer" or "Warrior")
 - `hp`: Health
 ---
 
 Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
 
-The Dragon (accessible via `environment.dragon`) with the following attributes:
+The Dragon (accessible via `environment.dragon`) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `hp`: Health
-The Farm (accessible via `environment.farm`) with the following attributes:
+The Farm (accessible via `environment.farm`) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `wheat`: Current wheat amount
 
 ---
 All Warriors should go to the Cave, and then attack the Dragon. All Farmers should stay in Village and spawn new villagers (if we have enough wheat) or farm.
 
-Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the code for the adaptation strategy.
+Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.

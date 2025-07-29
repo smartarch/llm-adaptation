@@ -174,3 +174,4 @@ cython_debug/
 # ignore the results while experimenting
 /generated_adaptations/farm/
 !/generated_adaptations/farm/mock
+/generated_adaptations/dragon/

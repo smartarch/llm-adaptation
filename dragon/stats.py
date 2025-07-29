@@ -23,7 +23,7 @@ class Stats:
 
     def global_stats(self, step: Optional[int], header=False):
         if header:
-            return ["step", "dragon_hp", "wheat"] + [state.name for state in VillagerState] + ["farmers_village", "farmers_cave", "warriors_village", "warriors_cave"] + ["dragon_attack"]
+            return ["step", "dragon_hp", "wheat"] + [state.name for state in VillagerState] + ["farmers_village", "farmers_cave", "warriors_village", "warriors_cave", "spawned_farmers", "spawned_warriors"] + ["dragon_attack"]
         counts_in_states = [
             sum(1 for component in self.simulation.last_components if isinstance(component, Villager) and component.log_state == state)
             for state in VillagerState
@@ -34,9 +34,11 @@ class Stats:
             sum(1 for component in self.simulation.last_components if isinstance(component, Warrior) and component.location == Map.VILLAGE),
             sum(1 for component in self.simulation.last_components if isinstance(component, Warrior) and component.location == Map.CAVE)
         ]
+        new_spawns = set(self.simulation.components) - set(self.simulation.last_components)
+        spawned = [sum(1 for component in new_spawns if isinstance(component, Farmer)), sum(1 for component in new_spawns if isinstance(component, Warrior))]
         dragon_attack = self.simulation.dragon.attack_log
         self.simulation.dragon.attack_log = ""
-        return [step, self.simulation.dragon_hp, self.simulation.wheat] + counts_in_states + villager_counts + [dragon_attack]
+        return [step, self.simulation.dragon_hp, self.simulation.wheat] + counts_in_states + villager_counts + spawned + [dragon_attack]
 
     def close_file(self):
         self._csv_file.close()

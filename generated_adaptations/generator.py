@@ -29,6 +29,7 @@ def parse_arguments(cmdline_args=None):
     parser.add_argument("--folder", type=str, required=True, help="Path to the folder.")
     parser.add_argument("--retries_test", type=int, default=3, help="Number of retries for failing unit tests.")
     parser.add_argument("--retries_simulation", type=int, default=2, help="Number of retries for simulation results.")
+    parser.add_argument("--simulation_runs", type=int, default=3, help="Number of runs of simulation for evaluation.")
     parser.add_argument("--llm", type=str, default="gpt-4.1-mini-2025-04-14", help="LLM to use.")
     if cmdline_args is None:
         return parser.parse_args()
@@ -100,7 +101,7 @@ def test_code(folder, code_file):
     example = folder.parent.stem
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
-        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rA", "--show-capture=no", "--color=no",
+        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExXpP", "--show-capture=no", "--color=no",
         f"--example={example}", f"--adaptation_name={adaptation_name}"
     ]
     print("Running tests:", " ".join(cmd))
@@ -134,8 +135,9 @@ def prepare_config(folder, code_file):
 
 def run_simulation(folder, code_file, repeats=3, start=1):
     print(f"Running simulation for '{code_file}'.")
+    example = folder.parent.stem
 
-    configs = simulation_configs(example=folder.parent.stem)
+    configs = simulation_configs(example=example)
     extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
 
     log_files = []
@@ -163,13 +165,17 @@ def run_simulation(folder, code_file, repeats=3, start=1):
             log_file = stdout.partition("log_file_path: ")[2].partition("\n")[0].strip()
             log_files.append(log_file)
             if repeat == 0:
-                # TODO: this works only for farm
                 plot_file = log_file.replace(".ansi", ".png")
                 shutil.copy(plot_file, folder / "results" / f"{code_file.stem}_plot.png")
-        except ValueError:
+        except (ValueError, FileNotFoundError):
             pass
 
-    return analyze_farm_simulation_results(log_files, folder, code_file)
+    if example == "farm":
+        return analyze_farm_simulation_results(log_files, folder, code_file)
+    elif example == "dragon":
+        return analyze_dragon_simulation_results(log_files, folder, code_file)
+    else:
+        raise ValueError(f"Unrecognized example: {example}")
 
 
 def analyze_farm_simulation_results(log_files, folder, code_file):
@@ -193,21 +199,57 @@ def analyze_farm_simulation_results(log_files, folder, code_file):
         except (FileNotFoundError, ValueError):
             pass
 
-    (folder / "results" / f"{code_file.stem}_simulation_result.txt").write_text(
-        f"Average damage: {results['damage'].mean():.1f}\n"
-        f"Protecting: {results['protecting'].mean():.1f}\n"
-        f"Moving: {results['moving'].mean():.1f}\n"
-        f"Coverage of most threatened field: {results['coverage'].mean():.1f}\n"
-        , encoding="utf-8")
+    result = results.mean().to_dict()
+    (folder / "results" / f"{code_file.stem}_simulation_result.json").write_text(json.dumps(result), encoding="utf-8")
 
-    print(f"Average damage: {results['damage'].mean():.1f}")
-    return results.mean().to_dict()
+    print(f"Average damage: {result['damage']:.1f}")
+    return result
+
+
+def analyze_dragon_simulation_results(log_files, folder, code_file):
+    results = pd.DataFrame(columns=["win", "steps", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"])
+
+    for log_file in log_files:
+        try:
+            csv_file = log_file.replace(".ansi", ".csv")
+            csv_data = pd.read_csv(csv_file, encoding="utf-8")
+
+            results.loc[len(results)] = [any(csv_data.dragon_hp <= 0), csv_data.step.max(),
+                                         csv_data.warriors_village.iloc[-1] + csv_data.warriors_cave.iloc[-1],
+                                         csv_data.farmers_village.iloc[-1] + csv_data.farmers_cave.iloc[-1],
+                                         csv_data.FARMING.mean(), csv_data.ATTACKING.mean(),
+                                         csv_data.spawned_farmers.sum(), csv_data.spawned_warriors.sum()]
+        except (FileNotFoundError, ValueError):
+            pass
+
+    result = results[["warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"]].mean().to_dict()
+    result["games_played"] = len(log_files)
+    result["wins"] = int(results["win"].sum())
+    result["losses"] = len(log_files) - result["wins"]
+    result["winrate"] = result["wins"] / len(log_files)
+    result["steps"] = results[results["win"]].steps.mean() if len(results[results["win"]]) > 0 else None
+
+    (folder / "results" / f"{code_file.stem}_simulation_result.json").write_text(json.dumps(result), encoding="utf-8")
+
+    print(f"Winrate: {result['winrate']:.1f}, avg. steps: {result['steps']}")
+    return result
 
 
 def append_simulation_report(results, messages, folder, report_file):
-    prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation.md", encoding="utf-8")  # TODO: this is a template for farm
-    verdict = "is a good result. Good job!" if results["damage"] < 60 else "is not a good result and needs improvement."
-    simulation_prompt = prompt_template.format(**results, verdict=verdict)
+    example = folder.parent.stem
+    if example == "farm":
+        prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation_farm.md", encoding="utf-8")
+        verdict = "is a good result. Good job!" if results["damage"] < 60 else "is not a good result and needs improvement."
+        simulation_prompt = prompt_template.format(**results, verdict=verdict)
+    elif example == "dragon":
+        prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation_dragon.md", encoding="utf-8")
+        if results["steps"] is None:
+            results["steps"] = "N/A"
+        else:
+            results["steps"] = f"{results['steps']:.1f}"
+        simulation_prompt = prompt_template.format(**results)
+    else:
+        raise ValueError(f"Unrecognized example: {example}")
     (folder / f"{report_file}.md").write_text(simulation_prompt, encoding="utf-8")
     messages[report_file] = HumanMessage(content=simulation_prompt)
 
@@ -248,7 +290,7 @@ def main(cmdline_args=None):
                 print(f"Test report file '{test_report_file}' already exists. Skipping tests.")
                 continue
             result, test_report = test_code(folder, code_file)
-            results = run_simulation(folder, code_file)
+            results = run_simulation(folder, code_file, args.simulation_runs)
 
             if result == 0:
                 break

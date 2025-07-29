@@ -12,6 +12,9 @@ Suggest an adaptation strategy. The goal is to assign the components into groups
 The strategy must be written in Python and it must be a class named `{{ configuration.strategy_interface.class }}` derived from this base class (which can be imported from `{{ path }}`):
 ```
 class {{ class }}(abc.ABC):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
 {% for assignment_name in configuration.assignments %}
     @abc.abstractmethod
     def {{ assignment_name }}(self, components, environment, group_ids, step: int):

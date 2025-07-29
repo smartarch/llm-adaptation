@@ -18,14 +18,30 @@ def simulation_configs(example):
     return configs
 
 
-def adaptation_config(adaptation_name, example):
+# TODO: can we load this from the DSL?
+def adaptation_class_name(example):
     if example == "farm":
-        class_name = "SmartFarmAdaptation"
+        return "SmartFarmAdaptation"
     elif example == "dragon":
-        class_name = "SmartAdaptation"
+        return "SmartAdaptation"
     else:
         raise ValueError(f"Unknown example: {example}")
 
+
+# TODO: can we load this from the DSL?
+def adaptation_class(example):
+    if example == "farm":
+        from generated_adaptations.base_classes.farm import FarmAdaptation
+        return FarmAdaptation, "generated_adaptations.base_classes.farm.FarmAdaptation"
+    elif example == "dragon":
+        from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+        return DragonHuntAdaptation, "generated_adaptations.base_classes.dragon.DragonHuntAdaptation"
+    else:
+        raise ValueError(f"Unknown example: {example}")
+
+
+def adaptation_config(adaptation_name, example):
+    class_name = adaptation_class_name(example)
     return {
         "name": adaptation_name,
         "log_dir.append": f"/{adaptation_name}",
