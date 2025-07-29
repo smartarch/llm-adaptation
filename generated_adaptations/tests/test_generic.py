@@ -1,4 +1,5 @@
 import importlib
+import itertools
 from pathlib import Path
 from typing import TypeVar
 
@@ -51,7 +52,10 @@ def filter_errors(errors: list[AssignmentError], error_class: type[T]) -> list[T
 def assert_no_repeated_assignments(assignment_errors):
     repeatedly_assigned = filter_errors(assignment_errors, ComponentAlreadyAssignedError)
     if repeatedly_assigned:
-        fail(f"{len(repeatedly_assigned)} components were assigned more than once. Each component must be assigned exactly once.")
+        message = ""
+        for assignment, group in itertools.groupby(repeatedly_assigned, key=lambda e: e.assignment):
+            message += f"In '{assignment}', {len(list(group))} components were assigned more than once. "
+        fail(message + "Each component must be assigned exactly once.")
 
 
 def assert_no_invalid_groups(assignment_errors):

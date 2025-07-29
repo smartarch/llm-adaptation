@@ -10,8 +10,15 @@ from base_classes.ensembles import ResolvedEnsemble
 
 class AssignmentError(Exception):
 
+    assignment: str | None = None  # name of the assignment method that caused the error, if any
+
+    def __init__(self, message: str):
+        super().__init__(message)
+
     @property
     def message(self):
+        if self.assignment:
+            return f"In '{self.assignment}': {self.args[0]}"
         return self.args[0]
 
 
@@ -118,6 +125,7 @@ class Simulation(abc.ABC):
 
     def append_assignment_error(self, error):
         print("Before retry:", error.message)
+        error.assignment = self.current_assignment
         self.assignment_errors.append(error)
 
     @abc.abstractmethod
