@@ -1,11 +1,13 @@
+from DSL.dsl_utils import EnsembleInstance
 from base_classes.components import Component
 
 
-class Ensemble:
+class ResolvedEnsemble:
 
-    def __init__(self, ensemble_config: dict, members: list[Component]):
-        self.name = ensemble_config["name"]
-        self.__dict__.update(ensemble_config)
+    def __init__(self, ensemble_instance: EnsembleInstance, members: list[Component]):
+        self.name = ensemble_instance.name
+        self.__dict__.update(ensemble_instance.__dict__)
+        self.ensemble_instance = ensemble_instance
         self.components = members
 
     @property
@@ -19,4 +21,4 @@ class Ensemble:
         return self.name
 
     def __repr__(self):
-        return f"Ensemble(name={self.name}, count={self.count})"
+        return f"ResolvedEnsemble(name={self.name}, count={self.count})"

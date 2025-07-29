@@ -2,7 +2,7 @@ import re
 
 from jinja2 import Environment, FileSystemLoader, pass_context
 
-from DSL.dsl_utils import get_components_for_assignment, get_attr, get_ensembles_for_assignment, DSLConfiguration
+from DSL.dsl_utils import get_components_for_assignment, get_attr, get_ensemble_instances_for_assignment, DSLConfiguration
 from base_classes.components import Component
 from base_classes.simulation import Simulation, AssignmentError, UnknownComponentError, ComponentAlreadyAssignedError
 from base_classes.prompt_template import PromptTemplate, ProcessingError
@@ -33,7 +33,7 @@ def get_ensembles_ctx(context, config: list[str | dict]):
     ensemble_types = context.get("configuration")["ensembles"]
     environment = context.get("environment")
 
-    yield from get_ensembles_for_assignment(config, ensemble_types, components, environment)
+    yield from get_ensemble_instances_for_assignment(config, ensemble_types, components, environment)
 
 
 def prepare_jinja_env():
@@ -88,7 +88,7 @@ class JinjaPromptTemplate(PromptTemplate):
             return [ProcessingError(None, error)], None
         memory = self.extract_tag(response, "memory")
 
-        components = self.configuration.load_components_for_assignments(simulation)
+        components = self.configuration.load_components_for_all_assignments(simulation)
 
         if is_retry and "retry_format" in self.configuration:
             self.apply_correct_assignments(components, simulation)
@@ -202,7 +202,7 @@ class JinjaPromptTemplate(PromptTemplate):
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
 
-        all_groups = self.configuration.load_ensembles_for_assignments(simulation)
+        all_groups = self.configuration.load_ensemble_names_for_all_assignments(simulation)
         if len(assigned_groups) < len(all_groups):
             missing_groups = [group for group in all_groups if group not in assigned_groups]
             error = AssignmentError("The following groups are missing in the assignment: " + ", ".join(missing_groups))
@@ -229,7 +229,7 @@ class JinjaPromptTemplate(PromptTemplate):
         ensembles = set()
 
         for assignment_config in self.configuration["assignments"].values():
-            assignment_ensembles = get_ensembles_for_assignment(simulation.components, assignment_config["ensembles"], self.configuration["ensembles"], simulation)
+            assignment_ensembles = get_ensemble_instances_for_assignment(simulation.components, assignment_config["ensembles"], self.configuration["ensembles"], simulation)
             ensembles.update([ensemble["name"] for ensemble in assignment_ensembles])
 
         return ensembles

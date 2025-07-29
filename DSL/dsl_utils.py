@@ -1,46 +1,63 @@
+import dataclasses
 from collections import UserDict
+
+from base_classes.components import Component
 
 
 class DSLConfiguration(UserDict):
 
-    def load_assignments(self):
-        return self.data["assignments"].values()
+    def load_assignment_names(self) -> list[str]:
+        return self.data["assignments"].keys()
 
-    def load_components_for_assignments(self, simulation):
+    def load_assignment_configs(self) -> list[tuple[str, dict]]:
+        return self.data["assignments"].items()
+
+    def load_components_for_all_assignments(self, simulation) -> dict[str, Component]:
         components = {}
-
-        for assignment_config in self.load_assignments():
-            components_config = assignment_config["components"]
-            components_type_config = self.data["components"][components_config["type"]]
-            id_attr = components_type_config.get("id", "id")
-
-            for component in get_components_for_assignment(components_config, simulation.components, simulation):
-                component_id = getattr(component, id_attr)
-                components[component_id] = component
-
+        for assignment_name in self.data["assignments"]:
+            components.update(self.load_components_for_assignment(simulation, assignment_name))
         return components
 
-    def load_ensembles_for_assignments(self, simulation):
-        ensembles = set()
+    def load_components_for_assignment(self, simulation, assignment_name) -> dict[str, Component]:
+        assignment_config = self.data["assignments"][assignment_name]
+        components_config = assignment_config["components"]
+        components_type_config = self.data["components"][components_config["type"]]
+        id_attr = components_type_config.get("id", "id")
 
-        for assignment_config in self.load_assignments():
-            assignment_ensembles = get_ensembles_for_assignment(assignment_config["ensembles"], self.data["ensembles"], simulation.components, simulation)
-            ensembles.update([ensemble["name"] for ensemble in assignment_ensembles])
+        return {
+            getattr(component, id_attr): component
+            for component in get_components_for_assignment(components_config, simulation.components, simulation)
+        }
 
+    def load_ensemble_names_for_all_assignments(self, simulation) -> list[str]:
+        ensembles = []
+        for assignment_name in self.data["assignments"]:
+            ensemble_instances = self.load_ensemble_instances_for_assignment(simulation, assignment_name)
+            ensembles.extend([ensemble.name for ensemble in ensemble_instances])
         return ensembles
 
-    def load_constraints_for_assignment(self, simulation, assignment_config):
-        assignment_ensembles = list(get_ensembles_for_assignment(assignment_config["ensembles"], self.data["ensembles"], simulation.components, simulation))
+    def load_ensemble_instances_for_assignment(self, simulation, assignment_name) -> list["EnsembleInstance"]:
+        assignment_config = self.data["assignments"][assignment_name]
+        ensembles_config = assignment_config["ensembles"]
+        ensemble_types = self.data["ensembles"]
 
+        return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components, simulation))
+
+    def load_constraints_for_assignment(self, simulation, assignment_name) -> list["UserConstraint"]:
+        assignment_config = self.data["assignments"][assignment_name]
+        ensemble_instances = self.load_ensemble_instances_for_assignment(simulation, assignment_name)
+
+        constraints = []
         for constraint in assignment_config.get("constraints", []):
-            relevant_ensembles = assignment_ensembles
-            if "foreach" in constraint:
-                relevant_ensembles = list(filter(lambda e: e["type"] == constraint["foreach"], assignment_ensembles))
-            yield {
-                "constraint": eval(constraint["constraint"], simulation.get_globals()),
-                "ensembles": relevant_ensembles,
-                "reason": eval(constraint["reason"], simulation.get_globals()),
-            }
+            relevant_ensembles = ensemble_instances  # all ensembles by default
+            if "foreach" in constraint:  # filter ensembles by type
+                relevant_ensembles = list(filter(lambda e: e.type == constraint["foreach"], relevant_ensembles))
+            constraints.append(UserConstraint(
+                constraint=eval(constraint["constraint"], simulation.get_globals()),
+                relevant_ensembles=relevant_ensembles,
+                reason=eval(constraint["reason"], simulation.get_globals()),
+            ))
+        return constraints
 
 
 def get_components_for_assignment(components_config, components, environment):
@@ -64,13 +81,10 @@ def get_attr(component, attribute, config):
     return formatter.format(value)
 
 
-def get_ensembles_for_assignment(ensembles_config, ensemble_types, components, environment):
+def get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, components, environment):
     for ensemble_config in ensembles_config:
         if isinstance(ensemble_config, str):  # singleton
-            yield {
-                **ensemble_types[ensemble_config],
-                "type": ensemble_config,
-            }
+            yield EnsembleInstance(type=ensemble_config, **ensemble_types[ensemble_config])
         else:  # instance for each component
             ensemble_type = ensemble_types[ensemble_config["type"]]
             component_type = eval(ensemble_config["foreach"], environment.get_globals())
@@ -82,14 +96,25 @@ def get_ensembles_for_assignment(ensembles_config, ensemble_types, components, e
             name_generator = eval(ensemble_type["name"])
 
             for component in components:
-                ensemble = {
-                    "type": ensemble_config["type"],
-                    "name": name_generator(component),
-                }
+                ensemble = EnsembleInstance(type=ensemble_config["type"], name=name_generator(component))
                 if "description" in ensemble_type:
-                    ensemble["description"] = ensemble_type["description"]
+                    ensemble.description = ensemble_type["description"]
                 # if the ensemble has parameters, the component is the first parameter
                 if "params" in ensemble_type:
                     first_param = next(iter(ensemble_type["params"]))  # TODO: how to handle multiple parameters?
-                    ensemble[first_param] = component
+                    setattr(ensemble, first_param, component)
                 yield ensemble
+
+
+@dataclasses.dataclass
+class EnsembleInstance:
+    type: str
+    name: str
+    description: str | None = None
+
+
+@dataclasses.dataclass
+class UserConstraint:
+    constraint: callable
+    relevant_ensembles: list[EnsembleInstance]
+    reason: callable

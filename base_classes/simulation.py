@@ -3,9 +3,9 @@ import sys
 from typing import Callable, Optional
 import traceback
 
-from DSL.dsl_utils import DSLConfiguration
+from DSL.dsl_utils import DSLConfiguration, UserConstraint, EnsembleInstance
 from base_classes.components import Component
-from base_classes.ensembles import Ensemble
+from base_classes.ensembles import ResolvedEnsemble
 
 
 class AssignmentError(Exception):
@@ -54,6 +54,7 @@ class Simulation(abc.ABC):
         self.visualizer = None
         self.stats = None
 
+        self.current_assignment: str | None = None  # name of the assignment method currently being executed, if any
         self.assignments: dict[Component, str] = {}
         self.assignment_errors: list[AssignmentError] = []
         self.step: Optional[int] = None
@@ -136,28 +137,29 @@ class Simulation(abc.ABC):
             self._assign_group(component, group_id)
 
     def check_missing_assignments(self, components_to_be_assigned):
-        if len(self.assignments) < len(components_to_be_assigned):
-            for component in components_to_be_assigned:
-                if component not in self.assignments:
-                    self.append_assignment_error(MissingAssignmentError(component))
+        for component in components_to_be_assigned:
+            if component not in self.assignments:
+                self.append_assignment_error(MissingAssignmentError(component))
 
     def check_user_constraints(self):
-        for assignment_config in self.dsl_config.load_assignments():
-            for constraint_config in self.dsl_config.load_constraints_for_assignment(self, assignment_config):
-                self._check_user_constraint(**constraint_config)
+        for assignment_name in self.dsl_config.load_assignment_names():
+            for constraint in self.dsl_config.load_constraints_for_assignment(self, assignment_name):
+                self._check_user_constraint(constraint)
 
-    # TODO: the attribute names here depend on the dict keys returned from `dsl_utils.load_constraints_for_assignment`. We should probably replace the dict with a proper class.
-    def _check_user_constraint(self, constraint, ensembles, reason):
-        ensemble_instances = []
-        # load members for each ensemble
-        for ensemble_config in ensembles:
-            members = [c for c, e in self.assignments.items() if e == ensemble_config["name"]]
-            ensemble_instances.append(Ensemble(ensemble_config, members))
+    def _check_user_constraint(self, constraint: UserConstraint):
         # check the constraint for each ensemble
         # TODO: handle global constraints (not foreach individually but for all)
-        for ensemble in ensemble_instances:
-            if not constraint(ensemble):
-                self.append_assignment_error(UserConstraintError(reason(ensemble)))
+        for resolved_ensemble in self._resolve_ensembles(constraint.relevant_ensembles):
+            if not constraint.constraint(resolved_ensemble):
+                self.append_assignment_error(UserConstraintError(constraint.reason(resolved_ensemble)))
+
+    def _resolve_ensembles(self, ensemble_instances: list[EnsembleInstance]):
+        resolved_ensembles = []
+        # load members for each ensemble
+        for ensemble_instance in ensemble_instances:
+            members = [c for c, e in self.assignments.items() if e == ensemble_instance.name]
+            resolved_ensembles.append(ResolvedEnsemble(ensemble_instance, members))
+        return resolved_ensembles
 
     @abc.abstractmethod
     def _assign_group(self, component: Component, group_id: str):

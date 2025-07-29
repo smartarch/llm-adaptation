@@ -25,6 +25,19 @@ class Adaptation(abc.ABC):
         pass
 
 
+class DSLAdaptation(Adaptation):
+
+    def adapt(self, simulation: "Simulation", step: int):
+        for assignment_name, assignment_config in simulation.dsl_config.load_assignment_configs():
+            simulation.current_assignment = assignment_name
+            components = list(simulation.dsl_config.load_components_for_assignment(simulation, assignment_name).values())
+            ensemble_instances = simulation.dsl_config.load_ensemble_instances_for_assignment(simulation, assignment_name)
+            assignment_method = getattr(self, assignment_name)
+            assignment_method(components, simulation, ensemble_instances, step)
+            simulation.check_missing_assignments(components)
+        simulation.current_assignment = None
+
+
 def import_adaptation(config: dict) -> Adaptation:
     adaptation_name = config["adaptation_name"]
     adaptation_params = config["adaptation_params"]
