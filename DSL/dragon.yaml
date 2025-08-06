@@ -18,6 +18,10 @@ adaptation_params:  # this is purely technical
             description: "\"Farmer\" or \"Warrior\""
           hp:
             name: "Health"
+          state:
+            name: "State"
+            format: "lambda value: value.value"
+            description: '"idle", "farming", "moving_to_village", "moving_to_cave", "attacking", or "spawning_new_villager"'
 
     ensembles:
       Farm:
@@ -66,12 +70,33 @@ adaptation_params:  # this is purely technical
           if: "lambda component: component.location == Map.VILLAGE"
           description: "Villagers in the Village"
         ensembles: [Farm, GoToCave, SpawnFarmer, SpawnWarrior]
+        constraints:
+          - foreach: GoToCave
+            constraint: "lambda e: len(e) > 0"
+            occurrence: "once"
+            reason: "lambda e: f'At least one villager should go to the Cave to attack the Dragon.'"
+          - constraint: "lambda: len(ensembles[2]) >= 2 or len(ensembles[3]) >= 2"  # spawn farmer and spawn warrior ensembles (assuming the order defined above)
+            occurrence: "10%"
+            reason: "lambda: f'At least a few new villagers should be spawned to increase the chance of killing the dragon.'"
       assign_in_cave:
         components:
           type: Villager
           if: "lambda component: component.location == Map.CAVE"
           description: "Villagers in the Cave"
         ensembles: [Attack, StayInCave, GoToVillage]
+        constraints:
+          - foreach: Attack
+            constraint: "lambda e: len(e) > 0"
+            occurrence: "once"
+            reason: "lambda e: f'The dragon should be attacked.'"
+    constraints:
+      - constraint: "lambda: (
+          warriors := [v for v in components if v.role == 'warrior'],
+          in_cave := [v for v in warriors if v.location == Map.CAVE],
+          len(in_cave) >= 0.5 * len(warriors)
+          )[-1]"
+        reason: "lambda: f'At least half of the warriors should be in the Cave so they can attack the Dragon.'"
+        occurrence: "80%"
 
     strategy: ""  # optional
     strategy_interface:

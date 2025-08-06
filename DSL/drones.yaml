@@ -83,12 +83,26 @@ adaptation_params:  # this is purely technical
             in_str: environment.fields
             if_str: field.threat_level > 0
         constraints:
+          # don't overprotect
           - foreach: Protecting
             constraint: "lambda e: len(e) <= e.field.drones_for_full_protection"
             reason: "lambda e: f'Field {e.field.id} is overprotected ({e.field.drones_for_full_protection} drones for full protection, {len(e)} assigned), use the drones elsewhere.'"
+          # fully protect the most threatened field (formulated as a local constraint)
           - foreach: Protecting
-            constraint: "lambda e: e.field.threat_level != max([f.threat_level for f in environment.fields]) or len(e) == e.field.drones_for_full_protection"
+            if: "lambda e: e.field.threat_level == max([f.threat_level for f in environment.fields])"  # if two fields have the same threat level, both are selected
+            constraint: "lambda e: len(e) == e.field.drones_for_full_protection"
             reason: "lambda e: f'The most threatened field should be fully protected ({e.field.id}, threat level {e.field.threat_level:.2f}, {e.field.drones_for_full_protection} drones for full protection, {len(e)} assigned).'"
+          # fully protect the most threatened field (formulated as a global constraint)
+          - constraint: "lambda: (
+              protecting := [e for e in ensembles if e.type == 'Protecting'],
+              most_threatened := max(protecting, key=lambda e: e.field.threat_level),
+              len(most_threatened) == most_threatened.field.drones_for_full_protection
+              )[-1]"  # to use assignments in lambda, we need to use a tuple with the ":=" operator and return only the last value
+            reason: "lambda: (
+              protecting := [e for e in ensembles if e.type == 'Protecting'],
+              most_threatened := max(protecting, key=lambda e: e.field.threat_level),
+              f'The most threatened field should be fully protected ({most_threatened.field.id}, threat level {most_threatened.field.threat_level:.2f}, {most_threatened.field.drones_for_full_protection} drones for full protection, {len(most_threatened)} assigned).'
+              )[-1]"  # unfortunately, we need to repeat the same logic as we cannot access the intermediate variables
 
     strategy: ""  # optional
     strategy_interface:

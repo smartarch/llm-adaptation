@@ -5,13 +5,13 @@ from base_classes.components import Component
 from dragon.simulation import Map, DragonHuntSimulation
 
 
-class VillagerState(enum.Enum):
-    IDLE = 0
-    FARMING = 1
-    MOVING_TO_VILLAGE = 2
-    MOVING_TO_CAVE = 3
-    ATTACKING = 4
-    SPAWNING = 5
+class VillagerState(enum.StrEnum):
+    IDLE = "idle"
+    FARMING = "farming"
+    MOVING_TO_VILLAGE = "moving_to_village"
+    MOVING_TO_CAVE = "moving_to_cave"
+    ATTACKING = "attacking"
+    SPAWNING = "spawning_new_villager"
 
 
 class Villager(Component):

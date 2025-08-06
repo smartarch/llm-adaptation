@@ -112,7 +112,9 @@ class Simulation(abc.ABC):
 
     def get_globals(self):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
-        return {}
+        return {
+            "environment": self,
+        }
 
     def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
         try:
@@ -151,15 +153,22 @@ class Simulation(abc.ABC):
 
     def check_user_constraints(self):
         for assignment_name in self.dsl_config.load_assignment_names():
-            for constraint in self.dsl_config.load_constraints_for_assignment(self, assignment_name):
+            components = self.dsl_config.load_components_for_assignment(self, assignment_name)
+            ensemble_instances = self.dsl_config.load_ensemble_instances_for_assignment(self, assignment_name)
+            resolved_ensembles = self._resolve_ensembles(ensemble_instances)
+
+            for constraint in self.dsl_config.load_constraints(self, assignment_name, resolved_ensembles, components):
                 self._check_user_constraint(constraint)
 
     def _check_user_constraint(self, constraint: UserConstraint):
         # check the constraint for each ensemble
-        # TODO: handle global constraints (not foreach individually but for all)
-        for resolved_ensemble in self._resolve_ensembles(constraint.relevant_ensembles):
-            if not constraint.constraint(resolved_ensemble):
-                self.append_assignment_error(UserConstraintError(constraint.reason(resolved_ensemble)))
+        if constraint.foreach:
+            for resolved_ensemble in self._resolve_ensembles(constraint.relevant_ensembles):
+                if not constraint.constraint(resolved_ensemble):
+                    self.append_assignment_error(UserConstraintError(constraint.reason(resolved_ensemble)))
+        else:
+            if not constraint.constraint():
+                self.append_assignment_error(UserConstraintError(constraint.reason()))
 
     def _resolve_ensembles(self, ensemble_instances: list[EnsembleInstance]):
         resolved_ensembles = []

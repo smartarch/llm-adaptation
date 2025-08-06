@@ -86,7 +86,7 @@ class DragonHuntSimulation(Simulation):
         from dragon.components.villagers import Villager
         from dragon.components.dragon import Dragon
 
-        return {
+        return super().get_globals() | {
             "Map": Map,
             "Dragon": Dragon,
             "Villager": Villager,

@@ -90,11 +90,10 @@ class SmartFarmSimulation(Simulation):
             drone.assignTarget(self._parse_field(group_id))
 
     def get_globals(self):
-        return {
+        return super().get_globals() | {
             "DroneState": DroneState,
             "Field": Field,
             "Drone": Drone,
-            "environment": self,
         }
 
     def random_assign_and_simulate(self, protecting_count, steps):

@@ -1,5 +1,6 @@
 import dataclasses
 from collections import UserDict
+from typing import Iterator
 
 from base_classes.components import Component
 
@@ -43,21 +44,30 @@ class DSLConfiguration(UserDict):
 
         return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components, simulation))
 
-    def load_constraints_for_assignment(self, simulation, assignment_name) -> list["UserConstraint"]:
-        assignment_config = self.data["assignments"][assignment_name]
-        ensemble_instances = self.load_ensemble_instances_for_assignment(simulation, assignment_name)
+    def load_constraints(self, simulation, assignment_name, resolved_ensembles, components) -> Iterator["UserConstraint"]:
+        if assignment_name is not None:
+            config = self.data.get("assignments", {}).get(assignment_name, {}).get("constraints", [])
+        else:
+            config = self.data.get("constraints", [])
 
-        constraints = []
-        for constraint in assignment_config.get("constraints", []):
-            relevant_ensembles = ensemble_instances  # all ensembles by default
-            if "foreach" in constraint:  # filter ensembles by type
+        eval_globals = simulation.get_globals() | {
+            "components": components,
+            "ensembles": resolved_ensembles,
+        }
+
+        for constraint in config:
+            relevant_ensembles = resolved_ensembles
+            if "foreach" in constraint:
                 relevant_ensembles = list(filter(lambda e: e.type == constraint["foreach"], relevant_ensembles))
-            constraints.append(UserConstraint(
-                constraint=eval(constraint["constraint"], simulation.get_globals()),
+            if "if" in constraint:
+                condition = eval(constraint["if"], eval_globals)
+                relevant_ensembles = list(filter(condition, relevant_ensembles))
+            yield UserConstraint(
+                constraint=eval(constraint["constraint"], eval_globals),
                 relevant_ensembles=relevant_ensembles,
-                reason=eval(constraint["reason"], simulation.get_globals()),
-            ))
-        return constraints
+                reason=eval(constraint["reason"], eval_globals),
+                foreach="foreach" in constraint,
+            )
 
 
 def get_components_for_assignment(components_config, components, environment):
@@ -118,3 +128,4 @@ class UserConstraint:
     constraint: callable
     relevant_ensembles: list[EnsembleInstance]
     reason: callable
+    foreach: bool = False
