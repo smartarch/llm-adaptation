@@ -99,8 +99,9 @@ class Simulation(abc.ABC):
         if self.should_adapt(step):
             try:
                 self.adapt(self, step)
-            except Exception as error:
+            except Exception:
                 print(traceback.format_exc(), file=sys.stderr)
+            self.check_user_constraints()
             self._apply_assignments()
 
         for component in self.components + self.beyond_control_components:
@@ -147,8 +148,6 @@ class Simulation(abc.ABC):
 
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
-        self.check_user_constraints()
-
         for error in self.assignment_errors:
             print("Error in final assignment:", error.message)
             print(error.message, file=sys.stderr)
@@ -191,15 +190,17 @@ class Simulation(abc.ABC):
     def _check_long_term_constraint_violations(self):
         for constraint, violations in self.constraints_violations.items():
             self._check_long_term_constraint_violation(constraint.occurrence, violations)
-        print("Long-term constraint violations:", file=sys.stderr)
-        for error in self.assignment_errors:
-            print(error.message, file=sys.stderr)
+        if len(self.assignment_errors) > 0:
+            print("Long-term constraint violations:", file=sys.stderr)
+            for error in self.assignment_errors:
+                print(error.message, file=sys.stderr)
 
     def _check_long_term_constraint_violation(self, occurrence, constraint_violations: LongTermConstraintViolations):
         violations = constraint_violations.violations
         total_tested = constraint_violations.occurrences
         if occurrence == "always":  # should never be violated
-            self.append_assignment_error(LongTermConstraintError(f"Long-term constraint '{constraint_violations.reason}' was violated {violations} times out of {total_tested} tested."))
+            if violations > 0:
+                self.append_assignment_error(LongTermConstraintError(f"Long-term constraint '{constraint_violations.reason}' was violated {violations} times out of {total_tested} tested."))
         elif occurrence == "once":  # should hold at least once -> violations <= steps - 1
             if violations > total_tested - 1:
                 self.append_assignment_error(LongTermConstraintError(f"Long-term constraint '{constraint_violations.reason}' should hold at least once, but was violated in every step."))
@@ -207,7 +208,7 @@ class Simulation(abc.ABC):
             if violations / total_tested > (1 - occurrence):
                 self.append_assignment_error(LongTermConstraintError(
                     f"Long-term constraint '{constraint_violations.reason}' should hold at least {occurrence:.1%} of the time, "
-                    f"but was violated {violations} times out of {total_tested} tested ({violations / total_tested:.1%})."
+                    f"but was violated {violations} times out of {total_tested} tested (violated: {violations / total_tested:.1%}, passed: {(total_tested - violations) / total_tested:.1%})."
                 ))
 
     def _resolve_ensembles(self, ensemble_instances: list[EnsembleInstance]):

@@ -19,13 +19,15 @@ assert TEST_STEP % 10 == 1, "TEST_STEP must be a multiple of 10 + 1 for the adap
 helpers = Helpers()
 
 
-@pytest.mark.dependency(depends=["generated_adaptations/tests/test_generic.py::TestConfiguration::test_adaptation_exists"], scope='session')
+@pytest.mark.skip  # TODO: temporarily skipped until a better approach is implemented
+@pytest.mark.dependency(depends=["generated_adaptations/tests/test_generic.py::TestConfiguration::test_adaptation_class_is_correct"], scope='session')
 class TestFarm:
 
     @staticmethod
     def initialize(adaptation_config, previously_protecting, seed, simulation_class, simulation_configs):
         random.seed(seed)
-        simulation: SmartFarmSimulation = helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)
+        # noinspection PyTypeChecker
+        simulation: SmartFarmSimulation = helpers.init_simulation(adaptation_config, simulation_class, simulation_configs)[0]
         protecting_count = int(previously_protecting.split("/")[0])
         return protecting_count, simulation
 

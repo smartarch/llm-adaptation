@@ -90,7 +90,7 @@ def extract_code_block(response_text):
     pattern = r"```(?:\w*\n)?(.*?)```"
     matches = re.findall(pattern, response_text, re.DOTALL)
     if matches:
-        return matches[0].strip()
+        return matches[-1].strip()  # there should only be one code block, but if there are multiple, return the last one
     return None
 
 
