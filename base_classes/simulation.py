@@ -1,9 +1,10 @@
 import abc
 import sys
+from collections import defaultdict
 from typing import Callable, Optional
 import traceback
 
-from DSL.dsl_utils import DSLConfiguration, UserConstraint, EnsembleInstance
+from DSL.dsl_utils import DSLConfiguration, UserConstraint, EnsembleInstance, LongTermConstraintViolations
 from base_classes.components import Component
 from base_classes.ensembles import ResolvedEnsemble
 
@@ -50,6 +51,11 @@ class UserConstraintError(AssignmentError):
         super().__init__(message)
 
 
+class LongTermConstraintError(AssignmentError):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
 class Simulation(abc.ABC):
 
     def __init__(self, adapt: Callable[["Simulation", int], None], config: dict):
@@ -66,10 +72,12 @@ class Simulation(abc.ABC):
         self.assignment_errors: list[AssignmentError] = []
         self.step: Optional[int] = None
         self.adapt_every = self.config.get("adaptation_params", {}).get("adapt_every", 1)
+        self.constraints_violations: dict[UserConstraint, LongTermConstraintViolations] = defaultdict(LongTermConstraintViolations)
 
         self.dsl_config = DSLConfiguration(config.get("adaptation_params", {}).get("prompt_template_params", {}))
 
     def run_simulation(self, steps: int):
+        step = 0
         for step in range(1, steps + 1):
             print(f"Step: {step}")
             self.step = step
@@ -83,6 +91,8 @@ class Simulation(abc.ABC):
 
             if self.should_stop():
                 break
+        self.reset_assignments()
+        self._check_long_term_constraint_violations()
 
     def simulation_step(self, step):
         self.reset_assignments()
@@ -162,13 +172,43 @@ class Simulation(abc.ABC):
 
     def _check_user_constraint(self, constraint: UserConstraint):
         # check the constraint for each ensemble
+        def check_constraint(*reason_args):
+            self.constraints_violations[constraint].constraint = constraint
+            self.constraints_violations[constraint].occurrences += 1
+            if not constraint.constraint(*reason_args):
+                if constraint.occurrence == "always":
+                    self.append_assignment_error(UserConstraintError(constraint.reason(*reason_args)))
+                else:
+                    self.constraints_violations[constraint].violations += 1
+                    self.constraints_violations[constraint].reason = constraint.reason(*reason_args)
+
         if constraint.foreach:
             for resolved_ensemble in self._resolve_ensembles(constraint.relevant_ensembles):
-                if not constraint.constraint(resolved_ensemble):
-                    self.append_assignment_error(UserConstraintError(constraint.reason(resolved_ensemble)))
+                check_constraint(resolved_ensemble)
         else:
-            if not constraint.constraint():
-                self.append_assignment_error(UserConstraintError(constraint.reason()))
+            check_constraint()
+
+    def _check_long_term_constraint_violations(self):
+        for constraint, violations in self.constraints_violations.items():
+            self._check_long_term_constraint_violation(constraint.occurrence, violations)
+        print("Long-term constraint violations:", file=sys.stderr)
+        for error in self.assignment_errors:
+            print(error.message, file=sys.stderr)
+
+    def _check_long_term_constraint_violation(self, occurrence, constraint_violations: LongTermConstraintViolations):
+        violations = constraint_violations.violations
+        total_tested = constraint_violations.occurrences
+        if occurrence == "always":  # should never be violated
+            self.append_assignment_error(LongTermConstraintError(f"Long-term constraint '{constraint_violations.reason}' was violated {violations} times out of {total_tested} tested."))
+        elif occurrence == "once":  # should hold at least once -> violations <= steps - 1
+            if violations > total_tested - 1:
+                self.append_assignment_error(LongTermConstraintError(f"Long-term constraint '{constraint_violations.reason}' should hold at least once, but was violated in every step."))
+        elif isinstance(occurrence, float):  # should hold at least this fraction of the time
+            if violations / total_tested > (1 - occurrence):
+                self.append_assignment_error(LongTermConstraintError(
+                    f"Long-term constraint '{constraint_violations.reason}' should hold at least {occurrence:.1%} of the time, "
+                    f"but was violated {violations} times out of {total_tested} tested ({violations / total_tested:.1%})."
+                ))
 
     def _resolve_ensembles(self, ensemble_instances: list[EnsembleInstance]):
         resolved_ensembles = []

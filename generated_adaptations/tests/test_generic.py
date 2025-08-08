@@ -138,3 +138,5 @@ class TestAdapt:
         simulation.check_user_constraints()
 
         assert_no_user_constraints_violated(simulation.assignment_errors)
+
+    # TODO: add tests for long-term constraints

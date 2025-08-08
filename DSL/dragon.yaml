@@ -71,11 +71,13 @@ adaptation_params:  # this is purely technical
           description: "Villagers in the Village"
         ensembles: [Farm, GoToCave, SpawnFarmer, SpawnWarrior]
         constraints:
-          - foreach: GoToCave
+          go_to_cave_at_least_once:
+            foreach: GoToCave
             constraint: "lambda e: len(e) > 0"
             occurrence: "once"
             reason: "lambda e: f'At least one villager should go to the Cave to attack the Dragon.'"
-          - constraint: "lambda: len(ensembles[2]) >= 2 or len(ensembles[3]) >= 2"  # spawn farmer and spawn warrior ensembles (assuming the order defined above)
+          spawn_at_least_a_few:
+            constraint: "lambda: len(ensembles[2]) >= 2 or len(ensembles[3]) >= 2"  # spawn farmer and spawn warrior ensembles (assuming the order defined above)
             occurrence: "10%"
             reason: "lambda: f'At least a few new villagers should be spawned to increase the chance of killing the dragon.'"
       assign_in_cave:
@@ -85,12 +87,14 @@ adaptation_params:  # this is purely technical
           description: "Villagers in the Cave"
         ensembles: [Attack, StayInCave, GoToVillage]
         constraints:
-          - foreach: Attack
+          attack_at_least_once:
+            foreach: Attack
             constraint: "lambda e: len(e) > 0"
             occurrence: "once"
             reason: "lambda e: f'The dragon should be attacked.'"
     constraints:
-      - constraint: "lambda: (
+      warriors_should_be_in_cave:
+        constraint: "lambda: (
           warriors := [v for v in components if v.role == 'warrior'],
           in_cave := [v for v in warriors if v.location == Map.CAVE],
           len(in_cave) >= 0.5 * len(warriors)
