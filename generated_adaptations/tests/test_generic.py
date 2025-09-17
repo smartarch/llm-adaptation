@@ -75,7 +75,8 @@ def assert_no_invalid_groups(assignment_errors):
 def assert_no_missing_assignments(assignment_errors):
     missing_assignments = filter_errors(assignment_errors, MissingAssignmentError)
     if missing_assignments:
-        fail(f"{missing_assignments} components have not been assigned to a group. Each component must be assigned exactly once.")
+        components = [str(error.component) for error in missing_assignments]
+        fail(f"The following components have not been assigned to a group: {', '.join(components)}. Each component must be assigned exactly once.")
 
 
 def assert_no_user_constraints_violated(assignment_errors):
