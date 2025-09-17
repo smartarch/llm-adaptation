@@ -2,6 +2,7 @@ import dataclasses
 from collections import UserDict
 from typing import Iterator, Callable
 
+from DSL.constraints.parser import parse_constraint
 from base_classes.components import Component
 
 
@@ -30,12 +31,15 @@ class DSLConfiguration(UserDict):
             for component in get_components_for_assignment(components_config, simulation.components, simulation)
         }
 
-    def load_ensemble_names_for_all_assignments(self, simulation) -> list[str]:
+    def load_ensemble_instances_for_all_assignments(self, simulation) -> list["EnsembleInstance"]:
         ensembles = []
         for assignment_name in self.data["assignments"]:
             ensemble_instances = self.load_ensemble_instances_for_assignment(simulation, assignment_name)
-            ensembles.extend([ensemble.name for ensemble in ensemble_instances])
+            ensembles.extend(ensemble_instances)
         return ensembles
+    
+    def load_ensemble_names_for_all_assignments(self, simulation) -> list[str]:
+        return [ensemble.name for ensemble in self.load_ensemble_instances_for_all_assignments(simulation)]
 
     def load_ensemble_instances_for_assignment(self, simulation, assignment_name) -> list["EnsembleInstance"]:
         assignment_config = self.data["assignments"][assignment_name]
@@ -56,6 +60,11 @@ class DSLConfiguration(UserDict):
         }
 
         for constraint_name, constraint in config.items():
+            parsed = parse_constraint(constraint["constraint"])
+            print("Parsed constraint:")
+            print(parsed.pretty(), end="\n\n")
+            continue
+
             relevant_ensembles = resolved_ensembles
             if "foreach" in constraint:
                 relevant_ensembles = list(filter(lambda e: e.type == constraint["foreach"], relevant_ensembles))

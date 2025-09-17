@@ -161,6 +161,7 @@ class Simulation(abc.ABC):
                 self.append_assignment_error(MissingAssignmentError(component))
 
     def check_user_constraints(self):
+        # per assignment constraints
         for assignment_name in self.dsl_config.load_assignment_names():
             components = self.dsl_config.load_components_for_assignment(self, assignment_name)
             ensemble_instances = self.dsl_config.load_ensemble_instances_for_assignment(self, assignment_name)
@@ -168,6 +169,13 @@ class Simulation(abc.ABC):
 
             for constraint in self.dsl_config.load_constraints(self, assignment_name, resolved_ensembles, components):
                 self._check_user_constraint(constraint)
+
+        # global constraints
+        components = self.dsl_config.load_components_for_all_assignments(self)
+        ensemble_instances = self.dsl_config.load_ensemble_instances_for_all_assignments(self)
+        resolved_ensembles = self._resolve_ensembles(ensemble_instances)
+        for constraint in self.dsl_config.load_constraints(self, None, resolved_ensembles, components):
+            self._check_user_constraint(constraint)
 
     def _check_user_constraint(self, constraint: UserConstraint):
         # check the constraint for each ensemble

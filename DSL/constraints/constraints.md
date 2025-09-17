@@ -2,7 +2,7 @@
 
 ## Semantics
 
-* `temporal` operator: $\lozenge^n_t \phi$ means that $\phi$ holds at least $n$ times within the next $t$ steps
+* `within` operator: $\lozenge^n_t \phi$ means that $\phi$ holds at least $n$ times within the next $t$ steps
   * for technical reasons regarding finite traces, if the last step of the simulation is reached before $t$ steps, the constraint is not enforced (except for the case $t = MAX$ as defined below)
 
 Derived operators:
@@ -17,11 +17,14 @@ Derived operators:
   * can be expressed as $\square_{MAX} \phi$ or $\lozenge^{MAX}_{MAX} \phi$
 * `once` operator: $\lozenge \phi$ means that $\phi$ holds at least once in the future
   * can be expressed as $\lozenge^1_{MAX} \phi$
+* `next` operator: $\bigcirc \phi$ means that $\phi$ holds in the next step
+  * can be expressed as $\lozenge^1_1 \phi$
 
 Other constructs:
 
 * standard boolean logic: `and` ($\wedge$), `or` ($\vee$), `not` ($\neg$), `implies` ($\implies$)
-* quantifiers: `forall x in X: ...` ($\forall x \in X: ...$), `exists x in X: ...` ($\exists x \in X: ...$)
+* quantifiers: `forall x in X: ...` ($\forall x \in X: ...$)
+  * for now, don't support `exists x in X: ...` ($\exists x \in X: ...$)
 * CAPITALIZED are constants
 * lower_case are name of ensembles and sets of components, e.g.
   * $attack$ is the attack ensemble
@@ -65,7 +68,7 @@ TODO: how to express `max_threatened_field`?
 
 = for each field, if its threat level is at least 0.2, the field should be fully protected (as many drones assigned to the corresponding ensemble) within 10 time steps, unless the threat level drops below 0.2 during that time
 
-$\forall f \in fields: \square_{10} f.threat\_level \ge 0.2 \implies |protecting(f)| \ge f.drones\_for\_full\_protection$
+$\forall f \in fields: \square_{10} f.threat\_level \ge 0.2 \implies \bigcirc |protecting(f)| \ge f.drones\_for\_full\_protection$
 
 Note: the semantics of the implication above is that the right side is enforced on the next step after the 10 steps that the left side holds on consecutively.
 
@@ -115,14 +118,18 @@ TODO: how to express the set definitions above?
 
 $\forall d \in drones: \square_{d.time\_to\_charger} d.battery \le 0.1 \implies \lozenge d \in charging$
 
-## DSL and parsing
+## Parsing and implementation notes
 
-* operators:
-  * always(phi) for <span>\square \phi</span>
-  * eventually(phi) for <span>\lozenge \phi</span>
-  * eventually^n(phi) for <span>\lozenge^n \phi</span>
-  * eventually_{t}(phi) for <span>\lozenge_t \phi</span>
-  * Boolean logic: and, or, not, implies
-  * Quantifiers: forall x in X: ...
 * `lark` or `pyparsing` to build the parser
 * `eval` to evaluate the constants and attribute access
+
+Variables available in the evaluation context:
+
+* ensembles
+  * for each ensemble type `Type`:
+    * `TypeEns` = dict of all ensemble instances of that type indexed by their parameter (component)
+    * `TypeEn` = the first ensemble instance of that type (if any) - useful for singleton ensembles
+* components
+  * for each component type `Type`:
+    * `TypeComps` = list of all components of that type
+* defined local variables (via Python `eval`)
