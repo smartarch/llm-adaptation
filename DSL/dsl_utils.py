@@ -2,6 +2,7 @@ import dataclasses
 from collections import UserDict
 from typing import Iterator, Callable
 
+from DSL.constraints.constraint import UserConstraint
 from DSL.constraints.parser import parse_constraint
 from base_classes.components import Component
 
@@ -48,45 +49,23 @@ class DSLConfiguration(UserDict):
 
         return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components, simulation))
 
-    def load_constraints(self, simulation, assignment_name, resolved_ensembles, components) -> Iterator["UserConstraint"]:
+    def load_constraints(self, simulation, assignment_name) -> Iterator["UserConstraint"]:
         if assignment_name is not None:
             config = self.data.get("assignments", {}).get(assignment_name, {}).get("constraints", {})
         else:
             config = self.data.get("constraints", {})
 
-        eval_globals = simulation.get_globals() | {
-            "components": components,
-            "ensembles": resolved_ensembles,
-        }
-
         for constraint_name, constraint in config.items():
-            parsed = parse_constraint(constraint["constraint"])
-            print("Parsed constraint:")
-            print(parsed.pretty(), end="\n\n")
-            continue
-
-            relevant_ensembles = resolved_ensembles
-            if "foreach" in constraint:
-                relevant_ensembles = list(filter(lambda e: e.type == constraint["foreach"], relevant_ensembles))
-            if "if" in constraint:
-                condition = eval(constraint["if"], eval_globals)
-                relevant_ensembles = list(filter(condition, relevant_ensembles))
-            if "occurrence" in constraint:
-                occurrence = constraint["occurrence"]
-                if occurrence.endswith("%"):
-                    occurrence = float(occurrence[:-1]) / 100
-                elif occurrence.startswith("lambda"):
-                    occurrence = eval(occurrence, eval_globals)
-            else:
-                occurrence = "always"
             yield UserConstraint(
                 name=constraint_name,
-                constraint=eval(constraint["constraint"], eval_globals),
-                relevant_ensembles=relevant_ensembles,
-                reason=eval(constraint["reason"], eval_globals),
-                foreach="foreach" in constraint,
-                occurrence=occurrence,
+                ast=parse_constraint(constraint["constraint"]),
+                reason=eval(constraint["reason"], simulation.get_globals()),
             )
+
+    def load_constraints_for_all_assignments(self, simulation) -> Iterator["UserConstraint"]:
+        for assignment_name in self.data.get("assignments", {}):
+            yield from self.load_constraints(simulation, assignment_name)
+        yield from self.load_constraints(simulation, None)
 
 
 def get_components_for_assignment(components_config, components, environment):
@@ -132,6 +111,7 @@ def get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, comp
                 if "params" in ensemble_type:
                     first_param = next(iter(ensemble_type["params"]))  # TODO: how to handle multiple parameters?
                     setattr(ensemble, first_param, component)
+                    ensemble.param = component
                 yield ensemble
 
 
@@ -140,26 +120,4 @@ class EnsembleInstance:
     type: str
     name: str
     description: str | None = None
-
-
-@dataclasses.dataclass
-class UserConstraint:
-    name: str
-    constraint: Callable
-    relevant_ensembles: list[EnsembleInstance]
-    reason: Callable
-    foreach: bool = False
-    occurrence: str | float | Callable = "always"
-
-    def __hash__(self):
-        return hash(self.name)
-
-    def __eq__(self, other):
-        return self.name == other.name
-
-
-class LongTermConstraintViolations:
-    constraint: UserConstraint
-    occurrences: int = 0
-    violations: int = 0
-    reason: str
+    param: str | None = None

@@ -2,6 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "dragon 41nano_default/code_01_04 - no spawn",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "args": ["dragon/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "DSL/dragon.yaml", "-s", "1", "-e", "1", "--extra_config={\"name\": \"41nano_default/code_01_04\", \"log_dir.append\": \"/41nano_default/code_01_04\", \"adaptation_name\": \"generated_adaptations.dragon.41nano_default.code_01_04.SmartAdaptation\"}"],
+    },
+    {
       "env": {
         "PYTHONPATH": "${workspaceFolder}"
       },

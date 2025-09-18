@@ -1,12 +1,11 @@
-from DSL.dsl_utils import EnsembleInstance
 from base_classes.components import Component
+from DSL.dsl_utils import EnsembleInstance
 
 
-class ResolvedEnsemble:
+class ResolvedEnsemble(EnsembleInstance):
 
     def __init__(self, ensemble_instance: EnsembleInstance, members: list[Component]):
-        self.name = ensemble_instance.name
-        self.__dict__.update(ensemble_instance.__dict__)
+        super().__init__(**ensemble_instance.__dict__)
         self.ensemble_instance = ensemble_instance
         self.components = members
 

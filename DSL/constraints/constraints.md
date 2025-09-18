@@ -126,9 +126,10 @@ $\forall d \in drones: \square_{d.time\_to\_charger} d.battery \le 0.1 \implies 
 Variables available in the evaluation context:
 
 * ensembles
-  * for each ensemble type `Type`:
+  * for each ensemble type `Type` with params:
     * `TypeEns` = dict of all ensemble instances of that type indexed by their parameter (component)
-    * `TypeEn` = the first ensemble instance of that type (if any) - useful for singleton ensembles
+  * for each ensemble type `Type` without params (singleton):
+    * `TypeEn` = the first ensemble instance of that type
 * components
   * for each component type `Type`:
     * `TypeComps` = list of all components of that type
