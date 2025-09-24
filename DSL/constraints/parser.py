@@ -1,6 +1,9 @@
 import os
 from lark import Lark, Transformer, v_args
 
+from DSL.constraints.evaluation import PyExpr, TemporalWithin, And, Or, Not, Implies, ForAll
+
+
 _GRAMMAR_PATH = os.path.join(os.path.dirname(__file__), 'grammar.lark')
 
 class ConstraintParser:
@@ -9,49 +12,15 @@ class ConstraintParser:
             grammar = f.read()
         self.lark = Lark(grammar, parser='lalr', start='start')
 
-    def parse(self, text):
-        """
-        Parse a DSL constraint string and return the Lark parse tree.
-        """
+    def parse(self, text: str):
+        """Parse a DSL constraint string and return the Lark parse tree."""
         return self.lark.parse(text)
 
 
-# === AST Node Classes ===
-class ASTNode:
-    pass
-
-class PyExpr(ASTNode):
-    def __init__(self, code):
-        self.code = code
-    def __repr__(self):
-        return f"PyExpr({self.code!r})"
-
-class TemporalWithin(ASTNode):
-    def __init__(self, min_occurrences, window, expr):
-        self.min_occurrences = min_occurrences  # PyExpr or number (as string)
-        self.window = window  # PyExpr or number (as string)
-        self.expr = expr  # ASTNode (usually PyExpr or BooleanOp)
-    def __repr__(self):
-        return f"Within(min_occurrences={self.min_occurrences!r}, window={self.window!r}, expr={self.expr!r})"
-
-class BooleanOp(ASTNode):
-    def __init__(self, op, *args):
-        self.op = op  # 'and', 'or', 'not', 'implies'
-        self.args = args
-    def __repr__(self):
-        return f"BooleanOp({self.op!r}, {', '.join(repr(a) for a in self.args)})"
-
-class ForAll(ASTNode):
-    def __init__(self, var, set_expr, body):
-        self.var = var
-        self.set_expr = set_expr  # PyExpr
-        self.body = body  # ASTNode
-    def __repr__(self):
-        return f"ForAll({self.var!r}, {self.set_expr!r}, {self.body!r})"
-
-# === AST Transformer ===
 @v_args(inline=True)
 class ConstraintASTTransformer(Transformer):
+    """AST transformer"""
+
     def start(self, child):
         # Unwrap the top-level 'start' rule for a cleaner AST
         return child
@@ -93,16 +62,16 @@ class ConstraintASTTransformer(Transformer):
         return TemporalWithin(1, 1, expr)
 
     def and_(self, left, right):
-        return BooleanOp('and', left, right)
+        return And(left, right)
 
     def or_(self, left, right):
-        return BooleanOp('or', left, right)
+        return Or(left, right)
 
     def not_(self, arg):
-        return BooleanOp('not', arg)
+        return Not(arg)
 
     def implies(self, left, right):
-        return BooleanOp('implies', left, right)
+        return Implies(left, right)
 
     def forall(self, var, set_expr, body):
         return ForAll(str(var), set_expr, body)
@@ -120,11 +89,11 @@ class ConstraintASTTransformer(Transformer):
         return PyExpr("MAX")
 
 
-# Singleton instance for convenience
+# Singleton parser + transformer
 _parser = ConstraintParser()
 _transformer = ConstraintASTTransformer()
 
-def parse_constraint(text):
+def parse_constraint(text: str):
     parsed = _parser.parse(text)
     return _transformer.transform(parsed)
 

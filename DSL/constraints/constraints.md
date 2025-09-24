@@ -11,12 +11,16 @@ Derived operators:
 
 * `scattered` operator: $\lozenge^n \phi$ means that $\phi$ holds at least $n$ times in the future
   * can be expressed as $\lozenge^n_{MAX} \phi$
+
 * `consequent` operator: $\square_t \phi$ means that $\phi$ holds in each of the next $t$ steps
   * can be expressed as $\lozenge^t_t \phi$
+
 * `always` operator: $\square \phi$ means that $\phi$ holds in each remaining step
   * can be expressed as $\square_{MAX} \phi$ or $\lozenge^{MAX}_{MAX} \phi$
+
 * `once` operator: $\lozenge \phi$ means that $\phi$ holds at least once in the future
   * can be expressed as $\lozenge^1_{MAX} \phi$
+  
 * `next` operator: $\bigcirc \phi$ means that $\phi$ holds in the next step
   * can be expressed as $\lozenge^1_1 \phi$
 

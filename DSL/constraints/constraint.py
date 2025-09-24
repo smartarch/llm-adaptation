@@ -1,10 +1,6 @@
-"""
-ConstraintMonitor scaffolding for temporal logic DSL.
-"""
-
 import dataclasses
 from typing import Callable, TYPE_CHECKING
-from DSL.constraints.parser import ASTNode
+from DSL.constraints.evaluation import ASTNode
 from base_classes.components import Component
 
 if TYPE_CHECKING:
@@ -17,39 +13,55 @@ class UserConstraint:
     name: str
     ast: ASTNode
     reason: Callable
+    variables: dict[str, str]
 
     def check(self, simulation: "Simulation", components, resolved_ensembles):
-        component_locals = self.components_to_eval(simulation, components)
-        ensemble_locals = self.ensembles_to_eval(simulation, resolved_ensembles)
-        # TODO: evaluate the AST using eval and the locals
+        context = self.prepare_context(simulation, components, resolved_ensembles)
+        step: int = simulation.step  # type: ignore
+        result = self.ast.evaluate(step, context)
+        print(result)
+
+    def prepare_context(self, simulation: "Simulation", components, resolved_ensembles):
+        component_context = self.components_to_eval(simulation, components)
+        ensemble_context = self.ensembles_to_eval(simulation, resolved_ensembles)
+
+        context = simulation.get_globals().copy()
+        context.update(component_context)
+        context.update(ensemble_context)
+
+        for variable_name, expression in self.variables.items():
+            context[variable_name] = eval(expression, {}, context)
+
+        return context
 
     def components_to_eval(self, simulation: "Simulation", components: dict[str, "Component"]):
-        variables = {}
+        context = {}
         for component_type in simulation.dsl_config.data["components"]:
             name = component_type + "Comps"
-            variables[name] = [
+            context[name] = [
                 c for c in components.values()
                 if isinstance(c, eval(component_type, simulation.get_globals()))
             ]
-        return variables
+        return context
     
     def ensembles_to_eval(self, simulation: "Simulation", resolved_ensembles: list["ResolvedEnsemble"]):
-        variables = {}
+        context: dict[str, dict["Component", "ResolvedEnsemble"] | "ResolvedEnsemble" | None] = {}
         for ensemble_type, ensemble_config in simulation.dsl_config.data["ensembles"].items():
             if "params" in ensemble_config:
                 name = ensemble_type + "Ens"
-                variables[name] = {
+                context[name] = {
                     e.param: e
                     for e in resolved_ensembles
                     if e.type == ensemble_type
+                    and e.param is not None  # this should always hold if "params" is in config
                 }
             else: # singleton
                 name = ensemble_type + "En"
-                variables[name] = next((
+                context[name] = next((
                     e for e in resolved_ensembles
                     if e.type == ensemble_type
                 ), None)
-        return variables
+        return context
 
 
 

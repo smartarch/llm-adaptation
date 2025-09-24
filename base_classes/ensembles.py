@@ -21,3 +21,6 @@ class ResolvedEnsemble(EnsembleInstance):
 
     def __repr__(self):
         return f"ResolvedEnsemble(name={self.name}, count={self.count})"
+
+    def __contains__(self, item):
+        return item in self.components

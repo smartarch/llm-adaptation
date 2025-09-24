@@ -1,7 +1,7 @@
 import abc
 import sys
 from collections import defaultdict
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 import traceback
 
 from DSL.dsl_utils import DSLConfiguration, UserConstraint, EnsembleInstance
@@ -83,7 +83,6 @@ class Simulation(abc.ABC):
         # self.constraints_violations: dict[UserConstraint, LongTermConstraintViolations] = defaultdict(LongTermConstraintViolations)
 
     def run_simulation(self, steps: int):
-        step = 0
         for step in range(1, steps + 1):
             print(f"Step: {step}")
             self.step = step
@@ -127,7 +126,7 @@ class Simulation(abc.ABC):
     def add_stats(self, stats):
         self.stats = stats
 
-    def get_globals(self):
+    def get_globals(self) -> dict[str, Any]:
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {
             "environment": self,

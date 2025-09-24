@@ -1,0 +1,5 @@
+{
+    "pylint.args": [
+        "--ignore=W0123"
+    ]
+}

@@ -60,6 +60,7 @@ class DSLConfiguration(UserDict):
                 name=constraint_name,
                 ast=parse_constraint(constraint["constraint"]),
                 reason=eval(constraint["reason"], simulation.get_globals()),
+                variables=constraint.get("variables", {})
             )
 
     def load_constraints_for_all_assignments(self, simulation) -> Iterator["UserConstraint"]:
@@ -120,4 +121,4 @@ class EnsembleInstance:
     type: str
     name: str
     description: str | None = None
-    param: str | None = None
+    param: Component | None = None

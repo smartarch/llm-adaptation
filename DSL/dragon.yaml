@@ -88,6 +88,11 @@ adaptation_params:  # this is purely technical
             constraint: "once(`len(AttackEn) > 0`)"
             reason: "lambda e: f'The dragon should be attacked.'"
     constraints:
+      attack_after_moving_to_cave:
+        variables:
+          warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+        constraint: "forall warrior in `warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
+        reason: "lambda warrior: f'Warrior {warrior.id} should attack the Dragon after moving to the Cave.'"
       warriors_should_be_in_cave:
         constraint: "scattered(`0.8 * MAX`, `len([v for v in VillagerComps if v.role == 'warrior' and v.location == Map.CAVE]) >= 0.5 * len([v for v in VillagerComps if v.role == 'warrior'])`)"
         reason: "lambda: f'At least half of the warriors should be in the Cave so they can attack the Dragon.'"
