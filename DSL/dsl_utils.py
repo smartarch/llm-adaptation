@@ -61,7 +61,7 @@ class DSLConfiguration(UserDict):
             yield UserConstraint(
                 name=constraint_name,
                 ast=ast,
-                reason=eval(constraint["reason"], simulation.get_globals()),
+                reason=constraint["reason"],
                 variables=constraint.get("variables", {})
             )
 

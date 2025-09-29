@@ -1,6 +1,6 @@
 import dataclasses
-from typing import Callable, TYPE_CHECKING
-from DSL.constraints.evaluation import ASTNode, TemporalObligation
+from typing import Any, Callable, TYPE_CHECKING
+from DSL.constraints.evaluation import ASTNode, ForAll, TemporalObligation
 from base_classes.components import Component
 
 if TYPE_CHECKING:
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 class UserConstraint:
     name: str
     ast: ASTNode
-    reason: Callable
+    reason: str  # f-string that will be evaluated later with context
     variables: dict[str, str]
     obligations: list[TemporalObligation] = dataclasses.field(default_factory=list)
 
@@ -26,7 +26,20 @@ class UserConstraint:
                     self.obligations.append(obligation)
         else:
             if result is False:
-                print(f"CONSTRAINT VIOLATED: {self.name} at step {step}")  # TODO: proper reason
+                if isinstance(self.ast, ForAll):
+                    for violation in self.ast.violations:
+                        yield self.format_reason(violation)
+                else:
+                    yield self.format_reason(context)
+
+    def check_end(self, simulation: "Simulation"):
+        context = self.prepare_context(simulation, {}, [])
+        for obligation in self.obligations:
+            if not obligation.resolved and obligation.occurences < obligation.min_occurrences:
+                yield self.format_reason(context | obligation.bound_variables)
+
+    def format_reason(self, context: dict[str, Any]) -> str:
+        return eval(f'f"{self.reason}"', context)
 
     def prepare_context(self, simulation: "Simulation", components, resolved_ensembles):
         component_context = self.components_to_eval(simulation, components)
@@ -38,6 +51,8 @@ class UserConstraint:
 
         for variable_name, expression in self.variables.items():
             context[variable_name] = eval(expression, context)
+
+        context["step"] = simulation.step
 
         return context
 

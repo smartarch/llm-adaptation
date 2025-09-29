@@ -73,10 +73,10 @@ adaptation_params:  # this is purely technical
         constraints:
           go_to_cave_at_least_once:
             constraint: "once(`len(GoToCaveEn) > 0`)"
-            reason: "lambda e: f'At least one villager should go to the Cave to attack the Dragon.'"
+            reason: "At least one villager should go to the Cave to attack the Dragon."
           spawn_at_least_a_few:
             constraint: "scattered(3, `len(SpawnFarmerEn) >= 2 or len(SpawnWarriorEn) >= 2`)"
-            reason: "lambda: f'At least a few new villagers should be spawned to increase the chance of killing the dragon.'"
+            reason: "At least a few new villagers should be spawned to increase the chance of killing the dragon."
       assign_in_cave:
         components:
           type: Villager
@@ -86,18 +86,19 @@ adaptation_params:  # this is purely technical
         constraints:
           attack_at_least_once:
             constraint: "once(`len(AttackEn) > 0`)"
-            reason: "lambda e: f'The dragon should be attacked.'"
+            reason: "The dragon should be attacked."
     constraints:
       attack_after_moving_to_cave:
         variables:
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
-        reason: "lambda warrior: f'Warrior {warrior.id} should attack the Dragon after moving to the Cave.'"
+        # constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
+        constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in SpawnFarmerEn`)"
+        reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
       warriors_should_be_in_cave:
         variables:
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "scattered(`0.8 * MAX`, `len([v for v in Warriors if v.location == Map.CAVE]) >= 0.5 * len(Warriors)`)"
-        reason: "lambda: f'At least half of the warriors should be in the Cave so they can attack the Dragon.'"
+        reason: "At least half of the warriors should be in the Cave so they can attack the Dragon."
 
     strategy: ""  # optional
     strategy_interface:

@@ -50,14 +50,15 @@ class TemporalWithin(ASTNode):
             resolve_number(self.min_occurrences, step, context, bindings),
             resolve_number(self.window, step, context, bindings),
             self.expr,
-            step
+            step,
+            bound_variables,
         )
         self.obligations[bound_variables] = obligation
         return [obligation]
 
 
 class TemporalObligation(ASTNode):
-    def __init__(self, min_occurrences: int, window: int, expr: PyExpr, step: int):
+    def __init__(self, min_occurrences: int, window: int, expr: PyExpr, step: int, bound_variables: HashableDict):
         self.min_occurrences = min_occurrences
         self.window = window
         self.expr = expr
@@ -65,6 +66,7 @@ class TemporalObligation(ASTNode):
         self.end_step = step + window
         self.occurences = 0
         self.resolved = False
+        self.bound_variables = bound_variables
 
     def evaluate(self, step: int, context: dict[str, Any], bindings: dict[str, Any]) -> bool | list["TemporalObligation"]:
         if self.resolved:
@@ -135,21 +137,23 @@ class ForAll(ASTNode):
         self.var = var
         self.set_expr = set_expr
         self.body = body
+        self.violations: list[dict[str, Any]] = []
 
     def __repr__(self):
         return f"ForAll({self.var!r}, {self.set_expr!r}, {self.body!r})"
 
     def evaluate(self, step: int, context: dict[str, Any], bindings: dict[str, Any]) -> bool | list["TemporalObligation"]:
         elems: list = self.set_expr.evaluate(step, context, bindings) or []  # type: ignore[assignment]
-        ok = True
         obligations = []
+        self.violations = []
         for e in elems:
             bindings = bindings.copy() | {self.var: e}
             eval_result = self.body.evaluate(step, context, bindings)
             if isinstance(eval_result, list):
                 obligations.extend(eval_result)
             else:
-                ok = ok and eval_result
+                if eval_result is False:
+                    self.violations.append(bindings)
         if obligations:
             return obligations
-        return ok
+        return not self.violations
