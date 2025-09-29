@@ -9,7 +9,7 @@ import pytest
 
 from base_classes.adaptation import import_adaptation
 from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError, \
-    MissingAssignmentError, UserConstraintError, Simulation, LongTermConstraintError
+    MissingAssignmentError, UserConstraintError, Simulation
 from generated_adaptations.generator_utils import adaptation_class_name, adaptation_class
 from utils import read_configs, nested_update
 
@@ -86,13 +86,6 @@ def assert_no_user_constraints_violated(assignment_errors):
              "\n".join([error.message for error in user_constraint_violations]))
 
 
-def assert_no_long_term_constraints_violated(assignment_errors):
-    long_term_constraint_violations = filter_errors(assignment_errors, LongTermConstraintError)
-    if long_term_constraint_violations:
-        fail("Long-term constraints violated.\n\n" +
-             "\n".join([error.message for error in long_term_constraint_violations]))
-
-
 @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_class_is_correct"])
 class TestAdapt:
 
@@ -159,8 +152,8 @@ class TestAdapt:
         steps = config["steps"]
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_user_constraints_violated)
 
-    def test_no_long_term_constraints_violated(self, adaptation_config, simulation_class, simulation_configs):
+    def test_no_user_constraints_violated_at_the_end(self, adaptation_config, simulation_class, simulation_configs):
         simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         simulation.run_simulation(steps)
-        assert_no_long_term_constraints_violated(simulation.assignment_errors)
+        assert_no_user_constraints_violated(simulation.assignment_errors)

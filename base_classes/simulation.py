@@ -46,13 +46,7 @@ class MissingAssignmentError(AssignmentError):
 
 
 class UserConstraintError(AssignmentError):
-    def __init__(self, message: str):
-        super().__init__(message)
-
-
-class LongTermConstraintError(AssignmentError):
-    def __init__(self, message: str):
-        super().__init__(message)
+    pass
 
 
 class Simulation(abc.ABC):
@@ -80,7 +74,6 @@ class Simulation(abc.ABC):
             for assignment_name in self.dsl_config.load_assignment_names()
         }
         self.global_constraints = list(self.dsl_config.load_constraints(self, None))
-        # self.constraints_violations: dict[UserConstraint, LongTermConstraintViolations] = defaultdict(LongTermConstraintViolations)
 
     def run_simulation(self, steps=None):
         simulation_steps: int = steps if steps is not None else self.steps  # type: ignore
@@ -175,28 +168,28 @@ class Simulation(abc.ABC):
             resolved_ensembles = self._resolve_ensembles(ensemble_instances)
 
             for constraint in constraints:
-                result = list(constraint.check(self, components, resolved_ensembles))
-                print(result)  # TODO: process result
+                for violation in constraint.check(self, components, resolved_ensembles):
+                    self.assignment_errors.append(UserConstraintError(violation))
 
         # global constraints
         components = self.dsl_config.load_components_for_all_assignments(self)
         ensemble_instances = self.dsl_config.load_ensemble_instances_for_all_assignments(self)
         resolved_ensembles = self._resolve_ensembles(ensemble_instances)
         for constraint in self.global_constraints:
-            result = list(constraint.check(self, components, resolved_ensembles))
-            print(result)  # TODO: process result
+            for violation in constraint.check(self, components, resolved_ensembles):
+                self.assignment_errors.append(UserConstraintError(violation))
 
     def check_user_constraints_end(self):
         # per assignment constraints
         for constraints in self.assignment_constraints.values():
             for constraint in constraints:
-                result = list(constraint.check_end(self))
-                print(result)  # TODO: process result
+                for violation in constraint.check_end(self):
+                    self.assignment_errors.append(UserConstraintError(violation))
 
         # global constraints
         for constraint in self.global_constraints:
-            result = list(constraint.check_end(self))
-            print(result)  # TODO: process result
+            for violation in constraint.check_end(self):
+                self.assignment_errors.append(UserConstraintError(violation))
 
         if len(self.assignment_errors) > 0:
             print("Long-term constraint violations:", file=sys.stderr)

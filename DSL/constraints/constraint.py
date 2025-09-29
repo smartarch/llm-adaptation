@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Any, Callable, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING, Iterator
 from DSL.constraints.evaluation import ASTNode, ForAll, TemporalObligation
 from base_classes.components import Component
 
@@ -16,7 +16,7 @@ class UserConstraint:
     variables: dict[str, str]
     obligations: list[TemporalObligation] = dataclasses.field(default_factory=list)
 
-    def check(self, simulation: "Simulation", components, resolved_ensembles):
+    def check(self, simulation: "Simulation", components, resolved_ensembles) -> Iterator[str]:
         context = self.prepare_context(simulation, components, resolved_ensembles)
         step: int = simulation.step  # type: ignore
         result = self.ast.evaluate(step, context, {})
@@ -32,7 +32,7 @@ class UserConstraint:
                 else:
                     yield self.format_reason(context)
 
-    def check_end(self, simulation: "Simulation"):
+    def check_end(self, simulation: "Simulation") -> Iterator[str]:
         context = self.prepare_context(simulation, {}, [])
         for obligation in self.obligations:
             if not obligation.resolved and obligation.occurences < obligation.min_occurrences:

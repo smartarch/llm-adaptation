@@ -91,8 +91,7 @@ adaptation_params:  # this is purely technical
       attack_after_moving_to_cave:
         variables:
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        # constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
-        constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in SpawnFarmerEn`)"
+        constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
         reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
       warriors_should_be_in_cave:
         variables:
