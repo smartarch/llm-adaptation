@@ -1,0 +1,52 @@
+// Temporal logic DSL with Python expressions
+// - Base operator: within(n, t, `python_predicate`)
+// - Derived: scattered(n, `pred`), consequent(t, `pred`), always(`pred`), once(`pred`), next(`pred`)
+// - Boolean composition: implies
+// - Quantifiers: forall x in `python_set_expr`: FORMULA
+// - Python sub-expressions are enclosed in backticks `...` and evaluated
+
+start: formula
+     | implication
+     | forall
+
+formula: py_expr
+       | temporal
+
+implication: formula "implies" formula
+
+temporal: within_call
+        | scattered_call
+        | consequent_call
+        | always_call
+        | once_call
+        | next_call
+
+
+within_call: "within" "(" num_arg "," num_arg "," py_expr ")"
+scattered_call: "scattered" "(" num_arg "," py_expr ")"
+consequent_call: "consequent" "(" num_arg "," py_expr ")"
+always_call: "always" "(" py_expr ")"
+once_call: "once" "(" py_expr ")"
+next_call: "next" "(" py_expr ")"
+
+// num_arg can be a NUMBER or a py_expr
+num_arg: NUMBER | MAX | py_expr
+
+forall: "forall" NAME "in" py_expr ":" (formula | implication)
+
+// Backtick-delimited Python expression; supports escaping backticks with \`
+py_expr: PY_EXPR
+
+PY_EXPR: /`([^`\\]|\\.)*`/
+
+NUMBER: /[0-9]+/
+
+MAX: "MAX"
+
+NAME: /[a-zA-Z_][a-zA-Z0-9_]*/
+
+%import common.WS
+%ignore WS
+
+COMMENT: /#[^\n]*/
+%ignore COMMENT

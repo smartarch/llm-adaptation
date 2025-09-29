@@ -56,9 +56,11 @@ class DSLConfiguration(UserDict):
             config = self.data.get("constraints", {})
 
         for constraint_name, constraint in config.items():
+            ast = parse_constraint(constraint["constraint"])
+            print(ast)  # TODO: remove after debugging
             yield UserConstraint(
                 name=constraint_name,
-                ast=parse_constraint(constraint["constraint"]),
+                ast=ast,
                 reason=eval(constraint["reason"], simulation.get_globals()),
                 variables=constraint.get("variables", {})
             )

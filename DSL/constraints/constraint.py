@@ -1,6 +1,6 @@
 import dataclasses
 from typing import Callable, TYPE_CHECKING
-from DSL.constraints.evaluation import ASTNode
+from DSL.constraints.evaluation import ASTNode, TemporalObligation
 from base_classes.components import Component
 
 if TYPE_CHECKING:
@@ -14,12 +14,19 @@ class UserConstraint:
     ast: ASTNode
     reason: Callable
     variables: dict[str, str]
+    obligations: list[TemporalObligation] = dataclasses.field(default_factory=list)
 
     def check(self, simulation: "Simulation", components, resolved_ensembles):
         context = self.prepare_context(simulation, components, resolved_ensembles)
         step: int = simulation.step  # type: ignore
-        result = self.ast.evaluate(step, context)
-        print(result)
+        result = self.ast.evaluate(step, context, {})
+        if isinstance(result, list):
+            for obligation in result:
+                if obligation not in self.obligations:
+                    self.obligations.append(obligation)
+        else:
+            if result is False:
+                print(f"CONSTRAINT VIOLATED: {self.name} at step {step}")  # TODO: proper reason
 
     def prepare_context(self, simulation: "Simulation", components, resolved_ensembles):
         component_context = self.components_to_eval(simulation, components)
@@ -30,7 +37,7 @@ class UserConstraint:
         context.update(ensemble_context)
 
         for variable_name, expression in self.variables.items():
-            context[variable_name] = eval(expression, {}, context)
+            context[variable_name] = eval(expression, context)
 
         return context
 

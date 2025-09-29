@@ -1,10 +1,10 @@
 import os
 from lark import Lark, Transformer, v_args
 
-from DSL.constraints.evaluation import PyExpr, TemporalWithin, And, Or, Not, Implies, ForAll
+from DSL.constraints.evaluation import PyExpr, TemporalHistory, TemporalWithin, Implies, ForAll
 
 
-_GRAMMAR_PATH = os.path.join(os.path.dirname(__file__), 'grammar.lark')
+_GRAMMAR_PATH = os.path.join(os.path.dirname(__file__), 'grammar-simple.lark')
 
 class ConstraintParser:
     def __init__(self):
@@ -23,6 +23,10 @@ class ConstraintASTTransformer(Transformer):
 
     def start(self, child):
         # Unwrap the top-level 'start' rule for a cleaner AST
+        return child
+    
+    def formula(self, child):
+        # Unwrap the 'formula' rule
         return child
 
     def temporal(self, child):
@@ -61,23 +65,18 @@ class ConstraintASTTransformer(Transformer):
         # next(expr) => within(1, 1, expr)
         return TemporalWithin(1, 1, expr)
 
-    def and_(self, left, right):
-        return And(left, right)
-
-    def or_(self, left, right):
-        return Or(left, right)
-
-    def not_(self, arg):
-        return Not(arg)
-
-    def implies(self, left, right):
+    def implication(self, left, right):
+        if isinstance(left, TemporalWithin):
+            # Antecedent is temporal: use history-based evaluation
+            left = TemporalHistory(
+                left.min_occurrences,
+                left.window,
+                left.expr
+            )
         return Implies(left, right)
 
     def forall(self, var, set_expr, body):
         return ForAll(str(var), set_expr, body)
-
-    def exists(self, *args):
-        raise NotImplementedError("'exists' quantifier is not supported as per the spec.")
 
     def NAME(self, token):
         return str(token)
@@ -103,6 +102,7 @@ if __name__ == "__main__":
         "once(`len(attack) >= 1`)",
         "forall field in `fields`: always(`len(protecting[field]) <= field.drones_for_full_protection`)",
         "scattered(3, `len(spawn_farmer) >= 2 or len(spawn_warrior) >= 2`)",
+        "once(`len(cave) >= 1`) implies once(`len(attack) >= 1`)",
     ]
     for example in examples:
         print(f"Parsing: {example}")

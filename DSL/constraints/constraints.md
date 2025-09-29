@@ -20,7 +20,7 @@ Derived operators:
 
 * `once` operator: $\lozenge \phi$ means that $\phi$ holds at least once in the future
   * can be expressed as $\lozenge^1_{MAX} \phi$
-  
+
 * `next` operator: $\bigcirc \phi$ means that $\phi$ holds in the next step
   * can be expressed as $\lozenge^1_1 \phi$
 
@@ -65,8 +65,6 @@ $\lozenge^1_{MAX} |attack| >= 1$
 = in each step (always), the ensemble corresponding to the field with the highest threat level has at least as many drones as are required for full protection of the field
 
 $\square |protecting(max\_threatened\_field)| \ge max\_threatened\_field.drones\_for\_full\_protection$
-
-TODO: how to express `max_threatened_field`?
 
 ### If the threat level is at least 0.2 for 10 consecutive time steps, the field is fully protected
 
@@ -114,8 +112,6 @@ $warriors = \{ c | c \in villagers : c.role = WARRIOR \}$
 $in\_cave = \{ c | c \in villagers : c.location = CAVE \}$  
 $\lozenge^{0.8 \cdot MAX} | warriors \cap in\_cave | \ge 0.5 | warriors |$
 
-TODO: how to express the set definitions above?
-
 ### When the drone’s battery is below 0.1, it should charge
 
 = After drone’s battery reaches 0.1 or lower, it should be in the “charging” ensemble at some point in the future (unless there is not enough time to reach the charger)
@@ -138,3 +134,15 @@ Variables available in the evaluation context:
   * for each component type `Type`:
     * `TypeComps` = list of all components of that type
 * defined local variables (via Python `eval`)
+
+### Temporal operators
+
+* evaluate -> return True / False, or list of obligations to be checked in the next steps
+* simplification -> remove and / or (can be part of PyExpr) -> [`grammar-simple.lark`](./grammar-simple.lark)
+
+* store history for each operator (boolean for each previous step)
+  * used when temporal operator is at the left side of an implication
+* obligations -> if a temporal operator should hold, store the obligation and check it in each following step
+  * used when temporal operator is at the right side of an implication
+  * used when temporal operator is not in an implication (top-level)
+* store history / obligations for each of "bindings" (i.e., variable assignment in `forall`)

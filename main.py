@@ -70,7 +70,7 @@ simulation.add_stats(stats)
 stats.write_header()
 
 print("\nRunning simulation...\n")
-simulation.run_simulation(config["steps"])
+simulation.run_simulation()
 print("\nSimulation done")
 
 adaptation.end(simulation)

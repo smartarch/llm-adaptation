@@ -125,3 +125,7 @@ def set_random_seed(seed):
     import numpy as np
     random.seed(seed)
     np.random.seed(seed)
+
+class HashableDict(dict):
+    def __hash__(self):  # type: ignore[override]
+        return hash(tuple(sorted(self.items())))

@@ -70,6 +70,7 @@ class Simulation(abc.ABC):
         self.current_assignment: str | None = None  # name of the assignment method currently being executed, if any
         self.assignments: dict[Component, str] = {}
         self.assignment_errors: list[AssignmentError] = []
+        self.steps: int = config["steps"]
         self.step: Optional[int] = None
         self.adapt_every = self.config.get("adaptation_params", {}).get("adapt_every", 1)
 
@@ -82,8 +83,9 @@ class Simulation(abc.ABC):
         self.global_constraints = list(self.dsl_config.load_constraints(self, None))
         # self.constraints_violations: dict[UserConstraint, LongTermConstraintViolations] = defaultdict(LongTermConstraintViolations)
 
-    def run_simulation(self, steps: int):
-        for step in range(1, steps + 1):
+    def run_simulation(self, steps=None):
+        simulation_steps: int = steps if steps is not None else self.steps  # type: ignore
+        for step in range(1, simulation_steps + 1):
             print(f"Step: {step}")
             self.step = step
 
@@ -97,6 +99,7 @@ class Simulation(abc.ABC):
             if self.should_stop():
                 break
         self.reset_assignments()
+        # TODO: check not yet resolved constraint obligations
         self._check_long_term_constraint_violations()
 
     def simulation_step(self, step):
@@ -130,6 +133,7 @@ class Simulation(abc.ABC):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {
             "environment": self,
+            "MAX": self.steps - (self.step if self.step is not None else 0),  # remaining steps
         }
 
     def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
