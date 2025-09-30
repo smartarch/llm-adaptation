@@ -16,7 +16,7 @@ class UserConstraint:
     variables: dict[str, str]
     obligations: list[TemporalObligation] = dataclasses.field(default_factory=list)
 
-    def check(self, simulation: "Simulation", components, resolved_ensembles) -> Iterator[str]:
+    def check(self, simulation: "Simulation", components: list[Component], resolved_ensembles: list["ResolvedEnsemble"]) -> Iterator[str]:
         context = self.prepare_context(simulation, components, resolved_ensembles)
         step: int = simulation.step  # type: ignore
         result = self.ast.evaluate(step, context, {})
@@ -32,8 +32,8 @@ class UserConstraint:
                 else:
                     yield self.format_reason(context)
 
-    def check_end(self, simulation: "Simulation") -> Iterator[str]:
-        context = self.prepare_context(simulation, {}, [])
+    def check_end(self, simulation: "Simulation", components: list[Component]) -> Iterator[str]:
+        context = self.prepare_context(simulation, components, [])
         for obligation in self.obligations:
             if not obligation.resolved and obligation.occurences < obligation.min_occurrences:
                 yield self.format_reason(context | obligation.bound_variables)
@@ -41,7 +41,7 @@ class UserConstraint:
     def format_reason(self, context: dict[str, Any]) -> str:
         return eval(f'f"{self.reason}"', context)
 
-    def prepare_context(self, simulation: "Simulation", components, resolved_ensembles):
+    def prepare_context(self, simulation: "Simulation", components: list[Component], resolved_ensembles: list["ResolvedEnsemble"]):
         component_context = self.components_to_eval(simulation, components)
         ensemble_context = self.ensembles_to_eval(simulation, resolved_ensembles)
 
@@ -56,12 +56,12 @@ class UserConstraint:
 
         return context
 
-    def components_to_eval(self, simulation: "Simulation", components: dict[str, "Component"]):
+    def components_to_eval(self, simulation: "Simulation", components: list["Component"]):
         context = {}
         for component_type in simulation.dsl_config.data["components"]:
             name = component_type + "Comps"
             context[name] = [
-                c for c in components.values()
+                c for c in components
                 if isinstance(c, eval(component_type, simulation.get_globals()))
             ]
         return context
@@ -77,20 +77,10 @@ class UserConstraint:
                     if e.type == ensemble_type
                     and e.param is not None  # this should always hold if "params" is in config
                 }
-            else: # singleton
+            else:  # singleton
                 name = ensemble_type + "En"
                 context[name] = next((
                     e for e in resolved_ensembles
                     if e.type == ensemble_type
                 ), None)
         return context
-
-
-
-class ConstraintViolation:
-    constraint: UserConstraint
-
-    # occurrences: int = 0
-    # violations: int = 0
-    # reason: str
-    # step: int

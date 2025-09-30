@@ -25,7 +25,8 @@ class SmartFarmSimulation(Simulation):
 
         self.fieldProbabilityGenerator = BirdFieldProbabilityGenerator(self, config["birdFieldProbabilities"], config["birdCohesion"])
 
-        self.components = [self.fieldProbabilityGenerator] + self.fields + self.drones + self.birds + [self.charger]
+        self.components = self.drones
+        self.beyond_control_components = self.fields + [self.charger]
 
         self.set_config_values(config)
 
@@ -43,6 +44,11 @@ class SmartFarmSimulation(Simulation):
                     setattr(Bird, key, config["bird"][key])
                 else:
                     raise KeyError(f"Unknown bird attribute: {key}")
+
+    def actuate_components(self):
+        # override to get custom actuation order
+        for component in [self.fieldProbabilityGenerator] + self.fields + self.drones + self.birds + [self.charger]:
+            component.actuate()
 
     @property
     def total_damage(self):

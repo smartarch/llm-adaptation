@@ -103,6 +103,9 @@ class Simulation(abc.ABC):
         self.check_user_constraints()
         self._apply_assignments()
 
+        self.actuate_components()
+
+    def actuate_components(self):
         for component in self.components + self.beyond_control_components:
             component.actuate()
 
@@ -164,33 +167,39 @@ class Simulation(abc.ABC):
         # per assignment constraints
         for assignment_name, constraints in self.assignment_constraints.items():
             components = self.dsl_config.load_components_for_assignment(self, assignment_name)
+            all_components = list(components.values()) + self.beyond_control_components
             ensemble_instances = self.dsl_config.load_ensemble_instances_for_assignment(self, assignment_name)
             resolved_ensembles = self._resolve_ensembles(ensemble_instances)
-
             for constraint in constraints:
-                for violation in constraint.check(self, components, resolved_ensembles):
+                for violation in constraint.check(self, all_components, resolved_ensembles):
                     self.assignment_errors.append(UserConstraintError(violation))
 
         # global constraints
         components = self.dsl_config.load_components_for_all_assignments(self)
+        all_components = list(components.values()) + self.beyond_control_components
         ensemble_instances = self.dsl_config.load_ensemble_instances_for_all_assignments(self)
         resolved_ensembles = self._resolve_ensembles(ensemble_instances)
         for constraint in self.global_constraints:
-            for violation in constraint.check(self, components, resolved_ensembles):
+            for violation in constraint.check(self, all_components, resolved_ensembles):
                 self.assignment_errors.append(UserConstraintError(violation))
 
     def check_user_constraints_end(self):
         # per assignment constraints
-        for constraints in self.assignment_constraints.values():
+        for assignment_name, constraints in self.assignment_constraints.items():
+            components = self.dsl_config.load_components_for_assignment(self, assignment_name)
+            all_components = list(components.values()) + self.beyond_control_components
             for constraint in constraints:
-                for violation in constraint.check_end(self):
+                for violation in constraint.check_end(self, all_components):
                     self.assignment_errors.append(UserConstraintError(violation))
 
         # global constraints
+        components = self.dsl_config.load_components_for_all_assignments(self)
+        all_components = list(components.values()) + self.beyond_control_components
         for constraint in self.global_constraints:
-            for violation in constraint.check_end(self):
+            for violation in constraint.check_end(self, all_components):
                 self.assignment_errors.append(UserConstraintError(violation))
 
+        # print all errors
         if len(self.assignment_errors) > 0:
             print("Long-term constraint violations:", file=sys.stderr)
             for error in self.assignment_errors:

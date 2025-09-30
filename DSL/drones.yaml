@@ -77,24 +77,20 @@ adaptation_params:  # this is purely technical
           - Idle
           - type: Protecting
             foreach: Field
-            if: "lambda field: field.threat_level > 0"
+            # if: "lambda field: field.threat_level > 0" # this would remove the ensemble entirely if no field has threat_level > 0, but we don't want that now, because it does not work with constraints
             # string representation of "foreach" and "if"
             for_str: field
             in_str: environment.fields
             if_str: field.threat_level > 0
         constraints:
           no_overprotect:
-            constraint: "forall field in `FieldComps`: always(`len(ProtectingEns[field]) <= field.drones_for_full_protection)`)"
-            reason: "lambda e: f'Field {e.field.id} is overprotected ({e.field.drones_for_full_protection} drones for full protection, {len(e)} assigned), use the drones elsewhere.'"
+            constraint: "forall field in `FieldComps`: always(`len(ProtectingEns[field]) <= field.drones_for_full_protection`)"
+            reason: "Field {field.id} is overprotected ({field.drones_for_full_protection} drones for full protection, {ProtectingEns[field]} assigned), use the drones elsewhere."
           fully_protect_most_threatened:
             variables:
               most_threatened_field: "max(FieldComps, key=lambda f: f.threat_level)"
             constraint: "always(`len(ProtectingEns[most_threatened_field]) == most_threatened_field.drones_for_full_protection`)"
-            reason: "lambda: (
-              protecting := [e for e in ensembles if e.type == 'Protecting'],
-              most_threatened := max(protecting, key=lambda e: e.field.threat_level),
-              f'The most threatened field should be fully protected ({most_threatened.field.id}, threat level {most_threatened.field.threat_level:.2f}, {most_threatened.field.drones_for_full_protection} drones for full protection, {len(most_threatened)} assigned).'
-              )[-1]"  # unfortunately, we need to repeat the same logic as we cannot access the intermediate variables
+            reason: "The most threatened field should be fully protected ({most_threatened_field.id}, threat level {most_threatened_field.threat_level:.2f}, {most_threatened_field.drones_for_full_protection} drones for full protection, {len(ProtectingEns[most_threatened_field])} assigned)."
 
     strategy: ""  # optional
     strategy_interface:

@@ -47,7 +47,7 @@ class DSLConfiguration(UserDict):
         ensembles_config = assignment_config["ensembles"]
         ensemble_types = self.data["ensembles"]
 
-        return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components, simulation))
+        return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components + simulation.beyond_control_components, simulation))
 
     def load_constraints(self, simulation, assignment_name) -> Iterator["UserConstraint"]:
         if assignment_name is not None:
@@ -99,14 +99,14 @@ def get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, comp
         else:  # instance for each component
             ensemble_type = ensemble_types[ensemble_config["type"]]
             component_type = eval(ensemble_config["foreach"], environment.get_globals())
-            condition = eval(ensemble_config.get("if", "True"), environment.get_globals())  # TODO: the condition only work for one parameter
+            condition = eval(ensemble_config.get("if", "lambda _: True"), environment.get_globals())  # TODO: the condition only work for one parameter
 
-            components = filter(lambda c: isinstance(c, component_type), components)
-            components = filter(condition, components)
+            filtered_components = filter(lambda c: isinstance(c, component_type), components)
+            filtered_components = filter(condition, filtered_components)
 
             name_generator = eval(ensemble_type["name"])
 
-            for component in components:
+            for component in filtered_components:
                 ensemble = EnsembleInstance(type=ensemble_config["type"], name=name_generator(component))
                 if "description" in ensemble_type:
                     ensemble.description = ensemble_type["description"]

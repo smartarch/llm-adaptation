@@ -5,7 +5,7 @@ from DSL.dsl_utils import EnsembleInstance
 class ResolvedEnsemble(EnsembleInstance):
 
     def __init__(self, ensemble_instance: EnsembleInstance, members: list[Component]):
-        super().__init__(**ensemble_instance.__dict__)
+        self.__dict__.update(ensemble_instance.__dict__)
         self.ensemble_instance = ensemble_instance
         self.components = members
 
