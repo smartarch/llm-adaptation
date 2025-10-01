@@ -1,6 +1,6 @@
 import dataclasses
 from typing import Any, TYPE_CHECKING, Iterator
-from DSL.constraints.evaluation import ASTNode, ForAll, TemporalObligation
+from DSL.constraints.evaluation import ASTNode, ForAll, TemporalObligation, ForAllViolation
 from base_classes.components import Component
 
 if TYPE_CHECKING:
@@ -21,21 +21,19 @@ class UserConstraint:
         step: int = simulation.step  # type: ignore
         result = self.ast.evaluate(step, context, {})
         if isinstance(result, list):
-            for obligation in result:
-                if obligation not in self.obligations:
-                    self.obligations.append(obligation)
-        else:
-            if result is False:
-                if isinstance(self.ast, ForAll):
-                    for violation in self.ast.violations:
-                        yield self.format_reason(violation)
-                else:
-                    yield self.format_reason(context)
+            for r in result:
+                if isinstance(r, TemporalObligation):
+                    if r not in self.obligations:
+                        self.obligations.append(r)
+                elif isinstance(r, ForAllViolation):
+                    yield self.format_reason(r.context)
+        if result is False:
+            yield self.format_reason(context)
 
     def check_end(self, simulation: "Simulation", components: list[Component]) -> Iterator[str]:
         context = self.prepare_context(simulation, components, [])
         for obligation in self.obligations:
-            if not obligation.resolved and obligation.occurences < obligation.min_occurrences:
+            if not obligation.resolved and obligation.occurrences < obligation.min_occurrences:
                 yield self.format_reason(context | obligation.bound_variables)
 
     def format_reason(self, context: dict[str, Any]) -> str:

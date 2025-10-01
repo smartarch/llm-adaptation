@@ -64,9 +64,12 @@ class TemporalObligation(ASTNode):
         self.expr = expr
         self.start_step = step
         self.end_step = step + window
-        self.occurences = 0
+        self.occurrences = 0
         self.resolved = False
         self.bound_variables = bound_variables
+
+    def __repr__(self):
+        return f"TemporalObligation(resolved={self.resolved}, min_occurrences={self.min_occurrences}, window={self.window}, expr={self.expr!r}, start_step={self.start_step}, end_step={self.end_step}, occurrences={self.occurrences}, bound_variables={self.bound_variables!r})"
 
     def evaluate(self, step: int, context: dict[str, Any], bindings: dict[str, Any]) -> bool | list["TemporalObligation"]:
         if self.resolved:
@@ -74,16 +77,16 @@ class TemporalObligation(ASTNode):
 
         current = bool(self.expr.evaluate(step, context, bindings))
         if current:
-            self.occurences += 1
+            self.occurrences += 1
 
         # end of obligation window reached
         if step >= self.end_step:
             self.resolved = True
-            return self.occurences >= self.min_occurrences
+            return self.occurrences >= self.min_occurrences
 
         # not enough remaining steps to satisfy obligation
         remaining_steps = self.end_step - step
-        if self.min_occurrences - self.occurences > remaining_steps:
+        if self.min_occurrences - self.occurrences > remaining_steps:
             self.resolved = True
             return False
 
@@ -132,28 +135,28 @@ class Implies(ASTNode):
         return True
 
 
+class ForAllViolation:
+    def __init__(self, context: dict[str, Any]):
+        self.context = context
+
+
 class ForAll(ASTNode):
     def __init__(self, var: str, set_expr: PyExpr, body: ASTNode):
         self.var = var
         self.set_expr = set_expr
         self.body = body
-        self.violations: list[dict[str, Any]] = []
 
     def __repr__(self):
         return f"ForAll({self.var!r}, {self.set_expr!r}, {self.body!r})"
 
-    def evaluate(self, step: int, context: dict[str, Any], bindings: dict[str, Any]) -> bool | list["TemporalObligation"]:
+    def evaluate(self, step: int, context: dict[str, Any], bindings: dict[str, Any]) -> bool | list[TemporalObligation | ForAllViolation]:
         elems: list = self.set_expr.evaluate(step, context, bindings) or []  # type: ignore[assignment]
-        obligations = []
-        self.violations = []
+        result = []
         for e in elems:
-            bindings = bindings.copy() | {self.var: e}
-            eval_result = self.body.evaluate(step, context, bindings)
+            bindings_e = bindings.copy() | {self.var: e}
+            eval_result = self.body.evaluate(step, context, bindings_e)
             if isinstance(eval_result, list):
-                obligations.extend(eval_result)
-            else:
-                if eval_result is False:
-                    self.violations.append(bindings)
-        if obligations:
-            return obligations
-        return not self.violations
+                result.extend(eval_result)
+            if eval_result is False:
+                result.append(ForAllViolation(context | bindings_e))
+        return result

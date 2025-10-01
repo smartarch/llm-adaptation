@@ -42,7 +42,10 @@ def adaptation_config(adaptation_name, example):
 @pytest.fixture(autouse=True)
 def reset_component_counters(example):
     """Automatically reset component counters before each test."""
-    return generator_utils.reset_component_counters(example)
+    try:
+        generator_utils.reset_component_counters(example)
+    except ValueError:
+        pass
 
 
 def pytest_collection_modifyitems(items):

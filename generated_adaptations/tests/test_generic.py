@@ -115,14 +115,12 @@ class TestAdapt:
                     error = f"{type(e).__name__} on line {tb_frames[-1].lineno} in {tb_frames[-1].name}: {e}"
                 if error:  # we cannot use `fail` within `except` block, because it does not work correctly
                     fail(error)
-                simulation.check_user_constraints()
 
-                assert_after_each_adapt(simulation.assignment_errors)
+            simulation.check_user_constraints()
+            assert_after_each_adapt(simulation.assignment_errors)
+            simulation._apply_assignments()
 
-                simulation._apply_assignments()
-
-            for component in simulation.components + simulation.beyond_control_components:
-                component.actuate()
+            simulation.actuate_components()
 
             if simulation.should_stop():
                 break

@@ -1,0 +1,4 @@
+name: rule_based_all1
+log_dir.append: /rule_based_all1
+adaptation_name: generated_adaptations.farm.mock.all1_adapt.SmartFarmAdaptation
+adaptation_params: {}

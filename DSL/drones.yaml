@@ -85,11 +85,11 @@ adaptation_params:  # this is purely technical
         constraints:
           no_overprotect:
             constraint: "forall field in `FieldComps`: always(`len(ProtectingEns[field]) <= field.drones_for_full_protection`)"
-            reason: "Field {field.id} is overprotected ({field.drones_for_full_protection} drones for full protection, {ProtectingEns[field]} assigned), use the drones elsewhere."
+            reason: "Field {field.id} is overprotected ({field.drones_for_full_protection} drones for full protection, {len(ProtectingEns[field])} assigned), use the drones elsewhere."
           fully_protect_most_threatened:
             variables:
               most_threatened_field: "max(FieldComps, key=lambda f: f.threat_level)"
-            constraint: "always(`len(ProtectingEns[most_threatened_field]) == most_threatened_field.drones_for_full_protection`)"
+            constraint: "always(`len(ProtectingEns[most_threatened_field]) >= most_threatened_field.drones_for_full_protection`)"
             reason: "The most threatened field should be fully protected ({most_threatened_field.id}, threat level {most_threatened_field.threat_level:.2f}, {most_threatened_field.drones_for_full_protection} drones for full protection, {len(ProtectingEns[most_threatened_field])} assigned)."
 
     strategy: ""  # optional
