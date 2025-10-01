@@ -127,7 +127,7 @@ class Simulation(abc.ABC):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {
             "environment": self,
-            "MAX": self.steps - (self.step if self.step is not None else 0),  # remaining steps
+            "MAX": self.steps - (self.step if self.step is not None else 1) + 1,  # remaining steps (including current)
         }
 
     def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
@@ -201,7 +201,7 @@ class Simulation(abc.ABC):
 
         # print all errors
         if len(self.assignment_errors) > 0:
-            print("Long-term constraint violations:", file=sys.stderr)
+            print("Constraint violations after simulation end:", file=sys.stderr)
             for error in self.assignment_errors:
                 print(error.message, file=sys.stderr)
 

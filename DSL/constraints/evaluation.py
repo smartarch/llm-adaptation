@@ -43,18 +43,17 @@ class TemporalWithin(ASTNode):
 
     def evaluate(self, step: int, context: dict[str, Any], bindings: dict[str, Any]) -> bool | list["TemporalObligation"]:
         bound_variables = HashableDict(bindings)
-        if bound_variables in self.obligations:
-            return self.obligations[bound_variables].evaluate(step, context, bindings)
+        if bound_variables not in self.obligations:
+            obligation = TemporalObligation(
+                resolve_number(self.min_occurrences, step, context, bindings),
+                resolve_number(self.window, step, context, bindings),
+                self.expr,
+                step,
+                bound_variables,
+            )
+            self.obligations[bound_variables] = obligation
 
-        obligation = TemporalObligation(
-            resolve_number(self.min_occurrences, step, context, bindings),
-            resolve_number(self.window, step, context, bindings),
-            self.expr,
-            step,
-            bound_variables,
-        )
-        self.obligations[bound_variables] = obligation
-        return [obligation]
+        return self.obligations[bound_variables].evaluate(step, context, bindings)
 
 
 class TemporalObligation(ASTNode):
@@ -63,7 +62,7 @@ class TemporalObligation(ASTNode):
         self.window = window
         self.expr = expr
         self.start_step = step
-        self.end_step = step + window
+        self.end_step = step + window - 1
         self.occurrences = 0
         self.resolved = False
         self.bound_variables = bound_variables
