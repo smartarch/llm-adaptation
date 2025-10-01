@@ -1,12 +1,13 @@
-import random
-
 import pytest
 
 from generated_adaptations import generator_utils
+from utils import set_random_seed
 
 
 # set random seed for tests
-random.seed(42)
+@pytest.fixture(autouse=True)
+def set_seed():
+    set_random_seed(42)
 
 
 def pytest_addoption(parser):

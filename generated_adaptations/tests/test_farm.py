@@ -4,7 +4,7 @@ import pytest
 
 from farm.components.drone import DroneState
 from farm.simulation import SmartFarmSimulation
-from generated_adaptations.tests.test_generic import TestAdapt as Helpers, assert_no_user_constraints_violated, fail
+from generated_adaptations.tests.test_generic import TestAdapt as Helpers, assert_no_user_constraints_violated, fail_without_traceback
 
 
 @pytest.fixture(autouse=True)
@@ -42,7 +42,7 @@ class TestFarm:
 
         state_msg = f'with state=="{state.value}" ' if state is not None else ''
         if unassigned_count > 0:
-            fail(f'{unassigned_count} out of {len(drones)} drones {state_msg}were not assigned')
+            fail_without_traceback(f'{unassigned_count} out of {len(drones)} drones {state_msg}were not assigned')
 
     # @pytest.mark.parametrize("seed", [1, 2, 3])
     # @pytest.mark.parametrize("previously_protecting", [5, 8])
@@ -101,7 +101,7 @@ class TestFarm:
         idle_drones = sum(1 for group_id in simulation.assignments.values() if group_id == "idle")
 
         if idle_drones == len(simulation.drones):
-            fail(f'All {len(simulation.drones)} drones were assigned to the "idle" group, no drones were assigned to protect fields.')
+            fail_without_traceback(f'All {len(simulation.drones)} drones were assigned to the "idle" group, no drones were assigned to protect fields.')
 
     @pytest.mark.parametrize("seed,previously_protecting", [(1, "5/8"), (2, "8/8")])
     def test_no_user_constraints_violated(self, adaptation_config, simulation_class, simulation_configs, seed, previously_protecting):
