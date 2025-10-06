@@ -15,7 +15,7 @@ The strategy must be written in Python and it must be a class named `SmartFarmAd
 class FarmAdaptation(abc.ABC):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
+    
     @abc.abstractmethod
     def assign_drones(self, components, environment, group_ids, step: int):
         pass
@@ -46,8 +46,6 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `bottom`: bottom
 - `threat_level`: threat level (bird-threat level between 0 and 1)
 - `drones_for_full_protection`: for full protection
-- `arriving_drones`: flying to field (number of drones flying towards the field to protect it when they arrive)
-- `protecting_drones`: protecting (number of drones currently protecting the field)
 
 ---
 Always fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be idle or assigned to other fields.

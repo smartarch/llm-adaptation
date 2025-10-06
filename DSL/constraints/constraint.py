@@ -31,9 +31,10 @@ class UserConstraint:
             yield self.format_reason(context)
 
     def check_end(self, simulation: "Simulation", components: list[Component]) -> Iterator[str]:
+        # FIXME: this is probably useless as MAX is the final step so all obligations should have been resolved already
         context = self.prepare_context(simulation, components, [])
         for obligation in self.obligations:
-            if not obligation.resolved and obligation.occurrences < obligation.min_occurrences:
+            if not obligation.resolved and simulation.step >= obligation.end_step and obligation.occurrences < obligation.min_occurrences:
                 yield self.format_reason(context | obligation.bound_variables)
 
     def format_reason(self, context: dict[str, Any]) -> str:

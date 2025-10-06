@@ -175,4 +175,4 @@ cython_debug/
 /generated_adaptations/farm/
 !/generated_adaptations/farm/mock
 /generated_adaptations/dragon/
-/generated_adaptations/old/dragon/
+/generated_adaptations/old/

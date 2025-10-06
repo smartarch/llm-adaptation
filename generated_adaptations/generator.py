@@ -279,7 +279,15 @@ def main(cmdline_args=None):
         # TODO: the message-existence checks below do not work correctly. For now, we just prohibit running the experiment again (or continuing). This can be removed if the checks are fixed (including correctly handling passing tests, etc.).
         return
 
-    llm = ChatOpenAI(model=args.llm)
+    llm_kwargs = {}
+    if "," in args.llm:
+        llm_name = args.llm.split(",")[0]
+        for arg in args.llm.split(",")[1:]:
+            key, value = arg.split("=", 1)
+            llm_kwargs[key] = value
+    else:
+        llm_name = args.llm
+    llm = ChatOpenAI(model=llm_name, **llm_kwargs)
 
     for iteration in range(1, args.retries_simulation + 2):
         for test in range(1, args.retries_test + 2):

@@ -78,12 +78,12 @@ class TemporalObligation(ASTNode):
         if current:
             self.occurrences += 1
 
-        # end of obligation window reached
+        # end of the obligation window reached
         if step >= self.end_step:
             self.resolved = True
             return self.occurrences >= self.min_occurrences
 
-        # not enough remaining steps to satisfy obligation
+        # not enough remaining steps to satisfy the obligation
         remaining_steps = self.end_step - step
         if self.min_occurrences - self.occurrences > remaining_steps:
             self.resolved = True

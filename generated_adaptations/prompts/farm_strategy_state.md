@@ -15,7 +15,7 @@ The strategy must be written in Python and it must be a class named `SmartFarmAd
 class FarmAdaptation(abc.ABC):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
+    
     @abc.abstractmethod
     def assign_drones(self, components, environment, group_ids, step: int):
         pass
@@ -30,7 +30,7 @@ In `assign_drones`, your goal is to divide the Drones (`components`) into the fo
 
 The `group_ids` argument is a list of all valid group names.
 
-For each component, the following attributes are available:
+For each component, the following attributes are available (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `state`: state ("idle", "moving_to_field", or "protecting")
 - `target_id`: target field (name (str) of the target field, None if drone is idle)
 - `location`: location (has `x` and `y` coordinates)
@@ -38,7 +38,7 @@ For each component, the following attributes are available:
 
 Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
 
-Fields on the farm (accessible via `environment.fields`) with the following attributes:
+Fields on the farm (accessible via `environment.fields`) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `id`: identifier
 - `left`: left
 - `top`: top
@@ -46,18 +46,94 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `bottom`: bottom
 - `threat_level`: threat level (bird-threat level between 0 and 1)
 - `drones_for_full_protection`: for full protection
-- `arriving_drones`: flying to field (number of drones flying towards the field to protect it when they arrive)
-- `protecting_drones`: protecting (number of drones currently protecting the field)
 
 ---
-Follow these step-by-step instructions when assigning the groups:
 
-1. Sort the fields by threat level from highest to lowest.
-2. For the most threatened field, determine how many additional drones are necessary for its full protection.
-3. Identify the drones currently protecting the most threatened field. They should continue protecting it.
-4. Sort the remaining drones by distance to the most threatened field from nearest to furthest.
-5. Add as many drones as necessary to the protection of the most threatened field.
-6. Distribute the remaining drones to the other fields.
-7. Provide the answer in the format described below. Don't forget to include the drones already protecting the most threatened field.
+### Example of the situation
+
+#### `assign_drones` method
+
+##### Drones (`components`)
+
+- Drone_1:
+    - state: "protecting"
+    - target_id: 'Field_2'
+    - location: x=18.00, y=42.00
+- Drone_2:
+    - state: "moving_to_field"
+    - target_id: 'Field_1'
+    - location: x=27.00, y=7.00
+- Drone_3:
+    - state: "moving_to_field"
+    - target_id: 'Field_3'
+    - location: x=38.62, y=23.99
+- Drone_4:
+    - state: "moving_to_field"
+    - target_id: 'Field_1'
+    - location: x=4.46, y=30.50
+- Drone_5:
+    - state: "protecting"
+    - target_id: 'Field_4'
+    - location: x=41.00, y=8.00
+- Drone_6:
+    - state: "moving_to_field"
+    - target_id: 'Field_1'
+    - location: x=26.26, y=31.13
+- Drone_7:
+    - state: "idle"
+    - location: x=31.00, y=3.00
+- Drone_8:
+    - state: "idle"
+    - location: x=11.00, y=49.00
+
+##### Valid groups (`group_ids`)
+
+- "idle"
+- "protecting Field_1"
+- "protecting Field_2"
+- "protecting Field_3"
+- "protecting Field_4"
+
+#### Beyond-control components
+
+- Field_1:
+    - left: 4
+    - top: 3
+    - right: 19
+    - bottom: 18
+    - threat_level: 0.1375
+    - drones_for_full_protection: 4
+    - arriving_drones: 3
+    - protecting_drones: 0
+- Field_2:
+    - left: 6
+    - top: 30
+    - right: 22
+    - bottom: 45
+    - threat_level: 0.1375
+    - drones_for_full_protection: 4
+    - arriving_drones: 0
+    - protecting_drones: 1
+- Field_3:
+    - left: 35
+    - top: 32
+    - right: 43
+    - bottom: 48
+    - threat_level: 0.05
+    - drones_for_full_protection: 2
+    - arriving_drones: 1
+    - protecting_drones: 0
+- Field_4:
+    - left: 37
+    - top: 4
+    - right: 44
+    - bottom: 27
+    - threat_level: 0.05
+    - drones_for_full_protection: 3
+    - arriving_drones: 0
+    - protecting_drones: 1
+
+---
+Always fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be idle or assigned to other fields.
 
 Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.
