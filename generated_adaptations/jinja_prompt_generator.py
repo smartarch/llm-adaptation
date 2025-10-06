@@ -41,6 +41,6 @@ class JinjaPromptGenerator(Adaptation):
 
         print_prompt(prompt)
 
-        (PROMPTS_PATH / f"{self.example}{self.name}.txt").write_text(prompt)
+        (PROMPTS_PATH / f"{self.example}{self.name}.md").write_text(prompt)
 
         exit()

@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/generated_adaptations/farm/old" />
       <excludeFolder url="file://$MODULE_DIR$/generated_adaptations/old" />
       <excludeFolder url="file://$MODULE_DIR$/farm/configs/unused" />
+      <excludeFolder url="file://$MODULE_DIR$/DSL/constraints/scratch" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11 (llm-adaptation)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

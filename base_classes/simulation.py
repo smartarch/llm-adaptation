@@ -98,8 +98,8 @@ class Simulation(abc.ABC):
         if self.should_adapt(step):
             try:
                 self.adapt(self, step)
-            except Exception:
-                print(traceback.format_exc(), file=sys.stderr)
+            except Exception as e:
+                self.adapt_exception_handler(e)
         self.check_user_constraints()
         self._apply_assignments()
 
@@ -116,6 +116,20 @@ class Simulation(abc.ABC):
     def should_adapt(self, step) -> bool:
         """Adaptation should be performed at this step. Set to False, for example, when there are no adaptable components left."""
         return (step - 1) % self.adapt_every == 0
+
+    def assignment_error_handler(self, error: AssignmentError):
+        """Called in `_apply_assignments` (i.e., if there are errors in the final assignments) for each of `self.assignment_errors`."""
+        print("Error in final assignment:", error.message)
+        print(error.message, file=sys.stderr)
+
+    def assignment_errors_handler(self, errors: list[AssignmentError]):
+        """Called in `_apply_assignments` (i.e., if there are errors in the final assignments) once with the list of all errors (`self.assignment_errors`)."""
+        pass
+
+    def adapt_exception_handler(self, error: Exception):
+        """Called if there is an exception in the `adapt` method."""
+        print("Exception in adapt:", error)
+        print(traceback.format_exc(), file=sys.stderr)
 
     def add_visualizer(self, visualizer):
         self.visualizer = visualizer
@@ -151,9 +165,9 @@ class Simulation(abc.ABC):
 
     def _apply_assignments(self):
         """Apply the group assignments (self.assignments)."""
+        self.assignment_errors_handler(self.assignment_errors)
         for error in self.assignment_errors:
-            print("Error in final assignment:", error.message)
-            print(error.message, file=sys.stderr)
+            self.assignment_error_handler(error)
 
         for component, group_id in self.assignments.items():
             self._assign_group(component, group_id)

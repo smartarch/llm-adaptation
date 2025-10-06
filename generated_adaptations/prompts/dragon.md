@@ -13,7 +13,7 @@ The strategy must be written in Python and it must be a class named `SmartAdapta
 class DragonHuntAdaptation(abc.ABC):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
     @abc.abstractmethod
     def assign_in_village(self, components, environment, group_ids, step: int):
         pass

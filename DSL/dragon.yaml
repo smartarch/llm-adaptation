@@ -70,34 +70,12 @@ adaptation_params:  # this is purely technical
           if: "lambda component: component.location == Map.VILLAGE"
           description: "Villagers in the Village"
         ensembles: [Farm, GoToCave, SpawnFarmer, SpawnWarrior]
-        constraints:
-          go_to_cave_at_least_once:
-            constraint: "once(`len(GoToCaveEn) > 0`)"
-            reason: "At least one villager should go to the Cave to attack the Dragon."
-          spawn_at_least_a_few:
-            constraint: "scattered(3, `len(SpawnFarmerEn) >= 2 or len(SpawnWarriorEn) >= 2`)"
-            reason: "At least a few new villagers should be spawned to increase the chance of killing the dragon."
       assign_in_cave:
         components:
           type: Villager
           if: "lambda component: component.location == Map.CAVE"
           description: "Villagers in the Cave"
         ensembles: [Attack, StayInCave, GoToVillage]
-        constraints:
-          attack_at_least_once:
-            constraint: "once(`len(AttackEn) > 0`)"
-            reason: "The dragon should be attacked."
-    constraints:
-      attack_after_moving_to_cave:
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
-        reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
-      warriors_should_be_in_cave:
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "scattered(`0.8 * MAX`, `len([v for v in Warriors if v.location == Map.CAVE]) >= 0.5 * len(Warriors)`)"
-        reason: "At least half of the warriors should be in the Cave so they can attack the Dragon."
 
     strategy: ""  # optional
     strategy_interface:

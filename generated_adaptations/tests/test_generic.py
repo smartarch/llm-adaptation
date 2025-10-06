@@ -29,13 +29,13 @@ class TestConfiguration:
         assert example in ("farm", "dragon")
 
     @pytest.mark.dependency(depends=["TestConfiguration::test_example_is_correct"])
-    def test_adaptation_exists(self, example, adaptation_name):
-        path = Path(f"generated_adaptations/{example}/{adaptation_name}.py")
+    def test_adaptation_exists(self, example, variant, adaptation_name):
+        path = Path(f"generated_adaptations/{example}/{variant}/{adaptation_name}.py")
         assert path.exists(), f"{path.resolve()} does not exist"
 
     @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_exists"])
-    def test_adaptation_class_is_correct(self, example, adaptation_name):
-        module = importlib.import_module(f"generated_adaptations.{example}.{adaptation_name.replace('/', '.')}")
+    def test_adaptation_class_is_correct(self, example, variant, adaptation_name):
+        module = importlib.import_module(f"generated_adaptations.{example}.{variant}.{adaptation_name.replace('/', '.')}")
         class_name = adaptation_class_name(example)
         if not hasattr(module, class_name):
             fail_without_traceback(f"The strategy must be a class named `{class_name}`.")
@@ -108,28 +108,21 @@ class TestAdapt:
                 failures.append(message)
             fail = add_failure
 
-        # this code is based on `simulation.run_simulation` and `simulation.simulation_step`
-        for step in range(1, steps + 1):
-            simulation.step = step
-            simulation.reset_assignments()
-            if simulation.should_adapt(step):
-                error = None
-                try:
-                    simulation.adapt(simulation, step)
-                except Exception as e:
-                    tb_frames = traceback.extract_tb(sys.exc_info()[2])
-                    error = f"{type(e).__name__} on line {tb_frames[-1].lineno} in {tb_frames[-1].name}: {e}"
-                if error:  # we cannot use `fail` within `except` block, because it does not work correctly
-                    fail(error)
+        error: str | None = None
 
-            simulation.check_user_constraints()
-            assert_after_each_adapt(simulation.assignment_errors, fail=fail)
-            simulation._apply_assignments()
+        def assignment_errors_handler(errors: list[AssignmentError]):
+            if error:  # we cannot use `fail` within `except` block (in simulation_step), because it does not work correctly, so we store the error in adapt_exception_handler and handle it here
+                fail_without_traceback(error)
+            assert_after_each_adapt(errors, fail=fail)
 
-            simulation.actuate_components()
+        def adapt_exception_handler(e: Exception):
+            nonlocal error
+            tb_frames = traceback.extract_tb(sys.exc_info()[2])
+            error = f"{type(e).__name__} on line {tb_frames[-1].lineno} in {tb_frames[-1].name}: {e}"
 
-            if simulation.should_stop():
-                break
+        simulation.assignment_errors_handler = assignment_errors_handler
+        simulation.adapt_exception_handler = adapt_exception_handler
+        simulation.run_simulation(steps)
 
         if not immediate:
             if failures:

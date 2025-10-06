@@ -8,11 +8,13 @@ def simulation_class(example):
     return Simulation
 
 
-def simulation_configs(example):
+def simulation_configs(example, variant):
     if example == "farm":
         configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "farm/configs/config_no_battery.yaml", "DSL/drones.yaml"]
     elif example == "dragon":
         configs = ["dragon/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "DSL/dragon.yaml"]
+        if variant == "constraints":
+            configs.append("DSL/dragon_constraints.yaml")
     else:
         raise ValueError(f"Unknown example: {example}")
     return configs
@@ -40,12 +42,12 @@ def adaptation_class(example):
         raise ValueError(f"Unknown example: {example}")
 
 
-def adaptation_config(adaptation_name, example):
+def adaptation_config(adaptation_name, example, variant):
     class_name = adaptation_class_name(example)
     return {
-        "name": adaptation_name,
-        "log_dir.append": f"/{adaptation_name}",
-        "adaptation_name": f"generated_adaptations.{example}.{adaptation_name.replace('/', '.')}.{class_name}",
+        "name": f"{variant}/{adaptation_name}",
+        "log_dir.append": f"/{variant}/{adaptation_name}",
+        "adaptation_name": f"generated_adaptations.{example}.{variant}.{adaptation_name.replace('/', '.')}.{class_name}",
     }
 
 
@@ -58,8 +60,8 @@ def reset_component_counters(example):
         from farm.components.field import Field
         components = [Drone, Field]
     elif example == "dragon":
-        from dragon.components.villagers import Villager
-        components = [Villager]
+        from dragon.components.villagers import Villager, Farmer, Warrior
+        components = [Villager, Farmer, Warrior]
     else:
         raise ValueError(f"Unknown example: {example}")
 

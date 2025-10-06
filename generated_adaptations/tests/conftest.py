@@ -12,6 +12,7 @@ def set_seed():
 
 def pytest_addoption(parser):
     parser.addoption("--example", action="store")
+    parser.addoption("--variant", action="store", default="default")
     parser.addoption("--adaptation_name", action="store")
 
 
@@ -26,18 +27,23 @@ def example(pytestconfig):
 
 
 @pytest.fixture(scope="session")
+def variant(pytestconfig):
+    return pytestconfig.getoption("variant")
+
+
+@pytest.fixture(scope="session")
 def simulation_class(example):
     return generator_utils.simulation_class(example)
 
 
 @pytest.fixture(scope="session")
-def simulation_configs(example):
-    return generator_utils.simulation_configs(example)
+def simulation_configs(example, variant):
+    return generator_utils.simulation_configs(example, variant)
 
 
 @pytest.fixture(scope="session")
-def adaptation_config(adaptation_name, example):
-    return generator_utils.adaptation_config(adaptation_name, example)
+def adaptation_config(adaptation_name, example, variant):
+    return generator_utils.adaptation_config(adaptation_name, example, variant)
 
 
 @pytest.fixture(autouse=True)

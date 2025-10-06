@@ -26,7 +26,7 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 
 def parse_arguments(cmdline_args=None):
     parser = argparse.ArgumentParser(description="Command-line arguments for the generator.")
-    parser.add_argument("--folder", type=str, required=True, help="Path to the folder.")
+    parser.add_argument("--folder", type=str, required=True, help="Path to the folder. The path should contain `{example}/{variant}/{folder}`")
     parser.add_argument("--retries_test", type=int, default=3, help="Number of retries for failing unit tests.")
     parser.add_argument("--retries_simulation", type=int, default=2, help="Number of retries for simulation results.")
     parser.add_argument("--simulation_runs", type=int, default=3, help="Number of runs of simulation for evaluation.")
@@ -35,6 +35,12 @@ def parse_arguments(cmdline_args=None):
         return parser.parse_args()
     else:
         return parser.parse_args(cmdline_args)
+
+
+def get_example_variant(folder):
+    example = folder.parent.parent.stem
+    variant = folder.parent.stem
+    return example, variant
 
 
 ### LLM querying
@@ -98,11 +104,11 @@ def extract_code_block(response_text):
 
 
 def test_code(folder, code_file):
-    example = folder.parent.stem
+    example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
         "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExXpP", "--show-capture=no", "--color=no",
-        f"--example={example}", f"--adaptation_name={adaptation_name}"
+        f"--example={example}", f"--adaptation_name={adaptation_name}", f"--variant={variant}"
     ]
     print("Running tests:", " ".join(cmd))
     env = os.environ.copy()
@@ -128,16 +134,16 @@ def append_test_report(test_report, messages, folder, test_report_file):
 
 
 def prepare_config(folder, code_file):
-    example = folder.parent.stem
+    example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
-    return adaptation_config(adaptation_name, example)
+    return adaptation_config(adaptation_name, example, variant)
 
 
 def run_simulation(folder, code_file, repeats=3, start=1):
     print(f"Running simulation for '{code_file}'.")
-    example = folder.parent.stem
+    example, variant = get_example_variant(folder)
 
-    configs = simulation_configs(example=example)
+    configs = simulation_configs(example=example, variant=variant)
     extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
 
     log_files = []
@@ -236,7 +242,7 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
 
 
 def append_simulation_report(results, messages, folder, report_file):
-    example = folder.parent.stem
+    example, _ = get_example_variant(folder)
     if example == "farm":
         prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation_farm.md", encoding="utf-8")
         verdict = "is a good result. Good job!" if results["damage"] < 60 else "is not a good result and needs improvement."
@@ -296,8 +302,9 @@ def main(cmdline_args=None):
                 break
             append_test_report(test_report, messages, folder, test_report_file)
         else:
-            print(f"Tests failed {args.retries_test + 1} times. Exiting.")
-            return
+            # print(f"Tests failed {args.retries_test + 1} times. Exiting.")
+            # return
+            print(f"Tests failed {args.retries_test + 1} times.")
 
         simulation_report_file = f"{iteration + 1:02d}_01_simulation"
         if simulation_report_file in messages:

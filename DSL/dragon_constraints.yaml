@@ -1,0 +1,37 @@
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
+    assignments:
+      assign_in_village:
+        constraints:
+          all_warriors_should_go_to_cave:
+            variables:
+              Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+            constraint: "forall warrior in `Warriors`: once(`warrior in GoToCaveEn`)"
+            reason: "Warrior {warrior} should go to the Cave to attack the Dragon."
+          all_farmers_should_stay_in_village:
+            variables:
+              Farmers: "[v for v in VillagerComps if v.role == 'Farmer']"
+            constraint: "forall farmer in `Farmers`: always(`farmer.location == Map.VILLAGE`)"
+            reason: "Farmer {farmer} should stay in the Village."
+          spawn_at_least_a_few_farmers:
+            constraint: "scattered(2, `len(SpawnFarmerEn) >= 2`)"
+            reason: "At least a few new farmers should be spawned to increase the chance of killing the dragon."
+          spawn_at_least_a_few_warriors:
+            constraint: "scattered(2, `len(SpawnWarriorEn) >= 2`)"
+            reason: "At least a few new warriors should be spawned to increase the chance of killing the dragon."
+      assign_in_cave:
+        constraints:
+          attack_at_least_once:
+            constraint: "once(`len(AttackEn) > 0`)"
+            reason: "The dragon should be attacked."
+    constraints:
+      attack_after_moving_to_cave:
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+        constraint: "forall warrior in `Warriors`: consequent(1, `warrior in GoToCaveEn`) implies once(`warrior in AttackEn`)"
+        reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
+      warriors_should_be_in_cave:
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+        constraint: "scattered(`0.8 * MAX`, `len([v for v in Warriors if v.location == Map.CAVE]) >= 0.5 * len(Warriors)`)"
+        reason: "At least half of the warriors should be in the Cave most of the time so they can attack the Dragon."
