@@ -14,6 +14,7 @@ def pytest_addoption(parser):
     parser.addoption("--example", action="store")
     parser.addoption("--variant", action="store", default="default")
     parser.addoption("--adaptation_name", action="store")
+    parser.addoption("--tests", choices=["system", "all"], required=True)
 
 
 @pytest.fixture(scope="session")
@@ -32,13 +33,18 @@ def variant(pytestconfig):
 
 
 @pytest.fixture(scope="session")
+def tests(pytestconfig):
+    return pytestconfig.getoption("tests")
+
+
+@pytest.fixture(scope="session")
 def simulation_class(example):
     return generator_utils.simulation_class(example)
 
 
 @pytest.fixture(scope="session")
-def simulation_configs(example, variant):
-    return generator_utils.simulation_configs(example, variant)
+def simulation_configs(example, tests):
+    return generator_utils.simulation_configs(example, constraints=tests == "all")
 
 
 @pytest.fixture(scope="session")

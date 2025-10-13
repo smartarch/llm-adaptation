@@ -1,11 +1,10 @@
-We evaluated your code in a simulation of the game. You achieved a win rate of {winrate:.0%}.
+We evaluated your code in a simulation of the game. You achieved a win rate of {winrate:.0%}. The average number of turns (steps) to win was {steps} (only the won games are counted, N/A if all games are lost).
 
 Here are some statistics from the simulation:
 
 - games played: {games_played}
 - wins (dragon is killed): {wins}
 - losses (dragon survives): {losses}
-- average number of turns (steps) to win: {steps} (only the won games are counted, lower is better)
 - number of warriors (at the end of the game): {warriors:.1f} (if this number is low, it indicates that most warriors were killed by the dragon during the game)
 - number of farmers (at the end of the game): {farmers:.1f} (if this number is low, it indicates that most farmers were killed by the dragon during the game)
 - average number of farming villagers (throughout the whole game): {farming:.1f} (if this number is low, it indicates not enough wheat is produced to spawn new villagers)
@@ -13,4 +12,4 @@ Here are some statistics from the simulation:
 - number of spawned warriors (throughout the whole game): {spawned_warriors:.1f} (if this number is low, it indicates that not enough new warriors are spawned)
 - number of spawned farmers (throughout the whole game): {spawned_farmers:.1f} (if this number is low, it indicates that not enough new farmers are spawned)
 
-Try to improve your code or come up with a different approach to win the game.
+Try to improve your code or come up with a different approach to win the game in fewer turns.

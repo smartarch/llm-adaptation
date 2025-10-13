@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 import textwrap
 import time
+from typing import Literal
 
 import numpy as np
 import pandas as pd
@@ -24,11 +25,19 @@ from utils import Logger
 load_dotenv(find_dotenv(), override=True)  # take environment variables from .env
 
 
+FARM_GOOD_DAMAGE = 60  # damage threshold for a good adaptation in the farm example
+DRAGON_GOOD_STEPS = 15  # average steps threshold for a good adaptation in the dragon example
+
+
 def parse_arguments(cmdline_args=None):
     parser = argparse.ArgumentParser(description="Command-line arguments for the generator.")
     parser.add_argument("--folder", type=str, required=True, help="Path to the folder. The path should contain `{example}/{variant}/{folder}`")
-    parser.add_argument("--retries_test", type=int, default=3, help="Number of retries for failing unit tests.")
-    parser.add_argument("--retries_simulation", type=int, default=2, help="Number of retries for simulation results.")
+    parser.add_argument("--max_iterations", type=int, default=10, help="")
+    parser.add_argument("--mode", choices=["system", "all", "result", "stats"], required=True, help="Mode of feedback to the LLM.\n"
+        "system=feedback from system unit tests\n"
+        "all=feedback from system + user constraints unit tests\n"
+        "results=feedback from simulation results\n"
+        "stats=feedback from simulation statistics (e.g., winrate, average damage, etc)")
     parser.add_argument("--simulation_runs", type=int, default=3, help="Number of runs of simulation for evaluation.")
     parser.add_argument("--llm", type=str, default="gpt-4.1-mini-2025-04-14", help="LLM to use.")
     if cmdline_args is None:
@@ -55,7 +64,7 @@ def load_messages(folder: Path) -> dict[str, BaseMessage]:
     files = sorted(folder.glob("*.md"))
 
     messages: dict[str, BaseMessage] = {
-        "00-system": SystemMessage(content=load_system_prompt())
+        "00_system": SystemMessage(content=load_system_prompt())
     }
 
     for file in files:
@@ -101,23 +110,91 @@ def extract_code_block(response_text):
     return None
 
 
+def load_llm(args):
+    llm_kwargs = {}
+    if "," in args.llm:
+        llm_name = args.llm.split(",")[0]
+        for arg in args.llm.split(",")[1:]:
+            key, value = arg.split("=", 1)
+            llm_kwargs[key] = value
+    else:
+        llm_name = args.llm
+    llm = ChatOpenAI(model=llm_name, **llm_kwargs)
+    return llm
+
+
+### Feedback to the LLM
+
+
+def gather_feedback(args, folder, messages, iteration, code_file):
+    if not code_file:
+        (folder / "results" / f"code{iteration * 2:02d}_missing.txt").write_text("No code block found in the LLM response.", encoding="utf-8")
+        append_missing_code_block(messages, folder, f"{iteration * 2 + 1:02d}_missing_code")
+        return
+
+    # run the tests and the simulation with the generated code
+    test_result_system, test_report_system = test_code(folder, code_file, "system")
+    test_result_all, test_report_all = test_code(folder, code_file, "all")
+    results = run_simulation(folder, code_file, args.simulation_runs)
+
+    if verdict(folder, results):
+        print("The generated code produces a good result. Stopping further iterations.")
+        return True
+
+    # provide feedback to the LLM
+    if args.mode == "system":
+        if test_result_system == pytest.ExitCode.OK:
+            test_report_file = f"{iteration * 2 + 1:02d}_test"
+            append_simulation_report(results, messages, folder, test_report_file, "testpass")
+        else:
+            simulation_report_file = f"{iteration + 1:02d}_pass"
+            append_test_report(test_report_system, messages, folder, simulation_report_file)
+    elif args.mode == "all":
+        if test_result_all == pytest.ExitCode.OK:
+            test_report_file = f"{iteration * 2 + 1:02d}_test"
+            append_simulation_report(results, messages, folder, test_report_file, "testpass")
+        else:
+            simulation_report_file = f"{iteration + 1:02d}_pass"
+            append_test_report(test_report_all, messages, folder, simulation_report_file)
+    elif args.mode in ["result", "stats"]:
+        simulation_report_file = f"{iteration + 1:02d}_{args.mode}"
+        append_simulation_report(results, messages, folder, simulation_report_file, args.mode)
+    else:
+        raise ValueError(f"Unrecognized mode: {args.mode}")
+
+
+def verdict(folder, results):
+    example, _ = get_example_variant(folder)
+
+    if example == "farm":
+        damage = results["damage"]
+        return damage <= FARM_GOOD_DAMAGE
+    elif example == "dragon":
+        steps = results["steps"]
+        if steps is None:
+            return False
+        return steps <= DRAGON_GOOD_STEPS
+    else:
+        raise ValueError(f"Unrecognized example: {example}")
+
+
 ### Unit tests
 
 
-def test_code(folder, code_file):
+def test_code(folder, code_file, tests: Literal["system", "all"]):
     example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
         "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExXpP", "--show-capture=no", "--color=no",
-        f"--example={example}", f"--adaptation_name={adaptation_name}", f"--variant={variant}"
+        f"--example={example}", f"--adaptation_name={adaptation_name}", f"--variant={variant}", f"--tests={tests}"
     ]
-    print("Running tests:", " ".join(cmd))
+    print(f"Running tests ({tests}):", " ".join(cmd))
     env = os.environ.copy()
     env["PYTHONPATH"] = env.get("PYTHONPATH", "") + os.pathsep + os.getcwd()
     # env['COLUMNS'] = '160'  # make output wider to avoid truncation of pytest short summary
     result = subprocess.run(cmd, capture_output=True, text=True, check=False, env=env)
     print(f"Test exit code: {result.returncode}")
-    (folder / "results" / f"{code_file.stem}_test_{'pass' if result.returncode == 0 else 'fail'}.txt")\
+    (folder / "results" / f"{code_file.stem}_test_{tests}_{'pass' if result.returncode == 0 else 'fail'}.txt")\
         .write_text(str(result.returncode) + "\n" + result.stdout + result.stderr, encoding="utf-8")
     if result.returncode not in [pytest.ExitCode.OK, pytest.ExitCode.TESTS_FAILED]:
         raise RuntimeError(f"Error in running tests:\n{result.stderr}")
@@ -151,7 +228,7 @@ def run_simulation(folder, code_file, repeats=3, start=1):
     print(f"Running simulation for '{code_file}'.")
     example, variant = get_example_variant(folder)
 
-    configs = simulation_configs(example=example, variant=variant)
+    configs = simulation_configs(example=example, constraints=variant == "constraints")
     extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
 
     log_files = []
@@ -249,14 +326,13 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
     return result
 
 
-def append_simulation_report(results, messages, folder, report_file):
+def append_simulation_report(results, messages, folder, report_file, mode):
     example, _ = get_example_variant(folder)
     if example == "farm":
-        prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation_farm.md", encoding="utf-8")
-        verdict = "is a good result. Good job!" if results["damage"] < 60 else "is not a good result and needs improvement."
-        simulation_prompt = prompt_template.format(**results, verdict=verdict)
+        prompt_template = PromptTemplate.from_file(f"generated_adaptations/prompts/farm_{mode}.md", encoding="utf-8")
+        simulation_prompt = prompt_template.format(**results)
     elif example == "dragon":
-        prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/simulation_dragon.md", encoding="utf-8")
+        prompt_template = PromptTemplate.from_file(f"generated_adaptations/prompts/dragon_{mode}.md", encoding="utf-8")
         if results["steps"] is None:
             results["steps"] = "N/A"
         else:
@@ -279,61 +355,24 @@ def main(cmdline_args=None):
 
     messages = load_messages(folder)
     print(f"Loaded {len(messages)} messages from {folder}.")
-    if "01_01_user" not in messages:
-        print(f"Error: Prompt is missing in {folder}. Create a prompt file named '01_01_user.md' in the folder.")
+    if "01_user" not in messages:
+        print(f"Error: Prompt is missing in {folder}. Create a prompt file named '01_user.md' in the folder.")
         return
     if len(messages) > 2:
         print(f"Error: experiment in {folder} was already ran. Aborting.")
-        # TODO: the message-existence checks below do not work correctly. For now, we just prohibit running the experiment again (or continuing). This can be removed if the checks are fixed (including correctly handling passing tests, etc.).
         return
 
-    llm_kwargs = {}
-    if "," in args.llm:
-        llm_name = args.llm.split(",")[0]
-        for arg in args.llm.split(",")[1:]:
-            key, value = arg.split("=", 1)
-            llm_kwargs[key] = value
+    llm = load_llm(args)
+
+    for iteration in range(1, args.max_iterations + 1):
+        # query LLM for code generation
+        llm_response_file = f"{iteration * 2:02d}_llm"
+        code_file = query_llm(llm, messages, folder, llm_response_file)
+
+        if gather_feedback(args, folder, messages, iteration, code_file):
+            break
     else:
-        llm_name = args.llm
-    llm = ChatOpenAI(model=llm_name, **llm_kwargs)
-
-    for iteration in range(1, args.retries_simulation + 2):
-        for test in range(1, args.retries_test + 2):
-            # query LLM for code generation
-            llm_response_file = f"{iteration:02d}_{test * 2:02d}_llm"
-            if llm_response_file in messages:
-                print(f"LLM response file '{llm_response_file}' already exists. Skipping LLM query.")
-                continue
-            code_file = query_llm(llm, messages, folder, llm_response_file)
-
-            # prepare for testing the generated code
-            test_report_file = f"{iteration:02d}_{test * 2 + 1:02d}_test"
-            if test_report_file in messages:
-                print(f"Test report file '{test_report_file}' already exists. Skipping tests.")
-                continue
-
-            if not code_file:
-                (folder / "results" / f"code_{llm_response_file.removesuffix('_llm')}_test_fail.txt").write_text("No code block found in the LLM response.", encoding="utf-8")
-                append_missing_code_block(messages, folder, test_report_file)
-                continue
-
-            # run unit tests on the generated code
-            result, test_report = test_code(folder, code_file)
-            results = run_simulation(folder, code_file, args.simulation_runs)
-
-            if result == 0:
-                break
-            append_test_report(test_report, messages, folder, test_report_file)
-        else:
-            # print(f"Tests failed {args.retries_test + 1} times. Exiting.")
-            # return
-            print(f"Tests failed {args.retries_test + 1} times.")
-
-        simulation_report_file = f"{iteration + 1:02d}_01_simulation"
-        if simulation_report_file in messages:
-            print(f"Simulation report file '{simulation_report_file}' already exists. Skipping simulation.")
-            continue
-        append_simulation_report(results, messages, folder, simulation_report_file)
+        print(f"Reached the maximum number of iterations ({args.max_iterations}). Stopping.")
 
 
 if __name__ == "__main__":

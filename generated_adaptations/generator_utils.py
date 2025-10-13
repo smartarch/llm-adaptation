@@ -8,14 +8,14 @@ def simulation_class(example):
     return Simulation
 
 
-def simulation_configs(example, variant):
+def simulation_configs(example, constraints):
     if example == "farm":
         configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "farm/configs/config_no_battery.yaml", "DSL/drones.yaml"]
-        if "constraints" in variant:
+        if constraints:
             configs.append("DSL/drones_constraints.yaml")
     elif example == "dragon":
         configs = ["dragon/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "DSL/dragon.yaml"]
-        if variant == "constraints":
+        if constraints:
             configs.append("DSL/dragon_constraints.yaml")
     else:
         raise ValueError(f"Unknown example: {example}")

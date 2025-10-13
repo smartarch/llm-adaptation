@@ -1,4 +1,4 @@
-We evaluated your code in a simulation of the scenario. The average damage to the fields was {damage:.1f}, which {verdict}
+We evaluated your code in a simulation of the scenario. The average damage to the fields was {damage:.1f}.
 
 Here are some statistics from the simulation:
 
