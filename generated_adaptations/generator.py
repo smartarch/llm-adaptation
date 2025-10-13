@@ -73,6 +73,8 @@ def query_llm(llm, messages, folder, llm_response_file):
     start_time = time.time()
     response = llm.invoke(list(messages.values()))
     end_time = time.time()
+    LLMTokenUsage(response, response_time=end_time - start_time).print()
+
     messages[llm_response_file] = AIMessage(content=response.content)
 
     (folder / f"{llm_response_file}.md").write_text(response.content, encoding="utf-8")
@@ -80,13 +82,12 @@ def query_llm(llm, messages, folder, llm_response_file):
 
     code_block = extract_code_block(response.content)
     if not code_block:
-        raise ValueError("No code block found in the LLM response.")
+        print("No code block found in the LLM response.")
+        return None
 
     code_file = folder / f"code_{llm_response_file.removesuffix('_llm')}.py"
     code_file.write_text(code_block, encoding="utf-8")
     print(f"Code block saved to '{code_file}'.")
-
-    LLMTokenUsage(response, response_time=end_time - start_time).print()
 
     return code_file
 
@@ -126,6 +127,13 @@ def test_code(folder, code_file):
 def append_test_report(test_report, messages, folder, test_report_file):
     prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/test.md", encoding="utf-8")
     test_prompt = prompt_template.format(test_report=test_report)
+    (folder / f"{test_report_file}.md").write_text(test_prompt, encoding="utf-8")
+    messages[test_report_file] = HumanMessage(content=test_prompt)
+
+
+def append_missing_code_block(messages, folder, test_report_file):
+    prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/missing_code.md", encoding="utf-8")
+    test_prompt = prompt_template.format()
     (folder / f"{test_report_file}.md").write_text(test_prompt, encoding="utf-8")
     messages[test_report_file] = HumanMessage(content=test_prompt)
 
@@ -298,11 +306,18 @@ def main(cmdline_args=None):
                 continue
             code_file = query_llm(llm, messages, folder, llm_response_file)
 
-            # run unit tests on the generated code
+            # prepare for testing the generated code
             test_report_file = f"{iteration:02d}_{test * 2 + 1:02d}_test"
             if test_report_file in messages:
                 print(f"Test report file '{test_report_file}' already exists. Skipping tests.")
                 continue
+
+            if not code_file:
+                (folder / "results" / f"code_{llm_response_file.removesuffix('_llm')}_test_fail.txt").write_text("No code block found in the LLM response.", encoding="utf-8")
+                append_missing_code_block(messages, folder, test_report_file)
+                continue
+
+            # run unit tests on the generated code
             result, test_report = test_code(folder, code_file)
             results = run_simulation(folder, code_file, args.simulation_runs)
 

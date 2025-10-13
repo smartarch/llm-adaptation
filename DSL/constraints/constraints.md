@@ -2,27 +2,27 @@
 
 ## Semantics
 
-* `within` operator: $\lozenge^n_t \phi$ means that $\phi$ holds at least $n$ times within the next $t$ steps
+* `within` operator: $\lozenge^n_t \varphi$ means that $\varphi$ holds at least $n$ times within the next $t$ steps
   * for technical reasons regarding finite traces, if the last step of the simulation is reached before $t$ steps, the constraint is not enforced (except for the case $t = MAX$ as defined below)
 
 Derived operators:
 
 (use the special constant $MAX$ to denote the number of steps until the end of the simulation)
 
-* `scattered` operator: $\lozenge^n \phi$ means that $\phi$ holds at least $n$ times in the future
-  * can be expressed as $\lozenge^n_{MAX} \phi$
+* `scattered` operator: $\lozenge^n \varphi$ means that $\varphi$ holds at least $n$ times in the future
+  * can be expressed as $\lozenge^n_{MAX} \varphi$
 
-* `consequent` operator: $\square_t \phi$ means that $\phi$ holds in each of the next $t$ steps
-  * can be expressed as $\lozenge^t_t \phi$
+* `consequent` operator: $\square_t \varphi$ means that $\varphi$ holds in each of the next $t$ steps
+  * can be expressed as $\lozenge^t_t \varphi$
 
-* `always` operator: $\square \phi$ means that $\phi$ holds in each remaining step
-  * can be expressed as $\square_{MAX} \phi$ or $\lozenge^{MAX}_{MAX} \phi$
+* `always` operator: $\square \varphi$ means that $\varphi$ holds in each remaining step
+  * can be expressed as $\square_{MAX} \varphi$ or $\lozenge^{MAX}_{MAX} \varphi$
 
-* `once` operator: $\lozenge \phi$ means that $\phi$ holds at least once in the future
-  * can be expressed as $\lozenge^1_{MAX} \phi$
+* `once` operator: $\lozenge \varphi$ means that $\varphi$ holds at least once in the future
+  * can be expressed as $\lozenge^1_{MAX} \varphi$
 
-* `next` operator: $\bigcirc \phi$ means that $\phi$ holds in the next step
-  * can be expressed as $\lozenge^1_1 \phi$
+* `next` operator: $\bigcirc \varphi$ means that $\varphi$ holds in the next step
+  * can be expressed as $\lozenge^1_1 \varphi$
 
 Other constructs:
 
@@ -54,11 +54,11 @@ $\forall f \in fields: \lozenge^{MAX}_{MAX} |protecting(f)| \le f.drones\_for\_f
 
 = at least once, the attack ensemble has at least one member
 
-$\lozenge |attack| >= 1$
+$\lozenge |attack| \ge 1$
 
 or
 
-$\lozenge^1_{MAX} |attack| >= 1$
+$\lozenge^1_{MAX} |attack| \ge 1$
 
 ### The most threatened field is fully protected
 

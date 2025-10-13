@@ -13,4 +13,4 @@ Here are some statistics from the simulation:
 - number of spawned warriors (throughout the whole game): {spawned_warriors:.1f} (if this number is low, it indicates that not enough new warriors are spawned)
 - number of spawned farmers (throughout the whole game): {spawned_farmers:.1f} (if this number is low, it indicates that not enough new farmers are spawned)
 
-Try to improve your code or come up with a different approach to reduce the damage to the fields even more.
+Try to improve your code or come up with a different approach to win the game.
