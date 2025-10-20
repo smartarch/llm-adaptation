@@ -71,46 +71,32 @@ def pytest_runtest_makereport(item, call):
     # remove file name from nodeid
     report.nodeid = report.nodeid.removeprefix(report.fspath + "::")
 
-    # add names to the test parameters
-    if hasattr(item, "callspec"):
-        params = dict(item.callspec.params)
-        if params:
-            report.nodeid = report.nodeid.split("[")[0]
-            report.nodeid += f"[{', '.join(f'{k}={v}' for k, v in params.items())}]"
-
-    # # replace the test name with its docstring
-    # test_fn = item.obj
-    # docstring = getattr(test_fn, '__doc__')
-    # if docstring:
-    #     report.nodeid = docstring
-
 
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
-
     results = defaultdict(lambda: defaultdict(list))
 
-    # Collect results grouped by test name and seed
+    # Collect situations grouped by test name and outcome
     for outcome in ["passed", "failed"]:
         for report in terminalreporter.stats.get(outcome, []):
             if report.nodeid.startswith("TestConfiguration"):
                 continue
             parts = report.nodeid.split("[")
             test_name = parts[0]
-            seed = parts[1][:-1].split("=")[1]
-            results[test_name][outcome].append(seed)
+            situation = parts[1][:-1]
+            results[test_name][outcome].append(situation)
 
     # Print formatted results
     terminalreporter.section("Test Results", sep="=")
     for test_name, outcomes in results.items():
         terminalreporter.write(f"{test_name} - ")
         if "failed" in outcomes:
-            failed_seeds = ", ".join(outcomes["failed"])
-            terminalreporter.write(f"failed for seeds: {failed_seeds}")
+            failed_situations = ", ".join(outcomes["failed"])
+            terminalreporter.write(f"failed for: {failed_situations}")
             if "passed" in outcomes:
                 terminalreporter.write("; ")
         if "passed" in outcomes:
-            passed_seeds = ", ".join(outcomes["passed"])
-            terminalreporter.write(f"passed for seeds: {passed_seeds}")
+            passed_situations = ", ".join(outcomes["passed"])
+            terminalreporter.write(f"passed for: {passed_situations}")
         terminalreporter.write("\n")
 
     # Clear the "short test summary info" section

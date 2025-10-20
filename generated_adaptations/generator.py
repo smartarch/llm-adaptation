@@ -184,7 +184,7 @@ def test_code(folder, code_file, tests: Literal["system", "all"]):
     example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
-        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExXpP", "--show-capture=no", "--color=no",
+        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExX", "--show-capture=no", "--color=no",
         f"--example={example}", f"--adaptation_name={adaptation_name}", f"--variant={variant}", f"--tests={tests}"
     ]
     print(f"Running tests ({tests}):", " ".join(cmd))

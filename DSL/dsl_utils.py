@@ -124,3 +124,14 @@ class EnsembleInstance:
     name: str
     description: str | None = None
     param: Component | None = None
+
+
+@dataclasses.dataclass
+class Situation:
+    name: str
+    seed = 42
+    steps = None
+    config: dict
+
+    def __str__(self):
+        return self.name
