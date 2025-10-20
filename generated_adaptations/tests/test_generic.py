@@ -11,7 +11,7 @@ from base_classes.adaptation import import_adaptation
 from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError, \
     MissingAssignmentError, UserConstraintError, Simulation
 from generated_adaptations.generator_utils import adaptation_class_name, adaptation_class
-from utils import read_configs, nested_update
+from utils import read_configs, nested_update, set_random_seed
 
 T = TypeVar('T', bound=AssignmentError)
 
@@ -85,10 +85,12 @@ def assert_no_user_constraints_violated(assignment_errors, fail=fail_without_tra
 
 
 @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_class_is_correct"])
+@pytest.mark.parametrize("seed", [1, 2, 3])
 class TestAdapt:
 
     @staticmethod
-    def init_simulation(adaptation_config, simulation_class, simulation_configs) -> tuple[Simulation, dict]:
+    def init_simulation(seed, adaptation_config, simulation_class, simulation_configs) -> tuple[Simulation, dict]:
+        set_random_seed(seed)
         config = read_configs(simulation_configs)
         config = nested_update(config, adaptation_config)
         adaptation = import_adaptation(config)
@@ -131,33 +133,33 @@ class TestAdapt:
                 else:
                     fail_without_traceback("\n\n".join(failures))
 
-    def test_no_assignment_errors(self, adaptation_config, simulation_class, simulation_configs):
-        simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+    def test_no_assignment_errors(self, seed, adaptation_config, simulation_class, simulation_configs):
+        simulation, config = self.init_simulation(seed, adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_assignment_errors, immediate=False, message=lambda failures: f"There were {sum(failures)} assignment errors in total.")
 
-    def test_no_repeated_assignments(self, adaptation_config, simulation_class, simulation_configs):
-        simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+    def test_no_repeated_assignments(self, seed, adaptation_config, simulation_class, simulation_configs):
+        simulation, config = self.init_simulation(seed, adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_repeated_assignments)
 
-    def test_no_invalid_groups(self, adaptation_config, simulation_class, simulation_configs):
-        simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+    def test_no_invalid_groups(self, seed, adaptation_config, simulation_class, simulation_configs):
+        simulation, config = self.init_simulation(seed, adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_invalid_groups)
 
-    def test_all_assigned(self, adaptation_config, simulation_class, simulation_configs):
-        simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+    def test_all_assigned(self, seed, adaptation_config, simulation_class, simulation_configs):
+        simulation, config = self.init_simulation(seed, adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_missing_assignments)
 
-    def test_no_user_constraints_violated(self, adaptation_config, simulation_class, simulation_configs):
-        simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+    def test_no_user_constraints_violated(self, seed, adaptation_config, simulation_class, simulation_configs):
+        simulation, config = self.init_simulation(seed, adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_user_constraints_violated, immediate=False)
 
-    def test_no_user_constraints_violated_at_the_end(self, adaptation_config, simulation_class, simulation_configs):
-        simulation, config = self.init_simulation(adaptation_config, simulation_class, simulation_configs)
+    def test_no_user_constraints_violated_at_the_end(self, seed, adaptation_config, simulation_class, simulation_configs):
+        simulation, config = self.init_simulation(seed, adaptation_config, simulation_class, simulation_configs)
         steps = config["steps"]
         simulation.run_simulation(steps)
         assert_no_user_constraints_violated(simulation.assignment_errors)

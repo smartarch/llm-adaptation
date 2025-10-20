@@ -18,6 +18,7 @@ adaptation_params:  # this is purely technical
             reason: "At least a few new farmers should be spawned to increase the chance of killing the dragon."
           spawn_at_least_a_few_warriors:
             constraint: "scattered(2, `len(SpawnWarriorEn) >= 2`)"
+#            constraint: "scattered(2, `len(SpawnWarriorEn) >= 2 and FarmComps[0].wheat >= 12 + 10 * len(SpawnFarmerEn) // 2`)"
             reason: "At least a few new warriors should be spawned to increase the chance of killing the dragon."
       assign_in_cave:
         constraints:

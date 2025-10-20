@@ -1,13 +1,8 @@
+from collections import defaultdict
+
 import pytest
 
 from generated_adaptations import generator_utils
-from utils import set_random_seed
-
-
-# set random seed for tests
-@pytest.fixture(autouse=True)
-def set_seed():
-    set_random_seed(42)
 
 
 def pytest_addoption(parser):
@@ -79,7 +74,6 @@ def pytest_runtest_makereport(item, call):
     # add names to the test parameters
     if hasattr(item, "callspec"):
         params = dict(item.callspec.params)
-        params.pop("seed")
         if params:
             report.nodeid = report.nodeid.split("[")[0]
             report.nodeid += f"[{', '.join(f'{k}={v}' for k, v in params.items())}]"
@@ -89,3 +83,35 @@ def pytest_runtest_makereport(item, call):
     # docstring = getattr(test_fn, '__doc__')
     # if docstring:
     #     report.nodeid = docstring
+
+
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+
+    results = defaultdict(lambda: defaultdict(list))
+
+    # Collect results grouped by test name and seed
+    for outcome in ["passed", "failed"]:
+        for report in terminalreporter.stats.get(outcome, []):
+            if report.nodeid.startswith("TestConfiguration"):
+                continue
+            parts = report.nodeid.split("[")
+            test_name = parts[0]
+            seed = parts[1][:-1].split("=")[1]
+            results[test_name][outcome].append(seed)
+
+    # Print formatted results
+    terminalreporter.section("Test Results", sep="=")
+    for test_name, outcomes in results.items():
+        terminalreporter.write(f"{test_name} - ")
+        if "failed" in outcomes:
+            failed_seeds = ", ".join(outcomes["failed"])
+            terminalreporter.write(f"failed for seeds: {failed_seeds}")
+            if "passed" in outcomes:
+                terminalreporter.write("; ")
+        if "passed" in outcomes:
+            passed_seeds = ", ".join(outcomes["passed"])
+            terminalreporter.write(f"passed for seeds: {passed_seeds}")
+        terminalreporter.write("\n")
+
+    # Clear the "short test summary info" section
+    terminalreporter.reportchars = []

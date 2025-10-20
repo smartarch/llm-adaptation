@@ -128,7 +128,7 @@ def load_llm(args):
 
 def gather_feedback(args, folder, messages, iteration, code_file):
     if not code_file:
-        (folder / "results" / f"code{iteration * 2:02d}_missing.txt").write_text("No code block found in the LLM response.", encoding="utf-8")
+        (folder / "results" / f"code_{iteration * 2:02d}_missing.txt").write_text("No code block found in the LLM response.", encoding="utf-8")
         append_missing_code_block(messages, folder, f"{iteration * 2 + 1:02d}_missing_code")
         return
 
@@ -138,7 +138,6 @@ def gather_feedback(args, folder, messages, iteration, code_file):
     results = run_simulation(folder, code_file, args.simulation_runs)
 
     if verdict(folder, results):
-        print("The generated code produces a good result. Stopping further iterations.")
         return True
 
     # provide feedback to the LLM
@@ -370,6 +369,7 @@ def main(cmdline_args=None):
         code_file = query_llm(llm, messages, folder, llm_response_file)
 
         if gather_feedback(args, folder, messages, iteration, code_file):
+            print(f"The generated code produces a good result (iteration: {iteration}). Stopping further iterations.")
             break
     else:
         print(f"Reached the maximum number of iterations ({args.max_iterations}). Stopping.")
