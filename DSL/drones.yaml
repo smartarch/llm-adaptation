@@ -83,6 +83,24 @@ adaptation_params:  # this is purely technical
             in_str: environment.fields
             if_str: field.threat_level > 0
 
+    situations:
+      seed=1:
+        seed: 1
+      all_protecting:
+        # randomly assign all the drones and run a few steps of the simulation to make sure they arrive to the fields
+        arrange: "generated_adaptations.tests.farm.arrange"  # Function to arrange the situation before running tests. Gets `simulation` as arguments and `params` (defined below) as keyword arguments, returns `simulation`.
+        params:
+          protecting_drones: 8
+          arrange_steps: 50
+        steps: 1
+      some_moving_drones:
+        # randomly assign some of the drones and run one step of the simulation to make sure their state changes, but they are still moving to the fields
+        arrange: "generated_adaptations.tests.farm.arrange"
+        params:
+          protecting_drones: 6
+          arrange_steps: 1
+        steps: 1
+
     strategy: ""  # optional
     strategy_interface:
       abstract_class: generated_adaptations.base_classes.farm.FarmAdaptation

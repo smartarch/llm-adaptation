@@ -77,6 +77,14 @@ adaptation_params:  # this is purely technical
           description: "Villagers in the Cave"
         ensembles: [Attack, StayInCave, GoToVillage]
 
+    situations:
+      seed=1:
+        seed: 1
+      seed=2:
+        seed: 2
+      seed=3:
+        seed: 3
+
     strategy: ""  # optional
     strategy_interface:
       abstract_class: generated_adaptations.base_classes.dragon.DragonHuntAdaptation

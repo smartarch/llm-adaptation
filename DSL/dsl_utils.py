@@ -132,6 +132,8 @@ class Situation:
     seed = 42
     steps = None
     config: dict
+    arrange: Callable = None  # function to arrange the simulation (after initialization, before running tests)
+    params: dict = None  # additional parameters for the `arrange` function
 
     def __str__(self):
         return self.name

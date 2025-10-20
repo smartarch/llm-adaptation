@@ -109,6 +109,13 @@ class TestAdapt:
                 situation.steps = situation_config["steps"]
             else:
                 situation.steps = config["steps"]
+            if "arrange" in situation_config:
+                module, func_name = situation_config["arrange"].rsplit(".", 1)
+                arrange_module = importlib.import_module(module)
+                arrange_func = getattr(arrange_module, func_name)
+                situation.arrange = arrange_func
+                if "params" in situation_config:
+                    situation.params = situation_config["params"]
             situations.append(situation)
         metafunc.parametrize("situation", situations, ids=str)
 
@@ -118,6 +125,9 @@ class TestAdapt:
         adaptation = import_adaptation(situation.config)
         simulation = simulation_class(adaptation.adapt, situation.config)
         adaptation.init(simulation)
+
+        if situation.arrange:
+            simulation = situation.arrange(simulation, **situation.params)
         return simulation
 
     @staticmethod

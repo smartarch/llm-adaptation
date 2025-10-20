@@ -36,15 +36,3 @@ adaptation_params:  # this is purely technical
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "scattered(`0.8 * MAX`, `len([v for v in Warriors if v.location == Map.CAVE]) >= 0.5 * len(Warriors)`)"
         reason: "At least half of the warriors should be in the Cave most of the time so they can attack the Dragon."
-    situations:
-      seed=1:
-        seed: 1
-        # init_simulation: "path.to.a.initialization.function"
-        # init_params: dict of parameters for the initialization function
-        # after_init: "path.to.a.function.to.run.after.initialization"
-        # after_init_params: dict of parameters for the after_init function
-        # steps: "number_of_steps" (default is MAX)
-      seed=2:
-        seed: 2
-      seed=3:
-        seed: 3

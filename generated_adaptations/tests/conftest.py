@@ -88,15 +88,13 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     # Print formatted results
     terminalreporter.section("Test Results", sep="=")
     for test_name, outcomes in results.items():
-        terminalreporter.write(f"{test_name} - ")
+        terminalreporter.write(f"{test_name}:")
         if "failed" in outcomes:
             failed_situations = ", ".join(outcomes["failed"])
-            terminalreporter.write(f"failed for: {failed_situations}")
-            if "passed" in outcomes:
-                terminalreporter.write("; ")
+            terminalreporter.write(f"\n - failed for: {failed_situations}")
         if "passed" in outcomes:
             passed_situations = ", ".join(outcomes["passed"])
-            terminalreporter.write(f"passed for: {passed_situations}")
+            terminalreporter.write(f"\n - passed for: {passed_situations}")
         terminalreporter.write("\n")
 
     # Clear the "short test summary info" section
