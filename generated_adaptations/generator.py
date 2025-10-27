@@ -130,51 +130,56 @@ def gather_feedback(args, folder, messages, iteration, code_file):
     if not code_file:
         (folder / "results" / f"code_{iteration * 2:02d}_missing.txt").write_text("No code block found in the LLM response.", encoding="utf-8")
         append_missing_code_block(messages, folder, f"{iteration * 2 + 1:02d}_missing_code")
-        return
+        return False
 
     # run the tests and the simulation with the generated code
     test_result_system, test_report_system = test_code(folder, code_file, "system")
     test_result_all, test_report_all = test_code(folder, code_file, "all")
-    results = run_simulation(folder, code_file, args.simulation_runs)
+    simulation_results = run_simulation(folder, code_file, args.simulation_runs)
 
-    if verdict(folder, results):
+    if verdict(folder, simulation_results, test_result_all):
         return True
 
     # provide feedback to the LLM
     if args.mode == "system":
         if test_result_system == pytest.ExitCode.OK:
             test_report_file = f"{iteration * 2 + 1:02d}_test"
-            append_simulation_report(results, messages, folder, test_report_file, "testpass")
+            append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
         else:
             simulation_report_file = f"{iteration + 1:02d}_pass"
             append_test_report(test_report_system, messages, folder, simulation_report_file)
     elif args.mode == "all":
         if test_result_all == pytest.ExitCode.OK:
             test_report_file = f"{iteration * 2 + 1:02d}_test"
-            append_simulation_report(results, messages, folder, test_report_file, "testpass")
+            append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
         else:
             simulation_report_file = f"{iteration + 1:02d}_pass"
             append_test_report(test_report_all, messages, folder, simulation_report_file)
     elif args.mode in ["result", "stats"]:
         simulation_report_file = f"{iteration + 1:02d}_{args.mode}"
-        append_simulation_report(results, messages, folder, simulation_report_file, args.mode)
+        append_simulation_report(simulation_results, messages, folder, simulation_report_file, args.mode)
     else:
         raise ValueError(f"Unrecognized mode: {args.mode}")
+    return False
 
 
-def verdict(folder, results):
+def verdict(folder, simulation_results, test_result_all):
     example, _ = get_example_variant(folder)
+    all_tests_passed = test_result_all == pytest.ExitCode.OK
 
     if example == "farm":
-        damage = results["damage"]
-        return damage <= FARM_GOOD_DAMAGE
+        damage = simulation_results["damage"]
+        simulation_good_enough = damage <= FARM_GOOD_DAMAGE
     elif example == "dragon":
-        steps = results["steps"]
+        steps = simulation_results["steps"]
         if steps is None:
-            return False
-        return steps <= DRAGON_GOOD_STEPS
+            simulation_good_enough = False
+        else:
+            simulation_good_enough = steps <= DRAGON_GOOD_STEPS
     else:
         raise ValueError(f"Unrecognized example: {example}")
+
+    return all_tests_passed and simulation_good_enough
 
 
 ### Unit tests
