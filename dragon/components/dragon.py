@@ -18,9 +18,10 @@ class Dragon(Component):
         super().__init__(simulation)
         self.hp = self.HP
         self.got_attacked_this_step = False
-        self.attack_log = ""  # save the last attack for logging purposes, this gets reset by Stats
+        self.attack_log = ""  # save the last attack for logging purposes
 
     def actuate(self):
+        self.attack_log = ""
         if self.got_attacked_this_step:
             self.attack_back()
         self.got_attacked_this_step = False

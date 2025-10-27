@@ -84,6 +84,8 @@ adaptation_params:  # this is purely technical
         seed: 2
       seed=3:
         seed: 3
+      no_initial_warriors:
+        arrange: "generated_adaptations.tests.dragon.remove_warriors"
 
     strategy: ""  # optional
     strategy_interface:

@@ -25,6 +25,9 @@ adaptation_params:  # this is purely technical
           attack_at_least_once:
             constraint: "once(`len(AttackEn) > 0`)"
             reason: "The dragon should be attacked."
+          attack_at_least_once_during_first_half:
+            constraint: "within(1, 15, `len(AttackEn) > 0`)"
+            reason: "The dragon should be attacked at least once in the first 15 steps of the game."
     constraints:
       attack_after_moving_to_cave:
         variables:

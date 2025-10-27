@@ -36,9 +36,7 @@ class Stats:
         ]
         new_spawns = set(self.simulation.components) - set(self.simulation.last_components)
         spawned = [sum(1 for component in new_spawns if isinstance(component, Farmer)), sum(1 for component in new_spawns if isinstance(component, Warrior))]
-        dragon_attack = self.simulation.dragon.attack_log
-        self.simulation.dragon.attack_log = ""
-        return [step, self.simulation.dragon_hp, self.simulation.wheat] + counts_in_states + villager_counts + spawned + [dragon_attack]
+        return [step, self.simulation.dragon_hp, self.simulation.wheat] + counts_in_states + villager_counts + spawned + [self.simulation.dragon.attack_log]
 
     def close_file(self):
         self._csv_file.close()

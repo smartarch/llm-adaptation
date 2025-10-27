@@ -80,10 +80,10 @@ def assert_no_missing_assignments(assignment_errors, fail=fail_without_traceback
         fail(f"The following components have not been assigned to a group: {', '.join(components)}. Each component must be assigned exactly once.")
 
 
-def assert_no_user_constraints_violated(assignment_errors, fail=fail_without_traceback):
-    user_constraint_violations = filter_errors(assignment_errors, UserConstraintError)
-    if user_constraint_violations:
-        fail("\n\n".join([error.message for error in user_constraint_violations]))
+def assert_no_functional_constraints_violated(assignment_errors, fail=fail_without_traceback):
+    functional_constraint_violations = filter_errors(assignment_errors, UserConstraintError)
+    if functional_constraint_violations:
+        fail("\n\n".join([error.message for error in functional_constraint_violations]))
 
 
 @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_class_is_correct"])
@@ -183,13 +183,13 @@ class TestAdapt:
         steps = situation.steps
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_missing_assignments)
 
-    def test_no_user_constraints_violated(self, situation, simulation_class):
+    def test_no_functional_constraints_violated(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
-        self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_user_constraints_violated, immediate=False)
+        self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_functional_constraints_violated, immediate=False)
 
-    def test_no_user_constraints_violated_at_the_end(self, situation, simulation_class):
+    def test_no_functional_constraints_violated_at_the_end(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
         simulation.run_simulation(steps)
-        assert_no_user_constraints_violated(simulation.assignment_errors)
+        assert_no_functional_constraints_violated(simulation.assignment_errors)
