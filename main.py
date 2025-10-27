@@ -32,13 +32,6 @@ log_dir = config["log_dir"]
 sys.stdout = Logger(f"{log_dir}/{name}.ansi")
 sys.stderr = Logger(f"{log_dir}/{name}.err", sys.stderr, create_on_first_write=True)
 
-if args.seed is not None:
-    if config.get("tensorflow_needed", False):
-        from keras.utils import set_random_seed
-    else:
-        from utils import set_random_seed
-    set_random_seed(args.seed)
-
 config["log_dir"] = log_dir
 config["log_file_name"] = name
 config["log_file_path"] = f"{log_dir}/{name}.ansi"
@@ -57,6 +50,12 @@ elif example == "dragon":
 else:
     raise ValueError(f"Unknown example: {example}")
 
+if args.seed is not None:
+    if config.get("tensorflow_needed", False):
+        from keras.utils import set_random_seed
+    else:
+        from utils import set_random_seed
+    set_random_seed(args.seed)
 
 adaptation = import_adaptation(config)
 simulation = Simulation(adaptation.adapt, config)
