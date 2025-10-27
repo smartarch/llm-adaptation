@@ -8,7 +8,6 @@ from utils import set_config_values
 if TYPE_CHECKING:
     from dragon.components.villagers import Villager
 
-
 VALID_IN_VILLAGE = ["farm", "cave", "spawn farmer", "spawn warrior"]
 VALID_IN_CAVE = ["village", "cave", "attack"]
 
@@ -23,12 +22,11 @@ class DragonHuntSimulation(Simulation):
         from dragon.components.dragon import Dragon
 
         self.dragon = Dragon(self)
-        self.farm = Farm(self)
+        self.farm = Farm(self, int(config["wheat"]))
         self.components: list["Villager"] = \
             [Farmer(self) for _ in range(config["farmers"])] + \
             [Warrior(self) for _ in range(config["warriors"])]
         self.beyond_control_components = [self.dragon, self.farm]
-        self.wheat = int(config["wheat"])
 
         self.spawn_farmer_ensemble = []
         self.spawn_warrior_ensemble = []
@@ -76,10 +74,10 @@ class DragonHuntSimulation(Simulation):
     def _spawn_villager(self, parents: list["Villager"], villager_type: type["Villager"]):
         count = len(parents) // 2
         for _ in range(count):
-            if self.wheat < villager_type.SpawnCost:
+            if self.farm.wheat < villager_type.SpawnCost:
                 return
 
-            self.wheat -= villager_type.SpawnCost
+            self.farm.wheat -= villager_type.SpawnCost
             self.components.append(villager_type(self))
 
     def get_globals(self):
@@ -105,6 +103,20 @@ class DragonHuntSimulation(Simulation):
             if group_id not in VALID_IN_CAVE:
                 valid_groups = '"' + '", "'.join(VALID_IN_CAVE) + '"'
                 raise AssignmentError(f'Invalid group for Villager in Cave: "{group_id}". It must be one of {valid_groups}.')
+
+        # check if there is enough wheat to spawn villagers
+        if group_id in ("spawn farmer", "spawn warrior"):
+            spawn_farmer_members = sum(1 for g in self.assignments.values() if g == "spawn farmer")
+            spawn_warrior_members = sum(1 for g in self.assignments.values() if g == "spawn warrior")
+            if group_id == "spawn farmer":
+                spawn_farmer_members += 1
+            else:
+                spawn_warrior_members += 1
+            from dragon.components.villagers import Farmer, Warrior
+            wheat_consumption = ((spawn_farmer_members // 2) * Farmer.SpawnCost +
+                                 (spawn_warrior_members // 2) * Warrior.SpawnCost)
+            if wheat_consumption > self.farm.wheat:
+                raise AssignmentError(f'Not enough wheat to spawn new villagers. Cannot assign "{component}" to "{group_id}".')
 
     def _assign_group(self, component: "Villager", group_id: str):
         from dragon.components.villagers import VillagerState
@@ -140,6 +152,11 @@ class Farm(Component):
 
     simulation: DragonHuntSimulation
 
-    @property
-    def wheat(self):
-        return self.simulation.wheat
+    def __init__(self, simulation: "Simulation", wheat):
+        super().__init__(simulation)
+        self.wheat = wheat
+        self.new_wheat = 0
+
+    def actuate(self):
+        self.wheat += self.new_wheat
+        self.new_wheat = 0

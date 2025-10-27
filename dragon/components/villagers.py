@@ -37,7 +37,7 @@ class Villager(Component):
         if self.state == VillagerState.IDLE or self.state == VillagerState.SPAWNING:
             pass
         elif self.state == VillagerState.FARMING and self.location == Map.VILLAGE:
-            self.simulation.wheat += self.Farming
+            self.simulation.farm.new_wheat += self.Farming
         elif self.state == VillagerState.ATTACKING and self.location == Map.CAVE:
             self.simulation.dragon.get_attacked(self.Attack)
         elif self.state == VillagerState.MOVING_TO_VILLAGE:
