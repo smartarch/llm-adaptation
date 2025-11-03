@@ -143,20 +143,20 @@ def gather_feedback(args, folder, messages, iteration, code_file):
     # provide feedback to the LLM
     if args.mode == "system":
         if test_result_system == pytest.ExitCode.OK:
-            test_report_file = f"{iteration * 2 + 1:02d}_test"
+            test_report_file = f"{iteration * 2 + 1:02d}_pass"
             append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
         else:
-            simulation_report_file = f"{iteration + 1:02d}_pass"
+            simulation_report_file = f"{iteration * 2 + 1:02d}_test"
             append_test_report(test_report_system, messages, folder, simulation_report_file)
     elif args.mode == "all":
         if test_result_all == pytest.ExitCode.OK:
-            test_report_file = f"{iteration * 2 + 1:02d}_test"
+            test_report_file = f"{iteration * 2 + 1:02d}_pass"
             append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
         else:
-            simulation_report_file = f"{iteration + 1:02d}_pass"
+            simulation_report_file = f"{iteration * 2 + 1:02d}_test"
             append_test_report(test_report_all, messages, folder, simulation_report_file)
     elif args.mode in ["result", "stats"]:
-        simulation_report_file = f"{iteration + 1:02d}_{args.mode}"
+        simulation_report_file = f"{iteration * 2 + 1:02d}_{args.mode}"
         append_simulation_report(simulation_results, messages, folder, simulation_report_file, args.mode)
     else:
         raise ValueError(f"Unrecognized mode: {args.mode}")
@@ -302,14 +302,18 @@ def analyze_farm_simulation_results(log_files, folder, code_file):
 
 
 def analyze_dragon_simulation_results(log_files, folder, code_file):
-    results = pd.DataFrame(columns=["win", "steps", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"])
+    results = pd.DataFrame(columns=["win", "steps", "dragon_hp", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"])
 
     for log_file in log_files:
         try:
             csv_file = log_file.replace(".ansi", ".csv")
             csv_data = pd.read_csv(csv_file, encoding="utf-8")
 
+            dragon_hp = csv_data.dragon_hp.min()
+            if dragon_hp < 0:
+                dragon_hp = 0
             results.loc[len(results)] = [any(csv_data.dragon_hp <= 0), csv_data.step.max(),
+                                         dragon_hp,
                                          csv_data.warriors_village.iloc[-1] + csv_data.warriors_cave.iloc[-1],
                                          csv_data.farmers_village.iloc[-1] + csv_data.farmers_cave.iloc[-1],
                                          csv_data.FARMING.mean(), csv_data.ATTACKING.mean(),
@@ -317,7 +321,7 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
         except (FileNotFoundError, ValueError):
             pass
 
-    result = results[["warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"]].mean().to_dict()
+    result = results[["dragon_hp", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"]].mean().to_dict()
     result["games_played"] = len(log_files)
     result["wins"] = int(results["win"].sum())
     result["losses"] = len(log_files) - result["wins"]

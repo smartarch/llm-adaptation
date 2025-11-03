@@ -11,7 +11,10 @@ adaptation_params:  # this is purely technical
             variables:
               most_threatened_field: "max(FieldComps, key=lambda f: f.threat_level)"
             constraint: "always(`len(ProtectingEns[most_threatened_field]) >= most_threatened_field.drones_for_full_protection`)"
-            reason: "The most threatened field should be fully protected ({most_threatened_field.id}, threat level {most_threatened_field.threat_level:.2f}, {most_threatened_field.drones_for_full_protection} drones for full protection, {len(ProtectingEns[most_threatened_field])} assigned)."
+            reason: "The most threatened field should be always fully protected (step {step}, {most_threatened_field.id}, threat level {most_threatened_field.threat_level:.2f}, {most_threatened_field.drones_for_full_protection} drones for full protection, {len(ProtectingEns[most_threatened_field])} assigned)."
           no_idle:
             constraint: "scattered(`0.8 * MAX`, `len(IdleEn) <= len(DroneComps) / 2`)"
             reason: "There are too many idle drones ({len(IdleEn)} out of {len(DroneComps)}). They can be utilized to protect other fields."
+          consistency:
+            constraint: "forall drone in `DroneComps`: scattered(`0.25 * MAX`, `drone in ProtectingEns.get(drone.target, [])`)"
+            reason: "To keep the protection efficient, drones shouldn't change the field they are protecting too often. {drone} was assigned to a different field than it was previously protecting more than 75% of the time, which is too often."
