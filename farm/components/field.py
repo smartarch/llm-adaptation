@@ -93,6 +93,10 @@ class Field(Component):
     def closestPlaceToDrone(self, drone: "Drone") -> Point2D:
         return min(self.protectionPlaces, key=lambda p: p.distance(drone.location))
 
+    def distanceToCenter(self, drone: "Drone") -> float:
+        center = Point2D((self.left + self.right) / 2, (self.top + self.bottom) / 2)
+        return center.distance(drone.location)
+
     def assignNextPlace(self, drone: "Drone") -> Point2D:
         if self.patrollingProtection():
             try:
@@ -191,6 +195,10 @@ class Field(Component):
             bird for bird in self.birds
             if bird.location.is_inside(self.left, self.top, self.right, self.bottom)
         ])
+        if birds_inside > 0:
+            # make sure threat levels are different per field to have unique max threat field
+            field_id = int(self.id.split("_")[-1])
+            birds_inside += 0.001 * field_id
         return birds_inside / len(self.birds)
 
     @property

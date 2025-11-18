@@ -146,6 +146,8 @@ class Simulation(abc.ABC):
 
     def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
         try:
+            if component not in self.components:
+                raise UnknownComponentError(str(component))
             self._check_group(component, group_id)
             self.assignments[component] = group_id
             return None

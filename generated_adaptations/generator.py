@@ -134,6 +134,7 @@ def gather_feedback(args, folder, messages, iteration, code_file):
 
     # run the tests and the simulation with the generated code
     test_result_system, test_report_system = test_code(folder, code_file, "system")
+    test_result_functional, test_report_functional = test_code(folder, code_file, "functional")
     test_result_all, test_report_all = test_code(folder, code_file, "all")
     simulation_results = run_simulation(folder, code_file, args.simulation_runs)
 
@@ -185,7 +186,7 @@ def verdict(folder, simulation_results, test_result_all):
 ### Unit tests
 
 
-def test_code(folder, code_file, tests: Literal["system", "all"]):
+def test_code(folder, code_file, tests: Literal["system", "all", "functional"]):
     example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [

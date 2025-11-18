@@ -13,6 +13,7 @@ from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentErr
     MissingAssignmentError, UserConstraintError, Simulation
 from generated_adaptations.generator_utils import adaptation_class_name, adaptation_class, simulation_configs, \
     adaptation_config
+from generated_adaptations.tests.conftest import load_constraints
 from utils import read_configs, nested_update, set_random_seed
 
 T = TypeVar('T', bound=AssignmentError)
@@ -87,7 +88,7 @@ def assert_no_functional_constraints_violated(assignment_errors, fail=fail_witho
 
 
 @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_class_is_correct"])
-class TestAdapt:
+class TestAdaptBase:
 
     @staticmethod
     def pytest_generate_tests(metafunc):
@@ -96,7 +97,7 @@ class TestAdapt:
         variant = metafunc.config.getoption("variant")
         adaptation_name = metafunc.config.getoption("adaptation_name")
         tests = metafunc.config.getoption("tests")
-        config = read_configs(simulation_configs(example, tests == "all"))
+        config = read_configs(simulation_configs(example, load_constraints(tests)))
         config = nested_update(config, adaptation_config(adaptation_name, example, variant))
 
         situations_config = config.get("adaptation_params", {}).get("prompt_template_params", {}).get("situations", {})
@@ -163,6 +164,14 @@ class TestAdapt:
                 else:
                     fail_without_traceback("\n\n".join(failures))
 
+
+class TestAdaptSystem(TestAdaptBase):
+
+    @pytest.fixture(scope="class", autouse=True)
+    def skip(self, tests):
+        if tests not in ("all", "system"):
+            pytest.skip("Skipping system constraints tests.")
+
     def test_no_assignment_errors(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
@@ -182,6 +191,14 @@ class TestAdapt:
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_missing_assignments)
+
+
+class TestAdaptFunctional(TestAdaptBase):
+
+    @pytest.fixture(scope="class", autouse=True)
+    def skip(self, tests):
+        if tests not in ("all", "functional"):
+            pytest.skip("Skipping functional constraints tests.")
 
     def test_no_functional_constraints_violated(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)
