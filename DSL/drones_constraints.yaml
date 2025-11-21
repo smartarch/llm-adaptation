@@ -23,3 +23,16 @@ adaptation_params:  # this is purely technical
               drones_protecting_same_target: "[drone for drone in DroneComps if drone in ProtectingEns.get(drone.target, [])]"
             constraint: "scattered(`0.25 * MAX`, `len(drones_protecting_same_target) >= len(DroneComps) / 2`)"  # at least 25% of the time at least half of the drones stay assigned to the same field
             reason: "To keep the protection efficient, drones shouldn't change the field they are protecting too often. At least half of the drones should stay assigned to the same field at least 25% of the time."
+          closeness:
+            variables:
+              most_threatened_field: "max(FieldComps, key=lambda f: f.threat_level)"
+              closest_drones: "sorted(DroneComps, key=lambda d: most_threatened_field.distanceToCenter(d))[:most_threatened_field.drones_for_full_protection]"  # this could also be expressed as a set of drones for which the number of closer drones to the field is at most drones_for_full_protection, but this is easier in Python
+            constraint: scattered(`0.8 * MAX`, `set(ProtectingEns[most_threatened_field]) == set(closest_drones)`)  # protecting drones are the closest drones
+             # constraint: scattered(`0.8 * MAX`, `len(set(ProtectingEns[most_threatened_field]) & set(closest_drones)) >= 0.75 * most_threatened_field.drones_for_full_protection`)  # protecting drones and closest drones have a big intersection
+            reason: "The drones protecting the most threatened field should be the closest ones."
+          coverage:
+            variables:
+              protected_fields: "[field for field in ProtectingEns if len(ProtectingEns[field]) > 0]"
+              average_coverage: "sum(len(ProtectingEns[field]) / field.drones_for_full_protection for field in protected_fields) / len(protected_fields) if protected_fields else 0"
+            constraint: "scattered(`0.8 * MAX`, `average_coverage >= 0.75`)"  # at least 75% average coverage of protected fields
+            reason: "Partial protection is not very effective, the the birds flee away only if the field is fully protected. Prefer fully protecting fewer fields to partially protecting many fields. Current average coverage of protected fields is {average_coverage:.2f}."

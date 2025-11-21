@@ -172,8 +172,9 @@ def verdict(folder, simulation_results, test_result_all):
         damage = simulation_results["damage"]
         simulation_good_enough = damage <= FARM_GOOD_DAMAGE
     elif example == "dragon":
+        winrate = simulation_results["winrate"]
         steps = simulation_results["steps"]
-        if steps is None:
+        if winrate < 1.0 or steps is None:
             simulation_good_enough = False
         else:
             simulation_good_enough = steps <= DRAGON_GOOD_STEPS

@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader, pass_context
 
 from DSL.dsl_utils import get_components_for_assignment, get_attr, get_ensemble_instances_for_assignment, DSLConfiguration
 from base_classes.components import Component
-from base_classes.simulation import Simulation, AssignmentError, UnknownComponentError, ComponentAlreadyAssignedError
+from base_classes.simulation import Simulation, InvalidAssignmentError, UnknownComponentError, ComponentAlreadyAssignedError
 from base_classes.prompt_template import PromptTemplate, ProcessingError
 
 
@@ -83,7 +83,7 @@ class JinjaPromptTemplate(PromptTemplate):
 
         answer = self.extract_tag(response, tag)
         if not answer:
-            error = AssignmentError(f"Final group assignment not found. You must use the `<{tag}>` and `</{tag}>` tags to mark the final answer.")
+            error = InvalidAssignmentError(f"Final group assignment not found. You must use the `<{tag}>` and `</{tag}>` tags to mark the final answer.")
             simulation.append_assignment_error(error)
             return [ProcessingError(None, error)], None
         memory = self.extract_tag(response, "memory")
@@ -152,7 +152,7 @@ class JinjaPromptTemplate(PromptTemplate):
                 print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
-            error = AssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
+            error = InvalidAssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
         return errors
@@ -198,14 +198,14 @@ class JinjaPromptTemplate(PromptTemplate):
                 print(f"Error - invalid row ({str(error)}): {repr(row)}")
         if len(simulation.assignments) < len(components):
             missing_components = [component_id for component_id, component in components.items() if component not in simulation.assignments]
-            error = AssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
+            error = InvalidAssignmentError("The following components have not been assigned to a group: " + ", ".join(missing_components))
             errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)
 
         all_groups = self.configuration.load_ensemble_names_for_all_assignments(simulation)
         if len(assigned_groups) < len(all_groups):
             missing_groups = [group for group in all_groups if group not in assigned_groups]
-            error = AssignmentError("The following groups are missing in the assignment: " + ", ".join(missing_groups))
+            error = InvalidAssignmentError("The following groups are missing in the assignment: " + ", ".join(missing_groups))
             if not self.configuration.get("retry_format") == "component-first":
                 errors.append(ProcessingError(None, error))
             simulation.append_assignment_error(error)

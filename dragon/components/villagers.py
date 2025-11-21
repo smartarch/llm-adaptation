@@ -47,6 +47,10 @@ class Villager(Component):
             self.location = Map.CAVE
             self.state = VillagerState.IDLE
 
+    @property
+    def role(self):
+        return
+
     def get_attacked(self, damage):
         self.hp -= damage
         if self.hp <= 0:
@@ -56,7 +60,7 @@ class Villager(Component):
         self.simulation.remove_component(self)
 
     def __repr__(self):
-        return f"{self.id}({self.state})"
+        return f"{self.name} ({self.role})"
 
     def __str__(self):
         return self.name

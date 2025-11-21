@@ -10,7 +10,7 @@ import pytest
 from DSL.dsl_utils import Situation
 from base_classes.adaptation import import_adaptation
 from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError, \
-    MissingAssignmentError, UserConstraintError, Simulation
+    MissingAssignmentError, UserConstraintError, InvalidAssignmentError, Simulation
 from generated_adaptations.generator_utils import adaptation_class_name, adaptation_class, simulation_configs, \
     adaptation_config
 from generated_adaptations.tests.conftest import load_constraints
@@ -77,8 +77,19 @@ def assert_no_invalid_groups(assignment_errors, fail=fail_without_traceback):
 def assert_no_missing_assignments(assignment_errors, fail=fail_without_traceback):
     missing_assignments = filter_errors(assignment_errors, MissingAssignmentError)
     if missing_assignments:
-        components = [str(error.component) for error in missing_assignments]
-        fail(f"The following components have not been assigned to a group: {', '.join(components)}. Each component must be assigned exactly once.")
+        grouped_per_assignment = itertools.groupby(missing_assignments, key=lambda e: e.assignment)
+        message = "The following components have not been assigned to a group:\n"
+        for assignment, group in grouped_per_assignment:
+            components = [repr(error.component) for error in group]
+            message += f"- in '{assignment}': {', '.join(components)}\n"
+        message += "Each component must be assigned exactly once."
+        fail(message)
+
+
+def assert_no_invalid_assignments(assignment_errors, fail=fail_without_traceback):
+    invalid_assignments = filter_errors(assignment_errors, InvalidAssignmentError)
+    if invalid_assignments:
+        fail("\n".join(invalid_assignment.message for invalid_assignment in invalid_assignments))
 
 
 def assert_no_functional_constraints_violated(assignment_errors, fail=fail_without_traceback):
@@ -172,10 +183,10 @@ class TestAdaptSystem(TestAdaptBase):
         if tests not in ("all", "system"):
             pytest.skip("Skipping system constraints tests.")
 
-    def test_no_assignment_errors(self, situation, simulation_class):
-        simulation = self.init_simulation(situation, simulation_class)
-        steps = situation.steps
-        self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_assignment_errors, immediate=False, message=lambda failures: f"There were {sum(failures)} assignment errors in total.")
+    # def test_no_assignment_errors(self, situation, simulation_class):
+    #     simulation = self.init_simulation(situation, simulation_class)
+    #     steps = situation.steps
+    #     self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_assignment_errors, immediate=False, message=lambda failures: f"There were {sum(failures)} assignment errors in total.")
 
     def test_no_repeated_assignments(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)
@@ -186,6 +197,11 @@ class TestAdaptSystem(TestAdaptBase):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_invalid_groups)
+
+    def test_no_invalid_assignments(self, situation, simulation_class):
+        simulation = self.init_simulation(situation, simulation_class)
+        steps = situation.steps
+        self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_invalid_assignments)
 
     def test_all_assigned(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)

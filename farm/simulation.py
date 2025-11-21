@@ -1,7 +1,7 @@
 import random
 
 from base_classes.components2d import Point2D
-from base_classes.simulation import Simulation, AssignmentError, ComponentAlreadyAssignedError, InvalidGroupError
+from base_classes.simulation import Simulation, InvalidAssignmentError, ComponentAlreadyAssignedError, InvalidGroupError
 from farm.components.bird import Bird, BirdFieldProbabilityGenerator
 from farm.components.charger import Charger
 from farm.components.drone import Drone, DroneState
@@ -78,7 +78,7 @@ class SmartFarmSimulation(Simulation):
             try:
                 self._parse_field(group_id)
             except (KeyError, IndexError):
-                raise AssignmentError(f"Invalid field in protecting group: {group_id}")
+                raise InvalidAssignmentError(f"Invalid field in protecting group: {group_id}")
         else:
             raise InvalidGroupError(group_id)
 

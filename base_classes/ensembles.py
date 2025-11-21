@@ -24,3 +24,6 @@ class ResolvedEnsemble(EnsembleInstance):
 
     def __contains__(self, item):
         return item in self.components
+
+    def __iter__(self):
+        return iter(self.components)

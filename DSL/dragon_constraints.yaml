@@ -15,18 +15,18 @@ adaptation_params:  # this is purely technical
             reason: "Farmer {farmer} should stay in the Village."
           spawn_at_least_a_few_farmers:
             constraint: "scattered(2, `len(SpawnFarmerEn) >= 2`)"
-            reason: "At least a few new farmers should be spawned to increase the chance of killing the dragon."
+            reason: "At least a few new farmers should be spawned to increase the chance of killing the Dragon."
           spawn_at_least_a_few_warriors:
             constraint: "scattered(2, `len(SpawnWarriorEn) >= 2`)"
-            reason: "At least a few new warriors should be spawned to increase the chance of killing the dragon."
+            reason: "At least a few new warriors should be spawned to increase the chance of killing the Dragon."
       assign_in_cave:
         constraints:
-          attack_at_least_once:
-            constraint: "once(`len(AttackEn) > 0`)"
-            reason: "The dragon should be attacked."
+#          attack_at_least_once:
+#            constraint: "once(`len(AttackEn) > 0`)"
+#            reason: "The Dragon should be attacked."
           attack_at_least_once_during_first_half:
             constraint: "within(1, 15, `len(AttackEn) > 0`)"
-            reason: "The dragon should be attacked at least once in the first 15 steps of the game."
+            reason: "The Dragon should be attacked at least once in the first 15 steps of the game."
     constraints:
       attack_after_moving_to_cave:
         variables:
@@ -38,3 +38,6 @@ adaptation_params:  # this is purely technical
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "scattered(`0.8 * MAX`, `len([v for v in Warriors if v.location == Map.CAVE]) >= 0.5 * len(Warriors)`)"
         reason: "At least half of the warriors should be in the Cave most of the time so they can attack the Dragon."
+      game_is_won:
+        constraint: "once(`DragonComps[0].hp <= 0`)"
+        reason: "To win the game, the Dragon must be killed."

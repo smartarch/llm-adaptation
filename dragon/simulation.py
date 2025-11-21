@@ -2,7 +2,7 @@ import enum
 from typing import TYPE_CHECKING
 
 from base_classes.components import Component
-from base_classes.simulation import Simulation, AssignmentError, ComponentAlreadyAssignedError
+from base_classes.simulation import Simulation, InvalidAssignmentError, ComponentAlreadyAssignedError
 from utils import set_config_values
 
 if TYPE_CHECKING:
@@ -98,11 +98,11 @@ class DragonHuntSimulation(Simulation):
         if component.location == Map.VILLAGE:
             if group_id not in VALID_IN_VILLAGE:
                 valid_groups = '"' + '", "'.join(VALID_IN_VILLAGE) + '"'
-                raise AssignmentError(f'Invalid group for Villager in Village: "{group_id}". It must be one of {valid_groups}.')
+                raise InvalidAssignmentError(f'Invalid group for Villager in Village: "{group_id}". It must be one of {valid_groups}.')
         else:  # component.location == Map.CAVE
             if group_id not in VALID_IN_CAVE:
                 valid_groups = '"' + '", "'.join(VALID_IN_CAVE) + '"'
-                raise AssignmentError(f'Invalid group for Villager in Cave: "{group_id}". It must be one of {valid_groups}.')
+                raise InvalidAssignmentError(f'Invalid group for Villager in Cave: "{group_id}". It must be one of {valid_groups}.')
 
         # check if there is enough wheat to spawn villagers
         if group_id in ("spawn farmer", "spawn warrior"):
@@ -116,7 +116,7 @@ class DragonHuntSimulation(Simulation):
             wheat_consumption = ((spawn_farmer_members // 2) * Farmer.SpawnCost +
                                  (spawn_warrior_members // 2) * Warrior.SpawnCost)
             if wheat_consumption > self.farm.wheat:
-                raise AssignmentError(f'Not enough wheat to spawn new villagers. Cannot assign "{component}" to "{group_id}".')
+                raise InvalidAssignmentError(f'Not enough wheat to spawn new villager. Cannot assign "{component}" to "{group_id}".')
 
     def _assign_group(self, component: "Villager", group_id: str):
         from dragon.components.villagers import VillagerState

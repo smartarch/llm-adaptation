@@ -13,6 +13,8 @@ class AssignmentError(Exception):
     assignment: str | None = None  # name of the assignment method that caused the error, if any
 
     def __init__(self, message: str):
+        if self.__class__ is AssignmentError:
+            raise TypeError("AssignmentError is an abstract class and cannot be instantiated directly.")
         super().__init__(message)
 
     @property
@@ -46,6 +48,10 @@ class MissingAssignmentError(AssignmentError):
 
 
 class UserConstraintError(AssignmentError):
+    pass
+
+
+class InvalidAssignmentError(AssignmentError):
     pass
 
 
