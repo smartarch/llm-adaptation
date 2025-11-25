@@ -1,4 +1,4 @@
-"""Assign drones to fully protect the most threatened field. Keep other drones where they were."""
+"""Order fields by threat level and assign the closest drones to protect them."""
 from generated_adaptations.base_classes.farm import FarmAdaptation
 
 
