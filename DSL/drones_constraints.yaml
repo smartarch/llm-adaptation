@@ -35,4 +35,4 @@ adaptation_params:  # this is purely technical
               protected_fields: "[field for field in ProtectingEns if len(ProtectingEns[field]) > 0]"
               average_coverage: "sum(len(ProtectingEns[field]) / field.drones_for_full_protection for field in protected_fields) / len(protected_fields) if protected_fields else 0"
             constraint: "scattered(`0.8 * MAX`, `average_coverage >= 0.75`)"  # at least 75% average coverage of protected fields
-            reason: "Partial protection is not very effective, the the birds flee away only if the field is fully protected. Prefer fully protecting fewer fields to partially protecting many fields. Current average coverage of protected fields is {average_coverage:.2f}."
+            reason: "Partial protection is not very effective, the birds flee away only if the field is fully protected. Prefer fully protecting fewer fields to partially protecting many fields. Current average coverage of protected fields is {average_coverage:.2f}."
