@@ -1,5 +1,0 @@
-name: o3_sd1_1
-log_dir.append: /o3_sd1_1
-adaptation_name: generated_adaptations.farm.o3_sd1_1.AdaptiveFarm
-adaptation_params:
-  adapt_every: 10

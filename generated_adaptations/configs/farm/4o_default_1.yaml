@@ -1,5 +1,0 @@
-name: 4o_default_1
-log_dir.append: /4o_default_1
-adaptation_name: generated_adaptations.farm.4o_default_1.SmartFarmDroneCoordinator
-adaptation_params:
-  adapt_every: 10

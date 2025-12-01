@@ -11,14 +11,14 @@ pytest
 pytest-dependency
 
 # LLMs
-langchain
+langchain==0.3.0
 langchain-openai>=0.3.9
 langchain-google-genai
 langchain-anthropic
 tiktoken
 
 # RL
-tensorflow==2.14.0
+#tensorflow==2.14.0
 
 # templates
 Jinja2

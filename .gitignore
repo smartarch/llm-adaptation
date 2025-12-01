@@ -166,13 +166,10 @@ cython_debug/
 /logs/*.gif
 /rl_models/
 /logs
+/results
 /results/**/*.gif
 /results/**/*.png
 /results/**/*.pdf
 /results/**/RL*
 /generated_adaptations/**/*.png
-# ignore the results while experimenting
-/generated_adaptations/farm/
-!/generated_adaptations/farm/mock
-/generated_adaptations/dragon/
 /generated_adaptations/old/

@@ -1,4 +1,4 @@
-# User constraints
+# Functional Constraints Logic implementation notes
 
 ## Semantics
 
@@ -120,7 +120,7 @@ $\forall d \in drones: \square_{d.time\_to\_charger} d.battery \le 0.1 \implies 
 
 ## Parsing and implementation notes
 
-* `lark` or `pyparsing` to build the parser
+* we use a `lark` grammar for parsing the (simplified) FCL: [`grammar-simple.lark`](./grammar-simple.lark)
 * `eval` to evaluate the constants and attribute access
 
 Variables available in the evaluation context:
@@ -138,7 +138,7 @@ Variables available in the evaluation context:
 ### Temporal operators
 
 * evaluate -> return True / False, or list of obligations to be checked in the next steps
-* simplification -> remove and / or (can be part of PyExpr) -> [`grammar-simple.lark`](./grammar-simple.lark)
+* Python expressions (in backticks) are used for formulas (attribute access, ensemble membership, size of ensembles, constants, logical operators, etc.)
 
 * store history for each operator (boolean for each previous step)
   * used when temporal operator is at the left side of an implication

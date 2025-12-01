@@ -1,5 +1,0 @@
-name: 4o_sd2_strategy_2
-log_dir.append: /4o_sd2_strategy_2
-adaptation_name: generated_adaptations.farm.4o_sd2_strategy_2.SmartFarmAdaptation
-adaptation_params:
-  adapt_every: 10

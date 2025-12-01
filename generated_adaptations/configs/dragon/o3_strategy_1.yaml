@@ -1,4 +1,0 @@
-name: o3_strategy_1
-log_dir.append: /o3_strategy_1
-adaptation_name: generated_adaptations.dragon.o3_strategy_1.SmartAdaptation
-adaptation_params: {}

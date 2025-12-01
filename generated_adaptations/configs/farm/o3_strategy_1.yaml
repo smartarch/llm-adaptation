@@ -1,5 +1,0 @@
-name: o3_strategy_1
-log_dir.append: /o3_strategy_1
-adaptation_name: generated_adaptations.farm.o3_strategy_1.SmartFarmAdaptation
-adaptation_params:
-  adapt_every: 10
