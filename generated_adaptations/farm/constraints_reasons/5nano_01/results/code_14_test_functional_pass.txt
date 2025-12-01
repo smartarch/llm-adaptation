@@ -1,0 +1,8 @@
+0
+...ssssssssssss......                                                    [100%]
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+9 passed, 12 skipped in 2.65s

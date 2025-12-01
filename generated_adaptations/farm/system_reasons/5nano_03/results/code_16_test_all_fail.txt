@@ -1,0 +1,43 @@
+1
+...FFFFF.FF.FF.FF....                                                    [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+In 'assign_drones', 8 components were assigned more than once. Each component must be assigned exactly once.
+________ TestAdaptSystem.test_no_repeated_assignments[all_protecting] _________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+______ TestAdaptSystem.test_no_repeated_assignments[some_moving_drones] _______
+In 'assign_drones', 8 components were assigned more than once. Each component must be assigned exactly once.
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+___________ TestAdaptSystem.test_no_invalid_groups[all_protecting] ____________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+_________ TestAdaptSystem.test_no_invalid_assignments[all_protecting] _________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+______________ TestAdaptSystem.test_all_assigned[all_protecting] ______________
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+_ TestAdaptFunctional.test_no_functional_constraints_violated[all_protecting] _
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+================================ Test Results =================================
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+11 failed, 10 passed in 2.58s

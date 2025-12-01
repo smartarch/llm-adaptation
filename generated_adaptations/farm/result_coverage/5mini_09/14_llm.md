@@ -1,0 +1,121 @@
+Reasoning and strategy
+
+What I observed
+- The previous complex heuristics (partial protection, stealing, marginal metrics) sometimes made worse decisions than a simpler greedy policy: they either wasted drones on low-impact partial protections or disrupted existing protections.
+- A reliable, easy-to-reason-about policy that performed well earlier was: always fully protect the single highest-threat field (counting drones already protecting or already moving toward it), using the closest drones to finish it; then, with any remaining drones, greedily fully protect other fields in descending threat order but only if we can meet their full requirement using available drones. Do not "steal" protecting drones from other fields except when they were already moving/protecting toward the chosen field.
+
+Strategy I implement now
+- Compute arrival time as Euclidean distance from the drone to the field center divided by speed (speed = 2).
+- For each field (sorted by threat desc, tie by id):
+  - Count drones already protecting or moving_to_field toward that field and keep them assigned.
+  - For the top field: if still short, assign the nearest available drones (by arrival time) to reach full protection, even if that exhausts remaining drones.
+  - For lower-priority fields: only assign drones if we can fully satisfy that field's required number using available drones (so we don't waste drones on ineffective partial protection).
+- Never reassign drones that are currently protecting some other fully-protected field (we keep them there).
+- Explicitly call environment.assign_group for every drone every step; if a target group name is not in group_ids, fall back to "idle".
+
+This is a simple, robust greedy full-protection allocator that prioritizes arrival time and avoids disruptive reassignments. The implementation follows.
+
+```py
+from generated_adaptations.base_classes.farm import FarmAdaptation
+import math
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        DRONE_SPEED = 2.0
+
+        def field_center(f):
+            return ((f.left + f.right) / 2.0, (f.top + f.bottom) / 2.0)
+
+        def arrival_time(drone, field):
+            # Already protecting on-site -> zero arrival time
+            if getattr(drone, "state", None) == "protecting" and drone.target_id == field.id:
+                return 0.0
+            cx, cy = field_center(field)
+            dx = getattr(drone.location, "x", 0) - cx
+            dy = getattr(drone.location, "y", 0) - cy
+            return math.hypot(dx, dy) / DRONE_SPEED
+
+        idle_group = "idle"
+
+        fields = list(getattr(environment, "fields", []) or [])
+        threatened = [f for f in fields if getattr(f, "threat_level", 0) > 0]
+
+        # If no threats, set all drones to idle
+        if not threatened:
+            for c in components:
+                environment.assign_group(c, idle_group)
+            return
+
+        # Sort fields by descending threat level (tie-breaker by id for determinism)
+        threatened.sort(key=lambda f: (f.threat_level, str(f.id)), reverse=True)
+
+        # Prepare assignment map and available drones pool
+        assigned = {}  # component -> group name
+        available = list(components)  # drones not yet assigned in this step
+
+        # Helper: count and assign contributors (protecting or moving_to_field for that field)
+        def assign_contributors_for_field(field):
+            contrib = []
+            for d in list(available):
+                if getattr(d, "target_id", None) == field.id and getattr(d, "state", None) in ("protecting", "moving_to_field"):
+                    contrib.append(d)
+            for d in contrib:
+                assigned[d] = f"protecting {field.id}"
+                if d in available:
+                    available.remove(d)
+            return len(contrib)
+
+        # Iterate fields in priority order
+        for idx, field in enumerate(threatened):
+            required = int(getattr(field, "drones_for_full_protection", 0))
+            if required <= 0:
+                continue
+
+            # Assign contributors (protecting or moving_to_field toward this field)
+            already = assign_contributors_for_field(field)
+            need = max(0, required - already)
+
+            if need == 0:
+                # Field already has sufficient contributors; keep them assigned
+                continue
+
+            # For the top field: use nearest available drones even if that uses up most drones
+            if idx == 0:
+                if available:
+                    # sort available by arrival time to this field
+                    available.sort(key=lambda d: arrival_time(d, field))
+                    to_take = available[:need]
+                    for d in to_take:
+                        assigned[d] = f"protecting {field.id}"
+                    # remove taken from available
+                    available = [d for d in available if assigned.get(d) != f"protecting {field.id}"]
+                # after this, whether fully satisfied or not, move on (we prioritized top field)
+                continue
+
+            # For other fields: only assign if we can fully satisfy requirement using currently available drones
+            if len(available) >= need:
+                # choose nearest 'need' drones by arrival time
+                available.sort(key=lambda d: arrival_time(d, field))
+                to_take = available[:need]
+                for d in to_take:
+                    assigned[d] = f"protecting {field.id}"
+                # remove taken from available
+                available = [d for d in available if assigned.get(d) != f"protecting {field.id}"]
+            else:
+                # not enough available drones to fully protect this field; skip it
+                continue
+
+        # Any remaining drones become idle
+        for d in available:
+            assigned[d] = idle_group
+
+        # Finalize assignments: ensure group name is valid, else fallback to idle, and call environment.assign_group
+        for comp in components:
+            group = assigned.get(comp, idle_group)
+            if group not in group_ids:
+                group = idle_group
+            environment.assign_group(comp, group)
+```

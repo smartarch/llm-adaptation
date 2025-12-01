@@ -1,0 +1,16 @@
+0
+.....................                                                    [100%]
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+21 passed in 8.51s

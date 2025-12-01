@@ -1,0 +1,116 @@
+Loaded 2 messages from generated_adaptations\farm\result_coverage\5mini_06.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1024, Output: 2338 (reasoning: 1280)
+Response time (seconds): 32.9
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_coverage\5mini_06\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_02 --variant=result_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_02 --variant=result_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_02 --variant=result_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_coverage\5mini_06\code_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_02", "log_dir.append": "/result_coverage/5mini_06/code_02", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_02.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_02", "log_dir.append": "/result_coverage/5mini_06/code_02", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_02.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_02", "log_dir.append": "/result_coverage/5mini_06/code_02", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_02.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 127.0
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2128, Output: 3980 (reasoning: 1728)
+Response time (seconds): 63.9
+[0m
+LLM response saved to '04_llm.md'.
+No code block found in the LLM response.
+Querying LLM with prompt 05_missing_code.
+[33mTOKENS USED:
+Input: 4434, Output: 2353 (reasoning: 384)
+Response time (seconds): 37.1
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_coverage\5mini_06\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_06 --variant=result_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_06 --variant=result_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_06 --variant=result_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_coverage\5mini_06\code_06.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_06", "log_dir.append": "/result_coverage/5mini_06/code_06", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_06.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_06", "log_dir.append": "/result_coverage/5mini_06/code_06", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_06.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_06", "log_dir.append": "/result_coverage/5mini_06/code_06", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_06.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 87.0
+Querying LLM with prompt 07_result.
+[33mTOKENS USED:
+Input: 6449, Output: 4543 (reasoning: 1536)
+Response time (seconds): 72.6
+[0m
+LLM response saved to '08_llm.md'.
+No code block found in the LLM response.
+Querying LLM with prompt 09_missing_code.
+[33mTOKENS USED:
+Input: 9510, Output: 4029 (reasoning: 1088)
+Response time (seconds): 65.2
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_coverage\5mini_06\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_10 --variant=result_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_10 --variant=result_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_10 --variant=result_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_coverage\5mini_06\code_10.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_10", "log_dir.append": "/result_coverage/5mini_06/code_10", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_10.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_10", "log_dir.append": "/result_coverage/5mini_06/code_10", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_10.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_10", "log_dir.append": "/result_coverage/5mini_06/code_10", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_10.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 134.7
+Querying LLM with prompt 11_result.
+[33mTOKENS USED:
+Input: 12497, Output: 4430 (reasoning: 2112)
+Response time (seconds): 77.7
+[0m
+LLM response saved to '12_llm.md'.
+No code block found in the LLM response.
+Querying LLM with prompt 13_missing_code.
+[33mTOKENS USED:
+Input: 14869, Output: 2964 (reasoning: 960)
+Response time (seconds): 47.1
+[0m
+LLM response saved to '14_llm.md'.
+No code block found in the LLM response.
+Querying LLM with prompt 15_missing_code.
+[33mTOKENS USED:
+Input: 16927, Output: 2576 (reasoning: 832)
+Response time (seconds): 38.5
+[0m
+LLM response saved to '16_llm.md'.
+No code block found in the LLM response.
+Querying LLM with prompt 17_missing_code.
+[33mTOKENS USED:
+Input: 18725, Output: 3431 (reasoning: 1536)
+Response time (seconds): 50.4
+[0m
+LLM response saved to '18_llm.md'.
+No code block found in the LLM response.
+Querying LLM with prompt 19_missing_code.
+[33mTOKENS USED:
+Input: 20674, Output: 3419 (reasoning: 1024)
+Response time (seconds): 49.4
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_coverage\5mini_06\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_20 --variant=result_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_20 --variant=result_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5mini_06/code_20 --variant=result_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_coverage\5mini_06\code_20.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_20", "log_dir.append": "/result_coverage/5mini_06/code_20", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_20.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_20", "log_dir.append": "/result_coverage/5mini_06/code_20", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_20.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_coverage/5mini_06/code_20", "log_dir.append": "/result_coverage/5mini_06/code_20", "adaptation_name": "generated_adaptations.farm.result_coverage.5mini_06.code_20.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 116.0
+Reached the maximum number of iterations (10). Stopping.

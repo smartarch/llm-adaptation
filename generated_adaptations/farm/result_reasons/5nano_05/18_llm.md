@@ -1,0 +1,238 @@
+Reasoning and new adaptation strategy
+
+Goal
+- Push the damage down further by a strong, arrival-aware, globally greedy allocation. The top-threat field remains the primary target, but we allocate remaining drones to other threatened fields using a true greedy optimization that accounts for arrival times, distance, threat levels, remaining protection needs, and per-drone memory to improve stability without sacrificing top-field protection.
+
+Key ideas
+- Arrival-time aware scoring: drones that are already heading toward a field or are protecting it have near-zero arrival time; others are penalized by estimated arrival to that field.
+- Memory bias: drones that previously protected a field get a modest boost when evaluating that field, improving stability without blocking top-field progress.
+- Phase 1 (top field): guarantee full protection for the most-threatened field using the closest drones, with memory bias.
+- Phase 2 (global greedy): repeatedly assign the best (drone, field) pair by maximizing a composite score:
+  - Components: field threat level, remaining need to reach full protection, arrival time, distance, and memory bias.
+  - After each assignment, the field’s remaining need is updated.
+- Phase 3 (half-protection): if fewer than half of drones are protecting, opportunistically bolster protection to reach at least half, using the same scoring approach.
+- Stability: memory persists across steps to reduce churn; top-field protection remains the priority.
+
+Code
+- A single class SmartFarmAdaptation implementing the above strategy. It keeps a per-drone memory and uses a phase-based, arrival-aware greedy allocation.
+
+```py
+from math import sqrt
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Persist across steps: map drone_id -> last_protected_field_id (string) or None
+        self._last_target_by_drone = {}
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # 1) Gather threatened fields (threat_level > 0)
+        fields = list(getattr(environment, "fields", []))
+        threatened_fields = [f for f in fields if getattr(f, "threat_level", 0) > 0]
+
+        # If nothing is threatened, idle all drones and reset memory
+        if not threatened_fields:
+            for d in components:
+                environment.assign_group(d, "idle")
+            for d in components:
+                self._last_target_by_drone[id(d)] = None
+            return
+
+        # 2) Compute field centers for distance calculations
+        field_centers = {}
+        for f in threatened_fields:
+            cx = (f.left + f.right) / 2.0
+            cy = (f.top  + f.bottom) / 2.0
+            field_centers[f.id] = (cx, cy)
+
+        # 3) Helper: determine current group for a drone (considers moving_to_field as protection)
+        def current_group(d):
+            st = getattr(d, "state", None)
+            tid = getattr(d, "target_id", None)
+            if st in ("protecting", "moving_to_field") and tid is not None:
+                return f"protecting {tid}"
+            return "idle"
+
+        # 4) Start with the current assignment as the baseline
+        final_group = {d: current_group(d) for d in components}
+
+        # 5) Sort threatened fields by threat descending
+        threatened_sorted = sorted(
+            threatened_fields,
+            key=lambda ff: getattr(ff, "threat_level", 0),
+            reverse=True
+        )
+
+        # Phase 1: Top field - fully protect using closest drones with memory bias
+        def fill_field_to_full(field):
+            field_id = field.id
+            grp = f"protecting {field_id}"
+            current_protectors = sum(1 for d in components if final_group.get(d) == grp)
+            needed = int(getattr(field, "drones_for_full_protection", 0)) - current_protectors
+            if needed <= 0:
+                return
+            cx, cy = field_centers[field_id]
+
+            candidates = []
+            for d in components:
+                if final_group.get(d) == grp:
+                    continue
+                loc = getattr(d, "location", None)
+                if loc is None:
+                    dist = float("inf")
+                else:
+                    dx = getattr(loc, "x", 0.0) - cx
+                    dy = getattr(loc, "y", 0.0) - cy
+                    dist = sqrt(dx*dx + dy*dy)
+
+                # arrival time
+                if getattr(d, "state", None) in ("moving_to_field", "protecting") and getattr(d, "target_id", None) == field_id:
+                    arrival = 0.0
+                else:
+                    arrival = dist / 2.0
+
+                last = (self._last_target_by_drone.get(id(d)) == field_id)
+                mem = 1.0 if last else 0.0
+                threat = getattr(field, "threat_level", 0.0)
+
+                # Score to maximize: higher threat and memory, but prefer faster arrival and closer distance
+                score = threat * needed + mem - arrival * 0.9 - dist * 0.01
+                candidates.append((score, arrival, dist, d, last))
+            candidates.sort(key=lambda t: (-t[0], t[1], t[2]))
+            for _, _, _, d, _ in candidates[:max(0, needed)]:
+                final_group[d] = grp
+
+        top_field = threatened_sorted[0]
+        fill_field_to_full(top_field)
+
+        # Phase 2: Global greedy distribution for remaining needs
+        total = len(components)
+        half = (total + 1) // 2
+
+        # Build needs for remaining fields (excluding top already processed)
+        field_by_id = {f.id: f for f in threatened_sorted}
+        needs = {}
+        for f in threatened_sorted[1:]:
+            fid = f.id
+            current = sum(1 for d in components if final_group.get(d) == f"protecting {fid}")
+            rem = int(getattr(f, "drones_for_full_protection", 0)) - current
+            if rem > 0:
+                needs[fid] = rem
+
+        # Greedy, global allocation: pick best (drone, field) pair per iteration
+        while needs:
+            best_pair = None
+            best_score = -1e9
+
+            for d in components:
+                current = final_group.get(d, "idle")
+                current_field_id = current.split(" ", 1)[1] if isinstance(current, str) and current.startswith("protecting ") else None
+
+                best_for_drone = None
+                best_for_score = -1e9
+
+                for fid, need in list(needs.items()):
+                    if need <= 0:
+                        continue
+                    f = field_by_id[fid]
+                    cx, cy = field_centers[fid]
+
+                    loc = getattr(d, "location", None)
+                    dist = float("inf") if loc is None else sqrt((getattr(loc, "x", 0.0) - cx) ** 2 + (getattr(loc, "y", 0.0) - cy) ** 2)
+                    arrival = 0.0 if getattr(d, "state", None) in ("moving_to_field", "protecting") and getattr(d, "target_id", None) == fid else dist / 2.0
+                    mem = 1.0 if (self._last_target_by_drone.get(id(d)) == fid) else 0.0
+                    threat = getattr(f, "threat_level", 0.0)
+                    need_val = need
+                    score = threat * need_val + mem - arrival * 0.9 - dist * 0.01
+
+                    if score > best_for_score:
+                        best_for_score = score
+                        best_for_drone = (d, fid)
+
+                if best_for_drone is not None:
+                    d_best, fid_best = best_for_drone
+                    if current_field_id == fid_best:
+                        continue
+                    if best_for_score > best_score:
+                        best_score = best_for_score
+                        best_pair = (d_best, fid_best)
+
+            if best_pair is None:
+                break
+
+            d_sel, fid_sel = best_pair
+            final_group[d_sel] = f"protecting {fid_sel}"
+            needs[fid_sel] -= 1
+            if needs[fid_sel] <= 0:
+                del needs[fid_sel]
+
+        # Phase 3: Ensure at least half of drones are protecting if possible
+        current_protectors = sum(1 for d in components if final_group.get(d, "idle").startswith("protecting "))
+        if current_protectors < half:
+            # Recompute needs
+            needs = {}
+            for f in threatened_sorted:
+                fid = f.id
+                current = sum(1 for d in components if final_group.get(d) == f"protecting {fid}")
+                rem = int(getattr(f, "drones_for_full_protection", 0)) - current
+                if rem > 0:
+                    needs[fid] = rem
+
+            while needs and current_protectors < half:
+                best_pair = None
+                best_score = -1e9
+                for d in components:
+                    current = final_group.get(d)
+                    current_field_id = current.split(" ", 1)[1] if isinstance(current, str) and current.startswith("protecting ") else None
+                    best_for_drone = None
+                    best_for_score = -1e9
+
+                    for fid, need in list(needs.items()):
+                        if need <= 0:
+                            continue
+                        f = field_by_id[fid]
+                        cx, cy = field_centers[fid]
+                        loc = getattr(d, "location", None)
+                        dist = float("inf") if loc is None else sqrt((getattr(loc, "x", 0.0) - cx) ** 2 + (getattr(loc, "y", 0.0) - cy) ** 2)
+                        arrival = 0.0 if getattr(d, "state", None) in ("moving_to_field", "protecting") and getattr(d, "target_id", None) == fid else dist / 2.0
+                        mem = 1.0 if (self._last_target_by_drone.get(id(d)) == fid) else 0.0
+                        threat = getattr(f, "threat_level", 0.0)
+                        need_val = need
+                        score = threat * need_val + mem - arrival * 0.9 - dist * 0.01
+                        if score > best_for_score:
+                            best_for_score = score
+                            best_for_drone = (d, fid)
+
+                    if best_for_drone is not None:
+                        d_best, fid_best = best_for_drone
+                        if current_field_id == fid_best:
+                            continue
+                        if best_for_score > best_score:
+                            best_score = best_score
+                            best_pair = (d_best, fid_best)
+
+                if best_pair is None:
+                    break
+
+                d_sel, fid_sel = best_pair
+                final_group[d_sel] = f"protecting {fid_sel}"
+                current_protectors += 1
+                needs[fid_sel] = max(0, needs.get(fid_sel, 0) - 1)
+                if current_protectors >= half:
+                    break
+
+        # 4) Step memory update
+        for d in components:
+            g = final_group.get(d, "idle")
+            if isinstance(g, str) and g.startswith("protecting "):
+                field_id = g.split(" ", 1)[1]
+                self._last_target_by_drone[id(d)] = field_id
+            else:
+                self._last_target_by_drone[id(d)] = None
+
+        # 5) Final assignment to environment
+        for d in components:
+            grp = final_group.get(d, "idle")
+            environment.assign_group(d, grp)
+```

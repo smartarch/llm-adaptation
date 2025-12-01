@@ -1,0 +1,12 @@
+0
+...............ssssss                                                    [100%]
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, all_protecting, some_moving_drones
+15 passed, 6 skipped in 2.70s

@@ -1,0 +1,298 @@
+Loaded 2 messages from generated_adaptations/farm/result_reasons/5nano_07.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1192, Output: 9350 (reasoning: 7808)
+Response time (seconds): 87.7
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_02 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_02 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_02 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_02", "log_dir.append": "/result_reasons/5nano_07/code_02", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_02.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2394 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_02", "log_dir.append": "/result_reasons/5nano_07/code_02", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_02.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1746 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_02", "log_dir.append": "/result_reasons/5nano_07/code_02", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_02.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1611 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 238.7
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2780, Output: 7332 (reasoning: 5760)
+Response time (seconds): 63.8
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_04 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_04 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_04 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_04", "log_dir.append": "/result_reasons/5nano_07/code_04", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_04.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 9 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_04", "log_dir.append": "/result_reasons/5nano_07/code_04", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_04.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2610 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_04", "log_dir.append": "/result_reasons/5nano_07/code_04", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_04.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 284.3
+Querying LLM with prompt 05_result.
+[33mTOKENS USED:
+Input: 4398, Output: 5979 (reasoning: 3840)
+Response time (seconds): 51.6
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_06 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_06 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_06 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_06.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_06", "log_dir.append": "/result_reasons/5nano_07/code_06", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_06.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 1773 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_06", "log_dir.append": "/result_reasons/5nano_07/code_06", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_06.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2520 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_06", "log_dir.append": "/result_reasons/5nano_07/code_06", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_06.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1404 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 280.7
+Querying LLM with prompt 07_result.
+[33mTOKENS USED:
+Input: 6583, Output: 5720 (reasoning: 3904)
+Response time (seconds): 42.4
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_08 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_08 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_08 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_08.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_08", "log_dir.append": "/result_reasons/5nano_07/code_08", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_08.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2529 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_08", "log_dir.append": "/result_reasons/5nano_07/code_08", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_08.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1125 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_08", "log_dir.append": "/result_reasons/5nano_07/code_08", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_08.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1044 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 233.0
+Querying LLM with prompt 09_result.
+[33mTOKENS USED:
+Input: 8445, Output: 11025 (reasoning: 9088)
+Response time (seconds): 96.6
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_10 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_10 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_10 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_10.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_10", "log_dir.append": "/result_reasons/5nano_07/code_10", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_10.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2610 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_10", "log_dir.append": "/result_reasons/5nano_07/code_10", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_10.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2313 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_10", "log_dir.append": "/result_reasons/5nano_07/code_10", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_10.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 954 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 207.7
+Querying LLM with prompt 11_result.
+[33mTOKENS USED:
+Input: 10428, Output: 6998 (reasoning: 4928)
+Response time (seconds): 68.7
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_12 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_12 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_12 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_12.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_12", "log_dir.append": "/result_reasons/5nano_07/code_12", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_12.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2592 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_12", "log_dir.append": "/result_reasons/5nano_07/code_12", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_12.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1548 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_12", "log_dir.append": "/result_reasons/5nano_07/code_12", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_12.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1467 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 204.7
+Querying LLM with prompt 13_result.
+[33mTOKENS USED:
+Input: 12544, Output: 6077 (reasoning: 4032)
+Response time (seconds): 45.5
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_14 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_14 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_14 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_14.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_14", "log_dir.append": "/result_reasons/5nano_07/code_14", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_14.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2448 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_14", "log_dir.append": "/result_reasons/5nano_07/code_14", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_14.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1917 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_14", "log_dir.append": "/result_reasons/5nano_07/code_14", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_14.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1926 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 231.7
+Querying LLM with prompt 15_result.
+[33mTOKENS USED:
+Input: 14635, Output: 5331 (reasoning: 3328)
+Response time (seconds): 45.4
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_16 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_16 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_16 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_16.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_16", "log_dir.append": "/result_reasons/5nano_07/code_16", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_16.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2295 lines
+        scored.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_16", "log_dir.append": "/result_reasons/5nano_07/code_16", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_16.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2115 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_16", "log_dir.append": "/result_reasons/5nano_07/code_16", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_16.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1926 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 229.0
+Querying LLM with prompt 17_result.
+[33mTOKENS USED:
+Input: 16684, Output: 6733 (reasoning: 4736)
+Response time (seconds): 59.3
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_18 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_18 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_18 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_18.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_18", "log_dir.append": "/result_reasons/5nano_07/code_18", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_18.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2610 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_18", "log_dir.append": "/result_reasons/5nano_07/code_18", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_18.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2259 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_18", "log_dir.append": "/result_reasons/5nano_07/code_18", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_18.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1953 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 243.0
+Querying LLM with prompt 19_result.
+[33mTOKENS USED:
+Input: 18727, Output: 8163 (reasoning: 5760)
+Response time (seconds): 69.9
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations/farm/result_reasons/5nano_07/code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_20 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_20 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_20 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/result_reasons/5nano_07/code_20.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_20", "log_dir.append": "/result_reasons/5nano_07/code_20", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_20.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2493 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_20", "log_dir.append": "/result_reasons/5nano_07/code_20", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_20.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2034 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_07/code_20", "log_dir.append": "/result_reasons/5nano_07/code_20", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_07.code_20.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 945 lines
+        pool.sort()
+    TypeError: '<' not supported between instances of 'Drone' and 'Drone'
+
+Average damage: 215.0
+Reached the maximum number of iterations (10). Stopping.

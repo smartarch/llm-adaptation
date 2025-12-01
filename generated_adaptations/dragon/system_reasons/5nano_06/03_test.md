@@ -1,0 +1,24 @@
+Here is a report from running unit tests on your implementation:
+
+...FFFF............ssssssss                                              [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] _______
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+================================= Test Results =================================
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+4 failed, 15 passed, 8 skipped in 21.12s
+
+Update your code to fix the failing tests.

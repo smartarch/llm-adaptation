@@ -1,0 +1,14 @@
+1
+...ssssssssssssF.F...                                                    [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+NameError on line 140 in dist2_to_field: name 'dist2' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[some_moving_drones] _
+NameError on line 140 in dist2_to_field: name 'dist2' is not defined
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, some_moving_drones
+ - passed for: all_protecting
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+2 failed, 7 passed, 12 skipped in 1.35s

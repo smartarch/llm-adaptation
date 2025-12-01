@@ -1,0 +1,14 @@
+1
+...ssssssssssssFF....                                                    [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+_ TestAdaptFunctional.test_no_functional_constraints_violated[all_protecting] _
+AttributeError on line 117 in <genexpr>: 'NoneType' object has no attribute 'startswith'
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+2 failed, 7 passed, 12 skipped in 1.63s

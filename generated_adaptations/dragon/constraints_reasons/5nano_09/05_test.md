@@ -1,0 +1,23 @@
+Here is a report from running unit tests on your implementation:
+
+.....................F.....                                              [100%]
+=================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+To win the game, the Dragon must be killed.
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=3
+ - passed for: seed=1, seed=2, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+1 failed, 26 passed in 7.56s
+
+Update your code to fix the failing tests.

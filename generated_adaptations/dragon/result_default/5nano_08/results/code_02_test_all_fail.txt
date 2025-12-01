@@ -1,0 +1,59 @@
+1
+...........FFFFFFFFFFFF....                                              [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] ______________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Sandra" to "spawn warrior".
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] ______________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Sandra" to "spawn warrior".
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] ______________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Sandra" to "spawn warrior".
+_______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Sandra" to "spawn warrior".
+__________________ TestAdaptSystem.test_all_assigned[seed=1] ___________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Sandra (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=2] ___________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Sandra (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=3] ___________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Sandra (Farmer)
+Each component must be assigned exactly once.
+____________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Sandra (Farmer)
+Each component must be assigned exactly once.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] ______
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+The Dragon should be attacked at least once in the first 15 steps of the game.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+12 failed, 15 passed in 26.45s

@@ -1,0 +1,91 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+import math
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Helper to compute center and squared distance
+        def field_center(field):
+            cx = (field.left + field.right) / 2.0
+            cy = (field.top + field.bottom) / 2.0
+            return cx, cy
+
+        def dist2(loc, cx, cy):
+            dx = loc.x - cx
+            dy = loc.y - cy
+            return dx*dx + dy*dy
+
+        # Find fields with threat_level > 0
+        threatened_fields = [f for f in environment.fields if f.threat_level > 0]
+
+        if not threatened_fields:
+            # No threats: assign all drones to idle
+            for comp in components:
+                environment.assign_group(comp, "idle")
+            return
+
+        # Select the field with the highest threat_level (tie-breaker: id)
+        # Ensure deterministic tie-break by sorting by (-threat, id)
+        threatened_fields.sort(key=lambda f: (-f.threat_level, str(f.id)))
+        target_field = threatened_fields[0]
+        target_group = f"protecting {target_field.id}"
+        required = int(target_field.drones_for_full_protection)
+
+        # Compute center of target field
+        cx, cy = field_center(target_field)
+
+        # Identify drones already protecting the target field
+        already_protecting = [d for d in components if d.state == "protecting" and d.target_id == target_field.id]
+
+        # Assign all currently protecting drones to the protecting group (keep them)
+        assigned = set()
+        for d in already_protecting:
+            environment.assign_group(d, target_group)
+            assigned.add(d)
+
+        protected_count = len(already_protecting)
+        if protected_count >= required:
+            # Field already fully protected; remaining drones go idle
+            for d in components:
+                if d in assigned:
+                    continue
+                environment.assign_group(d, "idle")
+            return
+
+        # Need additional drones
+        need = required - protected_count
+
+        # Build candidate list excluding already assigned drones
+        candidates = [d for d in components if d not in assigned]
+
+        # Prefer drones already moving to this field
+        moving_to_target = [d for d in candidates if d.state == "moving_to_field" and d.target_id == target_field.id]
+        others = [d for d in candidates if not (d.state == "moving_to_field" and d.target_id == target_field.id)]
+
+        # Sort both lists by distance to the field center (closest first)
+        moving_to_target.sort(key=lambda d: dist2(d.location, cx, cy))
+        others.sort(key=lambda d: dist2(d.location, cx, cy))
+
+        # Select required additional drones from preferred then others
+        selected = []
+        for d in moving_to_target:
+            if len(selected) >= need:
+                break
+            selected.append(d)
+        for d in others:
+            if len(selected) >= need:
+                break
+            selected.append(d)
+
+        # Assign selected drones to protecting group
+        for d in selected:
+            environment.assign_group(d, target_group)
+            assigned.add(d)
+
+        # Remaining drones (not assigned) go idle
+        for d in components:
+            if d in assigned:
+                continue
+            environment.assign_group(d, "idle")

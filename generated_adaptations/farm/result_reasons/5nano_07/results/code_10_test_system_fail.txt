@@ -1,0 +1,25 @@
+1
+...F..F..F..F..ssssss                                                    [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+TypeError on line 138 in assign_drones: '<' not supported between instances of 'Drone' and 'Drone'
+________________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+TypeError on line 138 in assign_drones: '<' not supported between instances of 'Drone' and 'Drone'
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] ______________
+TypeError on line 138 in assign_drones: '<' not supported between instances of 'Drone' and 'Drone'
+__________________ TestAdaptSystem.test_all_assigned[seed=1] ___________________
+TypeError on line 138 in assign_drones: '<' not supported between instances of 'Drone' and 'Drone'
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+4 failed, 11 passed, 6 skipped in 7.31s

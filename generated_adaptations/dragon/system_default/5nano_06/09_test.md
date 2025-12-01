@@ -1,0 +1,48 @@
+Here is a report from running unit tests on your implementation:
+
+...FFFFFFFFFFFFFFFFssssssss                                              [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] _______
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+________________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+________________ TestAdaptSystem.test_no_invalid_groups[seed=2] ________________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+________________ TestAdaptSystem.test_no_invalid_groups[seed=3] ________________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_________ TestAdaptSystem.test_no_invalid_groups[no_initial_warriors] __________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] ______________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] ______________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] ______________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+_______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+__________________ TestAdaptSystem.test_all_assigned[seed=1] ___________________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+__________________ TestAdaptSystem.test_all_assigned[seed=2] ___________________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+__________________ TestAdaptSystem.test_all_assigned[seed=3] ___________________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+____________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+UnboundLocalError on line 25 in assign_in_village: cannot access local variable 'to_cave' where it is not associated with a value
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+16 failed, 3 passed, 8 skipped in 8.05s
+
+Update your code to fix the failing tests.

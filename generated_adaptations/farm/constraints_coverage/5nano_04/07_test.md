@@ -1,0 +1,28 @@
+Here is a report from running unit tests on your implementation:
+
+...F...........F.....                                                    [100%]
+================================== FAILURES ===================================
+______________ TestAdaptSystem.test_no_assignment_errors[seed=1] ______________
+There were 2 assignment errors in total.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+The most threatened field should be always fully protected (step 1, Field_2, threat level 0.09, 4 drones for full protection, 0 assigned).
+
+The drones protecting the most threatened field should be the closest ones.
+================================ Test Results =================================
+TestAdaptSystem::test_no_assignment_errors:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+2 failed, 19 passed in 11.83s
+
+Update your code to fix the failing tests.

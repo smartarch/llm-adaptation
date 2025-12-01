@@ -1,0 +1,15 @@
+1
+...ssssssssssssFFF...                                                    [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[all_protecting] _
+NameError on line 114 in current_protectors_after_phase1: name 'plan' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[some_moving_drones] _
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, all_protecting, some_moving_drones
+3 failed, 6 passed, 12 skipped in 1.43s

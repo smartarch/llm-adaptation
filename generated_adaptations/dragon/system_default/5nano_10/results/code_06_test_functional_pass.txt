@@ -1,0 +1,8 @@
+0
+...ssssssssssssssss........                                              [100%]
+================================= Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+11 passed, 16 skipped in 6.47s

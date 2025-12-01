@@ -1,0 +1,37 @@
+1
+...........FFFFFFFFssssssss                                              [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] ______________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Linda" to "spawn warrior".
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] ______________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Linda" to "spawn warrior".
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] ______________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Linda" to "spawn warrior".
+_______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Linda" to "spawn warrior".
+__________________ TestAdaptSystem.test_all_assigned[seed=1] ___________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Linda (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=2] ___________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Linda (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=3] ___________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Linda (Farmer)
+Each component must be assigned exactly once.
+____________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Linda (Farmer)
+Each component must be assigned exactly once.
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+8 failed, 11 passed, 8 skipped in 7.46s

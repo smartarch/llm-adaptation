@@ -1,0 +1,54 @@
+Here is a report from running unit tests on your implementation:
+
+...FFFF............FFFF....                                              [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] _______
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+The Dragon should be attacked at least once in the first 15 steps of the game.
+
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+================================= Test Results =================================
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+8 failed, 19 passed in 11.68s
+
+Update your code to fix the failing tests.

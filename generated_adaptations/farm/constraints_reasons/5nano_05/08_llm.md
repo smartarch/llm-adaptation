@@ -1,0 +1,160 @@
+Reasoning and strategy description
+
+Goal recap and improvements:
+- Always fully protect the most threatened field with the minimum required drones (top field).
+- Allocate remaining drones to other threatened fields in threat-descending order, but only if we can fully protect a field (no partial protection).
+- Use time-to-reach (distance to field center) as a bias when selecting which drones go to a field; closer drones reach protection sooner and reduce damage earlier.
+- Strengthen stability by biasing drone assignments toward those that protected a field in the previous step, both for the top field and for other fields. This reduces unnecessary drone movement and keeps protection effective across steps.
+- Maintain a clear memory of top-field drones and per-field allocations to guide future steps and satisfy the stability constraint (drones stay on the same field when possible for at least 25% of the time).
+- Ensure no field is overprotected (no more than drones_for_full_protection per field). If there aren’t enough drones to fully protect the next field, skip it and idle those drones, keeping focus on fully protecting as few fields as possible.
+
+Strategy outline (new touches):
+1) Identify threatened fields (threat_level > 0). If none, idle all drones and reset memory.
+2) Pick the top field (highest threat level). Compute how many drones are needed (top_needed), limited by the number of available drones.
+3) Allocate drones to top field:
+   - First, keep drones that protected it in the previous step (when possible).
+   - Then fill remaining slots with the closest available drones to the top field center.
+4) For other threatened fields (in threat-descending order), try to fully protect them if possible:
+   - Compute remaining_needed per field (drones_for_full_protection minus what was allocated in memory previously to that field).
+   - Prefer drones that previously protected that field; otherwise pick the closest remaining drones.
+5) Drones not allocated to a protection group become idle.
+6) Update memory: top field id, top field drones, and per-field allocations. This memory guides future steps to promote stability and faster responses.
+
+Code (Python):
+
+```py
+from __future__ import annotations
+import math
+import abc
+from generated_adaptations.base_classes.farm import FarmAdaptation as BaseFarmAdaptation
+
+class SmartFarmAdaptation(BaseFarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Memory to help stability across steps
+        # Store as:
+        # - prev_top_field_id: id of the field that was top field in the previous step
+        # - prev_top_drones: set of drone object ids that protected the top field in the previous step
+        # - prev_field_allocations: mapping field_id -> set of drone ids that protected that field in the previous step
+        self.prev_top_field_id = None
+        self.prev_top_drones = set()
+        self.prev_field_allocations = {}  # field_id -> set(drone_id)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        drones = list(components)
+        fields = list(environment.fields)
+
+        # Helper to compute field center
+        def center_of(field):
+            return ((field.left + field.right) / 2.0, (field.top + field.bottom) / 2.0)
+
+        # Helper to compute squared distance between a drone and a point
+        def dist2_to_point(drone, point):
+            dx = getattr(drone.location, "x", 0.0) - point[0]
+            dy = getattr(drone.location, "y", 0.0) - point[1]
+            return dx * dx + dy * dy
+
+        # Filter threatened fields
+        threatened_fields = [f for f in fields if getattr(f, "threat_level", 0.0) > 0.0]
+        if not threatened_fields:
+            # No threat: put all drones idle
+            for d in drones:
+                environment.assign_group(d, "idle")
+            # Clear memory
+            self.prev_top_field_id = None
+            self.prev_top_drones = set()
+            self.prev_field_allocations = {}
+            return
+
+        # Sort threatened fields by threat level (desc)
+        threatened_fields_sorted = sorted(threatened_fields,
+                                          key=lambda f: getattr(f, "threat_level", 0.0),
+                                          reverse=True)
+
+        # Top (most threatened) field
+        top_field = threatened_fields_sorted[0]
+        top_center = center_of(top_field)
+        top_needed = max(0, getattr(top_field, "drones_for_full_protection", len(drones)))
+        top_needed = min(top_needed, len(drones))
+
+        # Prepare distance map for all drones to top field
+        dist_to_top = {d: dist2_to_point(d, top_center) for d in drones}
+
+        # Build initial top_set using memory and proximity bias
+        top_set = set()
+
+        # 1) Try to keep drones that protected the top field in the previous step
+        if self.prev_top_field_id == getattr(top_field, "id", None) and self.prev_top_drones:
+            for d in drones:
+                if len(top_set) >= top_needed:
+                    break
+                if id(d) in self.prev_top_drones:
+                    top_set.add(d)
+
+        # 2) Fill remaining slots with closest available drones
+        if len(top_set) < top_needed:
+            remaining = [d for d in drones if d not in top_set]
+            remaining.sort(key=lambda d: dist_to_top.get(d, dist2_to_point(d, top_center)))
+            for d in remaining:
+                if len(top_set) >= top_needed:
+                    break
+                top_set.add(d)
+
+        allocations = {}
+        for d in top_set:
+            allocations[d] = f"protecting {top_field.id}"
+
+        remaining_drones = [d for d in drones if d not in top_set]
+
+        new_field_allocations = {}
+        new_field_allocations[top_field.id] = set(id(d) for d in top_set)
+
+        # Allocate to other threatened fields in descending threat order
+        for field in threatened_fields_sorted[1:]:
+            needed = max(0, getattr(field, "drones_for_full_protection", 0) - len(self.prev_field_allocations.get(field.id, set())))
+            if needed <= 0:
+                continue
+
+            center = center_of(field)
+            prev_ids = self.prev_field_allocations.get(field.id, set())
+
+            # First, try to reuse previously allocated drones for this field
+            keep = set()
+            if remaining_drones:
+                for d in list(remaining_drones):
+                    if id(d) in prev_ids:
+                        keep.add(d)
+                        if len(keep) >= needed:
+                            break
+
+            # If more are needed, fill with closest among remaining
+            if len(keep) < needed and remaining_drones:
+                rem_sorted = sorted(remaining_drones, key=lambda d: dist2_to_point(d, center))
+                for d in rem_sorted:
+                    if d in keep:
+                        continue
+                    keep.add(d)
+                    remaining_drones.remove(d)
+                    if len(keep) >= needed:
+                        break
+
+            # Assign these drones to this field if any
+            if keep:
+                for d in keep:
+                    allocations[d] = f"protecting {field.id}"
+                new_field_allocations[field.id] = set(id(d) for d in keep)
+
+        # Assign any drones not allocated to idle
+        for d in remaining_drones:
+            allocations[d] = "idle"
+
+        # Write groups for all drones
+        for d in drones:
+            group = allocations.get(d, "idle")
+            environment.assign_group(d, group)
+
+        # Update memory for next step
+        self.prev_top_field_id = getattr(top_field, "id", None)
+        self.prev_top_drones = set(id(d) for d in top_set)
+        self.prev_field_allocations = new_field_allocations
+```

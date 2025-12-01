@@ -1,0 +1,120 @@
+Reasoning and improved adaptation strategy
+
+Goal and context recap:
+- All Warriors should end up in the Cave and attack the Dragon.
+- Farmers stay in the Village to farm or spawn new villagers (both Farmers and Warriors are needed).
+- Spawning rules: for every two villagers in the "spawn farmer" group and 10 wheat, a new Farmer is spawned; for every two villagers in the "spawn warrior" group and 12 wheat, a new Warrior is spawned.
+- You win by reducing the Dragon’s HP to 0 within 30 steps; you lose if the Dragon survives or all villagers die.
+
+What we change and why:
+- Introduce dynamic aggressiveness based on the Dragon’s current HP. When the Dragon is healthier (higher HP), we push a few Farmers to the Cave early to start dealing damage sooner. When the Dragon is weaker, we scale back the initial cave push to reduce risk of heavy casualties from dragon retaliation.
+- Maintain a steady spawning pipeline in the Village: first spawn Farmers (using pairs of villagers in the village and 10 wheat each), then spawn Warriors (again using pairs and 12 wheat each). This ensures a continuous population and DPS growth without starving the attack force.
+- Always keep Warriors in the Cave attacking, and send Farmers back to the Village during cave turns (as required by the rules).
+- Use simple deterministic rules that depend on current environment (wheat and dragon HP) to decide how many villagers to send to the Cave and how to assign spawn groups.
+
+This approach attempts to achieve earlier Dragon damage while preserving enough villagers to sustain growth via spawning, aiming to reduce the number of turns to kill the Dragon.
+
+Python implementation:
+
+```py
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        Divide Villagers in the Village into:
+        - farm: stay in Village and farm
+        - cave: go to the Cave (to attack)
+        - spawn farmer: for every two villagers assigned here and 10 wheat, spawn a new Farmer
+        - spawn warrior: for every two villagers assigned here and 12 wheat, spawn a new Warrior
+        """
+        mapping = {}
+
+        # Read current dragon HP to adapt aggressiveness
+        dragon_hp = getattr(getattr(environment, "dragon", None), "hp", 0)
+
+        # Determine how many Farmers to send to Cave for early DPS
+        # More aggressive when dragon_hp is high; conservatively small otherwise
+        n = min(3, len(components))
+        if dragon_hp < 20:
+            n = min(1, len(components))
+        elif dragon_hp < 35:
+            n = min(2, len(components))
+        else:
+            n = min(3, len(components))
+
+        # Default assignments
+        for c in components:
+            if getattr(c, "role", None) == "Warrior":
+                mapping[c] = "cave"  # Warriors go to Cave
+            else:
+                mapping[c] = "farm"  # Farmers stay in Village
+
+        # Move up to n Farmers to Cave for initial DPS
+        farmers = [c for c in components if getattr(c, "role", None) == "Farmer"]
+        moved = 0
+        for f in farmers:
+            if mapping.get(f) != "cave" and moved < n:
+                mapping[f] = "cave"
+                moved += 1
+
+        # Spawning planning based on wheat in the Farm
+        wheat = getattr(getattr(environment, "farm", None), "wheat", 0)
+
+        # Pool of villagers available in Village (not in Cave)
+        village_pool = [c for c in components if mapping.get(c) != "cave"]
+
+        # Spawn Farmers: needs 2 villagers in spawn farmer + 10 wheat
+        max_farm_spawns_by_wheat = wheat // 10
+        max_farm_spawns_by_count = len(village_pool) // 2
+        max_farm_spawns = min(max_farm_spawns_by_wheat, max_farm_spawns_by_count)
+
+        idx = 0
+        for _ in range(max_farm_spawns):
+            a = village_pool[idx]
+            b = village_pool[idx + 1]
+            mapping[a] = "spawn farmer"
+            mapping[b] = "spawn farmer"
+            idx += 2
+
+        wheat_after_farm_spawns = wheat - max_farm_spawns * 10
+        if wheat_after_farm_spawns < 0:
+            wheat_after_farm_spawns = 0
+
+        # Spawn Warriors: needs 2 villagers in spawn warrior + 12 wheat
+        # Pool excludes cave and spawn farmer assignments
+        pool_for_warrior = [c for c in components if mapping.get(c) not in ("spawn farmer", "cave")]
+        max_warrior_spawns = min(wheat_after_farm_spawns // 12, len(pool_for_warrior) // 2)
+
+        idx = 0
+        for _ in range(max_warrior_spawns):
+            a = pool_for_warrior[idx]
+            b = pool_for_warrior[idx + 1]
+            mapping[a] = "spawn warrior"
+            mapping[b] = "spawn warrior"
+            idx += 2
+
+        # Step 3: Fallback for any remaining unassigned villagers
+        for c in components:
+            if c not in mapping:
+                mapping[c] = "farm"
+
+        # Apply assignments
+        for component, gid in mapping.items():
+            environment.assign_group(component, gid)
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        # In the Cave:
+        # - Warriors attack
+        # - Farmers go back to Village
+        for c in components:
+            role = getattr(c, "role", None)
+            if role == "Warrior":
+                environment.assign_group(c, "attack")
+            else:
+                environment.assign_group(c, "village")
+```

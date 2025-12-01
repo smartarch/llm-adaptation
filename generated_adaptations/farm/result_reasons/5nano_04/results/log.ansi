@@ -1,0 +1,50 @@
+Loaded 2 messages from generated_adaptations\farm\result_reasons\5nano_04.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1192, Output: 11833 (reasoning: 10496)
+Response time (seconds): 120.1
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_reasons\5nano_04\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_04/code_02 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_04/code_02 --variant=result_reasons --tests=functional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_04/code_02 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_reasons\5nano_04\code_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_04/code_02", "log_dir.append": "/result_reasons/5nano_04/code_02", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_04.code_02.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 102 lines
+    In 'assign_drones': Component assigned into multiple groups: Drone_4
+    In 'assign_drones': Component assigned into multiple groups: Drone_6
+    In 'assign_drones': Component assigned into multiple groups: Drone_8
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_04/code_02", "log_dir.append": "/result_reasons/5nano_04/code_02", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_04.code_02.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 80 lines
+    In 'assign_drones': Component assigned into multiple groups: Drone_2
+    In 'assign_drones': Component assigned into multiple groups: Drone_6
+    In 'assign_drones': Component assigned into multiple groups: Drone_7
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_04/code_02", "log_dir.append": "/result_reasons/5nano_04/code_02", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_04.code_02.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 86 lines
+    In 'assign_drones': Component assigned into multiple groups: Drone_4
+    In 'assign_drones': Component assigned into multiple groups: Drone_1
+    In 'assign_drones': Component assigned into multiple groups: Drone_6
+Average damage: 52.7
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2574, Output: 4984 (reasoning: 3776)
+Response time (seconds): 53.1
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_reasons\5nano_04\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_04/code_04 --variant=result_reasons --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_04/code_04 --variant=result_reasons --tests=functional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_04/code_04 --variant=result_reasons --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\result_reasons\5nano_04\code_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_04/code_04", "log_dir.append": "/result_reasons/5nano_04/code_04", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_04.code_04.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_04/code_04", "log_dir.append": "/result_reasons/5nano_04/code_04", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_04.code_04.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_reasons/5nano_04/code_04", "log_dir.append": "/result_reasons/5nano_04/code_04", "adaptation_name": "generated_adaptations.farm.result_reasons.5nano_04.code_04.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 46.7
+The generated code produces a good result (iteration: 2). Stopping further iterations.

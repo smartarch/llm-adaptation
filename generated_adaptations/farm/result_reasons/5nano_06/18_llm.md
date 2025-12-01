@@ -1,0 +1,212 @@
+Reasoning and adaptation strategy
+
+Observations from prior runs:
+- Fully protecting the top-threat field is the strongest lever. Partial protection often yields little benefit and can cause churn.
+- A stable, proximity-aware allocation helps: reusing drones that were already protecting a field reduces travel and stabilizes protection.
+- Spreading protection across many fields without reaching full protection reduces effectiveness.
+- A robust approach should first maximize fully protected top fields, then ensure a protective floor (at least half the drones protecting), without overprotecting any single field.
+
+New proposed strategy (stricter top-field-first with disciplined staging):
+- Stage 1: Fully protect the top-threat field, using drones already protecting it first, then the closest available drones. Do not overshoot drones_for_full_protection for that field (demote farthest if over-protected).
+- Stage 2: For remaining threatened fields (in threat order), attempt to fully protect as many as possible with the remaining drones, using the same proximity + stability bias. Do not partially protect a field unless you can reach full protection.
+- Stage 3: If less than half the drones are protecting, allocate additional drones to other fields to bring protection up to half, respecting per-field capacity.
+- Stage 4: Idle all remaining drones.
+- Memory: Keep per-drone memory (prev_group and prev_target) to bias future allocations toward stability.
+
+This approach emphasizes robust protection of top fields, minimizes churn by biasing toward drones that previously protected a field, and avoids fragmentation by not assigning to fields unless we can reach full protection. It also gently enforces a protective floor without sacrificing the top-field protection.
+
+Python code:
+
+```py
+import math
+
+# Assuming the base class can be imported as described
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Memory of last group assignment for each drone (by id)
+        self.prev_group = {}
+        # Memory of last target field id for each drone
+        self.prev_target = {}
+
+    def _center_of_field(self, f):
+        return ((f.left + f.right) / 2.0, (f.top + f.bottom) / 2.0)
+
+    def _dist_to_point(self, drone, cx, cy):
+        loc = getattr(drone, "location", None)
+        if loc is None:
+            return float("inf")
+        dx = getattr(loc, "x", 0.0) - cx
+        dy = getattr(loc, "y", 0.0) - cy
+        return math.hypot(dx, dy)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        """
+        Allocation plan:
+        - Stage 1: Fully protect top-threat field using drones already protecting it first, then nearest available drones.
+        - Stage 2: Fully protect remaining threatened fields in threat order, with the same bias.
+        - Stage 3: If protection < half the drones, add drones to other fields up to their capacity.
+        - Stage 4: Idle all remaining drones.
+        - Re-assign every step explicitly.
+        """
+        # Gather fields with positive threat
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+
+        # If no threat, idle all drones
+        if not fields_with_threat:
+            for c in components:
+                environment.assign_group(c, "idle")
+                self.prev_group[id(c)] = "idle"
+                self.prev_target[id(c)] = None
+            return
+
+        # Sort fields by threat level descending
+        fields_with_threat.sort(key=lambda f: f.threat_level, reverse=True)
+
+        total_drones = len(components)
+        half_target = (total_drones + 1) // 2
+
+        def group_for(field):
+            return f"protecting {field.id}"
+
+        # Stage 1: Top field handling
+        top_field = fields_with_threat[0]
+        top_group = group_for(top_field)
+        if top_group not in group_ids:
+            # If the top group's name isn't valid, idle everything
+            for c in components:
+                environment.assign_group(c, "idle")
+                self.prev_group[id(c)] = "idle"
+                self.prev_target[id(c)] = None
+            return
+
+        required_top = int(getattr(top_field, "drones_for_full_protection", 0))
+
+        current_top = [d for d in components if self.prev_group.get(id(d)) == top_group]
+        current_top_count = len(current_top)
+        need_top = max(0, required_top - current_top_count)
+
+        center_top = self._center_of_field(top_field)
+
+        pool_top = [d for d in components if self.prev_group.get(id(d)) != top_group]
+
+        def pool_key_top(d):
+            dist = self._dist_to_point(d, center_top[0], center_top[1])
+            bias_target = 0 if self.prev_target.get(id(d)) == top_field.id else 1
+            return (bias_target, dist)
+
+        pool_top_sorted = sorted(pool_top, key=pool_key_top)
+
+        for d in pool_top_sorted[:need_top]:
+            environment.assign_group(d, top_group)
+            self.prev_group[id(d)] = top_group
+            self.prev_target[id(d)] = top_field.id
+            current_top.append(d)
+
+        # Demote overshoot if any
+        if len(current_top) > required_top:
+            current_top_sorted = sorted(current_top,
+                                        key=lambda d: self._dist_to_point(d, center_top[0], center_top[1]),
+                                        reverse=True)
+            to_idle = current_top_sorted[: len(current_top_sorted) - required_top]
+            for d in to_idle:
+                environment.assign_group(d, "idle")
+                self.prev_group[id(d)] = "idle"
+                self.prev_target[id(d)] = None
+                current_top.remove(d)
+
+        # Stage 2: Fully protect remaining fields in threat order
+        protecting_groups = []
+        for f in fields_with_threat[1:]:
+            g = f"protecting {f.id}"
+            if g in group_ids:
+                protecting_groups.append(g)
+
+        protecting_count = sum(
+            1 for d in components if self.prev_group.get(id(d), "") in protecting_groups
+        )
+
+        if protecting_count < half_target:
+            for field in fields_with_threat[1:]:
+                grp = group_for(field)
+                if grp not in group_ids:
+                    continue
+
+                required = int(getattr(field, "drones_for_full_protection", 0))
+                current = [d for d in components if self.prev_group.get(id(d)) == grp]
+                current_count = len(current)
+
+                if current_count >= required:
+                    continue
+
+                pool = [d for d in components if self.prev_group.get(id(d)) != grp]
+
+                center = self._center_of_field(field)
+
+                def pool_key2(d):
+                    dist = self._dist_to_point(d, center[0], center[1])
+                    bias_target = 0 if self.prev_target.get(id(d)) == field.id else 1
+                    return (bias_target, dist)
+
+                pool_sorted = sorted(pool, key=pool_key2)
+                needed = min(required - current_count, len(pool_sorted))
+
+                for d in pool_sorted[:needed]:
+                    environment.assign_group(d, grp)
+                    self.prev_group[id(d)] = grp
+                    self.prev_target[id(d)] = field.id
+                    current.append(d)
+                    protecting_count += 1
+
+                    if protecting_count >= half_target:
+                        break
+                if protecting_count >= half_target:
+                    break
+
+        # Stage 3: If still not at half, try to allocate more to other fields (respecting capacity)
+        if protecting_count < half_target:
+            for field in fields_with_threat[1:]:
+                grp = group_for(field)
+                if grp not in group_ids:
+                    continue
+
+                required = int(getattr(field, "drones_for_full_protection", 0))
+                current = [d for d in components if self.prev_group.get(id(d)) == grp]
+                current_count = len(current)
+
+                if current_count >= required:
+                    continue
+
+                pool = [d for d in components if self.prev_group.get(id(d)) != grp]
+
+                center = self._center_of_field(field)
+
+                def pool_key3(d):
+                    dist = self._dist_to_point(d, center[0], center[1])
+                    bias_target = 0 if self.prev_target.get(id(d)) == field.id else 1
+                    return (bias_target, dist)
+
+                pool_sorted = sorted(pool, key=pool_key3)
+                needed = min(required - current_count, len(pool_sorted))
+
+                for d in pool_sorted[:needed]:
+                    environment.assign_group(d, grp)
+                    self.prev_group[id(d)] = grp
+                    self.prev_target[id(d)] = field.id
+                    current.append(d)
+                    protecting_count += 1
+                    if protecting_count >= half_target:
+                        break
+                if protecting_count >= half_target:
+                    break
+
+        # Stage 4: idle any drones not assigned
+        for d in components:
+            if self.prev_group.get(id(d)) is None:
+                environment.assign_group(d, "idle")
+                self.prev_group[id(d)] = "idle"
+                self.prev_target[id(d)] = None
+```

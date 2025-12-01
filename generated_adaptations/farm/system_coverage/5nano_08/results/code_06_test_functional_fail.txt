@@ -1,0 +1,14 @@
+1
+...ssssssssssssFF....                                                    [100%]
+=================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+TypeError on line 64 in pick_candidates_for_field: 'dict' object is not callable
+_ TestAdaptFunctional.test_no_functional_constraints_violated[all_protecting] __
+TypeError on line 64 in pick_candidates_for_field: 'dict' object is not callable
+================================= Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+2 failed, 7 passed, 12 skipped in 6.17s

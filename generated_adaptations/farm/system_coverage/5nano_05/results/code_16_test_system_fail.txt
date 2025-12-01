@@ -1,0 +1,37 @@
+1
+...FFFFFFFFFFFFssssss                                                    [100%]
+================================== FAILURES ===================================
+______________ TestAdaptSystem.test_no_assignment_errors[seed=1] ______________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+__________ TestAdaptSystem.test_no_assignment_errors[all_protecting] __________
+NameError on line 114 in current_protectors_after_phase1: name 'plan' is not defined
+________ TestAdaptSystem.test_no_assignment_errors[some_moving_drones] ________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+________ TestAdaptSystem.test_no_repeated_assignments[all_protecting] _________
+NameError on line 114 in current_protectors_after_phase1: name 'plan' is not defined
+______ TestAdaptSystem.test_no_repeated_assignments[some_moving_drones] _______
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+___________ TestAdaptSystem.test_no_invalid_groups[all_protecting] ____________
+NameError on line 114 in current_protectors_after_phase1: name 'plan' is not defined
+_________ TestAdaptSystem.test_no_invalid_groups[some_moving_drones] __________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+______________ TestAdaptSystem.test_all_assigned[all_protecting] ______________
+NameError on line 114 in current_protectors_after_phase1: name 'plan' is not defined
+____________ TestAdaptSystem.test_all_assigned[some_moving_drones] ____________
+NameError on line 93 in assign_drones: name 'planned_ids' is not defined
+================================ Test Results =================================
+TestAdaptSystem::test_no_assignment_errors:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, all_protecting, some_moving_drones
+12 failed, 3 passed, 6 skipped in 0.69s

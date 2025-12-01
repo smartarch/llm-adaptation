@@ -1,0 +1,116 @@
+Loaded 2 messages from generated_adaptations/farm/constraints_coverage/5nano_07.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1024, Output: 4973 (reasoning: 3776)
+Response time (seconds): 46.0
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations/farm/constraints_coverage/5nano_07/code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_02 --variant=constraints_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_02 --variant=constraints_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_02 --variant=constraints_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/constraints_coverage/5nano_07/code_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_02", "log_dir.append": "/constraints_coverage/5nano_07/code_02", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_02.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_02", "log_dir.append": "/constraints_coverage/5nano_07/code_02", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_02.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_02", "log_dir.append": "/constraints_coverage/5nano_07/code_02", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_02.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 129.7
+Querying LLM with prompt 03_test.
+[33mTOKENS USED:
+Input: 2514, Output: 6710 (reasoning: 5248)
+Response time (seconds): 62.1
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations/farm/constraints_coverage/5nano_07/code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_04 --variant=constraints_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_04 --variant=constraints_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_04 --variant=constraints_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/constraints_coverage/5nano_07/code_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_04", "log_dir.append": "/constraints_coverage/5nano_07/code_04", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_04.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_04", "log_dir.append": "/constraints_coverage/5nano_07/code_04", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_04.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_04", "log_dir.append": "/constraints_coverage/5nano_07/code_04", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_04.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 193.7
+Querying LLM with prompt 05_test.
+[33mTOKENS USED:
+Input: 4332, Output: 6729 (reasoning: 5120)
+Response time (seconds): 53.1
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations/farm/constraints_coverage/5nano_07/code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_06 --variant=constraints_coverage --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_06 --variant=constraints_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_06 --variant=constraints_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/constraints_coverage/5nano_07/code_06.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_06", "log_dir.append": "/constraints_coverage/5nano_07/code_06", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_06.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 1934 lines
+    In 'assign_drones': Missing assignment for: Drone_6
+    In 'assign_drones': Missing assignment for: Drone_7
+    In 'assign_drones': Missing assignment for: Drone_8
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_06", "log_dir.append": "/constraints_coverage/5nano_07/code_06", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_06.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1978 lines
+    In 'assign_drones': Missing assignment for: Drone_6
+    In 'assign_drones': Missing assignment for: Drone_7
+    In 'assign_drones': Missing assignment for: Drone_8
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_06", "log_dir.append": "/constraints_coverage/5nano_07/code_06", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_06.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1975 lines
+    In 'assign_drones': Missing assignment for: Drone_6
+    In 'assign_drones': Missing assignment for: Drone_7
+    In 'assign_drones': Missing assignment for: Drone_8
+Average damage: 133.0
+Querying LLM with prompt 07_test.
+[33mTOKENS USED:
+Input: 6513, Output: 4358 (reasoning: 2752)
+Response time (seconds): 32.7
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations/farm/constraints_coverage/5nano_07/code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_08 --variant=constraints_coverage --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_08 --variant=constraints_coverage --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_08 --variant=constraints_coverage --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations/farm/constraints_coverage/5nano_07/code_08.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_08", "log_dir.append": "/constraints_coverage/5nano_07/code_08", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_08.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 1934 lines
+    In 'assign_drones': Missing assignment for: Drone_6
+    In 'assign_drones': Missing assignment for: Drone_7
+    In 'assign_drones': Missing assignment for: Drone_8
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_08", "log_dir.append": "/constraints_coverage/5nano_07/code_08", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_08.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1978 lines
+    In 'assign_drones': Missing assignment for: Drone_6
+    In 'assign_drones': Missing assignment for: Drone_7
+    In 'assign_drones': Missing assignment for: Drone_8
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_08", "log_dir.append": "/constraints_coverage/5nano_07/code_08", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_08.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1975 lines
+    In 'assign_drones': Missing assignment for: Drone_6
+    In 'assign_drones': Missing assignment for: Drone_7
+    In 'assign_drones': Missing assignment for: Drone_8
+Average damage: 133.0
+Querying LLM with prompt 09_test.
+[33mTOKENS USED:
+Input: 8691, Output: 5640 (reasoning: 4416)
+Response time (seconds): 44.7
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations/farm/constraints_coverage/5nano_07/code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_10 --variant=constraints_coverage --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_10 --variant=constraints_coverage --tests=functional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_07/code_10 --variant=constraints_coverage --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations/farm/constraints_coverage/5nano_07/code_10.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_10", "log_dir.append": "/constraints_coverage/5nano_07/code_10", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_10.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_10", "log_dir.append": "/constraints_coverage/5nano_07/code_10", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_10.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "constraints_coverage/5nano_07/code_10", "log_dir.append": "/constraints_coverage/5nano_07/code_10", "adaptation_name": "generated_adaptations.farm.constraints_coverage.5nano_07.code_10.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 50.7
+The generated code produces a good result (iteration: 5). Stopping further iterations.

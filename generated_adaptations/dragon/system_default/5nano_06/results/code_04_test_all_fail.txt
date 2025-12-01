@@ -1,0 +1,43 @@
+1
+...................FFFF....                                              [100%]
+=================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+The Dragon should be attacked at least once in the first 15 steps of the game.
+
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+================================= Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+4 failed, 23 passed in 8.82s

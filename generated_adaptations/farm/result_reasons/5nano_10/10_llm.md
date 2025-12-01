@@ -1,0 +1,225 @@
+Reasoning and improved adaptation strategy
+
+Observations from the latest run:
+- The top-threat field remains the highest priority, but we can further improve robustness by reducing unnecessary reassignments and by counting in-transit drones toward the top field more reliably.
+- Persistence matters: drones that were already protecting a field or en route to one should be reused when possible, to reduce disruption and maintain stable coverage.
+- A small memory of past assignments can help keep drones in a good location longer and reduce the cost of movement.
+
+Key improvements to the strategy:
+- Memory of previous assignments: keep a lightweight record of the last group each drone was assigned to. Reuse that assignment when still reasonable, which helps with persistence (the “don’t move drones unless needed” principle).
+- Top-field enrichment order: prioritize idle drones first, then drones en route to the top field, and finally other drones. Count drones heading to the top field as contributing toward its protection.
+- Secondary-field protection: when filling other threatened fields, prefer drones that are idle or en route to some field (not the top) to minimize disruption of existing protections.
+- Half-protection floor with minimal disruption: ensure at least half the drones are protecting if possible, but pull the closest available drones to the top field first, and only then consider disturbing other protections.
+- Over-protection prevention: never assign more drones to a field than drones_for_full_protection.
+
+Implementation approach:
+- Compute threatened fields and identify the top field by threat level.
+- Build an initial mapping for each drone, favoring its previous group if still valid (to improve persistence).
+- Step 1: fully protect the top field using the closest drones, with a prioritized pool: idle → en-route to top → protecting others.
+- Step 2: allocate remaining drones to other threatened fields, in threat order, using closest drones and avoiding unnecessary disruption of already-protected fields.
+- Step 3: enforce a protection floor (at least half protected) with minimal disruption, prioritizing top-field coverage and then closest possible reallocations.
+- Step 4: write the final groups to the environment and store the final mapping for the next tick.
+
+Python code (class SmartFarmAdaptation)
+
+```py
+import math
+from typing import List
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Simple memory to improve persistence across steps
+        self._prev_group_assignments = {}
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        """
+        Assign drones to groups:
+        - "idle" for idle drones
+        - "protecting {field_id}" for protected fields (one group per field with threat > 0)
+
+        Strategy highlights:
+        - Fully protect the top-threat field using the closest drones, counting drones en route to it.
+        - Reuse drones from previous groups when still reasonable (persistence).
+        - After top field is addressed, protect other threatened fields by proximity and with minimal disruption.
+        - Ensure at least half the drones are protecting when possible.
+        - Do not over-protect any field beyond drones_for_full_protection.
+        - Update internal memory of assignments for next tick.
+        """
+
+        def field_center(f):
+            return ((f.left + f.right) / 2.0, (f.top + f.bottom) / 2.0)
+
+        def dist_to_field(drone, f):
+            loc = getattr(drone, "location", None)
+            if loc is None:
+                return float("inf")
+            cx, cy = field_center(f)
+            return math.hypot(loc.x - cx, loc.y - cy)
+
+        # Gather threatened fields
+        fields = list(environment.fields)
+        threatened_fields = [f for f in fields if getattr(f, "threat_level", 0) > 0]
+
+        # If nothing is threatened, all drones go idle
+        if not threatened_fields:
+            for d in components:
+                environment.assign_group(d, "idle")
+            # Update memory
+            self._prev_group_assignments = {d: "idle" for d in components}
+            return
+
+        # Sort threatened fields by threat level (desc), top field first
+        threatened_fields.sort(key=lambda ff: ff.threat_level, reverse=True)
+        top_field = threatened_fields[0]
+        top_group = f"protecting {top_field.id}"
+
+        # Build initial target_group mapping, using previous assignments if valid
+        target_group = {}
+        prev_mem = getattr(self, "_prev_group_assignments", {}) or {}
+
+        # Helper to decide an initial group for a drone
+        for d in components:
+            # Prefer the previous group if it's still valid
+            prev = prev_mem.get(d)
+            if prev in group_ids:
+                initial = prev
+            else:
+                # Fallback to current target if available
+                tid = getattr(d, "target_id", None)
+                if tid is not None:
+                    initial = f"protecting {tid}"
+                else:
+                    initial = "idle"
+            target_group[d] = initial
+
+        # Step 1: Fully protect the top field
+        current_top_protect = sum(1 for d in components if target_group.get(d, "") == top_group)
+        needed_top = max(0, getattr(top_field, "drones_for_full_protection", 0) - current_top_protect)
+
+        if needed_top > 0:
+            # Pools prioritized for minimal disruption
+            idle = [d for d in components if target_group.get(d, "") == "idle"]
+            enroute_top = [
+                d for d in components
+                if getattr(d, "state", "") == "moving_to_field" and getattr(d, "target_id", None) == top_field.id
+            ]
+            protecting_others = [
+                d for d in components
+                if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) != top_field.id
+            ]
+
+            idle.sort(key=lambda d: dist_to_field(d, top_field))
+            enroute_top.sort(key=lambda d: dist_to_field(d, top_field))
+            protecting_others.sort(key=lambda d: dist_to_field(d, top_field))
+
+            taken = 0
+            pools = [idle, enroute_top, protecting_others]
+            for pool in pools:
+                for d in pool:
+                    if taken >= needed_top:
+                        break
+                    target_group[d] = top_group
+                    taken += 1
+                if taken >= needed_top:
+                    break
+
+        # Step 2: Allocate to other threatened fields (excluding the top field)
+        for f in threatened_fields[1:]:
+            gid = f"protecting {f.id}"
+            current = sum(1 for d in components if target_group.get(d, "") == gid)
+            needed = max(0, getattr(f, "drones_for_full_protection", 0) - current)
+            if needed <= 0:
+                continue
+
+            candidates = []
+            for d in components:
+                if target_group.get(d, "") in (gid, top_group):
+                    continue
+                candidates.append((dist_to_field(d, f), d))
+            candidates.sort(key=lambda t: t[0])
+
+            allocated = 0
+            for _, d in candidates:
+                if allocated >= needed:
+                    break
+                target_group[d] = gid
+                allocated += 1
+
+        # Step 3: Ensure at least half the drones are protecting when possible
+        total_drones = len(components)
+        required_protecting = (total_drones + 1) // 2
+        currently_protecting = sum(1 for d in components if target_group.get(d, "").startswith("protecting "))
+
+        if currently_protecting < required_protecting:
+            to_gain = required_protecting - currently_protecting
+
+            # First, fill the top field if it still needs protection
+            top_current = sum(1 for d in components if target_group.get(d, "") == top_group)
+            top_need = max(0, getattr(top_field, "drones_for_full_protection", 0) - top_current)
+
+            if top_need > 0 and to_gain > 0:
+                idle = [d for d in components if target_group.get(d, "") == "idle"]
+                idle.sort(key=lambda d: dist_to_field(d, top_field))
+                for d in idle:
+                    if to_gain <= 0 or top_need <= 0:
+                        break
+                    target_group[d] = top_group
+                    to_gain -= 1
+                    top_need -= 1
+
+                if to_gain > 0:
+                    # Pull closest non-top drones toward the top field
+                    candidates = [d for d in components if target_group.get(d, "") != top_group]
+                    candidates.sort(key=lambda d: dist_to_field(d, top_field))
+                    for d in candidates:
+                        if to_gain <= 0 or top_need <= 0:
+                            break
+                        target_group[d] = top_group
+                        to_gain -= 1
+                        top_need -= 1
+
+            # If still short, consider other threatened fields that can accept more drones
+            if to_gain > 0:
+                for f in threatened_fields[1:]:
+                    if to_gain <= 0:
+                        break
+                    gid = f"protecting {f.id}"
+                    current = sum(1 for d in components if target_group.get(d, "") == gid)
+                    can_add = max(0, getattr(f, "drones_for_full_protection", 0) - current)
+                    if can_add <= 0:
+                        continue
+                    candidates = [
+                        (dist_to_field(d, f), d)
+                        for d in components
+                        if target_group.get(d, "") not in (gid, top_group)
+                    ]
+                    candidates.sort(key=lambda t: t[0])
+                    for _, d in candidates:
+                        if to_gain <= 0 or can_add <= 0:
+                            break
+                        target_group[d] = gid
+                        to_gain -= 1
+                        currently_protecting += 1
+                        can_add -= 1
+
+        # Final: assign groups to environment, ensuring valid group names
+        for d in components:
+            grp = target_group.get(d, "idle")
+            if grp not in group_ids:
+                tid = getattr(d, "target_id", None)
+                if tid is not None:
+                    cand = f"protecting {tid}"
+                    if cand in group_ids:
+                        grp = cand
+                    else:
+                        grp = "idle"
+                else:
+                    grp = "idle"
+            environment.assign_group(d, grp)
+
+        # Update memory for next tick
+        self._prev_group_assignments = {d: (target_group.get(d, "idle")) for d in components}
+```

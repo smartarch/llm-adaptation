@@ -1,0 +1,18 @@
+1
+...FF..........ssssss                                                    [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+In 'assign_drones', 2 components were assigned more than once. Each component must be assigned exactly once.
+________ TestAdaptSystem.test_no_repeated_assignments[all_protecting] _________
+In 'assign_drones', 5 components were assigned more than once. Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, all_protecting, some_moving_drones
+2 failed, 13 passed, 6 skipped in 7.67s

@@ -1,0 +1,87 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Gather fields with positive threat level
+        fields = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+
+        # Pre-compute field centers
+        field_centers = {}
+        for f in fields:
+            cx = (f.left + f.right) / 2.0
+            cy = (f.top + f.bottom) / 2.0
+            field_centers[f.id] = (cx, cy)
+
+        # Count currently protecting drones per field (include those moving_to_field toward this field)
+        protecting_counts = {f.id: 0 for f in fields}
+        for d in components:
+            fid = getattr(d, "target_id", None)
+            state = getattr(d, "state", None)
+            if fid in protecting_counts and state in ("protecting", "moving_to_field"):
+                protecting_counts[fid] += 1
+
+        # Track assignments we will make in this step
+        assignments = {}
+
+        # Sort fields by threat level (descending)
+        fields_sorted = sorted(fields, key=lambda f: f.threat_level, reverse=True)
+
+        # Helper: squared distance from drone to field center
+        def dist2_to_field(drone, center):
+            loc = getattr(drone, "location", None)
+            if loc is None:
+                return float('inf')
+            dx = loc.x - center[0]
+            dy = loc.y - center[1]
+            return dx*dx + dy*dy
+
+        # Step: allocate drones to fully protect fields in threat order
+        for field in fields_sorted:
+            center = field_centers[field.id]
+            current = protecting_counts.get(field.id, 0)
+            needed = getattr(field, "drones_for_full_protection", 0) - current
+            if needed <= 0:
+                continue
+
+            target_group = f"protecting {field.id}"
+
+            # Build candidate pool: drones not yet assigned in this step, and not already heading to this field
+            candidates = []
+            for d in components:
+                if d in assignments:
+                    continue
+                fid = getattr(d, "target_id", None)
+                state = getattr(d, "state", None)
+                # If drone is already targeting this field (protecting or moving_to_field), treat as already allocated
+                if fid == field.id and state in ("protecting", "moving_to_field"):
+                    continue
+                candidates.append(d)
+
+            # Prefer closest drones to the field center
+            candidates.sort(key=lambda dr: dist2_to_field(dr, center))
+
+            to_take = min(needed, len(candidates))
+            for i in range(to_take):
+                drone = candidates[i]
+                environment.assign_group(drone, target_group)
+                assignments[drone] = target_group
+                protecting_counts[field.id] = protecting_counts.get(field.id, 0) + 1
+
+        # Final pass: ensure every drone is explicitly assigned to some valid group
+        for d in components:
+            if d in assignments:
+                # Explicit reassignment to the chosen group
+                environment.assign_group(d, assignments[d])
+                continue
+
+            fid = getattr(d, "target_id", None)
+            state = getattr(d, "state", None)
+            if state in ("protecting", "moving_to_field") and fid is not None:
+                current_group = f"protecting {fid}"
+            else:
+                current_group = "idle"
+
+            environment.assign_group(d, current_group)

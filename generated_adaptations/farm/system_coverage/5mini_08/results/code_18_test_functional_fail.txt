@@ -1,0 +1,12 @@
+1
+...ssssssssssssF.....                                                    [100%]
+=================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+Partial protection is not very effective, the birds flee away only if the field is fully protected. Prefer fully protecting fewer fields to partially protecting many fields. Current average coverage of protected fields is 0.72.
+================================= Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+1 failed, 8 passed, 12 skipped in 15.12s

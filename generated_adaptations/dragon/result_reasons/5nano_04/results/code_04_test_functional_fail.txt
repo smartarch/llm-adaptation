@@ -1,0 +1,14 @@
+1
+...ssssssssssssssss..F.....                                              [100%]
+=================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+================================= Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=3
+ - passed for: seed=1, seed=2, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+1 failed, 10 passed, 16 skipped in 5.72s

@@ -1,0 +1,17 @@
+1
+...ssssssssssssssssFFFF....                                              [100%]
+=================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] ______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+================================= Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+4 failed, 7 passed, 16 skipped in 6.37s

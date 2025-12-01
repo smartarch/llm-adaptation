@@ -1,0 +1,57 @@
+1
+...FFFFFFFFFFFFFFFFFFFF....                                              [100%]
+=================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] _______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+________________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+________________ TestAdaptSystem.test_no_invalid_groups[seed=2] ________________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+________________ TestAdaptSystem.test_no_invalid_groups[seed=3] ________________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_________ TestAdaptSystem.test_no_invalid_groups[no_initial_warriors] __________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] ______________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] ______________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] ______________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=1] ___________________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=2] ___________________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=3] ___________________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+____________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] ______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] ______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] ______
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+NameError on line 17 in assign_in_village: name 'Warriors' is not defined
+================================= Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+20 failed, 7 passed in 6.67s

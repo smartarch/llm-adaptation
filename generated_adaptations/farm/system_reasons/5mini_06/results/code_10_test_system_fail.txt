@@ -1,0 +1,37 @@
+1
+...FFFFFFFFFFFFssssss                                                    [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+________ TestAdaptSystem.test_no_repeated_assignments[all_protecting] _________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+______ TestAdaptSystem.test_no_repeated_assignments[some_moving_drones] _______
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+___________ TestAdaptSystem.test_no_invalid_groups[all_protecting] ____________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+_________ TestAdaptSystem.test_no_invalid_groups[some_moving_drones] __________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+_________ TestAdaptSystem.test_no_invalid_assignments[all_protecting] _________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+_______ TestAdaptSystem.test_no_invalid_assignments[some_moving_drones] _______
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+______________ TestAdaptSystem.test_all_assigned[all_protecting] ______________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+____________ TestAdaptSystem.test_all_assigned[some_moving_drones] ____________
+NameError on line 131 in <listcomp>: cannot access free variable 'cats' where it is not associated with a value in enclosing scope
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, all_protecting, some_moving_drones
+12 failed, 3 passed, 6 skipped in 0.64s
