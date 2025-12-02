@@ -1,0 +1,254 @@
+# SmartFarmAdaptation
+#
+# Reasoning and strategy (described here as comments per instructions):
+#
+# Problem recap:
+# - We must always fully protect the single field with the highest threat_level using the closest drones.
+# - If it's already fully protected, keep those drones there.
+# - Remaining drones may be idle or protecting other fields.
+# - Partial protection is less effective but still beneficial.
+#
+# Observed problem with prior simple strategy:
+# - Too many drones remained idle; protection coverage of the top field was low (0.5).
+# - Many drones were moving unnecessarily, reducing effective protection.
+#
+# Goals for improvement:
+# 1) Still always fully protect the highest-threat field, but select drones in a way that:
+#    - Prefers drones already protecting or moving to that field (minimize extra movement/time).
+#    - Then prefers idle drones near the field.
+#    - Only as a last resort pulls drones protecting other fields.
+# 2) Use remaining drones proactively: assign them to protect other threatened fields
+#    ordered by threat level. Try to fully protect as many high-threat fields as possible
+#    (greedy), and if full protection isn't possible, assign remaining drones to the most
+#    threatened fields (partial protection is still helpful).
+# 3) Avoid unnecessary reassignment: if a drone is already moving to a field and we want
+#    it to keep going there, assign it to that protecting group (so it doesn't flip and
+#    cause extra movement).
+#
+# Approach summary:
+# - Identify the highest-threat field (tie-break by id). Compute center and required drones.
+# - Build prioritized pools of drones:
+#     A) already protecting that field
+#     B) moving to that field
+#     C) idle drones
+#     D) moving to other fields
+#     E) protecting other fields
+#   When filling the highest field, consume pools in that order but within pools use
+#   geometric closeness to the highest field center (to respect "closest drones" rule).
+# - After satisfying highest's requirement, for remaining threatened fields (by threat desc),
+#   try to fill them greedily using the remaining drones (keeping those already protecting them).
+#   If not enough to reach full protection, assign what's available.
+# - Any leftover drones -> idle.
+#
+# Implementation notes:
+# - Use squared Euclidean distance for ranking to avoid sqrt.
+# - Use id(component) as stable identifier in sets.
+# - Validate group names against group_ids; if a protecting group is missing for a field,
+#   skip assigning drones to it and prefer idle (safe fallback).
+#
+# This strategy aims to increase coverage of the most-threatened field while also using
+# remaining drones to reduce overall damage across multiple fields and minimize wasted movement.
+
+import math
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Helpers
+        def dist2(comp, center):
+            dx = comp.location.x - center[0]
+            dy = comp.location.y - center[1]
+            return dx * dx + dy * dy
+
+        def assign(comp, group):
+            # fallback safety: if group doesn't exist, assign to idle (which should exist)
+            if group not in group_ids:
+                fallback = "idle" if "idle" in group_ids else (group_ids[0] if group_ids else None)
+                if fallback is None:
+                    return
+                environment.assign_group(comp, fallback)
+            else:
+                environment.assign_group(comp, group)
+
+        # Prepare idle fallback
+        idle_group = "idle"
+        if idle_group not in group_ids and group_ids:
+            idle_group = group_ids[0]
+
+        # Filter fields with threat > 0
+        threat_fields = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+        if not threat_fields:
+            # no threats, put all drones idle
+            for comp in components:
+                assign(comp, idle_group)
+            return
+
+        # Sort fields by threat desc, tie-break by id
+        threat_fields.sort(key=lambda f: (-f.threat_level, str(f.id)))
+        highest = threat_fields[0]
+        highest_group = f"protecting {highest.id}"
+
+        # Compute field center
+        center_high = ((highest.left + highest.right) / 2.0, (highest.top + highest.bottom) / 2.0)
+
+        # Required drones for full protection for highest
+        try:
+            required_high = int(math.ceil(highest.drones_for_full_protection))
+        except Exception:
+            required_high = 1
+
+        # Categorize drones into prioritized pools
+        comps_by_id = {id(c): c for c in components}
+        assigned_ids = set()
+
+        pool_A = []  # already protecting highest
+        pool_B = []  # moving to highest
+        pool_C = []  # idle
+        pool_D = []  # moving to other fields
+        pool_E = []  # protecting other fields
+
+        for comp in components:
+            if comp.state == "protecting" and comp.target_id == highest.id:
+                pool_A.append(comp)
+            elif comp.state == "moving_to_field" and comp.target_id == highest.id:
+                pool_B.append(comp)
+            elif comp.state == "idle" or comp.target_id is None:
+                pool_C.append(comp)
+            elif comp.state == "moving_to_field":
+                pool_D.append(comp)
+            elif comp.state == "protecting":
+                pool_E.append(comp)
+            else:
+                # unknown state -> treat as idle
+                pool_C.append(comp)
+
+        # Sort pools B,C,D,E by distance to highest center (A already there)
+        pool_B.sort(key=lambda c: dist2(c, center_high))
+        pool_C.sort(key=lambda c: dist2(c, center_high))
+        pool_D.sort(key=lambda c: dist2(c, center_high))
+        pool_E.sort(key=lambda c: dist2(c, center_high))
+
+        # Select drones for highest: prioritize A -> B -> C -> D -> E
+        selected_for_high = []
+        selected_for_high.extend(pool_A)
+        if len(selected_for_high) < required_high:
+            need = required_high - len(selected_for_high)
+            take = pool_B[:need]
+            selected_for_high.extend(take)
+        if len(selected_for_high) < required_high:
+            need = required_high - len(selected_for_high)
+            take = pool_C[:need]
+            selected_for_high.extend(take)
+        if len(selected_for_high) < required_high:
+            need = required_high - len(selected_for_high)
+            take = pool_D[:need]
+            selected_for_high.extend(take)
+        if len(selected_for_high) < required_high:
+            need = required_high - len(selected_for_high)
+            take = pool_E[:need]
+            selected_for_high.extend(take)
+
+        # Mark assigned
+        for comp in selected_for_high:
+            assigned_ids.add(id(comp))
+
+        # Assign selected_for_high to the protecting group for highest (or idle fallback if missing)
+        for comp in selected_for_high:
+            assign(comp, highest_group if highest_group in group_ids else idle_group)
+
+        # Prepare list of remaining unassigned comps
+        remaining = [c for c in components if id(c) not in assigned_ids]
+
+        # For remaining fields (excluding highest), try to protect them in descending threat order
+        for field in threat_fields[1:]:
+            if not remaining:
+                break
+            protect_group = f"protecting {field.id}"
+            # If expected group missing, skip assigning to this field
+            if protect_group not in group_ids:
+                continue
+
+            # field center and required
+            center_f = ((field.left + field.right) / 2.0, (field.top + field.bottom) / 2.0)
+            try:
+                req = int(math.ceil(field.drones_for_full_protection))
+            except Exception:
+                req = 1
+
+            # Count already protecting (among remaining)
+            already = [c for c in remaining if c.state == "protecting" and c.target_id == field.id]
+            selected = []
+            selected.extend(already)
+            # If need more, choose nearest from remaining that are not already selected
+            need = max(0, req - len(selected))
+            if need > 0:
+                # Prioritize those moving to this field (they will be efficient)
+                moving_to_field = [c for c in remaining if c.state == "moving_to_field" and c.target_id == field.id and c not in selected]
+                moving_to_field.sort(key=lambda c: dist2(c, center_f))
+                take = moving_to_field[:need]
+                selected.extend(take)
+                need = max(0, req - len(selected))
+
+            if need > 0:
+                # Then idle / nearest
+                candidates = [c for c in remaining if c not in selected]
+                candidates.sort(key=lambda c: dist2(c, center_f))
+                take = candidates[:need]
+                selected.extend(take)
+                need = max(0, req - len(selected))
+
+            # Assign selected to that field's protecting group
+            for comp in selected:
+                if id(comp) in assigned_ids:
+                    continue
+                assign(comp, protect_group)
+                assigned_ids.add(id(comp))
+
+            # Update remaining
+            remaining = [c for c in remaining if id(c) not in assigned_ids]
+
+        # Any leftover drones: attempt to assign them to protect other fields partially
+        # (If groups exist) by descending threat, otherwise idle.
+        if remaining:
+            # Try to distribute remaining by threat (partial protection)
+            rem = remaining[:]
+            for field in threat_fields:
+                if not rem:
+                    break
+                protect_group = f"protecting {field.id}"
+                if protect_group not in group_ids:
+                    continue
+                # If there are already drones protecting this field (we may have some assigned earlier),
+                # we still may assign more up to full protection.
+                try:
+                    req = int(math.ceil(field.drones_for_full_protection))
+                except Exception:
+                    req = 1
+                # Count current assigned to this field
+                currently_assigned = [c for c in components if id(c) in assigned_ids and getattr(c, "target_id", None) == field.id]
+                need = max(0, req - len(currently_assigned))
+                if need <= 0:
+                    continue
+                # Select up to 'need' nearest from rem to this field
+                center_f = ((field.left + field.right) / 2.0, (field.top + field.bottom) / 2.0)
+                rem.sort(key=lambda c: dist2(c, center_f))
+                take = rem[:need]
+                for comp in take:
+                    if id(comp) in assigned_ids:
+                        continue
+                    assign(comp, protect_group)
+                    assigned_ids.add(id(comp))
+                rem = [c for c in rem if id(c) not in assigned_ids]
+            # Any still leftover -> idle
+            for comp in rem:
+                assign(comp, idle_group)
+                assigned_ids.add(id(comp))
+
+        # Final safety: ensure every component has been assigned (some may not due to group id issues)
+        for comp in components:
+            if id(comp) not in assigned_ids:
+                assign(comp, idle_group)
+                assigned_ids.add(id(comp))

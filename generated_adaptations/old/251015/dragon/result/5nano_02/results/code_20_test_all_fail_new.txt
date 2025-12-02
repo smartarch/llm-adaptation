@@ -1,0 +1,41 @@
+....FF..........FF...                                                    [100%]
+================================== FAILURES ===================================
+_________________ TestAdapt.test_no_assignment_errors[seed=2] _________________
+There were 1 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=3] _________________
+There were 1 assignment errors in total.
+_____________ TestAdapt.test_no_user_constraints_violated[seed=2] _____________
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+_____________ TestAdapt.test_no_user_constraints_violated[seed=3] _____________
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+=================================== PASSES ====================================
+_________________ TestAdapt.test_no_assignment_errors[seed=1] _________________
+_______________ TestAdapt.test_no_repeated_assignments[seed=1] ________________
+_______________ TestAdapt.test_no_repeated_assignments[seed=2] ________________
+_______________ TestAdapt.test_no_repeated_assignments[seed=3] ________________
+__________________ TestAdapt.test_no_invalid_groups[seed=1] ___________________
+__________________ TestAdapt.test_no_invalid_groups[seed=2] ___________________
+__________________ TestAdapt.test_no_invalid_groups[seed=3] ___________________
+_____________________ TestAdapt.test_all_assigned[seed=1] _____________________
+_____________________ TestAdapt.test_all_assigned[seed=2] _____________________
+_____________________ TestAdapt.test_all_assigned[seed=3] _____________________
+_____________ TestAdapt.test_no_user_constraints_violated[seed=1] _____________
+_______ TestAdapt.test_no_user_constraints_violated_at_the_end[seed=1] ________
+_______ TestAdapt.test_no_user_constraints_violated_at_the_end[seed=2] ________
+_______ TestAdapt.test_no_user_constraints_violated_at_the_end[seed=3] ________
+================================ Test Results =================================
+TestAdapt::test_no_assignment_errors:
+ - failed for: seed=2, seed=3
+ - passed for: seed=1
+TestAdapt::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3
+TestAdapt::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3
+TestAdapt::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3
+TestAdapt::test_no_user_constraints_violated:
+ - failed for: seed=2, seed=3
+ - passed for: seed=1
+TestAdapt::test_no_user_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3
+4 failed, 17 passed in 5.00s

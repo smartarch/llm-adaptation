@@ -1,0 +1,32 @@
+Here is a report from running unit tests on your implementation:
+
+...FFFFFFFF........ssssssss                                              [100%]
+================================== FAILURES ===================================
+______________ TestAdaptSystem.test_no_assignment_errors[seed=1] ______________
+There were 60 assignment errors in total.
+______________ TestAdaptSystem.test_no_assignment_errors[seed=2] ______________
+There were 60 assignment errors in total.
+______________ TestAdaptSystem.test_no_assignment_errors[seed=3] ______________
+There were 60 assignment errors in total.
+_______ TestAdaptSystem.test_no_assignment_errors[no_initial_warriors] ________
+There were 60 assignment errors in total.
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] ______
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_assignment_errors:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+8 failed, 11 passed, 8 skipped in 1.58s
+
+Update your code to fix the failing tests.

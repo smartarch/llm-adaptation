@@ -1,0 +1,26 @@
+1
+...FFFFF.sssssssssss                                                     [100%]
+================================== FAILURES ===================================
+_____________________ TestAdapt.test_no_assignment_errors _____________________
+AttributeError on line 67 in <genexpr>: 'DragonHuntSimulation' object has no attribute 'group_of'
+___________________ TestAdapt.test_no_repeated_assignments ____________________
+AttributeError on line 67 in <genexpr>: 'DragonHuntSimulation' object has no attribute 'group_of'
+______________________ TestAdapt.test_no_invalid_groups _______________________
+AttributeError on line 67 in <genexpr>: 'DragonHuntSimulation' object has no attribute 'group_of'
+_________________________ TestAdapt.test_all_assigned _________________________
+AttributeError on line 67 in <genexpr>: 'DragonHuntSimulation' object has no attribute 'group_of'
+_________________ TestAdapt.test_no_user_constraints_violated _________________
+AttributeError on line 67 in <genexpr>: 'DragonHuntSimulation' object has no attribute 'group_of'
+=================================== PASSES ====================================
+___________ TestAdapt.test_no_user_constraints_violated_at_the_end ____________
+=========================== short test summary info ===========================
+FAILED TestAdapt::test_no_assignment_errors - Failed: AttributeError on line ...
+FAILED TestAdapt::test_no_repeated_assignments - Failed: AttributeError on li...
+FAILED TestAdapt::test_no_invalid_groups - Failed: AttributeError on line 67 ...
+FAILED TestAdapt::test_all_assigned - Failed: AttributeError on line 67 in <g...
+FAILED TestAdapt::test_no_user_constraints_violated - Failed: AttributeError ...
+PASSED TestConfiguration::test_example_is_correct
+PASSED TestConfiguration::test_adaptation_exists
+PASSED TestConfiguration::test_adaptation_class_is_correct
+PASSED TestAdapt::test_no_user_constraints_violated_at_the_end
+5 failed, 4 passed, 11 skipped in 0.30s

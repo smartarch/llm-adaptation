@@ -1,0 +1,170 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+import math
+
+class SmartFarmAdaptation(FarmAdaptation):
+    DRONE_SPEED = 2.0  # units per time step
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        """
+        Improved strategy:
+        - Force full protection for the highest-threat field first by selecting the closest drones
+          (by estimated arrival time) from the whole fleet when necessary.
+        - Then allocate remaining drones to other threatened fields in descending threat order,
+          preferring idle or en-route drones and minimizing arrival time.
+        - Any leftover drones are set to idle.
+        """
+        # Helpers
+        def field_center(field):
+            return ((field.left + field.right) / 2.0, (field.top + field.bottom) / 2.0)
+
+        def distance_to_point(drone, point):
+            dx = drone.location.x - point[0]
+            dy = drone.location.y - point[1]
+            return math.hypot(dx, dy)
+
+        def arrival_time(drone, point):
+            # Estimate time to reach point from current location
+            return distance_to_point(drone, point) / self.DRONE_SPEED
+
+        # State priority for non-top allocations: prefer idle -> moving_to_field -> protecting
+        state_priority = {"idle": 0, "moving_to_field": 1, "protecting": 2}
+
+        def valid_group(name):
+            if name in group_ids:
+                return name
+            if "idle" in group_ids:
+                return "idle"
+            return group_ids[0] if group_ids else name
+
+        # Collect threatened fields (threat_level > 0)
+        threatened_fields = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+        if not threatened_fields:
+            # No threats -> all drones idle
+            idle_grp = valid_group("idle")
+            for comp in components:
+                environment.assign_group(comp, idle_grp)
+            return
+
+        # Sort fields by threat desc, deterministic tie-break by id
+        threatened_fields.sort(key=lambda f: (-f.threat_level, f.id))
+
+        # Map initial targets for determinism and to compute who's already heading where
+        initial_target = {comp: getattr(comp, "target_id", None) for comp in components}
+
+        # Assignments to fill; will map comp -> group_name
+        assignments = {}
+
+        # A helper to count how many drones (in snapshot) are targeting a field
+        def snapshot_target_count(field_id):
+            return sum(1 for comp in components if getattr(comp, "target_id", None) == field_id)
+
+        # 1) Forcefully allocate for top field using minimal arrival time from entire fleet
+        top_field = threatened_fields[0]
+        top_group = valid_group(f"protecting {top_field.id}")
+        required_top = int(getattr(top_field, "drones_for_full_protection", 0))
+
+        # Currently targeting top field (protecting or moving) based on snapshot
+        currently_targeting_top = [comp for comp in components if getattr(comp, "target_id", None) == top_field.id]
+        current_count = len(currently_targeting_top)
+        need_top = max(0, required_top - current_count)
+
+        # Assign those already targeting top field to top_group
+        for comp in currently_targeting_top:
+            assignments[comp] = top_group
+
+        # If we need more drones for top field, pick closest ones by arrival time (can reassign protecting drones)
+        if need_top > 0:
+            # Candidates: all drones not already targeting top_field
+            candidates = []
+            center_top = field_center(top_field)
+            for comp in components:
+                if getattr(comp, "target_id", None) == top_field.id:
+                    continue
+                t = arrival_time(comp, center_top)
+                candidates.append((t, id(comp), comp))
+            candidates.sort(key=lambda x: (x[0], x[1]))
+            for i in range(min(need_top, len(candidates))):
+                comp = candidates[i][2]
+                assignments[comp] = top_group
+
+        # Keep track of which drones are now assigned (to avoid double assignment)
+        assigned_set = set(assignments.keys())
+
+        # 2) Allocate remaining drones to other fields in descending threat order
+        # For each field, count how many are effectively already assigned to it (from snapshot or earlier assignment)
+        # and then try to bring it to full protection using available drones, preferring idle/moving and minimal arrival.
+        available = [comp for comp in components if comp not in assigned_set]
+
+        for field in threatened_fields[1:]:
+            if not available:
+                break
+            grp = valid_group(f"protecting {field.id}")
+            req = int(getattr(field, "drones_for_full_protection", 0))
+
+            # Count how many are currently targeting this field and are still available OR already assigned to its group
+            current_targeting = [comp for comp in components if getattr(comp, "target_id", None) == field.id]
+            # Among current_targeting, those not already assigned elsewhere should be considered as committed
+            committed = []
+            for comp in current_targeting:
+                if comp in assigned_set:
+                    # If already assigned, check if it's assigned to this group's name; if so, count it
+                    if assignments.get(comp) == grp:
+                        committed.append(comp)
+                else:
+                    # Not reassigned; treat as committed towards this field
+                    committed.append(comp)
+
+            committed_count = len(committed)
+            # Ensure committed ones are assigned to this group in our assignments map (if not assigned elsewhere)
+            for comp in committed:
+                if comp not in assignments:
+                    assignments[comp] = grp
+                    assigned_set.add(comp)
+                    if comp in available:
+                        available.remove(comp)
+
+            remaining_needed = max(0, req - committed_count)
+            if remaining_needed <= 0:
+                continue
+
+            # Choose candidates from available using (state_priority, arrival_time) to minimize unnecessary reassignments
+            center = field_center(field)
+            candidates = []
+            for comp in list(available):
+                st = getattr(comp, "state", "idle")
+                pri = state_priority.get(st, 2)
+                t_arr = arrival_time(comp, center)
+                candidates.append((pri, t_arr, id(comp), comp))
+            candidates.sort(key=lambda x: (x[0], x[1], x[2]))
+
+            for i in range(min(remaining_needed, len(candidates))):
+                comp = candidates[i][3]
+                assignments[comp] = grp
+                assigned_set.add(comp)
+                if comp in available:
+                    available.remove(comp)
+
+        # 3) Any remaining unassigned drones -> assign idle
+        idle_grp = valid_group("idle")
+        for comp in components:
+            if comp not in assignments:
+                # Keep those that originally targeted some field but were not reassigned as their original protecting group,
+                # if that original group exists (so we don't unnecessarily send a drone idle if it's already protecting a field we're not touching).
+                orig_tgt = initial_target.get(comp)
+                if orig_tgt:
+                    orig_grp = valid_group(f"protecting {orig_tgt}")
+                    # Only keep original target if that group is one of the available group_ids
+                    if orig_grp in group_ids:
+                        assignments[comp] = orig_grp
+                    else:
+                        assignments[comp] = idle_grp
+                else:
+                    assignments[comp] = idle_grp
+
+        # 4) Finalize: ensure all assignments use valid groups and apply them
+        for comp, grp in assignments.items():
+            valid = grp if grp in group_ids else idle_grp
+            environment.assign_group(comp, valid)

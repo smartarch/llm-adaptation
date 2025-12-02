@@ -1,0 +1,104 @@
+# Strategy and reasoning (as comments):
+#
+# Goal: kill the Dragon quickly while minimizing disruption to farming. Tests previously failed
+# due to assignment errors and insufficient spawning. To address this reliably:
+# - Ensure every assignment to a spawn group uses pairs of farmers (never assign a single farmer
+#   to a spawn group), which avoids spawn-group assignment errors.
+# - Spawn warriors aggressively when wheat is available (each warrior costs 12 wheat and 2 farmers).
+#   This produces attackers to kill the Dragon quickly.
+# - Also occasionally spawn a farmer (cost 10 wheat, 2 farmers) to grow the workforce, but only
+#   after warrior spawns in that step are done (and throttled to every 2 steps).
+# - Always send all Warriors from Village to Cave, and in the Cave make Warriors attack and Farmers
+#   return to Village.
+# - Ensure every component is assigned exactly once to a valid group from group_ids.
+#
+# Implementation details:
+# - In assign_in_village: iterate available farmers as an "unassigned" list. While there is enough
+#   wheat and at least 2 unassigned farmers, create warrior spawns (up to a small cap per step).
+#   Then possibly create one farmer spawn if allowed. Remaining farmers farm.
+# - In assign_in_cave: warriors -> "attack", farmers -> "village".
+#
+# This approach avoids partial spawn assignments and increases both warrior and farmer spawn counts.
+
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # throttle farmer spawn to at most once every 2 steps
+        self.last_farmer_spawn_step = -999
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        # Valid group names for Village context
+        available = set(group_ids)
+        G_FARM = "farm" if "farm" in available else group_ids[0]
+        G_CAVE = "cave" if "cave" in available else group_ids[0]
+        G_SPAWN_FARMER = "spawn farmer" if "spawn farmer" in available else None
+        G_SPAWN_WARRIOR = "spawn warrior" if "spawn warrior" in available else None
+
+        # Partition villagers by role
+        farmers = [c for c in components if getattr(c, "role", "").lower() == "farmer"]
+        warriors = [c for c in components if getattr(c, "role", "").lower() == "warrior"]
+
+        # Send all warriors to Cave (one assignment each)
+        for w in warriors:
+            environment.assign_group(w, G_CAVE)
+
+        # If no farmers, nothing more to do
+        if not farmers:
+            return
+
+        # Local copy of wheat for decision-making
+        local_wheat = getattr(environment.farm, "wheat", 0)
+
+        # Work on farmers as an unassigned queue; we will pop pairs when assigning spawns
+        unassigned = list(farmers)
+
+        # Spawn warriors aggressively while resources allow.
+        # Each warrior needs 2 farmers and 12 wheat.
+        # Cap warrior spawns per step to avoid pulling entire workforce at once:
+        WARRIOR_SPAWN_CAP = 3
+
+        warrior_spawns = 0
+        if G_SPAWN_WARRIOR:
+            # compute maximum possible by resources
+            max_by_wheat = local_wheat // 12
+            max_by_pairs = len(unassigned) // 2
+            warrior_spawns = min(max_by_wheat, max_by_pairs, WARRIOR_SPAWN_CAP)
+
+            for _ in range(warrior_spawns):
+                # assign two farmers to spawn warrior
+                f1 = unassigned.pop(0)
+                f2 = unassigned.pop(0)
+                environment.assign_group(f1, G_SPAWN_WARRIOR)
+                environment.assign_group(f2, G_SPAWN_WARRIOR)
+                local_wheat -= 12
+
+        # After warrior spawns, maybe spawn one farmer pair (throttled to once every 2 steps)
+        if G_SPAWN_FARMER and (step - self.last_farmer_spawn_step) >= 2:
+            if local_wheat >= 10 and len(unassigned) >= 2:
+                f1 = unassigned.pop(0)
+                f2 = unassigned.pop(0)
+                environment.assign_group(f1, G_SPAWN_FARMER)
+                environment.assign_group(f2, G_SPAWN_FARMER)
+                local_wheat -= 10
+                self.last_farmer_spawn_step = step
+
+        # Any remaining unassigned farmers should farm
+        for f in unassigned:
+            environment.assign_group(f, G_FARM)
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        # Valid group names for Cave context
+        available = set(group_ids)
+        G_ATTACK = "attack" if "attack" in available else group_ids[0]
+        G_VILLAGE = "village" if "village" in available else group_ids[0]
+
+        for c in components:
+            role = getattr(c, "role", "").lower()
+            if role == "warrior":
+                environment.assign_group(c, G_ATTACK)
+            else:
+                # Farmers in cave should return to Village
+                environment.assign_group(c, G_VILLAGE)

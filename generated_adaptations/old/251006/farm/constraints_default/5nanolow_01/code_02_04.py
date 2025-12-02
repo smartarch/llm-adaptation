@@ -1,0 +1,73 @@
+import abc
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        """
+        Improved strategy focusing on fully protecting the most-threatened field.
+        - Identify all fields with threat_level > 0 and pick the top-threat field.
+        - Move drones (from anywhere) to the top field's protecting group until it reaches
+          drones_for_full_protection or there are no drones left.
+        - All remaining drones go to idle.
+        - This minimizes moves by reusing drones already protecting the top field when possible
+          and reallocating others only as needed to reach full protection.
+        """
+        # Gather fields with threat
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0.0) > 0]
+        if not fields_with_threat:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Pick top-threat field deterministically
+        fields_with_threat.sort(key=lambda f: getattr(f, "threat_level", 0.0), reverse=True)
+        top_field = fields_with_threat[0]
+        top_group_id = f"protecting {top_field.id}"
+        if top_group_id not in group_ids:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Determine required drones for full protection
+        required_top = getattr(top_field, "drones_for_full_protection", None)
+        if required_top is None:
+            required_top = len(components)
+        try:
+            required_top = int(required_top)
+        except Exception:
+            try:
+                required_top = int(float(required_top))
+            except Exception:
+                required_top = len(components)
+
+        # Reassign drones to top field until full or no drones left
+        assigned = set()
+        current_top = 0
+
+        # First, reuse drones already protecting the top field
+        for c in components:
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == top_field.id:
+                environment.assign_group(c, top_group_id)
+                assigned.add(c)
+                current_top += 1
+
+        # If more are needed, move any remaining drones to the top field's group
+        if current_top < required_top:
+            needed = required_top - current_top
+            for c in components:
+                if c in assigned:
+                    continue
+                environment.assign_group(c, top_group_id)
+                assigned.add(c)
+                current_top += 1
+                needed -= 1
+                if needed <= 0:
+                    break
+
+        # All remaining drones go idle
+        for c in components:
+            if c not in assigned:
+                environment.assign_group(c, "idle")

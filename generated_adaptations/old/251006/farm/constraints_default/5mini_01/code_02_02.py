@@ -1,0 +1,214 @@
+# Improved adaptation strategy (described here as comments):
+#
+# Goal: reduce damage by increasing effective protection coverage while still obeying the core requirement:
+#   "Always fully protect the field with the highest threat level with the closest drones."
+# Improvements made over the prior simple strategy:
+# 1. Primary field (highest-threat): keep the required behavior exactly — use the closest drones (including those
+#    currently protecting other fields) to fully protect it. If it's already fully protected, keep those drones there.
+# 2. After the primary is satisfied, attempt to fully protect additional fields (in descending threat order)
+#    using remaining drones, but avoid reassigning drones that are already protecting other (different) fields unless
+#    absolutely necessary. This reduces unnecessary movement and raises the average number of drones actually protecting.
+# 3. Selection policy for non-primary fields:
+#    - Always keep drones that are already protecting/moving to that field.
+#    - Prefer idle drones or drones without a different protection target (they're least costly to redirect).
+#    - Avoid pulling drones that are currently protecting other fields (only use them if there are not enough other
+#      available drones to reach full protection).
+# 4. If fields cannot be fully protected, we do not assign partial protection (we avoid wasteful partial assignments).
+#    This follows the note that partial protection is less effective. We only assign groups for fields we can fully protect
+#    given the available drones (except for the mandatory primary field which must always be fully protected).
+#
+# Implementation details:
+# - Compute field center ((left+right)/2, (top+bottom)/2) for distance measures.
+# - Use Euclidean distance to determine closeness.
+# - Maintain assignment map and make exactly one environment.assign_group call per component at the end.
+# - Carefully handle missing/invalid group names by skipping fields whose protecting group is unavailable.
+#
+# Expected effect: primary field fully covered by closest drones; additional fields covered when possible using drones that
+# are naturally available (idle or already heading there), which increases protecting count and reduces idle and moving churn.
+
+from generated_adaptations.base_classes.farm import FarmAdaptation
+import math
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        idle_group = "idle"
+
+        all_fields = getattr(environment, "fields", []) or []
+        fields_with_threat = [f for f in all_fields if getattr(f, "threat_level", 0) > 0]
+
+        # If no threatened fields, assign all to idle.
+        if not fields_with_threat:
+            for comp in components:
+                environment.assign_group(comp, idle_group)
+            return
+
+        # Sort fields by descending threat_level, tie-break by id (string) for determinism
+        def field_sort_key(f):
+            return (-getattr(f, "threat_level", 0.0), str(getattr(f, "id", "")))
+        fields_sorted = sorted(fields_with_threat, key=field_sort_key)
+
+        # Utility: field center
+        def field_center(f):
+            left = getattr(f, "left", 0.0)
+            right = getattr(f, "right", 0.0)
+            top = getattr(f, "top", 0.0)
+            bottom = getattr(f, "bottom", 0.0)
+            return ((left + right) / 2.0, (top + bottom) / 2.0)
+
+        # Utility: distance from comp to a center
+        def distance_to_center(comp, center):
+            loc = getattr(comp, "location", None)
+            if loc is None:
+                return float("inf")
+            x = getattr(loc, "x", 0.0)
+            y = getattr(loc, "y", 0.0)
+            return math.hypot(x - center[0], y - center[1])
+
+        # Map components by id for stable references
+        comp_by_id = {id(c): c for c in components}
+        unassigned_ids = set(comp_by_id.keys())
+        assignments = {}  # cid -> group_name
+
+        # ---- PRIMARY field handling (highest-threat) ----
+        primary_field = fields_sorted[0]
+        primary_group = f"protecting {getattr(primary_field, 'id')}"
+        # If protecting group not available, we cannot protect; fall back to idle for all (defensive)
+        if primary_group not in group_ids:
+            for comp in components:
+                environment.assign_group(comp, idle_group)
+            return
+
+        needed_primary = int(getattr(primary_field, "drones_for_full_protection", 0))
+        primary_center = field_center(primary_field)
+
+        # All drones are candidates for primary; count those already committed (protecting/moving_to_field)
+        committed_primary_ids = []
+        for cid, comp in comp_by_id.items():
+            state = getattr(comp, "state", None)
+            target_id = getattr(comp, "target_id", None)
+            if (state == "protecting" and target_id == getattr(primary_field, "id")) or \
+               (state == "moving_to_field" and target_id == getattr(primary_field, "id")):
+                committed_primary_ids.append(cid)
+
+        # Choose closest drones overall to satisfy primary (must be closest)
+        chosen_primary_ids = []
+        if len(committed_primary_ids) >= needed_primary:
+            # Enough committed; use those (keep them)
+            # If more than needed, prefer those already protecting first (then moving_to_field), but keep just needed closest among committed
+            def committed_priority(cid):
+                comp = comp_by_id[cid]
+                state = getattr(comp, "state", None)
+                # prefer protecting over moving
+                state_score = 0 if state == "protecting" else 1
+                return (state_score, distance_to_center(comp, primary_center), cid)
+            committed_sorted = sorted(committed_primary_ids, key=committed_priority)
+            chosen_primary_ids = committed_sorted[:needed_primary]
+        else:
+            # Need extra drones beyond committed. Choose closest across all drones (including those committed).
+            # Build list of all drones sorted by distance
+            all_ids_sorted = sorted(comp_by_id.keys(), key=lambda cid: (distance_to_center(comp_by_id[cid], primary_center), cid))
+            chosen_primary_ids = all_ids_sorted[:needed_primary]
+
+        # Assign primary chosen
+        for cid in chosen_primary_ids:
+            assignments[cid] = primary_group
+            if cid in unassigned_ids:
+                unassigned_ids.remove(cid)
+
+        # ---- SECONDARY fields handling (try to fully protect as many as possible) ----
+        # Process remaining fields in descending threat order (skip primary which is index 0)
+        for field in fields_sorted[1:]:
+            group_name = f"protecting {getattr(field, 'id')}"
+            if group_name not in group_ids:
+                continue
+            needed = int(getattr(field, "drones_for_full_protection", 0))
+            if needed <= 0:
+                continue
+            center = field_center(field)
+
+            # Among currently unassigned drones, find those committed to this field
+            committed_ids = []
+            for cid in list(unassigned_ids):
+                comp = comp_by_id[cid]
+                state = getattr(comp, "state", None)
+                target_id = getattr(comp, "target_id", None)
+                if (state == "protecting" and target_id == getattr(field, "id")) or \
+                   (state == "moving_to_field" and target_id == getattr(field, "id")):
+                    committed_ids.append(cid)
+
+            # If committed already enough, keep them (take exactly needed of them preferring protecting)
+            if len(committed_ids) >= needed:
+                # prefer protecting then moving, then by distance
+                def comm_key(cid):
+                    comp = comp_by_id[cid]
+                    state = getattr(comp, "state", None)
+                    state_score = 0 if state == "protecting" else 1
+                    return (state_score, distance_to_center(comp, center), cid)
+                chosen = sorted(committed_ids, key=comm_key)[:needed]
+                for cid in chosen:
+                    assignments[cid] = group_name
+                    unassigned_ids.remove(cid)
+                continue
+
+            # Need some additional drones beyond committed
+            need_more = needed - len(committed_ids)
+            chosen_ids = list(committed_ids)
+
+            # Prefer candidates that are idle or have no target (target_id is None) or are moving without target (unlikely).
+            preferred_candidates = []
+            reluctant_candidates = []  # those protecting other fields (higher cost to reassign)
+            for cid in list(unassigned_ids):
+                if cid in committed_ids:
+                    continue
+                comp = comp_by_id[cid]
+                state = getattr(comp, "state", None)
+                target_id = getattr(comp, "target_id", None)
+                if state == "protecting" and target_id != getattr(field, "id"):
+                    # protecting some other field -> reluctant
+                    reluctant_candidates.append(cid)
+                else:
+                    # idle or moving (maybe moving to None or moving_to_field elsewhere but not protecting)
+                    preferred_candidates.append(cid)
+
+            # Sort preferred by distance
+            preferred_candidates.sort(key=lambda cid: (distance_to_center(comp_by_id[cid], center), cid))
+            take_from_preferred = preferred_candidates[:need_more]
+            chosen_ids.extend(take_from_preferred)
+            remaining_need = need_more - len(take_from_preferred)
+
+            # If still need more, reluctantly pick from reluctant_candidates sorted by distance
+            if remaining_need > 0:
+                reluctant_candidates.sort(key=lambda cid: (distance_to_center(comp_by_id[cid], center), cid))
+                take_reluctant = reluctant_candidates[:remaining_need]
+                chosen_ids.extend(take_reluctant)
+
+            # Only finalize assignment if we have enough to fully protect
+            if len(chosen_ids) >= needed:
+                # pick exactly needed; prefer committed then preferred (they are already ordered)
+                # ensure deterministic ordering: sort chosen_ids by (is_committed desc, distance)
+                def final_key(cid):
+                    is_comm = 0 if cid in committed_ids else 1
+                    return (is_comm, distance_to_center(comp_by_id[cid], center), cid)
+                chosen_final = sorted(chosen_ids, key=final_key)[:needed]
+                for cid in chosen_final:
+                    assignments[cid] = group_name
+                    if cid in unassigned_ids:
+                        unassigned_ids.remove(cid)
+            else:
+                # Not enough drones available to fully protect this field; skip assigning any to avoid partial protection.
+                # This keeps those drones available for later fields or idle.
+                continue
+
+        # ---- Remaining drones -> idle ----
+        for cid in list(unassigned_ids):
+            assignments[cid] = idle_group
+            unassigned_ids.remove(cid)
+
+        # Perform assignments exactly once per component
+        for cid, group_name in assignments.items():
+            comp = comp_by_id.get(cid)
+            if comp is not None:
+                environment.assign_group(comp, group_name)

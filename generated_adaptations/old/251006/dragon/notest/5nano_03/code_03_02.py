@@ -1,0 +1,118 @@
+"""
+Reasoning and improved strategy (embedded as comments for context):
+
+Goal
+- Kill the Dragon quickly while minimizing damage to fields. The Dragon AoE punishes large groups in the Cave.
+Key insights
+- Attacking with a large number of Warriors in the Cave is risky due to AoE damage. A small, rotating attacking subset reduces casualties while keeping DPS manageable.
+- Spawning can help grow the village, but poorly managed spawning (very large numbers of farmers) can delay aggression and waste wheat. A controlled, stepwise spawning policy is preferable.
+- Farmers should predominantly stay in the Village to farm and/or be used for controlled spawning; Warriors should be in the Cave, but only a small fixed number should attack each turn.
+
+Improved plan
+1) Village side
+   - All Warriors go to the Cave (as required).
+   - Farmers stay in the Village and farm by default.
+   - Spawn Farmer: If there is at least 10 wheat and at least 2 Farmers available, spawn at most 1 Farmer per step by assigning 2 Farmers to the "spawn farmer" group (cost 10 wheat).
+   - Spawn Warrior: If there is at least 12 wheat and at least 2 Farmers not used for farming this turn, spawn at most 1 Warrior per step by assigning 2 Farmers (not used for spawn farmer) to the "spawn warrior" group (cost 12 wheat).
+   - This keeps a steady wheat-to-population pipeline without blowing up the fighting force.
+
+2) Cave side
+   - All Warriors in the Cave are present, but only a small rotating subset attacks the Dragon each step (e.g., up to 2).
+   - Remaining Warriors stay in the Cave to avoid large AoE exposure.
+   - Farmers in the Cave return to the Village (to avoid being drawn into AoE damage).
+
+Implementation notes
+- We rotate attackers implicitly by selecting the first N Cave Warriors to attack each step.
+- Spawns consume wheat and villagers according to the described rules; spawning is intentionally limited to avoid rapid overgrowth and to keep a focus on DPS via a small attacking cohort.
+
+Code
+"""
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        Divide villagers in the Village into:
+        - "farm": stay in Village and farm (default for Farmers)
+        - "cave": go to the Cave (for Warriors)
+        - "spawn farmer": 2 villagers + 10 wheat -> spawn 1 Farmer
+        - "spawn warrior": 2 villagers + 12 wheat -> spawn 1 Warrior
+
+        Strategy details:
+        - Always send Warriors to the Cave (except for spawn Warrior which consumes two Farmers)
+        - Spawn at most 1 Farmer per step when possible (2 Farmers assigned to "spawn farmer" group)
+        - Spawn at most 1 Warrior per step when possible (2 Farmers (excluding those used for spawn farmer) assigned to "spawn warrior")
+        """
+        # Indices by role
+        farmers_indices = [i for i, c in enumerate(components) if getattr(c, 'role', None) == "Farmer"]
+        warriors_indices = [i for i, c in enumerate(components) if getattr(c, 'role', None) == "Warrior"]
+
+        n_farmers = len(farmers_indices)
+
+        # Wheat available in the Farm
+        wheat = getattr(getattr(environment, 'farm', None), 'wheat', 0)
+
+        # Spawn Farmer: up to min(n_farmers // 2, wheat // 10)
+        max_spawn_farmers = min(n_farmers // 2, wheat // 10)
+        spawn_farmers_indices = set(farmers_indices[:2 * max_spawn_farmers])
+
+        wheat_after_farm_spawns = wheat - (10 * max_spawn_farmers)
+
+        # Remaining farmers available for spawning warriors
+        remaining_for_warriors = [idx for idx in farmers_indices if idx not in spawn_farmers_indices]
+
+        # Spawn Warrior: at most 1 per step if enough wheat and not depleting farming base
+        max_spawn_warriors = 0
+        if wheat_after_farm_spawns >= 12 and len(remaining_for_warriors) >= 2:
+            max_spawn_warriors = 1  # limit to 1 per step to avoid large swings
+
+        spawn_warrior_indices = set(remaining_for_warriors[:2 * max_spawn_warriors]) if max_spawn_warriors > 0 else set()
+
+        for idx, comp in enumerate(components):
+            role = getattr(comp, 'role', None)
+            if role == "Warrior":
+                if idx in spawn_warrior_indices:
+                    environment.assign_group(comp, "spawn warrior")
+                else:
+                    # All others go to cave
+                    environment.assign_group(comp, "cave")
+            else:  # Farmer
+                if idx in spawn_farmers_indices:
+                    environment.assign_group(comp, "spawn farmer")
+                else:
+                    # Farmers stay in the village and farm
+                    environment.assign_group(comp, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        """
+        Divide villagers in the Cave into:
+        - "attack": Attack the Dragon (rotate up to 2 per step)
+        - "cave": Stay in the Cave
+        - "village": Go to the Village (Farmers return to Village)
+
+        Strategy details:
+        - Limit attackers to a small rotating set to reduce AoE damage from the Dragon.
+        - Farmers always return to Village.
+        """
+        cave_warriors = [c for c in components if getattr(c, 'role', None) == "Warrior"]
+
+        # Rotate attackers: up to 2 per step
+        n_attack = min(2, len(cave_warriors))
+        attack_set = set(cave_warriors[:n_attack])
+
+        for comp in components:
+            role = getattr(comp, 'role', None)
+            if role == "Warrior":
+                if comp in attack_set:
+                    environment.assign_group(comp, "attack")
+                else:
+                    environment.assign_group(comp, "cave")
+            elif role == "Farmer":
+                # Farmers go back to Village
+                environment.assign_group(comp, "village")
+            else:
+                # Fallback: stay in Village
+                environment.assign_group(comp, "village")

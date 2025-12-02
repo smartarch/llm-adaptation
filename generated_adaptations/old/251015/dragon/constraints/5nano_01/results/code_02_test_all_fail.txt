@@ -1,0 +1,24 @@
+1
+...FF..F.sssssssssss                                                     [100%]
+================================== FAILURES ===================================
+_____________________ TestAdapt.test_no_assignment_errors _____________________
+There were 1683 assignment errors in total.
+___________________ TestAdapt.test_no_repeated_assignments ____________________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+_________________ TestAdapt.test_no_user_constraints_violated _________________
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+=================================== PASSES ====================================
+______________________ TestAdapt.test_no_invalid_groups _______________________
+_________________________ TestAdapt.test_all_assigned _________________________
+___________ TestAdapt.test_no_user_constraints_violated_at_the_end ____________
+=========================== short test summary info ===========================
+FAILED TestAdapt::test_no_assignment_errors - Failed: There were 1683 assignm...
+FAILED TestAdapt::test_no_repeated_assignments - Failed: In 'assign_in_villag...
+FAILED TestAdapt::test_no_user_constraints_violated - Failed: At least a few ...
+PASSED TestConfiguration::test_example_is_correct
+PASSED TestConfiguration::test_adaptation_exists
+PASSED TestConfiguration::test_adaptation_class_is_correct
+PASSED TestAdapt::test_no_invalid_groups
+PASSED TestAdapt::test_all_assigned
+PASSED TestAdapt::test_no_user_constraints_violated_at_the_end
+3 failed, 6 passed, 11 skipped in 3.61s

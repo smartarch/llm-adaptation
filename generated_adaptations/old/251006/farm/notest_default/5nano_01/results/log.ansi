@@ -1,0 +1,56 @@
+Loaded 2 messages from generated_adaptations\farm\notest_default\5nano_01.
+Querying LLM with prompt 01_01_user.
+LLM response saved to '01_02_llm.md'.
+Code block saved to 'generated_adaptations\farm\notest_default\5nano_01\code_01_02.py'.
+[33mTOKENS USED:
+Input: 1010, Output: 7696 (reasoning: 6912)
+Response time (seconds): 42.0
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_01_02 --variant=notest_default
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\notest_default\5nano_01\code_01_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_01_02", "log_dir.append": "/notest_default/5nano_01/code_01_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_01_02.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_01_02", "log_dir.append": "/notest_default/5nano_01/code_01_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_01_02.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_01_02", "log_dir.append": "/notest_default/5nano_01/code_01_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_01_02.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 123.0
+Querying LLM with prompt 02_01_simulation.
+LLM response saved to '02_02_llm.md'.
+Code block saved to 'generated_adaptations\farm\notest_default\5nano_01\code_02_02.py'.
+[33mTOKENS USED:
+Input: 1947, Output: 4971 (reasoning: 4032)
+Response time (seconds): 38.5
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_02_02 --variant=notest_default
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\notest_default\5nano_01\code_02_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_02_02", "log_dir.append": "/notest_default/5nano_01/code_02_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_02_02.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 84 lines
+    In 'assign_drones': Component assigned into multiple groups: Drone_2
+    In 'assign_drones': Component assigned into multiple groups: Drone_7
+    In 'assign_drones': Component assigned into multiple groups: Drone_1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_02_02", "log_dir.append": "/notest_default/5nano_01/code_02_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_02_02.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 76 lines
+    In 'assign_drones': Component assigned into multiple groups: Drone_7
+    In 'assign_drones': Component assigned into multiple groups: Drone_2
+    In 'assign_drones': Component assigned into multiple groups: Drone_3
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_02_02", "log_dir.append": "/notest_default/5nano_01/code_02_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_02_02.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 75 lines
+    In 'assign_drones': Component assigned into multiple groups: Drone_2
+    In 'assign_drones': Component assigned into multiple groups: Drone_1
+    In 'assign_drones': Component assigned into multiple groups: Drone_7
+Average damage: 60.7
+Tests failed 1 times.
+Querying LLM with prompt 03_01_simulation.
+LLM response saved to '03_02_llm.md'.
+Code block saved to 'generated_adaptations\farm\notest_default\5nano_01\code_03_02.py'.
+[33mTOKENS USED:
+Input: 3338, Output: 3422 (reasoning: 2560)
+Response time (seconds): 22.7
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_03_02 --variant=notest_default
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\notest_default\5nano_01\code_03_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_03_02", "log_dir.append": "/notest_default/5nano_01/code_03_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_03_02.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_03_02", "log_dir.append": "/notest_default/5nano_01/code_03_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_03_02.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "notest_default/5nano_01/code_03_02", "log_dir.append": "/notest_default/5nano_01/code_03_02", "adaptation_name": "generated_adaptations.farm.notest_default.5nano_01.code_03_02.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 60.7

@@ -1,0 +1,111 @@
+from typing import List
+import math
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        """
+        Assign drones into groups:
+        - "idle" for idle drones
+        - "protecting {field_id}" for drones protecting a specific field
+
+        Strategy:
+        1) Identify fields with threat_level > 0. If none, set all drones to idle.
+        2) Select the field with the highest threat level (top_field).
+        3) Compute how many drones are needed to fully protect it:
+           need = max(0, top_field.drones_for_full_protection - top_field.protecting_drones)
+        4) If need <= 0: keep drones protecting top_field (where possible) and set others to idle.
+        5) If need > 0: choose the closest 'need' drones to the field center and assign them to "protecting {top_field.id}".
+           All other drones will be set to "idle".
+        6) Use environment.assign_group(component, group_id) to apply assignments.
+
+        Note: Field critical attributes come from environment.fields and drones from components.
+        """
+        # Helper: distance between two points with x, y attributes
+        def dist(p, q):
+            dx = getattr(p, 'x', 0) - getattr(q, 'x', 0)
+            dy = getattr(p, 'y', 0) - getattr(q, 'y', 0)
+            return math.hypot(dx, dy)
+
+        # Obtain field list safely
+        fields = list(getattr(environment, 'fields', []))
+
+        # Build a list of fields with threat > 0
+        threatened_fields = [f for f in fields if getattr(f, 'threat_level', 0) > 0]
+
+        # If no threatened fields, idle all drones
+        if not threatened_fields:
+            for drone in components:
+                group_id = "idle"
+                if group_id not in group_ids:
+                    # Fallback: skip if "idle" not in valid groups
+                    continue
+                environment.assign_group(drone, group_id)
+            return
+
+        # Choose the field with the maximum threat level
+        top_field = max(threatened_fields, key=lambda f: getattr(f, 'threat_level', 0))
+
+        # Build the center of the field for distance calculation
+        left = getattr(top_field, 'left', 0)
+        right = getattr(top_field, 'right', 0)
+        top = getattr(top_field, 'top', 0)
+        bottom = getattr(top_field, 'bottom', 0)
+        center_x = (left + right) / 2.0
+        center_y = (top + bottom) / 2.0
+
+        # Drones currently protecting this field
+        current_protecting = getattr(top_field, 'protecting_drones', 0)
+        drones_for_full = getattr(top_field, 'drones_for_full_protection', 0)
+        need = max(0, drones_for_full - current_protecting)
+
+        # Build a map of drone -> assigned group
+        assignments = {}
+
+        # Ensure the group name for the top field
+        top_group = f"protecting {top_field.id}"
+        if top_group not in group_ids:
+            # If the group name isn't in allowed list, revert to a safe default
+            top_group = "idle"
+
+        if need <= 0:
+            # Field already fully protected: keep drones currently protecting it, others idle
+            for drone in components:
+                if getattr(drone, 'state', '') == "protecting" and getattr(drone, 'target_id', None) == top_field.id:
+                    # Keep protecting this field
+                    assignments[drone] = top_group
+                else:
+                    # Put others to idle
+                    assignments[drone] = "idle" if "idle" in group_ids else top_group
+        else:
+            # Need to allocate 'need' more drones by choosing the closest drones to the field center
+            # Compute distances to the top_field center
+            drone_distances = []
+            for drone in components:
+                d = dist(drone.location, type('P', (), {'x': center_x, 'y': center_y})())
+                drone_distances.append((d, drone))
+
+            # Sort by distance
+            drone_distances.sort(key=lambda t: t[0])
+
+            allocated = set()
+            # Assign the closest 'need' drones to the top field
+            for i in range(min(need, len(drone_distances))):
+                _, drone = drone_distances[i]
+                assignments[drone] = top_group
+                allocated.add(drone)
+
+            # All remaining drones idle (or could be assigned elsewhere, but strategy limits to top field)
+            for _, drone in drone_distances[len(allocated):]:
+                assignments[drone] = "idle" if "idle" in group_ids else top_group
+
+        # Apply the assignments
+        for drone in components:
+            group_id = assignments.get(drone, "idle")
+            # If the group_id is not in the valid group_ids, skip or clamp to idle if possible
+            if group_id not in group_ids:
+                group_id = "idle" if "idle" in group_ids else top_group
+            environment.assign_group(drone, group_id)

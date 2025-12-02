@@ -1,0 +1,86 @@
+import math
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Helper to assign a component to a group if valid
+        def assign(component, group):
+            # Only assign if group is available in group_ids to avoid invalid assignments
+            if group in group_ids:
+                environment.assign_group(component, group)
+            else:
+                # fallback to idle if requested group isn't available
+                if "idle" in group_ids:
+                    environment.assign_group(component, "idle")
+
+        # Collect fields that need protection (threat_level > 0)
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+
+        # If no threatened fields, assign all drones to idle
+        if not fields_with_threat:
+            for c in components:
+                assign(c, "idle")
+            return
+
+        # Choose the highest-threat field (tie-breaker by id for determinism)
+        target_field = max(fields_with_threat, key=lambda f: (f.threat_level, getattr(f, "id", "")))
+
+        # Compute field center for distance calculations
+        fx = (target_field.left + target_field.right) / 2.0
+        fy = (target_field.top + target_field.bottom) / 2.0
+
+        # Required drones for full protection
+        required_total = int(getattr(target_field, "drones_for_full_protection", 0))
+
+        # Partition drones:
+        protecting_current = []  # drones currently protecting target_field
+        moving_current = []      # drones currently moving to target_field
+        others = []              # (component, distance) for all other drones
+
+        for c in components:
+            state = getattr(c, "state", None)
+            target_id = getattr(c, "target_id", None)
+            if state == "protecting" and target_id == target_field.id:
+                protecting_current.append(c)
+            elif state == "moving_to_field" and target_id == target_field.id:
+                moving_current.append(c)
+            else:
+                # compute distance to target field center
+                loc = getattr(c, "location", None)
+                if loc is not None:
+                    dx = getattr(loc, "x", 0) - fx
+                    dy = getattr(loc, "y", 0) - fy
+                    dist = math.hypot(dx, dy)
+                else:
+                    dist = float("inf")
+                others.append((c, dist))
+
+        # Count how many are already assigned (protecting + arriving)
+        already_assigned = len(protecting_current) + len(moving_current)
+
+        # Determine how many additional drones we need to assign to the target
+        needed = max(0, required_total - already_assigned)
+
+        # Sort other drones by distance (closest first)
+        others.sort(key=lambda item: item[1])
+
+        # Select the closest 'needed' drones from others
+        to_assign_to_target = [comp for comp, _ in others[:needed]]
+        # Remaining others become idle
+        remaining_others = [comp for comp, _ in others[needed:]]
+
+        # Assign protecting_current and moving_current explicitly to the protecting group
+        protecting_group = f"protecting {target_field.id}"
+        for c in protecting_current + moving_current:
+            assign(c, protecting_group)
+
+        # Assign newly selected drones to the protecting group
+        for c in to_assign_to_target:
+            assign(c, protecting_group)
+
+        # Assign all remaining drones to idle
+        for c in remaining_others:
+            assign(c, "idle")

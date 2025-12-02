@@ -1,0 +1,138 @@
+# Strategy and reasoning (described inline as comments)
+#
+# Goal recap:
+# - Assign every drone to exactly one group each step.
+# - Groups: "idle" and "protecting {field.id}" for fields with threat_level > 0.
+# - Always fully protect the field with the highest threat level using the closest drones.
+#   Use as many drones as required for full protection and allow reassigning drones from other fields if needed.
+# - If a field is already fully protected, keep the drones there to continue protection.
+# - Remaining drones should be utilized where possible to fully protect other threatened fields (to avoid too many idle drones).
+#
+# Adaptation strategy implemented:
+# 1. Collect all fields with threat_level > 0 and sort them by descending threat_level (tie-break by id for determinism).
+# 2. Process fields in that order. For each field:
+#    - Compute how many drones are already committed to that field among drones not yet assigned in this decision
+#      (a drone is "committed" if state is "protecting" or it's "moving_to_field" to that field).
+#    - If committed >= drones_for_full_protection, keep those committed drones assigned to that field.
+#    - Otherwise, choose the closest available (not-yet-assigned) drones to this field to reach the required count.
+#      Note: because we process the highest-threat field first, drones currently committed to lower-priority fields
+#      are still available to be chosen for the highest-priority field (which enforces the priority requirement).
+#    - Mark chosen drones as assigned to "protecting {field.id}".
+# 3. After all threatened fields are processed, any drones still unassigned are assigned to the "idle" group.
+#
+# Implementation notes:
+# - Distances are measured to the field center ((left+right)/2, (top+bottom)/2).
+# - We take care to assign each component exactly once by collecting assignments first and then invoking
+#   environment.assign_group for each component exactly once.
+# - Group names are validated against group_ids; if a protecting-group for a given field isn't present, that field is skipped.
+# - The approach ensures the highest-threat field gets priority and that remaining drones are used to protect other fields,
+#   reducing idle drones when possible.
+
+from generated_adaptations.base_classes.farm import FarmAdaptation
+import math
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        idle_group = "idle"
+
+        # Build list of fields with positive threat
+        all_fields = getattr(environment, "fields", []) or []
+        fields_with_threat = [f for f in all_fields if getattr(f, "threat_level", 0) > 0]
+
+        # If idle group missing, still attempt to assign but prefer not to fail (assigning to a missing group may be handled upstream).
+        # However, tests expect "idle" to exist; we proceed assuming it does.
+        # If no threatened fields, assign all to idle.
+        if not fields_with_threat:
+            for comp in components:
+                environment.assign_group(comp, idle_group)
+            return
+
+        # Sort fields by descending threat_level, tie-break by id for determinism
+        def field_sort_key(f):
+            # Use negative threat for descending; str id tie-break
+            return (-getattr(f, "threat_level", 0.0), str(getattr(f, "id", "")))
+        fields_in_order = sorted(fields_with_threat, key=field_sort_key)
+
+        # Helper: compute center of a field
+        def field_center(f):
+            left = getattr(f, "left", 0.0)
+            right = getattr(f, "right", 0.0)
+            top = getattr(f, "top", 0.0)
+            bottom = getattr(f, "bottom", 0.0)
+            return ((left + right) / 2.0, (top + bottom) / 2.0)
+
+        # Helper: distance from component to a field center
+        def distance(comp, center):
+            loc = getattr(comp, "location", None)
+            if loc is None:
+                return float("inf")
+            x = getattr(loc, "x", 0.0)
+            y = getattr(loc, "y", 0.0)
+            return math.hypot(x - center[0], y - center[1])
+
+        # We'll determine assignments in a dict comp_id -> group_name, then call environment.assign_group once per component.
+        assignments = {}
+        comp_by_id = {id(c): c for c in components}
+        unassigned_ids = set(comp_by_id.keys())
+
+        # Process fields in priority order
+        for field in fields_in_order:
+            protect_group_name = f"protecting {getattr(field, 'id')}"
+            # Skip if protecting group doesn't exist in group_ids (defensive)
+            if protect_group_name not in group_ids:
+                continue
+
+            needed = int(getattr(field, "drones_for_full_protection", 0))
+            if needed <= 0:
+                continue
+
+            center = field_center(field)
+
+            # Find drones not yet assigned in our current plan
+            available_ids = set(unassigned_ids)
+
+            # Among available, find those already committed to this field (protecting or moving_to_field with matching target_id)
+            committed_ids = set()
+            for cid in list(available_ids):
+                comp = comp_by_id[cid]
+                state = getattr(comp, "state", None)
+                target_id = getattr(comp, "target_id", None)
+                if (state == "protecting" and target_id == getattr(field, "id")) or \
+                   (state == "moving_to_field" and target_id == getattr(field, "id")):
+                    committed_ids.add(cid)
+
+            committed_list = list(committed_ids)
+            committed_count = len(committed_list)
+
+            chosen_ids = list(committed_list)
+
+            if committed_count < needed:
+                need_more = needed - committed_count
+                # Build list of other available comps (exclude committed), sort by distance to field, choose closest
+                other_available_ids = [cid for cid in available_ids if cid not in committed_ids]
+                # Sort by distance (tie-break by id for determinism)
+                other_available_ids.sort(key=lambda cid: (distance(comp_by_id[cid], center), cid))
+                chosen_more = other_available_ids[:need_more]
+                chosen_ids.extend(chosen_more)
+
+            # Assign chosen to protecting group (mark them assigned)
+            for cid in chosen_ids:
+                assignments[cid] = protect_group_name
+                if cid in unassigned_ids:
+                    unassigned_ids.remove(cid)
+
+            # Proceed to next field
+
+        # Any remaining unassigned drones -> idle
+        for cid in list(unassigned_ids):
+            assignments[cid] = idle_group
+            unassigned_ids.remove(cid)
+
+        # Finally, perform the actual assignments (exactly once per component)
+        for cid, group_name in assignments.items():
+            comp = comp_by_id.get(cid)
+            if comp is not None:
+                environment.assign_group(comp, group_name)

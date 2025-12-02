@@ -1,0 +1,46 @@
+import abc
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        Divide villagers in the Village (components) into:
+        - "farm": stay in Village and farm
+        - "cave": go to Cave
+        - "spawn farmer": for every two villagers assigned to this group and 10 wheat, a new Farmer is spawned
+        - "spawn warrior": for every two villagers assigned to this group and 12 wheat, a new Warrior is spawned
+        """
+        for comp in components:
+            role = getattr(comp, "role", None)
+            if role == "Warrior":
+                environment.assign_group(comp, "cave")
+            else:
+                environment.assign_group(comp, "farm")
+
+        # Optional simple spawning heuristic (kept conservative)
+        # If there are at least 4 farmers in village and enough wheat, designate two to spawn
+        farmers = [c for c in components if getattr(c, "role", None) == "Farmer"]
+        if len(farmers) >= 4:
+            wheat = getattr(getattr(environment, "farm", None), "wheat", 0)
+            if wheat >= 20:
+                # Move two farmers to spawn groups (if available)
+                to_spawn = farmers[:2]
+                for c in to_spawn:
+                    environment.assign_group(c, "spawn farmer")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        """
+        Divide villagers in the Cave (components) into:
+        - "attack": Attack the Dragon
+        - "cave": Stay in the Cave
+        - "village": Go to the Village
+        """
+        for comp in components:
+            role = getattr(comp, "role", None)
+            if role == "Warrior":
+                environment.assign_group(comp, "attack")
+            else:
+                environment.assign_group(comp, "village")

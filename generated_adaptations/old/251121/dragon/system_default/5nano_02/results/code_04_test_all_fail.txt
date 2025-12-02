@@ -1,0 +1,45 @@
+1
+...FFFF............FFFF....                                              [100%]
+================================== FAILURES ===================================
+_________________ TestAdapt.test_no_assignment_errors[seed=1] _________________
+There were 2 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=2] _________________
+There were 2 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=3] _________________
+There were 2 assignment errors in total.
+__________ TestAdapt.test_no_assignment_errors[no_initial_warriors] ___________
+There were 4 assignment errors in total.
+__________ TestAdapt.test_no_functional_constraints_violated[seed=1] __________
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+__________ TestAdapt.test_no_functional_constraints_violated[seed=2] __________
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+__________ TestAdapt.test_no_functional_constraints_violated[seed=3] __________
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+___ TestAdapt.test_no_functional_constraints_violated[no_initial_warriors] ____
+The dragon should be attacked at least once in the first 15 steps of the game.
+
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+
+The dragon should be attacked.
+================================ Test Results =================================
+TestAdapt::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_assignment_errors:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+8 failed, 19 passed in 2.08s

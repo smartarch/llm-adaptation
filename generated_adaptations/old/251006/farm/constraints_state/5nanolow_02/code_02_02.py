@@ -1,0 +1,115 @@
+import abc
+import math
+
+try:
+    from generated_adaptations.base_classes.farm import FarmAdaptation
+except Exception:
+    class FarmAdaptation(abc.ABC):
+        def __init__(self, **kwargs):
+            super().__init__()
+
+        @abc.abstractmethod
+        def assign_drones(self, components, environment, group_ids, step: int):
+            pass
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def _field_center(self, field):
+        return ((field.left + field.right) / 2.0, (field.top + field.bottom) / 2.0)
+
+    def _dist(self, p, q):
+        dx = p[0] - q[0]
+        dy = p[1] - q[1]
+        return math.hypot(dx, dy)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # 1) Identify fields with threat > 0 and sort by threat (desc)
+        fields = [f for f in environment.fields if f.threat_level > 0]
+        if not fields:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        fields.sort(key=lambda f: f.threat_level, reverse=True)
+        primary = fields[0]
+        primary_group = f"protecting {primary.id}"
+        if primary_group not in group_ids:
+            primary_group = "idle"
+
+        # Precompute field centers
+        centers = {f.id: self._field_center(f) for f in fields}
+
+        # Track planned assignments to ensure exactly one group per drone
+        planned = {}
+
+        def plan(c, g):
+            if id(c) in planned:
+                return
+            planned[id(c)] = g
+
+        # 2) Gather drones currently protecting or en route to primary
+        currently = [d for d in components if (d.state == "protecting" and d.target_id == primary.id) or
+                     (d.state == "moving_to_field" and d.target_id == primary.id)]
+        current_count = len(currently)
+
+        needed = getattr(primary, "drones_for_full_protection", 0)
+
+        # 2a) Plan currently assigned drones to the primary group
+        for d in currently:
+            plan(d, primary_group)
+
+        # 2b) If not enough, pick closest from remaining drones
+        if current_count < needed:
+            center_top = centers[primary.id]
+            candidates = []
+            for d in components:
+                if id(d) in planned:
+                    continue
+                pos = d.location
+                candidates.append((self._dist((pos.x, pos.y), center_top), d))
+            candidates.sort(key=lambda t: t[0])
+            to_take = min(needed - current_count, len(candidates))
+            for i in range(to_take):
+                plan(candidates[i][1], primary_group)
+
+        # 3) Consider other fields (secondary protection) if it matches threat and has a defined group
+        for f in fields[1:]:
+            gname = f"protecting {f.id}"
+            if gname not in group_ids:
+                # If no group exists for this field, skip planning it
+                continue
+            current = [d for d in components if d.state == "protecting" and d.target_id == f.id]
+            curr_count = len(current)
+            target_need = getattr(f, "drones_for_full_protection", 0)
+
+            # Plan current ones to their group
+            for d in current:
+                plan(d, gname)
+
+            if curr_count >= target_need:
+                continue
+
+            center_f = centers.get(f.id, self._field_center(f))
+            # Build available drones (not yet planned)
+            avail = []
+            for d in components:
+                if id(d) in planned:
+                    continue
+                avail.append((self._dist((d.location.x, d.location.y), center_f), d))
+            avail.sort(key=lambda t: t[0])
+            need_more = min(target_need - curr_count, len(avail))
+            for i in range(need_more):
+                plan(avail[i][1], gname)
+
+        # 4) Any drone not planned -> idle
+        for d in components:
+            if id(d) not in planned:
+                plan(d, "idle")
+
+        # 5) Execute assignments
+        for d in components:
+            env_group = planned.get(id(d), "idle")
+            environment.assign_group(d, env_group)

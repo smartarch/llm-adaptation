@@ -1,0 +1,116 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def assign_drones(self, components, environment, group_ids, step: int):
+        """
+        Distribute drones among fields to maximize protection of the most-threatened fields.
+
+        Strategy:
+        - Consider all fields with threat_level > 0, sorted by threat_level descending.
+        - For each field in that order, try to assign drones up to field.drones_for_full_protection.
+        - Reuse drones already heading to or protecting the field to minimize movement.
+        - Any remaining drones go to idle.
+        - Create/assign to groups named "protecting {field_id}" for each field we protect.
+        """
+        # Collect fields with positive threat
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+
+        # If no threat, idle all drones
+        if not fields_with_threat:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Sort fields by threat level (highest first)
+        fields_sorted = sorted(fields_with_threat, key=lambda fld: getattr(fld, "threat_level", 0), reverse=True)
+
+        # Build a quick look-up for field properties
+        field_by_id = {getattr(f, "id"): f for f in environment.fields}
+
+        # First, clear all groups to idle by default
+        for c in components:
+            environment.assign_group(c, "idle")
+
+        # We will greedily allocate drones to fields in order, reusing drones where possible.
+        # Track how many drones we have assigned to each field in this step.
+        assigned_to_field = {getattr(f, "id"): 0 for f in fields_sorted}
+
+        # Track the group name for each field
+        def group_name(field_id):
+            return f"protecting {field_id}"
+
+        # Helper: how many drones are currently assigned to protect a field (based on last assignment)
+        # We don't have persistent memory of previous rounds beyond grouping; however, we can infer
+        # from the current component's assigned group after our previous call in this step.
+        current_protecting = {f.id: 0 for f in fields_sorted}
+        for c in components:
+            gr = getattr(c, "group", None)  # some environments expose the assigned group via 'group'
+            # If the environment does not expose current group, we rely on state/target as best effort:
+            # We count a drone as protecting a field if its state is "protecting" and target_id matches.
+            if getattr(c, "state", None) == "protecting":
+                tid = getattr(c, "target_id", None)
+                if tid in current_protecting:
+                    current_protecting[tid] += 1
+            elif getattr(c, "state", None) == "moving_to_field":
+                tid = getattr(c, "target_id", None)
+                if tid in current_protecting:
+                    current_protecting[tid] += 1
+
+        # Available drones count
+        total_drones = len(components)
+
+        # Now allocate incrementally
+        remaining = total_drones
+
+        # For each field in order, attempt to fill up to drones_for_full_protection
+        for field in fields_sorted:
+            fid = getattr(field, "id", None)
+            if fid is None:
+                continue
+            needed = getattr(field, "drones_for_full_protection", 1)
+            if not isinstance(needed, int) or needed < 0:
+                needed = 1
+
+            # How many drones already effectively protecting this field (reused from current state)
+            already = current_protecting.get(fid, 0)
+
+            to_assign = max(0, min(needed - already, remaining))
+            if to_assign <= 0:
+                continue
+
+            # Assign drones to this field, reusing those already moving toward or protecting it first
+            # 1) First pass: drones currently moving_to_field with target_id == fid
+            for c in components:
+                if to_assign <= 0:
+                    break
+                if getattr(c, "state", None) == "moving_to_field" and getattr(c, "target_id", None) == fid:
+                    environment.assign_group(c, group_name(fid))
+                    to_assign -= 1
+                    remaining -= 1
+
+            # 2) Second pass: drones currently protecting this field
+            for c in components:
+                if to_assign <= 0:
+                    break
+                if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == fid:
+                    environment.assign_group(c, group_name(fid))
+                    to_assign -= 1
+                    remaining -= 1
+
+            # 3) Third pass: any idle drones
+            for c in components:
+                if to_assign <= 0:
+                    break
+                if getattr(c, "state", None) == "idle" or getattr(c, "state", None) is None:
+                    environment.assign_group(c, group_name(fid))
+                    to_assign -= 1
+                    remaining -= 1
+
+        # Any drones still unassigned (should be none due to defaulting to idle above)
+        # They can stay idle (already assigned to "idle" in initial step)
+
+        # Note: We created groups for only fields we allocated to. If a top field has zero drones_to_protect,
+        # it remains without a protecting group and drones stay idle.

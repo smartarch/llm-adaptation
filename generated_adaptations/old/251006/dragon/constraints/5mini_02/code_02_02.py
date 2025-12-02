@@ -1,0 +1,146 @@
+# Strategy and reasoning (comments):
+#
+# Goal: keep fields (farms) less disrupted — i.e., maximize the number of farmers actually farming
+# throughout the game — while still ensuring enough warriors are produced to kill the Dragon quickly.
+#
+# Observations from previous policy:
+# - It greedily used as many farmer pairs as possible to spawn warriors, which reduced the average
+#   number of farmers farming (low average farming villagers).
+# - We must still send all Warriors to the Cave and make them attack; Farmers should stay in Village
+#   and farm or be used sparingly for spawning.
+#
+# New adaptation strategy (conservative farmer-spawn policy):
+# 1) Always send any Warriors currently in the Village to the Cave (group "cave").
+#    In the Cave, all warriors will be assigned to "attack".
+# 2) For Farmers in the Village:
+#    - Maintain a high fraction of farmers farming. Concretely, keep at least 60% of the farmers
+#      farming (rounded up), and do not allocate more than the remaining 40% to spawning.
+#    - Limit warrior spawns to at most 1 warrior spawn per step. This prevents large numbers of
+#      farmers being pulled off the fields in a single step.
+#    - Prefer spawning Warriors over Farmers, but only when wheat and spare farmers allow it.
+#    - Spawn an extra Farmer pair only rarely (every 5 steps) and only if wheat is comfortably
+#      available after possible warrior spawn. This helps population growth without repeatedly
+#      draining the farm.
+# 3) In the Cave:
+#    - All Warriors -> "attack".
+#    - Any Farmers in the Cave are immediately returned to the Village ("village") to resume farming.
+#
+# Small amounts of internal state are kept to avoid spawning too frequently:
+# - last_warrior_spawn_step and last_farmer_spawn_step track the last step when that spawn type
+#   was assigned, and we throttle spawns to at most once per step for warriors and once per 5 steps
+#   for farmer spawns.
+#
+# The effect: fewer farmers are taken off the fields in bulk, raising the average number of farming
+# villagers and thus stabilizing wheat production, while still producing warriors steadily to kill
+# the Dragon.
+
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+import math
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Track last spawn steps to throttle spawns
+        self.last_warrior_spawn_step = -999
+        self.last_farmer_spawn_step = -999
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        components: list of villagers currently in the Village
+        groups available: "farm", "cave", "spawn farmer", "spawn warrior"
+        Policy:
+          - Send Warriors to Cave.
+          - Keep at least 60% of Farmers farming (rounded up).
+          - Allow at most 1 warrior spawn per step, using 2 farmers and 12 wheat each.
+          - Allow farmer spawn (2 farmers -> 1 farmer) only every 5 steps and only if wheat >= 10
+            after reserving wheat for the warrior spawn decision.
+        """
+        # Roles partition
+        farmers = [c for c in components if getattr(c, "role", "").lower() == "farmer"]
+        warriors = [c for c in components if getattr(c, "role", "").lower() == "warrior"]
+
+        # Send all warriors to cave
+        for w in warriors:
+            environment.assign_group(w, "cave")
+
+        num_farmers = len(farmers)
+        wheat = getattr(environment.farm, "wheat", 0)
+
+        if num_farmers == 0:
+            # Nothing to do with farmers
+            return
+
+        # Determine how many farmers to reserve for farming (keep at least 60%)
+        reserve_fraction = 0.60
+        min_farming = math.ceil(num_farmers * reserve_fraction)
+        # Ensure at least 1 farmer farming
+        min_farming = max(1, min_farming)
+
+        # Farmers available for spawning
+        spawnable_farmers = max(0, num_farmers - min_farming)
+
+        assigned = set()
+
+        # Decide on warrior spawn: max 1 warrior spawn per step, requires 2 farmers and 12 wheat
+        warrior_spawns_possible_by_wheat = wheat // 12
+        warrior_spawns_possible_by_pairs = spawnable_farmers // 2
+        warrior_spawn_allowed = (step != self.last_warrior_spawn_step)  # at most once per step
+        warrior_spawn_count = 0
+        if warrior_spawn_allowed and warrior_spawns_possible_by_wheat >= 1 and warrior_spawns_possible_by_pairs >= 1:
+            # spawn exactly 1 warrior (conservative)
+            warrior_spawn_count = 1
+            self.last_warrior_spawn_step = step
+
+        # Assign farmers to spawn warrior (2 farmers)
+        if warrior_spawn_count == 1:
+            to_assign = 2
+            for f in farmers:
+                if f in assigned:
+                    continue
+                environment.assign_group(f, "spawn warrior")
+                assigned.add(f)
+                to_assign -= 1
+                if to_assign == 0:
+                    break
+            # update spawnable_farmers
+            spawnable_farmers = max(0, spawnable_farmers - 2)
+            wheat -= 12  # assume cost will be accounted by environment; we reflect for local decisions
+
+        # Decide on farmer spawn: only every 5 steps to avoid repeated drains
+        farmer_spawn_allowed = ((step - self.last_farmer_spawn_step) >= 5)
+        if farmer_spawn_allowed and spawnable_farmers >= 2 and wheat >= 10:
+            # spawn exactly 1 farmer (2 villagers assigned)
+            to_assign = 2
+            for f in farmers:
+                if f in assigned:
+                    continue
+                environment.assign_group(f, "spawn farmer")
+                assigned.add(f)
+                to_assign -= 1
+                if to_assign == 0:
+                    break
+            self.last_farmer_spawn_step = step
+            spawnable_farmers = max(0, spawnable_farmers - 2)
+            wheat -= 10
+
+        # Any remaining farmers not assigned to spawn should farm
+        for f in farmers:
+            if f not in assigned:
+                environment.assign_group(f, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        """
+        components: list of villagers currently in the Cave
+        groups available: "attack", "cave", "village"
+        Policy:
+          - All Warriors -> "attack".
+          - Any Farmers in Cave -> "village" (send back to farm).
+        """
+        for c in components:
+            role = getattr(c, "role", "").lower()
+            if role == "warrior":
+                environment.assign_group(c, "attack")
+            else:
+                # Farmers should not stay in cave; return them to village to continue farming/spawning
+                environment.assign_group(c, "village")

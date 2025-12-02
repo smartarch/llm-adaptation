@@ -1,0 +1,24 @@
+1
+...FF..F.sssssssssss                                                     [100%]
+================================== FAILURES ===================================
+_____________________ TestAdapt.test_no_assignment_errors _____________________
+There were 2382 assignment errors in total.
+___________________ TestAdapt.test_no_repeated_assignments ____________________
+In 'assign_drones', 13 components were assigned more than once. Each component must be assigned exactly once.
+_________________ TestAdapt.test_no_user_constraints_violated _________________
+The most threatened field should be fully protected (Field_1, threat level 0.12, 4 drones for full protection, 3 assigned).
+=================================== PASSES ====================================
+______________________ TestAdapt.test_no_invalid_groups _______________________
+_________________________ TestAdapt.test_all_assigned _________________________
+___________ TestAdapt.test_no_user_constraints_violated_at_the_end ____________
+=========================== short test summary info ===========================
+FAILED TestAdapt::test_no_assignment_errors - Failed: There were 2382 assignm...
+FAILED TestAdapt::test_no_repeated_assignments - Failed: In 'assign_drones', ...
+FAILED TestAdapt::test_no_user_constraints_violated - Failed: The most threat...
+PASSED TestConfiguration::test_example_is_correct
+PASSED TestConfiguration::test_adaptation_exists
+PASSED TestConfiguration::test_adaptation_class_is_correct
+PASSED TestAdapt::test_no_invalid_groups
+PASSED TestAdapt::test_all_assigned
+PASSED TestAdapt::test_no_user_constraints_violated_at_the_end
+3 failed, 6 passed, 11 skipped in 9.38s

@@ -1,0 +1,96 @@
+import math
+
+from generated_adaptations.base_classes.farm import FarmAdaptation as _BaseFarmAdaptation
+
+
+class SmartFarmAdaptation(_BaseFarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def _field_center(self, field):
+        cx = (field.left + field.right) / 2.0
+        cy = (field.top + field.bottom) / 2.0
+        return cx, cy
+
+    def _distance(self, a, b):
+        dx = a.x - b[0]
+        dy = a.y - b[1]
+        return math.hypot(dx, dy)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Gather fields with threat
+        fields = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+
+        if not fields:
+            # No threat: idle all drones
+            for d in components:
+                environment.assign_group(d, "idle")
+            return
+
+        # Determine current protection counts for each field based on observed drones
+        field_protection = {}
+        for f in fields:
+            count = 0
+            for d in components:
+                if d.state == "protecting" and getattr(d, "target_id", None) == f.id:
+                    count += 1
+                elif d.state == "moving_to_field" and getattr(d, "target_id", None) == f.id:
+                    count += 1
+            field_protection[f.id] = count
+
+        # Choose the top-threat field that is not yet fully protected
+        target_field = None
+        for f in sorted(fields, key=lambda x: x.threat_level, reverse=True):
+            max_needed = getattr(f, "drones_for_full_protection", 1)
+            current = field_protection.get(f.id, 0)
+            if current < max_needed:
+                target_field = f
+                break
+
+        # If all fields with threat are fully protected, idle everyone
+        if target_field is None:
+            for d in components:
+                environment.assign_group(d, "idle")
+            return
+
+        # Compute center for the target field
+        center_x, center_y = self._field_center(target_field)
+
+        # Determine number currently protecting target_field (approx)
+        current_protecting = field_protection.get(target_field.id, 0)
+
+        # Sort drones by proximity to target field center to pick closest non-protecting drones
+        drones_sorted = []
+        for d in components:
+            dist = 0.0
+            if d.location is not None:
+                dist = self._distance(d.location, (center_x, center_y))
+            else:
+                dist = float("inf")
+            drones_sorted.append((dist, d))
+
+        drones_sorted.sort(key=lambda t: t[0])
+
+        # Number needed to reach full protection
+        needed = max(0, int(getattr(target_field, "drones_for_full_protection", 1)) - int(current_protecting))
+
+        allocated = 0
+        # First, collect drones that are not already protecting this field
+        for _, d in drones_sorted:
+            if allocated >= needed:
+                break
+            if getattr(d, "target_id", None) == target_field.id and d.state in ("protecting", "moving_to_field"):
+                # Already heading/Protecting this field
+                continue
+            # Assign this drone to protect the target field
+            environment.assign_group(d, f"protecting {target_field.id}")
+            allocated += 1
+
+        # After allocation, ensure all other drones are idle (or keep as is if already protecting another field)
+        for _, d in drones_sorted:
+            # If drone is now protecting the target field, it's fine
+            if getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == target_field.id:
+                continue
+            # If this drone is not yet assigned to any protecting group, idle it
+            if not (d.state == "protecting" and getattr(d, "target_id", None) == target_field.id):
+                environment.assign_group(d, "idle")

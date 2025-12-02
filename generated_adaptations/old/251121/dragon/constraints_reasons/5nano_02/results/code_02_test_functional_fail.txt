@@ -1,0 +1,29 @@
+1
+...ssssssssssssssssFFFF....                                              [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+The Dragon should be attacked at least once in the first 15 steps of the game.
+
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+
+The Dragon should be attacked.
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+4 failed, 7 passed, 16 skipped in 0.74s

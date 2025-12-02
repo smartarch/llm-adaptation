@@ -1,0 +1,83 @@
+Loaded 2 messages from generated_adaptations\dragon\constraints\5nanolow_02.
+Querying LLM with prompt 01_01_user.
+LLM response saved to '01_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\constraints\5nanolow_02\code_01_02.py'.
+[33mTOKENS USED:
+Input: 1066, Output: 2682 (reasoning: 1408)
+Response time (seconds): 20.0
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_01_02 --variant=constraints
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\constraints\5nanolow_02\code_01_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_02", "log_dir.append": "/constraints/5nanolow_02/code_01_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_02.SmartAdaptation"} -s 1 -e 1
+    StdErr: 1 lines
+    At least a few new warriors should be spawned to increase the chance of killing the dragon.
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_02", "log_dir.append": "/constraints/5nanolow_02/code_01_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_02.SmartAdaptation"} -s 2 -e 2
+    StdErr: 1 lines
+    At least a few new warriors should be spawned to increase the chance of killing the dragon.
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_02", "log_dir.append": "/constraints/5nanolow_02/code_01_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_02.SmartAdaptation"} -s 3 -e 3
+    StdErr: 1 lines
+    At least a few new warriors should be spawned to increase the chance of killing the dragon.
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 01_03_test.
+LLM response saved to '01_04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\constraints\5nanolow_02\code_01_04.py'.
+[33mTOKENS USED:
+Input: 2631, Output: 1637 (reasoning: 576)
+Response time (seconds): 11.5
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_01_04 --variant=constraints
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\constraints\5nanolow_02\code_01_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_04", "log_dir.append": "/constraints/5nanolow_02/code_01_04", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_04.SmartAdaptation"} -s 1 -e 1
+    StdErr: 1 lines
+    At least a few new warriors should be spawned to increase the chance of killing the dragon.
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_04", "log_dir.append": "/constraints/5nanolow_02/code_01_04", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_04.SmartAdaptation"} -s 2 -e 2
+    StdErr: 1 lines
+    At least a few new warriors should be spawned to increase the chance of killing the dragon.
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_04", "log_dir.append": "/constraints/5nanolow_02/code_01_04", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_04.SmartAdaptation"} -s 3 -e 3
+    StdErr: 1 lines
+    At least a few new warriors should be spawned to increase the chance of killing the dragon.
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 01_05_test.
+LLM response saved to '01_06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\constraints\5nanolow_02\code_01_06.py'.
+[33mTOKENS USED:
+Input: 3983, Output: 1619 (reasoning: 768)
+Response time (seconds): 11.5
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_01_06 --variant=constraints
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\constraints\5nanolow_02\code_01_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_06", "log_dir.append": "/constraints/5nanolow_02/code_01_06", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_06", "log_dir.append": "/constraints/5nanolow_02/code_01_06", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_01_06", "log_dir.append": "/constraints/5nanolow_02/code_01_06", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_01_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 12.0
+Querying LLM with prompt 02_01_simulation.
+LLM response saved to '02_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\constraints\5nanolow_02\code_02_02.py'.
+[33mTOKENS USED:
+Input: 5155, Output: 1611 (reasoning: 576)
+Response time (seconds): 10.8
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_02_02 --variant=constraints
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\constraints\5nanolow_02\code_02_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_02_02", "log_dir.append": "/constraints/5nanolow_02/code_02_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_02_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_02_02", "log_dir.append": "/constraints/5nanolow_02/code_02_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_02_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_02_02", "log_dir.append": "/constraints/5nanolow_02/code_02_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_02_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 12.0
+Querying LLM with prompt 03_01_simulation.
+LLM response saved to '03_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\constraints\5nanolow_02\code_03_02.py'.
+[33mTOKENS USED:
+Input: 6511, Output: 1140 (reasoning: 128)
+Response time (seconds): 8.7
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_03_02 --variant=constraints
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\constraints\5nanolow_02\code_03_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_03_02", "log_dir.append": "/constraints/5nanolow_02/code_03_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_03_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_03_02", "log_dir.append": "/constraints/5nanolow_02/code_03_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_03_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml DSL/dragon_constraints.yaml --extra_config={"name": "constraints/5nanolow_02/code_03_02", "log_dir.append": "/constraints/5nanolow_02/code_03_02", "adaptation_name": "generated_adaptations.dragon.constraints.5nanolow_02.code_03_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 12.0

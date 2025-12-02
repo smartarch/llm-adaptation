@@ -1,0 +1,194 @@
+Loaded 2 messages from generated_adaptations\farm\result_default\5nano_01.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1024, Output: 6849 (reasoning: 5760)
+Response time (seconds): 52.7
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_02 --variant=result_default --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_02 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_02 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_02", "log_dir.append": "/result_default/5nano_01/code_02", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_02.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 598 lines
+    In 'assign_drones': Missing assignment for: Drone_2
+    In 'assign_drones': Missing assignment for: Drone_5
+    In 'assign_drones': Missing assignment for: Drone_7
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_02", "log_dir.append": "/result_default/5nano_01/code_02", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_02.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 580 lines
+    In 'assign_drones': Missing assignment for: Drone_5
+    In 'assign_drones': Missing assignment for: Drone_4
+    In 'assign_drones': Missing assignment for: Drone_5
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_02", "log_dir.append": "/result_default/5nano_01/code_02", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_02.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 599 lines
+    In 'assign_drones': Missing assignment for: Drone_8
+    In 'assign_drones': Missing assignment for: Drone_8
+    In 'assign_drones': Missing assignment for: Drone_8
+Average damage: 129.7
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2158, Output: 8394 (reasoning: 7104)
+Response time (seconds): 67.1
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_04 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_04 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_04 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_04", "log_dir.append": "/result_default/5nano_01/code_04", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_04.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_04", "log_dir.append": "/result_default/5nano_01/code_04", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_04.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_04", "log_dir.append": "/result_default/5nano_01/code_04", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_04.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 311.7
+Querying LLM with prompt 05_result.
+[33mTOKENS USED:
+Input: 3494, Output: 7099 (reasoning: 5952)
+Response time (seconds): 49.1
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_06 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_06 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_06 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_06.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_06", "log_dir.append": "/result_default/5nano_01/code_06", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_06.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_06", "log_dir.append": "/result_default/5nano_01/code_06", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_06.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_06", "log_dir.append": "/result_default/5nano_01/code_06", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_06.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 163.0
+Querying LLM with prompt 07_result.
+[33mTOKENS USED:
+Input: 4687, Output: 4571 (reasoning: 3328)
+Response time (seconds): 29.5
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_08 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_08 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_08 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_08.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_08", "log_dir.append": "/result_default/5nano_01/code_08", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_08.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_08", "log_dir.append": "/result_default/5nano_01/code_08", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_08.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_08", "log_dir.append": "/result_default/5nano_01/code_08", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_08.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 179.0
+Querying LLM with prompt 09_result.
+[33mTOKENS USED:
+Input: 5976, Output: 3557 (reasoning: 2304)
+Response time (seconds): 23.7
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_10 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_10 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_10 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_10.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_10", "log_dir.append": "/result_default/5nano_01/code_10", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_10.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_10", "log_dir.append": "/result_default/5nano_01/code_10", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_10.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_10", "log_dir.append": "/result_default/5nano_01/code_10", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_10.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 179.0
+Querying LLM with prompt 11_result.
+[33mTOKENS USED:
+Input: 7275, Output: 6197 (reasoning: 4928)
+Response time (seconds): 42.9
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_12 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_12 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_12 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_12.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_12", "log_dir.append": "/result_default/5nano_01/code_12", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_12.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_12", "log_dir.append": "/result_default/5nano_01/code_12", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_12.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_12", "log_dir.append": "/result_default/5nano_01/code_12", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_12.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 234.7
+Querying LLM with prompt 13_result.
+[33mTOKENS USED:
+Input: 8589, Output: 6285 (reasoning: 4864)
+Response time (seconds): 37.5
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_14 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_14 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_14 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_14.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_14", "log_dir.append": "/result_default/5nano_01/code_14", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_14.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_14", "log_dir.append": "/result_default/5nano_01/code_14", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_14.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_14", "log_dir.append": "/result_default/5nano_01/code_14", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_14.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 44.7
+Querying LLM with prompt 15_result.
+[33mTOKENS USED:
+Input: 10056, Output: 6131 (reasoning: 4800)
+Response time (seconds): 37.5
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_16 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_16 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_16 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_16.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_16", "log_dir.append": "/result_default/5nano_01/code_16", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_16.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_16", "log_dir.append": "/result_default/5nano_01/code_16", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_16.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_16", "log_dir.append": "/result_default/5nano_01/code_16", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_16.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 269.0
+Querying LLM with prompt 17_result.
+[33mTOKENS USED:
+Input: 11433, Output: 4526 (reasoning: 2944)
+Response time (seconds): 29.5
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_18 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_18 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_18 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_18.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_18", "log_dir.append": "/result_default/5nano_01/code_18", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_18.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_18", "log_dir.append": "/result_default/5nano_01/code_18", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_18.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_18", "log_dir.append": "/result_default/5nano_01/code_18", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_18.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 234.7
+Querying LLM with prompt 19_result.
+[33mTOKENS USED:
+Input: 13061, Output: 2975 (reasoning: 1664)
+Response time (seconds): 17.0
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\farm\result_default\5nano_01\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_20 --variant=result_default --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_20 --variant=result_default --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=5nano_01/code_20 --variant=result_default --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\result_default\5nano_01\code_20.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_20", "log_dir.append": "/result_default/5nano_01/code_20", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_20.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_20", "log_dir.append": "/result_default/5nano_01/code_20", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_20.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "result_default/5nano_01/code_20", "log_dir.append": "/result_default/5nano_01/code_20", "adaptation_name": "generated_adaptations.farm.result_default.5nano_01.code_20.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 319.3
+Reached the maximum number of iterations (10). Stopping.

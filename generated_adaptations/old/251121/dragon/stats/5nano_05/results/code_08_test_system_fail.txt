@@ -1,0 +1,33 @@
+1
+...FFFF........FFFF........                                              [100%]
+================================== FAILURES ===================================
+_________________ TestAdapt.test_no_assignment_errors[seed=1] _________________
+There were 10 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=2] _________________
+There were 8 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=3] _________________
+There were 16 assignment errors in total.
+__________ TestAdapt.test_no_assignment_errors[no_initial_warriors] ___________
+There were 10 assignment errors in total.
+_____________________ TestAdapt.test_all_assigned[seed=1] _____________________
+The following components have not been assigned to a group: Jennifer. Each component must be assigned exactly once.
+_____________________ TestAdapt.test_all_assigned[seed=2] _____________________
+The following components have not been assigned to a group: Jennifer. Each component must be assigned exactly once.
+_____________________ TestAdapt.test_all_assigned[seed=3] _____________________
+The following components have not been assigned to a group: Jennifer. Each component must be assigned exactly once.
+______________ TestAdapt.test_all_assigned[no_initial_warriors] _______________
+The following components have not been assigned to a group: Jennifer. Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdapt::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_assignment_errors:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+8 failed, 19 passed in 0.78s

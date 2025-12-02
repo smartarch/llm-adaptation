@@ -1,0 +1,43 @@
+Loaded 2 messages from generated_adaptations\dragon\notest\5mini_03.
+Querying LLM with prompt 01_01_user.
+LLM response saved to '01_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\notest\5mini_03\code_01_02.py'.
+[33mTOKENS USED:
+Input: 1066, Output: 2521 (reasoning: 1152)
+Response time (seconds): 36.3
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5mini_03/code_01_02 --variant=notest
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\notest\5mini_03\code_01_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_01_02", "log_dir.append": "/notest/5mini_03/code_01_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_01_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_01_02", "log_dir.append": "/notest/5mini_03/code_01_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_01_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_01_02", "log_dir.append": "/notest/5mini_03/code_01_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_01_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 02_01_simulation.
+LLM response saved to '02_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\notest\5mini_03\code_02_02.py'.
+[33mTOKENS USED:
+Input: 2754, Output: 6527 (reasoning: 3968)
+Response time (seconds): 119.8
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5mini_03/code_02_02 --variant=notest
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\notest\5mini_03\code_02_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_02_02", "log_dir.append": "/notest/5mini_03/code_02_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_02_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_02_02", "log_dir.append": "/notest/5mini_03/code_02_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_02_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_02_02", "log_dir.append": "/notest/5mini_03/code_02_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_02_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 12.0
+Querying LLM with prompt 03_01_simulation.
+LLM response saved to '03_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\notest\5mini_03\code_03_02.py'.
+[33mTOKENS USED:
+Input: 5634, Output: 3706 (reasoning: 1216)
+Response time (seconds): 68.9
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5mini_03/code_03_02 --variant=notest
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\notest\5mini_03\code_03_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_03_02", "log_dir.append": "/notest/5mini_03/code_03_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_03_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_03_02", "log_dir.append": "/notest/5mini_03/code_03_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_03_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "notest/5mini_03/code_03_02", "log_dir.append": "/notest/5mini_03/code_03_02", "adaptation_name": "generated_adaptations.dragon.notest.5mini_03.code_03_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 20.333333333333332

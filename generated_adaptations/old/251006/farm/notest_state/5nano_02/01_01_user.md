@@ -1,0 +1,139 @@
+You are a coordinator for a smart farm. Your goal is to manage a fleet of drones to protect the fields on the farm against birds. The overall goal is to minimize the damage to the fields.
+
+The birds initially fly randomly around the farm. Sometimes, they decide they want to eat and then they target a field and fly towards it. The birds' preference among the fields changes over time. They also prefer fields with more birds already in them. When a bird lands on a field, it waits for a certain amount of time before damage is dealt. After the damage is dealt, the bird either attacks another crop within the same field or it flies away.
+
+Each field is equipped with sensors that can detect the birds. The more birds are in the field, the higher the "threat level" value is for that field.
+
+Drones can be used to protect the fields. When a drone is assigned a target field, it flies towards it and then hovers above it. The drone speed is 2 so it takes some time before the drone reaches the field and starts protecting it. The drone scares all the birds in a certain radius around it, however, multiple drones are necessary to fully protect a field. The scared birds try to flee to a different location within the same field and eat crops there. Only if the field is fully protected, the birds flee away, so a partial protection is not very effective (but still better than no protection).
+
+Your goal is to divide the drones among the fields to minimize the damage dealt by the birds. You will be periodically presented with the current situation (drone locations, threat levels, ...) and you will be asked to assign the drones to the fields.
+
+Suggest an adaptation strategy. The goal is to assign the components into groups. Note that each component must be assigned to exactly one group. If a component is supposed to remain in the same group (continue performing the same action), it must always be explicitly re-assigned to that group.
+
+The strategy must be written in Python and it must be a class named `SmartFarmAdaptation` derived from this base class (which can be imported from `generated_adaptations.base_classes.farm`):
+```
+class FarmAdaptation(abc.ABC):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    @abc.abstractmethod
+    def assign_drones(self, components, environment, group_ids, step: int):
+        pass
+
+```
+To perform the group assignments, use the `environment.assign_group(component, group_id)` method. The `group_id` must be exactly as listed below.
+
+---
+In `assign_drones`, your goal is to divide the Drones (`components`) into the following groups:
+- A group named "idle": Idle drones don't protect any fields.
+- For each `field` in `environment.fields` if `field.threat_level > 0`, a group named `"protecting {field.id}"`: Assigned drones fly to the field and protect it.
+
+The `group_ids` argument is a list of all valid group names.
+
+For each component, the following attributes are available (note that the attributes are read-only and they do not update when a component is assigned to a group):
+- `state`: state ("idle", "moving_to_field", or "protecting")
+- `target_id`: target field (name (str) of the target field, None if drone is idle)
+- `location`: location (has `x` and `y` coordinates)
+---
+
+Further, you can access the following beyond-control components, which are only observable and cannot be assigned to groups.
+
+Fields on the farm (accessible via `environment.fields`) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
+- `id`: identifier
+- `left`: left
+- `top`: top
+- `right`: right
+- `bottom`: bottom
+- `threat_level`: threat level (bird-threat level between 0 and 1)
+- `drones_for_full_protection`: for full protection
+
+---
+
+### Example of the situation
+
+#### `assign_drones` method
+
+##### Drones (`components`)
+
+- Drone_1:
+    - state: "protecting"
+    - target_id: 'Field_2'
+    - location: x=18.00, y=42.00
+- Drone_2:
+    - state: "moving_to_field"
+    - target_id: 'Field_1'
+    - location: x=27.00, y=7.00
+- Drone_3:
+    - state: "moving_to_field"
+    - target_id: 'Field_3'
+    - location: x=38.62, y=23.99
+- Drone_4:
+    - state: "moving_to_field"
+    - target_id: 'Field_1'
+    - location: x=4.46, y=30.50
+- Drone_5:
+    - state: "protecting"
+    - target_id: 'Field_4'
+    - location: x=41.00, y=8.00
+- Drone_6:
+    - state: "moving_to_field"
+    - target_id: 'Field_1'
+    - location: x=26.26, y=31.13
+- Drone_7:
+    - state: "idle"
+    - location: x=31.00, y=3.00
+- Drone_8:
+    - state: "idle"
+    - location: x=11.00, y=49.00
+
+##### Valid groups (`group_ids`)
+
+- "idle"
+- "protecting Field_1"
+- "protecting Field_2"
+- "protecting Field_3"
+- "protecting Field_4"
+
+#### Beyond-control components
+
+- Field_1:
+    - left: 4
+    - top: 3
+    - right: 19
+    - bottom: 18
+    - threat_level: 0.1375
+    - drones_for_full_protection: 4
+    - arriving_drones: 3
+    - protecting_drones: 0
+- Field_2:
+    - left: 6
+    - top: 30
+    - right: 22
+    - bottom: 45
+    - threat_level: 0.1375
+    - drones_for_full_protection: 4
+    - arriving_drones: 0
+    - protecting_drones: 1
+- Field_3:
+    - left: 35
+    - top: 32
+    - right: 43
+    - bottom: 48
+    - threat_level: 0.05
+    - drones_for_full_protection: 2
+    - arriving_drones: 1
+    - protecting_drones: 0
+- Field_4:
+    - left: 37
+    - top: 4
+    - right: 44
+    - bottom: 27
+    - threat_level: 0.05
+    - drones_for_full_protection: 3
+    - arriving_drones: 0
+    - protecting_drones: 1
+
+---
+Always fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be idle or assigned to other fields.
+
+Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.

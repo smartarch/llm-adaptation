@@ -1,0 +1,106 @@
+from typing import List
+import math
+
+# Import the base class from the expected location
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def _field_center(self, field) -> tuple:
+        cx = (field.left + field.right) / 2.0
+        cy = (field.top + field.bottom) / 2.0
+        return (cx, cy)
+    
+    def _distance(self, p, q) -> float:
+        dx = p.x - q[0]
+        dy = p.y - q[1]
+        return math.hypot(dx, dy)
+    
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        # Gather fields with threat > 0, sorted by threat descending
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+        if not fields_with_threat:
+            for comp in components:
+                environment.assign_group(comp, "idle")
+            return
+        
+        fields_with_threat.sort(key=lambda f: f.threat_level, reverse=True)
+        
+        total_drones = len(components)
+        
+        # First, determine how many drones are currently protecting each field
+        current_protecting_by_field = {}
+        for field in fields_with_threat:
+            current = 0
+            for comp in components:
+                if getattr(comp, "state", None) == "protecting" and getattr(comp, "target_id", None) == field.id:
+                    current += 1
+            current_protecting_by_field[field] = current
+        
+        # Determine kept drones (we keep as many as possible up to drones_for_full_protection)
+        kept_drones = set()
+        field_needs = {}
+        for field in fields_with_threat:
+            kept_for_field = min(current_protecting_by_field.get(field, 0), getattr(field, "drones_for_full_protection", 0))
+            # Mark some drones as kept for this field (we don't have direct identity; we'll rely on state/target)
+            # We'll conservatively mark any protecting drones toward this field up to kept_for_field as kept.
+            kept = 0
+            for comp in components:
+                if kept >= kept_for_field:
+                    break
+                if getattr(comp, "state", None) == "protecting" and getattr(comp, "target_id", None) == field.id:
+                    kept_drones.add(comp)
+                    kept += 1
+            # Compute remaining need
+            need = int(getattr(field, "drones_for_full_protection", 0) - kept_for_field)
+            if need > 0:
+                field_needs[field] = need
+        
+        # If nothing needs protection (or all fields already fully protected by kept drones)
+        any_need = len(field_needs) > 0
+        if not any_need:
+            # Keep kept drones on their current fields; set all others to idle
+            for comp in components:
+                if comp in kept_drones:
+                    # Ensure staying protecting some field if applicable
+                    # We keep their current target as-is
+                    # If they were not grouped yet, assign to their current target group
+                    if getattr(comp, "state", None) == "protecting":
+                        environment.assign_group(comp, f"protecting {getattr(comp, 'target_id', None)}")
+                    else:
+                        environment.assign_group(comp, "idle")
+                else:
+                    environment.assign_group(comp, "idle")
+            return
+        
+        # Pool of available drones to allocate (exclude kept drones)
+        available = [c for c in components if c not in kept_drones]
+        
+        # Allocate to fields in threat order, using closest drones first
+        for field in fields_with_threat:
+            if field not in field_needs:
+                continue
+            need = field_needs[field]
+            if need <= 0:
+                continue
+            center = self._field_center(field)
+            # compute distances for available drones
+            cand = []
+            for c in available:
+                pos = getattr(c, "location", None)
+                dist = float('inf')
+                if pos is not None:
+                    dist = self._distance(pos, center)
+                cand.append((dist, c))
+            cand.sort(key=lambda x: x[0])
+            take = min(need, len(cand))
+            for i in range(take):
+                dist, c = cand[i]
+                environment.assign_group(c, f"protecting {field.id}")
+                available.remove(c)
+        
+        # Remaining drones go idle
+        for c in available:
+            environment.assign_group(c, "idle")

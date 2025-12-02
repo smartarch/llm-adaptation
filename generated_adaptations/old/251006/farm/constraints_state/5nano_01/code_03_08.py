@@ -1,0 +1,119 @@
+"""
+Robust multi-field adaptation (top-field-first with flexible secondary allocation):
+- Identify all threatened fields (threat_level > 0) and sort by threat descending.
+- Fully protect the most threatened field first if its group exists.
+  - Preserve current protectors for the top field.
+  - If additional drones are needed, pick the closest available drones (not currently protecting the top field)
+    based on distance to the field center and assign them to the top field's protecting group.
+- After topping the top field, allocate additional drones to other threatened fields (in threat order)
+  using the closest available drones who are not already protecting the top field.
+- If the top field's protection group doesn't exist, idle all drones.
+- If there are no threatened fields, idle all drones.
+- Do exactly one environment.assign_group call per drone.
+"""
+import math
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # 1) Gather threatened fields
+        threatened_fields = [
+            f for f in environment.fields if getattr(f, "threat_level", 0) > 0
+        ]
+        if not threatened_fields:
+            for d in components:
+                environment.assign_group(d, "idle")
+            return
+
+        # 2) Sort by threat level (highest first)
+        threatened_fields.sort(key=lambda f: f.threat_level, reverse=True)
+        top_field = threatened_fields[0]
+        top_group = f"protecting {top_field.id}"
+
+        # 3) If top group's not available, idle all drones
+        if top_group not in group_ids:
+            for d in components:
+                environment.assign_group(d, "idle")
+            return
+
+        # 4) Build final mapping (start as idle)
+        final_group = {d: "idle" for d in components}
+
+        # 5) Phase A: Keep current protectors for the top field
+        current_top = [
+            d for d in components
+            if getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == top_field.id
+        ]
+        for d in current_top:
+            final_group[d] = top_group
+
+        # 6) Phase B: Fill the top field to full protection with closest drones
+        current_count = len(current_top)
+        needed_top = max(0, int(getattr(top_field, "drones_for_full_protection", 0)) - current_count)
+        if needed_top > 0:
+            cx = (top_field.left + top_field.right) / 2.0
+            cy = (top_field.top + top_field.bottom) / 2.0
+
+            top_set = set(current_top)
+            candidates = []
+            for d in components:
+                if d in top_set:
+                    continue
+                # Consider all drones not currently protecting the top field
+                loc = getattr(d, "location", None)
+                dist = float("inf")
+                if loc is not None:
+                    dist = math.hypot(loc.x - cx, loc.y - cy)
+                candidates.append((dist, d))
+
+            candidates.sort(key=lambda t: t[0])
+            for i in range(min(needed_top, len(candidates))):
+                drone = candidates[i][1]
+                final_group[drone] = top_group
+
+        # 7) Phase C: After topping, allocate remaining idle drones to other threatened fields
+        for field in threatened_fields[1:]:
+            group = f"protecting {field.id}"
+            if group not in group_ids:
+                continue
+
+            # Current protectors for this field
+            current_protectors = [
+                d for d in components
+                if getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == field.id
+            ]
+            for d in current_protectors:
+                final_group[d] = group
+
+            needed = max(0, int(getattr(field, "drones_for_full_protection", 0)) - len(current_protectors))
+            if needed <= 0:
+                continue
+
+            cx = (field.left + field.right) / 2.0
+            cy = (field.top + field.bottom) / 2.0
+
+            current_set = set(current_protectors)
+            candidates = []
+            for d in components:
+                if d in current_set:
+                    continue
+                if final_group[d] != "idle":
+                    continue  # only idle drones should be allocated to secondary fields
+                loc = getattr(d, "location", None)
+                dist = float("inf")
+                if loc is not None:
+                    dist = math.hypot(loc.x - cx, loc.y - cy)
+                candidates.append((dist, d))
+
+            candidates.sort(key=lambda t: t[0])
+            for i in range(min(needed, len(candidates))):
+                drone = candidates[i][1]
+                final_group[drone] = group
+
+        # 8) Phase D: Apply final assignments (one call per drone)
+        for d in components:
+            environment.assign_group(d, final_group[d])

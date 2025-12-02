@@ -1,0 +1,23 @@
+1
+......F...............F....                                              [100%]
+================================== FAILURES ===================================
+__________ TestAdapt.test_no_assignment_errors[no_initial_warriors] ___________
+There were 1 assignment errors in total.
+___ TestAdapt.test_no_functional_constraints_violated[no_initial_warriors] ____
+The dragon should be attacked at least once in the first 15 steps of the game.
+================================ Test Results =================================
+TestAdapt::test_no_assignment_errors:
+ - failed for: no_initial_warriors
+ - passed for: seed=1, seed=2, seed=3
+TestAdapt::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated:
+ - failed for: no_initial_warriors
+ - passed for: seed=1, seed=2, seed=3
+TestAdapt::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+2 failed, 25 passed in 1.91s

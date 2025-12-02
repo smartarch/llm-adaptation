@@ -1,0 +1,75 @@
+from __future__ import annotations
+import math
+import abc
+
+# Assuming the base class is importable as described
+# If the import path differs in your environment, adjust accordingly.
+from generated_adaptations.base_classes.farm import FarmAdaptation  # type: ignore
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Step 1: Find the field with the highest threat level > 0
+        target_field = None
+        max_threat = -1.0
+        for field in environment.fields:
+            if getattr(field, "threat_level", 0) > 0 and getattr(field, "threat_level", 0) > max_threat:
+                max_threat = getattr(field, "threat_level", 0)
+                target_field = field
+
+        # If no field is threatened, move all drones to idle
+        if target_field is None:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Step 2: Compute how many drones are currently protecting the target field
+        current_protecting = 0
+        protecting_group = f"protecting {target_field.id}"
+        for c in components:
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == target_field.id:
+                current_protecting += 1
+
+        # Step 3: Determine how many more drones are needed for full protection
+        drones_for_full = getattr(target_field, "drones_for_full_protection", 0)
+        needed_drones = max(0, drones_for_full - current_protecting)
+
+        # Step 4a: Reassign currently protecting drones to the target group explicitly
+        for c in components:
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == target_field.id:
+                environment.assign_group(c, protecting_group)
+
+        # Step 4b: If we still need more drones, pick closest non-protecting drones
+        if needed_drones > 0:
+            # Field center for distance calculation
+            left = getattr(target_field, "left", 0)
+            right = getattr(target_field, "right", 0)
+            top = getattr(target_field, "top", 0)
+            bottom = getattr(target_field, "bottom", 0)
+            center_x = (left + right) / 2.0
+            center_y = (top + bottom) / 2.0
+
+            def dist_to_field(drone):
+                loc = getattr(drone, "location", None)
+                if loc is None:
+                    return float("inf")
+                dx = getattr(loc, "x", 0.0) - center_x
+                dy = getattr(loc, "y", 0.0) - center_y
+                return math.hypot(dx, dy)
+
+            # Candidates: drones not currently protecting the target field
+            candidates = [d for d in components if not (getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == target_field.id)]
+            candidates.sort(key=dist_to_field)
+
+            # Assign the closest needed_drones to the protecting group
+            for i in range(min(needed_drones, len(candidates))):
+                environment.assign_group(candidates[i], protecting_group)
+
+        # Step 5: All remaining drones (not assigned to protect target_field) go idle
+        # Determine remaining drones (those not in the protecting_group)
+        for c in components:
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == target_field.id:
+                # already assigned to protecting target_field (we already reassigned them)
+                continue
+            # If a drone is not already in the protecting group, ensure it is idle
+            environment.assign_group(c, "idle")

@@ -1,0 +1,136 @@
+"""
+Reasoning and adaptation strategy (embedded as comments in the code):
+
+Goal: Defeat the Dragon as fast as possible while reducing damage to our fields.
+Key constraints:
+- All Warriors must go to the Cave and attack the Dragon.
+- All Farmers stay in the Village, farming or spawning new villagers.
+- Spawning rules: at least two villagers must be in a spawn group and wheat is consumed
+  (10 wheat for spawning a Farmer, 12 wheat for spawning a Warrior).
+
+Observations from prior attempt:
+- Large numbers of villagers in the Cave increases exposure to the Dragon's AoE (40% chance to deal 1 damage to every villager in the Cave).
+- The simulation showed many Farmers surviving but few Warriors, and a low attack rate on the Dragon, leading to no wins.
+- Continuous mass invasions by Warriors led to heavy casualties due to Dragon AoE explosions in the Cave.
+
+Improved strategy:
+1) Limit active attackers in the Cave to a small, rotating subset to reduce AoE casualties while maintaining DPS.
+   - Always keep Warriors in the Cave (policy preserved) but designate only a small, rotating subset to attack each turn.
+   - This reduces consistent exposure of a large number of Warriors to AoE damage.
+
+2) Maintain a steady pipeline of Warriors and Farmers via spawning:
+   - Spawn Farmers when wheat is available and there are at least two villagers to dedicate to the "spawn farmer" group (cost: 10 wheat, 2 villagers → 1 new Farmer).
+   - Spawn Warriors when wheat is available and there are at least two villagers to dedicate to the "spawn warrior" group (cost: 12 wheat, 2 villagers → 1 new Warrior).
+   - Prefer spawning in a balanced way so that we don't starve farming output, but also keep a few Warriors ready to attack.
+
+3) Rotation and memory-free strategy (stateless per step):
+   - In assign_in_village, decide two farms on which to spawn Farmer and up to one pair of villagers to spawn Warrior based on current wheat and number of Farmers.
+   - In assign_in_cave, select a small rotating subset of Warriors to attack (e.g., up to 2) and sling the rest to the cave (non-attacking this turn) to minimize AoE casualties.
+
+4) Robustness:
+   - If there are fewer than 2 Warriors in the Cave, all present Warriors will attack (to maximize DPS when available).
+   - Farmers in the Cave are always sent back to the Village (they should not stay in Cave).
+
+This approach aims to:
+- Keep the Dragon under steady pressure from a small, rotating Warrior group to maximize DPS while limiting AoE casualties.
+- Maintain Wheat production and a steady influx of new Farmers and Warriors through spawning to sustain a longer campaign against the Dragon.
+- Avoid over-reliance on large Warrior waves that would be destroyed by AoE.
+
+Code implementing the strategy:
+
+"""
+
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        Assign villagers in the Village into:
+        - "farm": stay in Village and farm
+        - "cave": go to the Cave (for Warriors)
+        - "spawn farmer": 2 villagers in this group + 10 wheat => spawn 1 Farmer
+        - "spawn warrior": 2 villagers in this group + 12 wheat => spawn 1 Warrior
+        Strategy:
+        - For Farmers: allocate some to spawn farmer (to grow the village) and the rest to farm.
+        - For Warriors: assign to cave (they must eventually enter the cave to attack).
+        - Use wheat to spawn as many Farmers and Warriors as possible, but limit spawning to at most one pair of Warriors per step to control risk.
+        """
+        # Collect indices for Farmers and Warriors
+        farmers_indices = [i for i, c in enumerate(components) if getattr(c, 'role', None) == "Farmer"]
+        warriors_indices = [i for i, c in enumerate(components) if getattr(c, 'role', None) == "Warrior"]
+
+        n_farmers = len(farmers_indices)
+
+        # Wheat available
+        wheat = 0
+        if hasattr(environment, 'farm') and hasattr(environment.farm, 'wheat'):
+            wheat = environment.farm.wheat
+
+        # Compute how many Farmers we can spawn this turn: 2 Farmers per spawn, 10 wheat per spawn
+        max_spawn_farmers = min(n_farmers // 2, wheat // 10)
+
+        # Wheat remaining after farming spawns
+        wheat_rem = max(0, wheat - max_spawn_farmers * 10)
+
+        # Compute how many Warriors we can spawn this turn: 2 villagers per spawn, 12 wheat per spawn
+        # Use remaining farmers (not used for spawning farmers) as potential spawn participants
+        remaining_for_warriors = max(0, n_farmers - 2 * max_spawn_farmers)
+
+        max_spawn_warriors = min(remaining_for_warriors // 2, wheat_rem // 12)
+
+        # Limit to at most one pair per step for Warriors to avoid large sudden spikes
+        max_spawn_warriors = min(max_spawn_warriors, 1)
+
+        # Choose actual indices for spawning
+        spawn_farmers_indices = set(farmers_indices[:2 * max_spawn_farmers])
+
+        remaining_for_warriors_indices = [i for i in farmers_indices if i not in spawn_farmers_indices]
+        spawn_warrior_indices = set(remaining_for_warriors_indices[:2 * max_spawn_warriors])
+
+        for idx, comp in enumerate(components):
+            role = getattr(comp, 'role', None)
+            if role == "Warrior":
+                if idx in spawn_warrior_indices:
+                    environment.assign_group(comp, "spawn warrior")
+                else:
+                    environment.assign_group(comp, "cave")
+            else:  # Farmer
+                if idx in spawn_farmers_indices:
+                    environment.assign_group(comp, "spawn farmer")
+                else:
+                    environment.assign_group(comp, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        """
+        Assign villagers in the Cave into:
+        - "attack": Attack the Dragon (a small rotating subset)
+        - "cave": Stay in the Cave
+        - "village": Go to the Village (Farmers return to farm)
+        Policy:
+        - Use a small rotating subset of Warriors to attack (up to 2)
+        - Remaining villagers stay in Cave
+        - Farmers return to Village
+        """
+        # Separate Warriors in the Cave
+        cave_warriors = [c for c in components if getattr(c, 'role', None) == "Warrior"]
+
+        # Determine how many should attack this turn (rotate up to 2)
+        n_attack = min(2, len(cave_warriors))
+        attack_set = set(cave_warriors[:n_attack])
+
+        for comp in components:
+            role = getattr(comp, 'role', None)
+            if role == "Warrior":
+                if comp in attack_set:
+                    environment.assign_group(comp, "attack")
+                else:
+                    environment.assign_group(comp, "cave")
+            elif role == "Farmer":
+                # Farmers should go back to the Village
+                environment.assign_group(comp, "village")
+            else:
+                # Fallback: keep in Village
+                environment.assign_group(comp, "village")

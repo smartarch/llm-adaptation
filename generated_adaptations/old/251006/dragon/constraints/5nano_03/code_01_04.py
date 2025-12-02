@@ -1,0 +1,52 @@
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        # Separate farmers and relocate warriors to cave
+        farmers = []
+        for c in components:
+            role = getattr(c, "role", None)
+            if role == "Warrior":
+                environment.assign_group(c, "cave")
+            elif role == "Farmer":
+                farmers.append(c)
+            else:
+                # Fallback for any unexpected component
+                environment.assign_group(c, "farm")
+
+        # Determine spawn opportunities based on current wheat
+        remaining_wheat = getattr(environment.farm, "wheat", 0)
+        nf = len(farmers)
+        spawn_index = 0
+
+        # Spawn farmers: need 2 farmers and 10 wheat per new farmer
+        pairs_farm = min(nf // 2, remaining_wheat // 10)
+        for i in range(pairs_farm * 2):
+            environment.assign_group(farmers[i], "spawn farmer")
+        remaining_wheat -= pairs_farm * 10
+        spawn_index = pairs_farm * 2
+
+        # Spawn warriors: need 2 farmers and 12 wheat per new warrior
+        remaining_farmers = nf - spawn_index
+        pairs_warrior = min(remaining_farmers // 2, remaining_wheat // 12)
+        for i in range(spawn_index, spawn_index + pairs_warrior * 2):
+            environment.assign_group(farmers[i], "spawn warrior")
+        remaining_wheat -= pairs_warrior * 12
+        spawn_index += pairs_warrior * 2
+
+        # Remaining farmers stay in farming
+        for i in range(spawn_index, nf):
+            environment.assign_group(farmers[i], "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        # In the cave: Warriors attack the Dragon; Farmers go back to village
+        for c in components:
+            role = getattr(c, "role", None)
+            if role == "Warrior":
+                environment.assign_group(c, "attack")
+            else:
+                environment.assign_group(c, "village")

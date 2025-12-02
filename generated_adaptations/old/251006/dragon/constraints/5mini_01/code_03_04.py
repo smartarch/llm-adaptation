@@ -1,0 +1,83 @@
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        components: villagers currently in the Village
+        Valid groups: "farm", "cave", "spawn farmer", "spawn warrior"
+        Simple deterministic pair-based spawning:
+          - Even steps: prefer spawn warrior (12 wheat) for pairs, then spawn farmer (10), else farm.
+          - Odd steps: prefer spawn farmer (10 wheat) for pairs, then spawn warrior (12), else farm.
+        """
+        # Partition by role
+        farmers = [c for c in components if getattr(c, "role", "") == "Farmer"]
+        warriors = [c for c in components if getattr(c, "role", "") == "Warrior"]
+
+        # Send all warriors to the Cave
+        for w in warriors:
+            environment.assign_group(w, "cave")
+
+        # Farming/wspawning logic for farmers
+        wheat = getattr(environment.farm, "wheat", 0)
+        i = 0
+        n = len(farmers)
+
+        # Process farmer list sequentially in pairs
+        while i < n:
+            remaining = n - i
+            if remaining >= 2:
+                # decide preference based on step parity
+                if step % 2 == 0:
+                    # prefer spawn warrior
+                    if wheat >= 12:
+                        environment.assign_group(farmers[i], "spawn warrior")
+                        environment.assign_group(farmers[i+1], "spawn warrior")
+                        wheat -= 12
+                        i += 2
+                        continue
+                    elif wheat >= 10:
+                        environment.assign_group(farmers[i], "spawn farmer")
+                        environment.assign_group(farmers[i+1], "spawn farmer")
+                        wheat -= 10
+                        i += 2
+                        continue
+                    else:
+                        environment.assign_group(farmers[i], "farm")
+                        i += 1
+                else:
+                    # prefer spawn farmer
+                    if wheat >= 10:
+                        environment.assign_group(farmers[i], "spawn farmer")
+                        environment.assign_group(farmers[i+1], "spawn farmer")
+                        wheat -= 10
+                        i += 2
+                        continue
+                    elif wheat >= 12:
+                        environment.assign_group(farmers[i], "spawn warrior")
+                        environment.assign_group(farmers[i+1], "spawn warrior")
+                        wheat -= 12
+                        i += 2
+                        continue
+                    else:
+                        environment.assign_group(farmers[i], "farm")
+                        i += 1
+            else:
+                # single leftover farmer farms
+                environment.assign_group(farmers[i], "farm")
+                i += 1
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        """
+        components: villagers currently in the Cave
+        Valid groups: "attack", "cave", "village"
+        - All Warriors attack.
+        - Farmers return to Village.
+        """
+        for c in components:
+            if getattr(c, "role", "") == "Warrior":
+                environment.assign_group(c, "attack")
+            else:
+                environment.assign_group(c, "village")

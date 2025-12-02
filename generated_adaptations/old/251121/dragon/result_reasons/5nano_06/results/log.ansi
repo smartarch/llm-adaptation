@@ -1,0 +1,254 @@
+Loaded 2 messages from generated_adaptations\dragon\result_reasons\5nano_06.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1218, Output: 7974 (reasoning: 6848)
+Response time (seconds): 50.8
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_02 --variant=result_reasons --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_02 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_02 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_02", "log_dir.append": "/result_reasons/5nano_06/code_02", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_02", "log_dir.append": "/result_reasons/5nano_06/code_02", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_02", "log_dir.append": "/result_reasons/5nano_06/code_02", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2414, Output: 5655 (reasoning: 4544)
+Response time (seconds): 36.8
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_04 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_04 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_04 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_04", "log_dir.append": "/result_reasons/5nano_06/code_04", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_04.SmartAdaptation"} -s 1 -e 1
+    StdErr: 61 lines
+    In 'assign_in_village': Component assigned into multiple groups: William
+    In 'assign_in_village': Component assigned into multiple groups: John
+    In 'assign_in_village': Component assigned into multiple groups: William
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_04", "log_dir.append": "/result_reasons/5nano_06/code_04", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_04.SmartAdaptation"} -s 2 -e 2
+    StdErr: 61 lines
+    In 'assign_in_village': Component assigned into multiple groups: Joseph
+    In 'assign_in_village': Component assigned into multiple groups: Dorothy
+    In 'assign_in_village': Component assigned into multiple groups: Joseph
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_04", "log_dir.append": "/result_reasons/5nano_06/code_04", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_04.SmartAdaptation"} -s 3 -e 3
+    StdErr: 61 lines
+    In 'assign_in_village': Component assigned into multiple groups: Paul
+    In 'assign_in_village': Component assigned into multiple groups: Anthony
+    In 'assign_in_village': Component assigned into multiple groups: Paul
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 05_result.
+[33mTOKENS USED:
+Input: 3595, Output: 5370 (reasoning: 4352)
+Response time (seconds): 35.1
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_06 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_06 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_06 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_06", "log_dir.append": "/result_reasons/5nano_06/code_06", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_06.SmartAdaptation"} -s 1 -e 1
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Jason
+    In 'assign_in_village': Component assigned into multiple groups: Margaret
+    In 'assign_in_village': Component assigned into multiple groups: Jason
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_06", "log_dir.append": "/result_reasons/5nano_06/code_06", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_06.SmartAdaptation"} -s 2 -e 2
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Michelle
+    In 'assign_in_village': Component assigned into multiple groups: Karen
+    In 'assign_in_village': Component assigned into multiple groups: Michelle
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_06", "log_dir.append": "/result_reasons/5nano_06/code_06", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_06.SmartAdaptation"} -s 3 -e 3
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: James
+    In 'assign_in_village': Component assigned into multiple groups: Laura
+    In 'assign_in_village': Component assigned into multiple groups: James
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 07_result.
+[33mTOKENS USED:
+Input: 4682, Output: 6220 (reasoning: 5440)
+Response time (seconds): 41.4
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_08 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_08 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_08 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_08", "log_dir.append": "/result_reasons/5nano_06/code_08", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_08.SmartAdaptation"} -s 1 -e 1
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Laura
+    In 'assign_in_village': Component assigned into multiple groups: Susan
+    In 'assign_in_village': Component assigned into multiple groups: Laura
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_08", "log_dir.append": "/result_reasons/5nano_06/code_08", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_08.SmartAdaptation"} -s 2 -e 2
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Donna
+    In 'assign_in_village': Component assigned into multiple groups: Linda
+    In 'assign_in_village': Component assigned into multiple groups: Donna
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_08", "log_dir.append": "/result_reasons/5nano_06/code_08", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_08.SmartAdaptation"} -s 3 -e 3
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Kenneth
+    In 'assign_in_village': Component assigned into multiple groups: Thomas
+    In 'assign_in_village': Component assigned into multiple groups: Kenneth
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 09_result.
+[33mTOKENS USED:
+Input: 5532, Output: 6704 (reasoning: 5888)
+Response time (seconds): 44.9
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_10 --variant=result_reasons --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_10 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_10 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_10", "log_dir.append": "/result_reasons/5nano_06/code_10", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_10.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_10", "log_dir.append": "/result_reasons/5nano_06/code_10", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_10.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_10", "log_dir.append": "/result_reasons/5nano_06/code_10", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_10.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 11_result.
+[33mTOKENS USED:
+Input: 6418, Output: 3448 (reasoning: 2560)
+Response time (seconds): 23.3
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_12 --variant=result_reasons --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_12 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_12 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_12", "log_dir.append": "/result_reasons/5nano_06/code_12", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_12.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_12", "log_dir.append": "/result_reasons/5nano_06/code_12", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_12.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_12", "log_dir.append": "/result_reasons/5nano_06/code_12", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_12.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 13_result.
+[33mTOKENS USED:
+Input: 7376, Output: 4227 (reasoning: 3328)
+Response time (seconds): 32.1
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_14 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_14 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_14 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_14", "log_dir.append": "/result_reasons/5nano_06/code_14", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_14.SmartAdaptation"} -s 1 -e 1
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Carol
+    In 'assign_in_village': Component assigned into multiple groups: Mark
+    In 'assign_in_village': Component assigned into multiple groups: Carol
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_14", "log_dir.append": "/result_reasons/5nano_06/code_14", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_14.SmartAdaptation"} -s 2 -e 2
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Ruth
+    In 'assign_in_village': Component assigned into multiple groups: Dorothy
+    In 'assign_in_village': Component assigned into multiple groups: Ruth
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_14", "log_dir.append": "/result_reasons/5nano_06/code_14", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_14.SmartAdaptation"} -s 3 -e 3
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Margaret
+    In 'assign_in_village': Component assigned into multiple groups: Susan
+    In 'assign_in_village': Component assigned into multiple groups: Margaret
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 15_result.
+[33mTOKENS USED:
+Input: 8345, Output: 4739 (reasoning: 3904)
+Response time (seconds): 33.2
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_16 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_16 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_16 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_16", "log_dir.append": "/result_reasons/5nano_06/code_16", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_16.SmartAdaptation"} -s 1 -e 1
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: William
+    In 'assign_in_village': Component assigned into multiple groups: Jennifer
+    In 'assign_in_village': Component assigned into multiple groups: William
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_16", "log_dir.append": "/result_reasons/5nano_06/code_16", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_16.SmartAdaptation"} -s 2 -e 2
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Jason
+    In 'assign_in_village': Component assigned into multiple groups: Paul
+    In 'assign_in_village': Component assigned into multiple groups: Jason
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_16", "log_dir.append": "/result_reasons/5nano_06/code_16", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_16.SmartAdaptation"} -s 3 -e 3
+    StdErr: 58 lines
+    In 'assign_in_village': Component assigned into multiple groups: Donald
+    In 'assign_in_village': Component assigned into multiple groups: Sharon
+    In 'assign_in_village': Component assigned into multiple groups: Donald
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 17_result.
+[33mTOKENS USED:
+Input: 9250, Output: 3707 (reasoning: 2944)
+Response time (seconds): 24.7
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_18 --variant=result_reasons --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_18 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_18 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_18", "log_dir.append": "/result_reasons/5nano_06/code_18", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_18.SmartAdaptation"} -s 1 -e 1
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Ronald
+    In 'assign_in_village': Component assigned into multiple groups: Helen
+    In 'assign_in_village': Component assigned into multiple groups: Ronald
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_18", "log_dir.append": "/result_reasons/5nano_06/code_18", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_18.SmartAdaptation"} -s 2 -e 2
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Sarah
+    In 'assign_in_village': Component assigned into multiple groups: Michelle
+    In 'assign_in_village': Component assigned into multiple groups: Sarah
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_18", "log_dir.append": "/result_reasons/5nano_06/code_18", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_18.SmartAdaptation"} -s 3 -e 3
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Anthony
+    In 'assign_in_village': Component assigned into multiple groups: Dorothy
+    In 'assign_in_village': Component assigned into multiple groups: Anthony
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 19_result.
+[33mTOKENS USED:
+Input: 10083, Output: 5558 (reasoning: 4672)
+Response time (seconds): 37.9
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result_reasons\5nano_06\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_20 --variant=result_reasons --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_20 --variant=result_reasons --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=5nano_06/code_20 --variant=result_reasons --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result_reasons\5nano_06\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_20", "log_dir.append": "/result_reasons/5nano_06/code_20", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_20.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_20", "log_dir.append": "/result_reasons/5nano_06/code_20", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_20.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result_reasons/5nano_06/code_20", "log_dir.append": "/result_reasons/5nano_06/code_20", "adaptation_name": "generated_adaptations.dragon.result_reasons.5nano_06.code_20.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Reached the maximum number of iterations (10). Stopping.

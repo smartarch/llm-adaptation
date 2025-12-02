@@ -1,0 +1,94 @@
+import abc
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        """
+        Deterministic, single-pass assignment ensuring:
+        - The most-threatened field is filled to its required protection (drones_for_full_protection),
+          reusing drones already protecting it when possible.
+        - Remaining drones (if any) are allocated to other threatened fields in threat order
+          up to their required protections.
+        - Every drone is assigned exactly once (idle if not used).
+        This reduces movement and avoids multiple assignments per drone.
+        """
+        # Gather fields with threat
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0.0) > 0]
+        if not fields_with_threat:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Sort by threat level (desc) for determinism
+        fields_with_threat.sort(key=lambda f: getattr(f, "threat_level", 0.0), reverse=True)
+
+        # Build feasible target fields (field, group, required)
+        targets = []
+        for field in fields_with_threat:
+            g = f"protecting {field.id}"
+            if g in group_ids:
+                req = getattr(field, "drones_for_full_protection", None)
+                if req is None:
+                    continue
+                try:
+                    req = int(req)
+                except Exception:
+                    try:
+                        req = int(float(req))
+                    except Exception:
+                        continue
+                targets.append((field, g, req))
+
+        if not targets:
+            # Nothing feasible to protect -> idle all
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Work with the top field first
+        top_field, top_group_id, top_required = targets[0]
+
+        # Stage 1: Assign drones already protecting top field
+        assigned = set()
+        current_top = 0
+        for c in components:
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == top_field.id:
+                environment.assign_group(c, top_group_id)
+                assigned.add(c)
+                current_top += 1
+
+        # Stage 2: Move additional drones to top_field until full protection
+        if current_top < top_required:
+            needed = top_required - current_top
+            for c in components:
+                if c in assigned:
+                    continue
+                environment.assign_group(c, top_group_id)
+                assigned.add(c)
+                current_top += 1
+                needed -= 1
+                if needed <= 0:
+                    break
+
+        # Stage 3: Allocate remaining drones to other fields (in threat order)
+        pool = [c for c in components if c not in assigned]
+
+        for field, g, req in targets[1:]:
+            # Current protecting for this field
+            current = 0
+            for c in components:
+                if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == field.id:
+                    current += 1
+            to_add = max(0, req - current)
+            while to_add > 0 and pool:
+                c = pool.pop()
+                environment.assign_group(c, g)
+                assigned.add(c)
+                to_add -= 1
+
+        # Stage 4: Remaining drones idle
+        for c in pool:
+            environment.assign_group(c, "idle")

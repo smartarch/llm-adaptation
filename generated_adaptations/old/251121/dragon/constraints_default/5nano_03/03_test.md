@@ -1,0 +1,56 @@
+Here is a report from running unit tests on your implementation:
+
+...FFFFFFFF........FFFF....                                              [100%]
+================================== FAILURES ===================================
+_________________ TestAdapt.test_no_assignment_errors[seed=1] _________________
+There were 63 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=2] _________________
+There were 63 assignment errors in total.
+_________________ TestAdapt.test_no_assignment_errors[seed=3] _________________
+There were 63 assignment errors in total.
+__________ TestAdapt.test_no_assignment_errors[no_initial_warriors] ___________
+There were 64 assignment errors in total.
+_______________ TestAdapt.test_no_repeated_assignments[seed=1] ________________
+In 'assign_in_village', 3 components were assigned more than once. Each component must be assigned exactly once.
+_______________ TestAdapt.test_no_repeated_assignments[seed=2] ________________
+In 'assign_in_village', 3 components were assigned more than once. Each component must be assigned exactly once.
+_______________ TestAdapt.test_no_repeated_assignments[seed=3] ________________
+In 'assign_in_village', 3 components were assigned more than once. Each component must be assigned exactly once.
+_________ TestAdapt.test_no_repeated_assignments[no_initial_warriors] _________
+In 'assign_in_village', 2 components were assigned more than once. Each component must be assigned exactly once.
+__________ TestAdapt.test_no_functional_constraints_violated[seed=1] __________
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+__________ TestAdapt.test_no_functional_constraints_violated[seed=2] __________
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+__________ TestAdapt.test_no_functional_constraints_violated[seed=3] __________
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+___ TestAdapt.test_no_functional_constraints_violated[no_initial_warriors] ____
+The dragon should be attacked at least once in the first 15 steps of the game.
+
+At least a few new farmers should be spawned to increase the chance of killing the dragon.
+
+At least a few new warriors should be spawned to increase the chance of killing the dragon.
+
+The dragon should be attacked.
+================================ Test Results =================================
+TestAdapt::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_assignment_errors:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdapt::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+12 failed, 15 passed in 2.03s
+
+Update your code to fix the failing tests.

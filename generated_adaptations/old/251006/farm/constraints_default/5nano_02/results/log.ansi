@@ -1,0 +1,126 @@
+Loaded 2 messages from generated_adaptations\farm\constraints_default\5nano_02.
+Querying LLM with prompt 01_01_user.
+LLM response saved to '01_02_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_01_02.py'.
+[33mTOKENS USED:
+Input: 1010, Output: 4126 (reasoning: 3072)
+Response time (seconds): 25.2
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_01_02 --variant=constraints_default
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_01_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_01_02", "log_dir.append": "/constraints_default/5nano_02/code_01_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_01_02.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 1 lines
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_01_02", "log_dir.append": "/constraints_default/5nano_02/code_01_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_01_02.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1 lines
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_01_02", "log_dir.append": "/constraints_default/5nano_02/code_01_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_01_02.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1 lines
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+Average damage: 123.3
+Querying LLM with prompt 01_03_test.
+LLM response saved to '01_04_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_01_04.py'.
+[33mTOKENS USED:
+Input: 2359, Output: 7801 (reasoning: 6464)
+Response time (seconds): 39.3
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_01_04 --variant=constraints_default
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_01_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_01_04", "log_dir.append": "/constraints_default/5nano_02/code_01_04", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_01_04.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_01_04", "log_dir.append": "/constraints_default/5nano_02/code_01_04", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_01_04.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_01_04", "log_dir.append": "/constraints_default/5nano_02/code_01_04", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_01_04.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 66.3
+Querying LLM with prompt 02_01_simulation.
+LLM response saved to '02_02_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_02_02.py'.
+[33mTOKENS USED:
+Input: 3849, Output: 4706 (reasoning: 3776)
+Response time (seconds): 23.6
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_02_02 --variant=constraints_default
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_02_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_02", "log_dir.append": "/constraints_default/5nano_02/code_02_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_02.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 1 lines
+    The most threatened field should be fully protected (Field_3, threat level 0.16, 2 drones for full protection, 1 assigned).
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_02", "log_dir.append": "/constraints_default/5nano_02/code_02_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_02.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1 lines
+    The most threatened field should be fully protected (Field_2, threat level 0.19, 4 drones for full protection, 2 assigned).
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_02", "log_dir.append": "/constraints_default/5nano_02/code_02_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_02.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1 lines
+    The most threatened field should be fully protected (Field_1, threat level 0.19, 4 drones for full protection, 2 assigned).
+Average damage: 255.0
+Querying LLM with prompt 02_03_test.
+LLM response saved to '02_04_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_02_04.py'.
+[33mTOKENS USED:
+Input: 5081, Output: 7080 (reasoning: 6208)
+Response time (seconds): 35.2
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_02_04 --variant=constraints_default
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_02_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_04", "log_dir.append": "/constraints_default/5nano_02/code_02_04", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_04.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 2 lines
+    The most threatened field should be fully protected (Field_2, threat level 0.10, 4 drones for full protection, 0 assigned).
+    There are too many idle drones (6 out of 8). They can be utilized to protect other fields.
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_04", "log_dir.append": "/constraints_default/5nano_02/code_02_04", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_04.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 2 lines
+    The most threatened field should be fully protected (Field_1, threat level 0.17, 4 drones for full protection, 0 assigned).
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_04", "log_dir.append": "/constraints_default/5nano_02/code_02_04", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_04.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 2 lines
+    The most threatened field should be fully protected (Field_2, threat level 0.16, 4 drones for full protection, 0 assigned).
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+Average damage: 119.7
+Querying LLM with prompt 02_05_test.
+LLM response saved to '02_06_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_02_06.py'.
+[33mTOKENS USED:
+Input: 6277, Output: 5750 (reasoning: 4736)
+Response time (seconds): 28.5
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_02_06 --variant=constraints_default
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_02_06.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_06", "log_dir.append": "/constraints_default/5nano_02/code_02_06", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_06.SmartFarmAdaptation"} -s 1 -e 1
+    StdErr: 1 lines
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_06", "log_dir.append": "/constraints_default/5nano_02/code_02_06", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_06.SmartFarmAdaptation"} -s 2 -e 2
+    StdErr: 1 lines
+    There are too many idle drones (5 out of 8). They can be utilized to protect other fields.
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_06", "log_dir.append": "/constraints_default/5nano_02/code_02_06", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_06.SmartFarmAdaptation"} -s 3 -e 3
+    StdErr: 1 lines
+    There are too many idle drones (6 out of 8). They can be utilized to protect other fields.
+Average damage: 123.0
+Querying LLM with prompt 02_07_test.
+LLM response saved to '02_08_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_02_08.py'.
+[33mTOKENS USED:
+Input: 7586, Output: 5977 (reasoning: 4608)
+Response time (seconds): 31.1
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_02_08 --variant=constraints_default
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_02_08.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_08", "log_dir.append": "/constraints_default/5nano_02/code_02_08", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_08.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_08", "log_dir.append": "/constraints_default/5nano_02/code_02_08", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_08.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_02_08", "log_dir.append": "/constraints_default/5nano_02/code_02_08", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_02_08.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 66.3
+Querying LLM with prompt 03_01_simulation.
+LLM response saved to '03_02_llm.md'.
+Code block saved to 'generated_adaptations\farm\constraints_default\5nano_02\code_03_02.py'.
+[33mTOKENS USED:
+Input: 9107, Output: 6223 (reasoning: 4672)
+Response time (seconds): 31.6
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=farm --adaptation_name=5nano_02/code_03_02 --variant=constraints_default
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\constraints_default\5nano_02\code_03_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_03_02", "log_dir.append": "/constraints_default/5nano_02/code_03_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_03_02.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_03_02", "log_dir.append": "/constraints_default/5nano_02/code_03_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_03_02.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml DSL/drones_constraints.yaml --extra_config={"name": "constraints_default/5nano_02/code_03_02", "log_dir.append": "/constraints_default/5nano_02/code_03_02", "adaptation_name": "generated_adaptations.farm.constraints_default.5nano_02.code_03_02.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 66.3

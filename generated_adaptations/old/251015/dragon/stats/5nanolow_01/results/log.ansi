@@ -1,0 +1,282 @@
+Loaded 2 messages from generated_adaptations\dragon\stats\5nanolow_01.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1066, Output: 2680 (reasoning: 1728)
+Response time (seconds): 16.4
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_02 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_02 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_02", "log_dir.append": "/stats/5nanolow_01/code_02", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_02.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_02", "log_dir.append": "/stats/5nanolow_01/code_02", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_02.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_02", "log_dir.append": "/stats/5nanolow_01/code_02", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_02.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 02_stats.
+[33mTOKENS USED:
+Input: 2339, Output: 1517 (reasoning: 576)
+Response time (seconds): 12.5
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_04 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_04 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_04", "log_dir.append": "/stats/5nanolow_01/code_04", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_04.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_04", "log_dir.append": "/stats/5nanolow_01/code_04", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_04.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_04", "log_dir.append": "/stats/5nanolow_01/code_04", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_04.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_stats.
+[33mTOKENS USED:
+Input: 3601, Output: 1398 (reasoning: 512)
+Response time (seconds): 10.7
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_06 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_06 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_06", "log_dir.append": "/stats/5nanolow_01/code_06", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_06.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_06", "log_dir.append": "/stats/5nanolow_01/code_06", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_06.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_06", "log_dir.append": "/stats/5nanolow_01/code_06", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_06.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 04_stats.
+[33mTOKENS USED:
+Input: 4808, Output: 1236 (reasoning: 384)
+Response time (seconds): 9.6
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_08 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_08 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_08", "log_dir.append": "/stats/5nanolow_01/code_08", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_08.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_08", "log_dir.append": "/stats/5nanolow_01/code_08", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_08.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_08", "log_dir.append": "/stats/5nanolow_01/code_08", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_08.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 05_stats.
+[33mTOKENS USED:
+Input: 5981, Output: 1314 (reasoning: 320)
+Response time (seconds): 11.8
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_10 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_10 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_10", "log_dir.append": "/stats/5nanolow_01/code_10", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_10.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_10", "log_dir.append": "/stats/5nanolow_01/code_10", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_10.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_10", "log_dir.append": "/stats/5nanolow_01/code_10", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_10.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 06_stats.
+[33mTOKENS USED:
+Input: 7296, Output: 1103 (reasoning: 256)
+Response time (seconds): 11.1
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_12 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_12 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_12", "log_dir.append": "/stats/5nanolow_01/code_12", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_12.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_12", "log_dir.append": "/stats/5nanolow_01/code_12", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_12.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_12", "log_dir.append": "/stats/5nanolow_01/code_12", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_12.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 07_stats.
+[33mTOKENS USED:
+Input: 8464, Output: 1225 (reasoning: 320)
+Response time (seconds): 9.7
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_14 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_14 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_14", "log_dir.append": "/stats/5nanolow_01/code_14", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_14.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_14", "log_dir.append": "/stats/5nanolow_01/code_14", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_14.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_14", "log_dir.append": "/stats/5nanolow_01/code_14", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_14.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 08_stats.
+[33mTOKENS USED:
+Input: 9690, Output: 1303 (reasoning: 448)
+Response time (seconds): 11.9
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_16 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_16 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_16", "log_dir.append": "/stats/5nanolow_01/code_16", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_16.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_16", "log_dir.append": "/stats/5nanolow_01/code_16", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_16.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_16", "log_dir.append": "/stats/5nanolow_01/code_16", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_16.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 09_stats.
+[33mTOKENS USED:
+Input: 10866, Output: 946 (reasoning: 64)
+Response time (seconds): 9.4
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_18 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_18 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_18", "log_dir.append": "/stats/5nanolow_01/code_18", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_18.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_18", "log_dir.append": "/stats/5nanolow_01/code_18", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_18.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_18", "log_dir.append": "/stats/5nanolow_01/code_18", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_18.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 10_stats.
+[33mTOKENS USED:
+Input: 12069, Output: 997 (reasoning: 128)
+Response time (seconds): 9.4
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\stats\5nanolow_01\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_20 --variant=stats --tests=system
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_01/code_20 --variant=stats --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\stats\5nanolow_01\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_20", "log_dir.append": "/stats/5nanolow_01/code_20", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_20.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_20", "log_dir.append": "/stats/5nanolow_01/code_20", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_20.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "stats/5nanolow_01/code_20", "log_dir.append": "/stats/5nanolow_01/code_20", "adaptation_name": "generated_adaptations.dragon.stats.5nanolow_01.code_20.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+        ^^^^^^^^^^^^^^^^
+    AttributeError: 'SmartAdaptation' object has no attribute 'environment'
+
+Winrate: 0.0, avg. steps: None
+Reached the maximum number of iterations (10). Stopping.

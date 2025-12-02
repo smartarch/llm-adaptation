@@ -1,0 +1,66 @@
+Loaded 2 messages from generated_adaptations\dragon\result\5nano_01.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1066, Output: 6007 (reasoning: 5184)
+Response time (seconds): 44.0
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result\5nano_01\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_02 --variant=result --tests=system
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_02 --variant=result --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result\5nano_01\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_02", "log_dir.append": "/result/5nano_01/code_02", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_02", "log_dir.append": "/result/5nano_01/code_02", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_02", "log_dir.append": "/result/5nano_01/code_02", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 02_result.
+[33mTOKENS USED:
+Input: 1959, Output: 5322 (reasoning: 4480)
+Response time (seconds): 36.8
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result\5nano_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_04 --variant=result --tests=system
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_04 --variant=result --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\result\5nano_01\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_04", "log_dir.append": "/result/5nano_01/code_04", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_04.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_04", "log_dir.append": "/result/5nano_01/code_04", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_04.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_04", "log_dir.append": "/result/5nano_01/code_04", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_04.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2871, Output: 7303 (reasoning: 6336)
+Response time (seconds): 47.7
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result\5nano_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_06 --variant=result --tests=system
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_06 --variant=result --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\result\5nano_01\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_06", "log_dir.append": "/result/5nano_01/code_06", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_06", "log_dir.append": "/result/5nano_01/code_06", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_06", "log_dir.append": "/result/5nano_01/code_06", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 15.333333333333334
+Querying LLM with prompt 04_result.
+[33mTOKENS USED:
+Input: 3906, Output: 4170 (reasoning: 3392)
+Response time (seconds): 23.8
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\result\5nano_01\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_08 --variant=result --tests=system
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nano_01/code_08 --variant=result --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\result\5nano_01\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_08", "log_dir.append": "/result/5nano_01/code_08", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_08.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_08", "log_dir.append": "/result/5nano_01/code_08", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_08.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "result/5nano_01/code_08", "log_dir.append": "/result/5nano_01/code_08", "adaptation_name": "generated_adaptations.dragon.result.5nano_01.code_08.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 12.0
+The generated code produces a good result. Stopping further iterations.

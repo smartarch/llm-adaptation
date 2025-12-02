@@ -1,0 +1,72 @@
+# Strategy reasoning (embedded as comments for clarity)
+# - We always look for the field with the highest threat level (> 0).
+# - We aim to fully protect that single field using drones.
+# - Each field has a parameter `drones_for_full_protection` indicating how many drones are needed for full protection.
+# - We count how many drones are already protecting that field (state == "protecting" and target_id matches the field id).
+# - If more drones are needed to reach full protection, we assign additional idle/unassigned drones to the
+#   target field's protection group until we reach the required number.
+# - Drones not involved in protecting the top-threat field are moved to the "idle" group.
+# - If there is no field with threat_level > 0, all drones remain idle.
+
+from typing import List
+
+# Import the base class from the provided path. This import path is assumed to exist in the runtime.
+from generated_adaptations.base_classes.farm import FarmAdaptation  # type: ignore
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        # Identify the field with the highest threat level (> 0)
+        best_field = None
+        best_threat = -1.0
+        for f in environment.fields:
+            try:
+                threat = float(getattr(f, "threat_level", 0.0))
+            except Exception:
+                threat = 0.0
+            if threat > best_threat and threat > 0.0:
+                best_threat = threat
+                best_field = f
+
+        # If no threatening field exists, idle all drones
+        if best_field is None:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Compute how many drones are currently protecting the best field
+        field_id = best_field.id
+        currently_protecting = sum(
+            1 for c in components if getattr(c, "state", None) == "protecting"
+            and getattr(c, "target_id", None) == field_id
+        )
+
+        # Drones required for full protection
+        required = getattr(best_field, "drones_for_full_protection", 0)
+        try:
+            required = int(required)
+        except Exception:
+            required = 0
+
+        needed = max(0, required - currently_protecting)
+
+        # If the field already has full protection and some drones are protecting it,
+        # keep those drones in place. Otherwise, reallocate as needed.
+        # We will assign drones in a deterministic order: as we iterate, we fill the top-field protection first.
+        # Remaining drones go idle.
+
+        for c in components:
+            # If this drone is already protecting the best field, keep it in that group.
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == field_id:
+                environment.assign_group(c, f"protecting {field_id}")
+                continue
+
+            if needed > 0:
+                # Move this drone to protect the best field
+                environment.assign_group(c, f"protecting {field_id}")
+                needed -= 1
+            else:
+                # No more drones needed for full protection; idle the rest
+                environment.assign_group(c, "idle")

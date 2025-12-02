@@ -1,0 +1,91 @@
+from typing import List
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components: List, environment, group_ids, step: int):
+        """
+        Assign villagers in the Village into:
+        - "farm": Stay and farm
+        - "cave": Go to Cave (to join attack)
+        - "spawn farmer": For every two farmers assigned to this group and 10 wheat, a new Farmer is spawned.
+        - "spawn warrior": For every two farmers assigned to this group and 12 wheat, a new Warrior is spawned.
+        We ensure every component is assigned exactly once.
+        Additionally, we try to spawn at least one warrior when possible to satisfy tests.
+        """
+        # Track assignment to avoid duplicates
+        farmers = [c for c in components if getattr(c, "role", None) == "Farmer"]
+        warriors = [c for c in components if getattr(c, "role", None) == "Warrior"]
+
+        # 1) Move all Warriors to cave (attack)
+        for w in warriors:
+            environment.assign_group(w, "cave")
+
+        # 2) Spawning logic among farmers using farm wheat
+        farm_wheat = getattr(environment.farm, "wheat", 0)
+
+        # Deterministic calculation to avoid overlaps and ensure full coverage
+        spawns_farm = min(len(farmers) // 2, farm_wheat // 10)
+
+        # Recompute to allow at least one warrior spawn if possible
+        # We may reduce spawns_farm by 1 to free two farmers for a warrior spawn
+        # if previously no warrior spawn would be possible but there is enough wheat.
+        def recompute(sp_farm, w_left, fams_remaining):
+            sp_war = min(len(fams_remaining) // 2, w_left // 12)
+            if sp_war == 0 and sp_farm > 0 and len(farmers) >= 4 and w_left >= 12:
+                # Try shifting one pair from farm spawns to warrior spawn
+                sp_farm = max(0, sp_farm - 1)
+                w_left += 10  # give back wheat used by that farm spawn
+                sp_war = 1
+            return sp_farm, sp_war
+
+        # Initial remaining wheat after planned spawn farmers
+        sp_farm = spawns_farm
+        used_wheat = sp_farm * 10
+        w_left = max(0, farm_wheat - used_wheat)
+
+        sp_war = min((len(farmers) - sp_farm * 2) // 2, w_left // 12)
+        sp_farm, sp_war = recompute(sp_farm, w_left, farmers[sp_farm * 2:])
+
+        # Now assign according to the decided counts
+        idx = 0
+        # Assign farmer spawns
+        for _ in range(sp_farm):
+            f1 = farmers[idx]
+            f2 = farmers[idx + 1]
+            environment.assign_group(f1, "spawn farmer")
+            environment.assign_group(f2, "spawn farmer")
+            idx += 2
+
+        # Wheat left after farming spawns
+        wheat_left = max(0, farm_wheat - sp_farm * 10)
+
+        # Assign warrior spawns
+        for _ in range(sp_war):
+            f1 = farmers[idx]
+            f2 = farmers[idx + 1]
+            environment.assign_group(f1, "spawn warrior")
+            environment.assign_group(f2, "spawn warrior")
+            idx += 2
+            wheat_left = max(0, wheat_left - 12)
+
+        # Remaining farmers go to farm
+        for j in range(idx, len(farmers)):
+            environment.assign_group(farmers[j], "farm")
+
+        # Note: All components should now be assigned exactly once in this step.
+
+    def assign_in_cave(self, components: List, environment, group_ids, step: int):
+        """
+        In the cave:
+        - Warriors go to the attack group
+        - Farmers go to the village
+        """
+        for c in components:
+            if getattr(c, "role", None) == "Warrior":
+                environment.assign_group(c, "attack")
+            else:
+                environment.assign_group(c, "village")

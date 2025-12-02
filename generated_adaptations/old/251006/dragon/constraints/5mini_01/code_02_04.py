@@ -1,0 +1,123 @@
+# SmartAdaptation for the Dragon Hunt game
+#
+# Reasoning and strategy (summary):
+# - Fixes from previous run:
+#   * Avoid assigning any component more than once per call (previous code sometimes assigned
+#     Warriors twice in assign_in_village).
+#   * Increase spawning aggressiveness slightly to ensure both new Warriors and Farmers are produced
+#     over the course of the game (tests expect a few of each to be spawned).
+# - Main ideas:
+#   * Keep a small reserve of farmers farming each turn to maintain wheat flow (reserve = 1 if possible).
+#   * Use remaining farmers in pairs to spawn Warriors first (cost 12 wheat per pair), then spawn Farmers
+#     (cost 10 wheat per pair) if wheat and pairs remain.
+#   * Limit the number of Warriors sent to the Cave each turn to a small attack squad (attack_squad_size),
+#     keeping extra Warriors in the Village farming to reduce exposure to area attacks and keep wheat production.
+#   * In the Cave: send Farmers immediately back to the Village; allow only a small number of Warriors to attack,
+#     others are returned to the Village.
+#
+# This implementation ensures every villager is assigned exactly once per call and uses only valid group names.
+
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Maximum number of warriors that attack the dragon in a single step.
+        self.attack_squad_size = 3
+        # Minimum number of farmers we try to keep farming if available (set to 1 to ensure spawning still occurs)
+        self.min_farmers_farming = 1
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        """
+        Assign villagers in the Village to groups:
+          - "farm", "cave", "spawn farmer", "spawn warrior"
+        Rules:
+          - Reserve min_farmers_farming farmers to "farm" if available.
+          - Use remaining farmers in pairs to spawn warriors first (12 wheat per pair), then spawn farmers (10 wheat per pair).
+          - Assign remaining farmers to "farm".
+          - From warriors present in the Village, select up to attack_squad_size to send to "cave",
+            and assign the rest to "farm" (to protect them and keep producing wheat).
+        """
+        # Partition villagers by role
+        farmers = [c for c in components if getattr(c, "role", "") == "Farmer"]
+        warriors = [c for c in components if getattr(c, "role", "") == "Warrior"]
+
+        wheat = getattr(environment.farm, "wheat", 0)
+
+        # Reserve some farmers to farm (if possible)
+        reserved_count = min(self.min_farmers_farming, len(farmers))
+        reserved_farmers = farmers[:reserved_count]
+        remaining_farmers = farmers[reserved_count:]
+
+        assigned_set = set()
+
+        # Spawn Warriors from remaining_farmers in pairs (12 wheat per pair)
+        pairs_available = len(remaining_farmers) // 2
+        max_warrior_spawns_by_wheat = wheat // 12
+        warrior_spawns = min(pairs_available, max_warrior_spawns_by_wheat)
+
+        idx = 0
+        for _ in range(warrior_spawns):
+            f1 = remaining_farmers[idx]; f2 = remaining_farmers[idx + 1]
+            environment.assign_group(f1, "spawn warrior")
+            environment.assign_group(f2, "spawn warrior")
+            assigned_set.add(f1); assigned_set.add(f2)
+            idx += 2
+            wheat -= 12
+
+        # Remaining farmers after warrior spawns
+        remaining_after_war = [f for f in remaining_farmers if f not in assigned_set]
+
+        # Spawn Farmers from remaining_after_war in pairs (10 wheat per pair)
+        pairs_available = len(remaining_after_war) // 2
+        max_farmer_spawns_by_wheat = wheat // 10
+        farmer_spawns = min(pairs_available, max_farmer_spawns_by_wheat)
+
+        idx = 0
+        for _ in range(farmer_spawns):
+            f1 = remaining_after_war[idx]; f2 = remaining_after_war[idx + 1]
+            environment.assign_group(f1, "spawn farmer")
+            environment.assign_group(f2, "spawn farmer")
+            assigned_set.add(f1); assigned_set.add(f2)
+            idx += 2
+            wheat -= 10
+
+        # Assign any farmers not used for spawning (including reserved ones) to "farm"
+        for f in farmers:
+            if f not in assigned_set:
+                environment.assign_group(f, "farm")
+
+        # Decide which warriors to send to cave (attack squad). Choose highest hp warriors to attack.
+        if warriors:
+            sorted_w = sorted(warriors, key=lambda c: getattr(c, "hp", 0), reverse=True)
+            to_send = sorted_w[: self.attack_squad_size]
+            to_keep = sorted_w[self.attack_squad_size :]
+            for w in to_send:
+                environment.assign_group(w, "cave")
+            for w in to_keep:
+                # keep safe and productive in village
+                environment.assign_group(w, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        """
+        Assign villagers in the Cave to groups:
+          - "attack", "cave", "village"
+        Rules:
+          - Farmers in Cave: immediately send back to "village".
+          - Warriors: allow up to attack_squad_size to "attack" (prefer highest hp), send others back to "village".
+        """
+        farmers = [c for c in components if getattr(c, "role", "") == "Farmer"]
+        warriors = [c for c in components if getattr(c, "role", "") == "Warrior"]
+
+        # Send farmers back to village
+        for f in farmers:
+            environment.assign_group(f, "village")
+
+        if warriors:
+            sorted_w = sorted(warriors, key=lambda c: getattr(c, "hp", 0), reverse=True)
+            attackers = sorted_w[: self.attack_squad_size]
+            others = sorted_w[self.attack_squad_size :]
+            for w in attackers:
+                environment.assign_group(w, "attack")
+            for w in others:
+                environment.assign_group(w, "village")

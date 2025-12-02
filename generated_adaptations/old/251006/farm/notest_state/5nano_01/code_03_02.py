@@ -1,0 +1,164 @@
+from typing import List
+import math
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        """
+        Assign drones into groups:
+        - "idle": Idle drones that are not protecting any field
+        - "protecting {field_id}": Drones protecting a specific field
+
+        Strategy:
+        1) Consider all threatened fields (threat_level > 0) sorted by threat (desc).
+        2) Fully protect the top field using the minimum drones required (drones_for_full_protection - protecting_drones),
+           preferring idle or non-top-field-protecting drones first, then reallocate from far-away protectors if needed.
+        3) Optionally, after securing the top field, similarly bolster the second-highest-threat field using any remaining drones.
+        4) Assign all drones to valid groups, defaulting to idle when possible to minimize unnecessary movement.
+        """
+        def dist_to_center(drone, cx, cy):
+            dx = getattr(drone.location, 'x', 0.0) - cx
+            dy = getattr(drone.location, 'y', 0.0) - cy
+            return math.hypot(dx, dy)
+
+        # Gather threatened fields
+        fields = list(getattr(environment, 'fields', []))
+        threatened_fields = [f for f in fields if getattr(f, 'threat_level', 0) > 0]
+
+        # If no threats, idle all drones (fallback)
+        if not threatened_fields:
+            for d in components:
+                gid = "idle" if "idle" in group_ids else None
+                if gid:
+                    environment.assign_group(d, gid)
+            return
+
+        # Sort threatened fields by threat descending
+        threatened_fields.sort(key=lambda f: getattr(f, 'threat_level', 0), reverse=True)
+
+        # Prepare for assignments
+        assignments = {}
+
+        # Step 1: Top field handling
+        top_field = threatened_fields[0]
+        top_group = f"protecting {top_field.id}"
+        if top_group not in group_ids:
+            top_group = "idle"
+        # Compute center of top field
+        left = getattr(top_field, 'left', 0)
+        right = getattr(top_field, 'right', 0)
+        top_y = getattr(top_field, 'top', 0)
+        bottom_y = getattr(top_field, 'bottom', 0)
+        cx = (left + right) / 2.0
+        cy = (top_y + bottom_y) / 2.0
+
+        drones_for_full = getattr(top_field, 'drones_for_full_protection', 0)
+        protecting_drones_top = getattr(top_field, 'protecting_drones', 0)
+        need_top = max(0, drones_for_full - protecting_drones_top)
+
+        # Keep current protectors for top field
+        currently_protecting_top = []
+        for d in components:
+            if getattr(d, 'state', '') == "protecting" and getattr(d, 'target_id', None) == top_field.id:
+                currently_protecting_top.append(d)
+                assignments[d] = top_group
+
+        # Step 2: Fill the top field's need, preferring non-top-field drones first (idle/moving)
+        if need_top > 0:
+            # Candidates not already protecting top field
+            candidates = [d for d in components if d not in assignments]
+            # Sort by distance to top field center (closest first)
+            candidates.sort(key=lambda d: dist_to_center(d, cx, cy))
+
+            allocated = 0
+            for d in candidates:
+                if allocated >= need_top:
+                    break
+                assignments[d] = top_group
+                allocated += 1
+
+            # If still short, consider reallocating from other fields' protectors
+            if allocated < need_top:
+                remaining = need_top - allocated
+                others = [d for d in components if d not in assignments and not (getattr(d, 'state', '') == 'protecting' and getattr(d, 'target_id', None) == top_field.id)]
+                # Reallocate from protectors of other fields, farthest from top center first
+                others = [d for d in components if d not in assignments and getattr(d, 'state', '') == 'protecting' and getattr(d, 'target_id', None) != top_field.id]
+                others.sort(key=lambda d: dist_to_center(d, cx, cy), reverse=True)
+                for d in others:
+                    if allocated >= need_top:
+                        break
+                    assignments[d] = top_group
+                    allocated += 1
+
+        # Step 3: Optional secondary field protection (best-effort)
+        if len(threatened_fields) > 1:
+            second_field = threatened_fields[1]
+            second_group = f"protecting {second_field.id}"
+            if second_group in group_ids:
+                # Compute center for second field
+                left2 = getattr(second_field, 'left', 0)
+                right2 = getattr(second_field, 'right', 0)
+                top2 = getattr(second_field, 'top', 0)
+                bottom2 = getattr(second_field, 'bottom', 0)
+                cx2 = (left2 + right2) / 2.0
+                cy2 = (top2 + bottom2) / 2.0
+                need_second = max(0, getattr(second_field, 'drones_for_full_protection', 0) - getattr(second_field, 'protecting_drones', 0))
+
+                if need_second > 0:
+                    # Already assigned to second field? mark them
+                    for d in components:
+                        if getattr(d, 'state', '') == "protecting" and getattr(d, 'target_id', None) == second_field.id:
+                            if d not in assignments:
+                                assignments[d] = second_group
+                    # Recompute remaining need after existing protectors
+                    current_protecting_second = sum(1 for d in components if getattr(d, 'state', '') == "protecting" and getattr(d, 'target_id', None) == second_field.id)
+                    need_second = max(0, getattr(second_field, 'drones_for_full_protection', 0) - current_protecting_second)
+
+                    if need_second > 0:
+                        candidates = [d for d in components if d not in assignments]
+                        candidates.sort(key=lambda d: dist_to_center(d, cx2, cy2))
+                        allocated = 0
+                        for d in candidates:
+                            if allocated >= need_second:
+                                break
+                            assignments[d] = second_group
+                            allocated += 1
+
+                        if allocated < need_second:
+                            # Reallocate from other protectors (not second_field) that are farthest from second field
+                            remaining_needed = need_second - allocated
+                            others = [d for d in components if d not in assignments and getattr(d, 'state', '') == 'protecting' and getattr(d, 'target_id', None) != second_field.id]
+                            others.sort(key=lambda d: dist_to_center(d, cx2, cy2), reverse=True)
+                            for d in others:
+                                if remaining_needed <= 0:
+                                    break
+                                assignments[d] = second_group
+                                remaining_needed -= 1
+
+        # Step 4: Assign remaining drones to a valid group
+        for d in components:
+            if d in assignments:
+                continue
+            if "idle" in group_ids:
+                assignments[d] = "idle"
+            else:
+                # If no idle group available, fallback to the top field group if possible, else any available protecting group
+                if top_group in group_ids:
+                    assignments[d] = top_group
+                else:
+                    # pick any protecting group that exists
+                    protecting_groups = [g for g in group_ids if g.startswith("protecting")]
+                    if protecting_groups:
+                        assignments[d] = protecting_groups[0]
+                    else:
+                        assignments[d] = "idle"
+
+        # Apply assignments (validate group existence)
+        for d in components:
+            gid = assignments.get(d, "idle")
+            if gid not in group_ids:
+                gid = "idle" if "idle" in group_ids else top_group
+            environment.assign_group(d, gid)

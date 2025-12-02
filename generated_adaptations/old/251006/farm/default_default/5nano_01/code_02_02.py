@@ -1,0 +1,136 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Gather fields with positive threat levels
+        fields = getattr(environment, "fields", []) or []
+        threat_fields = [f for f in fields if getattr(f, "threat_level", 0) > 0]
+
+        idle_group = "idle"
+
+        # If there are no threats, idle all drones
+        if not threat_fields:
+            for d in components:
+                environment.assign_group(d, idle_group)
+            return
+
+        # Sort threat fields by threat level (highest first)
+        threat_fields_sorted = sorted(threat_fields, key=lambda f: getattr(f, "threat_level", 0), reverse=True)
+
+        top_field = threat_fields_sorted[0]
+        top_group = f"protecting {top_field.id}"
+
+        # Drones required for full protection of the top field
+        drones_for_full = int(getattr(top_field, "drones_for_full_protection", 0) or 0)
+
+        # Drones currently protecting the top field
+        current_protecting_top = [
+            d for d in components
+            if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) == top_field.id
+        ]
+        n_current_top = len(current_protecting_top)
+
+        # Drones still needed to reach full protection
+        needed_top = max(0, drones_for_full - n_current_top)
+
+        # Center of the top field for distance calculations
+        center_x = (getattr(top_field, "left", 0) + getattr(top_field, "right", 0)) / 2.0
+        center_y = (getattr(top_field, "top", 0) + getattr(top_field, "bottom", 0)) / 2.0
+
+        # Ensure drones currently protecting the top field stay in that group
+        assigned = set()
+        for d in current_protecting_top:
+            environment.assign_group(d, top_group)
+            assigned.add(d)
+
+        # Gather candidates to move to the top field: closest first
+        candidates = []
+        for d in components:
+            if d in assigned:
+                continue
+            loc = getattr(d, "location", None)
+            if loc is None:
+                dx = dy = 0.0
+            else:
+                dx = getattr(loc, "x", 0.0)
+                dy = getattr(loc, "y", 0.0)
+            dist2 = (dx - center_x) ** 2 + (dy - center_y) ** 2
+            candidates.append((dist2, d))
+
+        candidates.sort(key=lambda t: t[0])
+
+        # Assign the closest drones to top field until full protection reached
+        for i in range(min(needed_top, len(candidates))):
+            _, drone = candidates[i]
+            environment.assign_group(drone, top_group)
+            assigned.add(drone)
+
+        # Remaining drones: distribute to secondary threat fields
+        remaining_fields = threat_fields_sorted[1:]  # exclude top field
+        remaining_drones = [d for d in components if d not in assigned]
+        remaining_count = len(remaining_drones)
+
+        if remaining_count > 0 and remaining_fields:
+            # We'll distribute remaining drones proportionally to help secondary fields.
+            # Compute per-field maximum share based on how many fields remain.
+            n_remaining_fields = len(remaining_fields)
+            remaining_drones_list = list(remaining_drones)
+            # Track which drones are assigned in this phase
+            already_assigned = set(assigned)
+
+            # For each secondary field, try to bring it toward full protection
+            for idx, f in enumerate(remaining_fields):
+                if remaining_count <= 0:
+                    break
+                field_group = f"protecting {f.id}"
+                # Current protectors on this field
+                current_on_field = [
+                    d for d in components
+                    if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) == f.id
+                ]
+                need_field = max(0, int(getattr(f, "drones_for_full_protection", 0) or 0) - len(current_on_field))
+                if need_field <= 0:
+                    continue
+
+                # How many drones we can reasonably allocate to this field this step
+                remaining_fields_after = max(1, n_remaining_fields - idx)
+                per_field_share = max(0, remaining_count // remaining_fields_after)
+
+                # Evaluate candidates for this field: closest among those not yet assigned
+                # Compute center for distance to this field
+                c_x = (getattr(f, "left", 0) + getattr(f, "right", 0)) / 2.0
+                c_y = (getattr(f, "top", 0) + getattr(f, "bottom", 0)) / 2.0
+
+                # Build a fresh candidate list for this field
+                pool = []
+                for d in remaining_drones_list:
+                    if d in already_assigned:
+                        continue
+                    loc = getattr(d, "location", None)
+                    if loc is None:
+                        dx = dy = 0.0
+                    else:
+                        dx = getattr(loc, "x", 0.0)
+                        dy = getattr(loc, "y", 0.0)
+                    dist2 = (dx - c_x) ** 2 + (dy - c_y) ** 2
+                    pool.append((dist2, d))
+                pool.sort(key=lambda t: t[0])
+
+                assign_count = min(need_field, per_field_share, len(pool))
+                for i in range(assign_count):
+                    _, drone = pool[i]
+                    environment.assign_group(drone, field_group)
+                    already_assigned.add(drone)
+                    remaining_drones_list.remove(drone)
+                    remaining_count -= 1
+
+                # If we allocated some drones, update remaining_fields count for next iterations
+                n_remaining_fields = max(1, n_remaining_fields - 1)
+
+        # Any drones not assigned to a protecting group go idle
+        for d in components:
+            if d not in assigned:
+                environment.assign_group(d, idle_group)

@@ -1,0 +1,23 @@
+1
+...FF.......FF.ssssss                                                    [100%]
+================================== FAILURES ===================================
+______________ TestAdaptSystem.test_no_assignment_errors[seed=1] ______________
+There were 598 assignment errors in total.
+__________ TestAdaptSystem.test_no_assignment_errors[all_protecting] __________
+There were 2 assignment errors in total.
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+The following components have not been assigned to a group: Drone_1. Each component must be assigned exactly once.
+______________ TestAdaptSystem.test_all_assigned[all_protecting] ______________
+The following components have not been assigned to a group: Drone_1, Drone_6. Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_assignment_errors:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, all_protecting
+ - passed for: some_moving_drones
+4 failed, 11 passed, 6 skipped in 2.62s

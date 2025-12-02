@@ -1,0 +1,101 @@
+import abc
+
+# The provided base class is expected to be importable as described.
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        # Group IDs available in village context
+        # "farm": Stay in Village and farm
+        # "cave": Go to the Cave
+        # "spawn farmer": Spawn a new Farmer (needs 2 villagers in group and 10 wheat)
+        # "spawn warrior": Spawn a new Warrior (needs 2 villagers in group and 12 wheat)
+
+        # Separate villagers by role
+        farmers = [c for c in components if getattr(c, "role", None) == "Farmer"]
+        warriors = [c for c in components if getattr(c, "role", None) == "Warrior"]
+
+        # Step 1: Send all warriors to the cave
+        for w in warriors:
+            self.environment.assign_group(w, "cave")
+
+        # Step 2: Farmers stay in village by default (farm)
+        # We will allocate some to spawn groups based on available wheat
+        # Start by assigning all remaining farmers to "farm"
+        for f in farmers:
+            self.environment.assign_group(f, "farm")
+
+        # Wheat available for spawning (10 for farmers, 12 for warriors)
+        wheat = getattr(environment.farm, "wheat", 0)
+
+        # Step 3: Spawn farmers using the available wheat
+        # We need 2 villagers in the spawn group and 10 wheat to spawn 1 new Farmer
+        # Number of possible spawns for farmers
+        f_count = len(farmers)
+        possible_farm_spawns = min(f_count // 2, wheat // 10)
+        s_farm = 2 * max(0, possible_farm_spawns)
+
+        # Move first s_farm farmers to "spawn farmer"
+        if s_farm > 0:
+            moved = 0
+            for f in farmers:
+                if moved >= s_farm:
+                    break
+                # If currently in "farm", move to "spawn farmer"
+                self.environment.assign_group(f, "spawn farmer")
+                moved += 1
+
+        # Update the list of farmers after moving some to spawn farmer
+        remaining_farmers = [f for f in farmers if self._current_group(f) == "farm"]
+
+        # Step 4: Spawn warriors using remaining wheat after farmer spawns
+        # Need 2 villagers in spawn warrior group and 12 wheat per spawn
+        w Wheat_remaining = wheat  # (for clarity, use wheat variable)
+        available_after_farm_spawns = max(0, Wheat_remaining - (10 * possible_farm_spawns))
+
+        remaining_f_count = len(remaining_farmers)
+        possible_war_spawns = min(remaining_f_count // 2, available_after_farm_spawns // 12)
+        s_war = 2 * max(0, possible_war_spawns)
+
+        if s_war > 0:
+            moved = 0
+            for f in remaining_farmers:
+                if moved >= s_war:
+                    break
+                if self._current_group(f) == "farm":
+                    self.environment.assign_group(f, "spawn warrior")
+                    moved += 1
+
+        # Step 5: Remaining farmers (not moved) stay in farm
+        # No further action needed; they are already in "farm"
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        # Group IDs in cave context:
+        # "attack": Attack the Dragon
+        # "cave": Stay in the Cave
+        # "village": Go to the Village
+
+        # Strategy:
+        # - All Warriors should attack the Dragon.
+        # - Farmers should return to the Village.
+        for c in components:
+            role = getattr(c, "role", None)
+            if role == "Warrior":
+                self.environment.assign_group(c, "attack")
+            else:
+                # Farmers go back to Village
+                self.environment.assign_group(c, "village")
+
+    # Helper to determine current group of a component (best-effort)
+    def _current_group(self, component):
+        # The environment may not provide a direct way to query current group from within this method.
+        # If such API exists, replace with a proper call. Here we return a reasonable default.
+        # This placeholder assumes the API isn't available; in that case, we simply return "unknown".
+        try:
+            return getattr(component, "current_group", "unknown")
+        except Exception:
+            return "unknown"

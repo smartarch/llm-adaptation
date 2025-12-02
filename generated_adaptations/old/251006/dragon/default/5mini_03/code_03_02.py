@@ -1,0 +1,217 @@
+"""
+SmartAdaptation (field-protecting edition)
+
+Reasoning and analysis:
+- Current success is high, but the user requested reducing "damage to the fields even more".
+  The Dragon only harms villagers that are in the Cave. Therefore protecting the "fields"
+  (i.e., preserving farmers and overall village stability) means:
+    - Keep as many farmers farming in the Village as is safe.
+    - Minimize the number of villagers (especially farmers) that ever go to the Cave.
+    - Reduce the number of simultaneous attackers in the Cave so area attacks hurt fewer units.
+    - Rotate attackers: prefer sending healthy warriors to attack and pull low-HP warriors back to the Village
+      to avoid them getting killed (this preserves unit count and farm labor).
+- Tradeoffs:
+    - Fewer simultaneous attackers may slightly increase time to kill the Dragon but reduces casualties.
+    - We maintain enough wheat production by keeping a small guaranteed farming corps.
+    - Spawning is done conservatively: we avoid taking too many farmers out of farming for spawn pairs
+      unless we have sufficient wheat buffer, and we prefer spawning farmers when wheat is low to grow income,
+      but we will spawn warriors when we have a comfortable wheat surplus for sustained attacks.
+
+Adaptation strategy (high level):
+1) assign_in_cave:
+   - Warriors:
+     - Only a small number (max_attackers_in_cave, set to 2) will be assigned to "attack".
+     - Select the healthiest warriors (highest hp) to attack.
+     - Any warrior with very low hp (hp <= 2) will be sent back to "village" to avoid dying.
+     - Any extra warriors beyond the allowed attackers are sent back to "village" (they can be staged and rotated).
+   - Farmers: always sent back to "village" (they should not fight).
+   This minimizes the number of villagers exposed every step to the Dragon's AoE or eating attack.
+
+2) assign_in_village:
+   - Warriors in Village:
+     - Only send a small number (up to max_attackers_in_cave) to the Cave; do not flood the Cave.
+       Even if some warriors are already in the Cave, assign_in_cave will ensure only the healthiest attack.
+     - Prefer to send healthy warriors (hp >= 3) first.
+   - Farmers in Village:
+     - Maintain a minimum number farming (min_farmers_farming = 2) if we have more than 2 farmers,
+       otherwise allow spawning when total farmers <= 2 to avoid deadlock.
+     - Be conservative when forming spawn pairs: require pairs beyond the reserved farmers.
+     - Prefer spawning farmers when wheat is limited (to grow income), and spawn warriors only when we
+       have a wheat surplus (e.g., at least 24 wheat) or dragon HP is low enough to justify immediate DPS.
+   - This keeps the fields productive, limits farmer exposure, and still allows building warrior numbers.
+
+Notes:
+- All assignments use environment.assign_group(component, group_id).
+- The code makes safe reads of environment.farm.wheat and environment.dragon.hp.
+- The implementation explicitly assigns each component to exactly one group each call.
+"""
+
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        # Group names (must match exactly)
+        GROUP_FARM = "farm"
+        GROUP_CAVE = "cave"
+        GROUP_SPAWN_FARMER = "spawn farmer"
+        GROUP_SPAWN_WARRIOR = "spawn warrior"
+
+        # Parameters tuned for field protection
+        max_attackers_in_cave = 2  # limit simultaneous attackers in Cave
+        # If we have only 2 or fewer farmers total, allow using them for spawning (to bootstrap).
+        # Otherwise keep at least this many farmers farming to protect wheat income.
+        default_min_farmers_farming = 2
+
+        # Partition components
+        farmers = [c for c in components if getattr(c, "role", "") == "Farmer"]
+        warriors = [c for c in components if getattr(c, "role", "") == "Warrior"]
+
+        # Safe reads of environment
+        try:
+            wheat = int(environment.farm.wheat)
+        except Exception:
+            wheat = 0
+        try:
+            dragon_hp = int(environment.dragon.hp)
+        except Exception:
+            dragon_hp = 0
+
+        # 1) Decide how many warriors to send to Cave this step.
+        # Send up to max_attackers_in_cave warriors, but prefer healthy ones.
+        # We'll choose the healthiest warriors from those available in Village.
+        # To avoid over-exposing multiple warriors in the Cave at once, we conservatively send at most max_attackers_in_cave.
+        warriors_sorted = sorted(warriors, key=lambda c: getattr(c, "hp", 0), reverse=True)
+        warriors_to_send = []
+
+        for w in warriors_sorted:
+            if len(warriors_to_send) >= max_attackers_in_cave:
+                break
+            # prefer healthy warriors (hp >= 3). If none meet threshold, still send the top ones (but fewer).
+            if getattr(w, "hp", 0) >= 3 or len(warriors_to_send) == 0:
+                warriors_to_send.append(w)
+
+        # Assign chosen warriors to move to Cave; others remain in Village (they'll be assigned to cave by cave logic if needed)
+        # but we must assign each warrior here exactly once: either to "cave" (travel) or keep them farming/staging in Village.
+        # For warriors kept in Village, put them into "farm" group? No—warriors in village should not farm; they should be in "cave"
+        # group to move to cave or remain idle in "farm" for simplicity. The allowed groups in Village include "farm", "cave", "spawn farmer", "spawn warrior".
+        # We'll use "farm" as the idle/staging for warriors that are not currently being sent to cave; they won't produce much, but the group is available.
+        # (This follows prior solutions that sent village warriors to "cave" immediately; here we selectively send only some.)
+        warriors_sent_set = set(warriors_to_send)
+        for w in warriors:
+            if w in warriors_sent_set:
+                environment.assign_group(w, GROUP_CAVE)
+            else:
+                # keep staging in village (not assigned to spawn); using "farm" group to keep them in the Village
+                environment.assign_group(w, GROUP_FARM)
+
+        # 2) Farmers: determine minimum farmers to keep farming
+        total_farmers = len(farmers)
+        if total_farmers <= 2:
+            min_farmers_farming = 0
+        else:
+            min_farmers_farming = default_min_farmers_farming
+
+        remaining_farmers = list(farmers)
+
+        # Helper to pop two farmers for a spawn pair
+        def pop_two_farmers():
+            if len(remaining_farmers) >= 2:
+                return [remaining_farmers.pop(0), remaining_farmers.pop(0)]
+            return None
+
+        assigned_spawn = []
+
+        # Conservative spawn logic:
+        # - Only form spawn pairs if doing so leaves at least min_farmers_farming farmers (except when min is 0).
+        # - Prefer spawning farmers when wheat is limited (to grow wheat production).
+        # - Spawn warriors only if wheat is comfortably large (e.g., >= 24) or dragon HP is low enough (< 15).
+        while True:
+            if len(remaining_farmers) < 2:
+                break
+            # If taking a pair would violate min farming reserve, stop (unless min reserve is zero)
+            if len(remaining_farmers) - 2 < min_farmers_farming and min_farmers_farming > 0:
+                break
+
+            # Decide spawn type
+            can_spawn_warrior = wheat >= 12
+            can_spawn_farmer = wheat >= 10
+
+            if not can_spawn_warrior and not can_spawn_farmer:
+                break
+
+            spawn_warrior = False
+            # Conditions for spawning a warrior now:
+            # - Have comfortable wheat buffer OR dragon is nearly dead (to finish fast) OR we have very few warriors
+            if can_spawn_warrior:
+                # comfortable buffer threshold (we keep it conservative): require at least 24 wheat to prefer warriors
+                if wheat >= 24 or dragon_hp <= 15:
+                    spawn_warrior = True
+
+            if spawn_warrior and can_spawn_warrior:
+                pair = pop_two_farmers()
+                if pair is None:
+                    break
+                for p in pair:
+                    assigned_spawn.append((p, GROUP_SPAWN_WARRIOR))
+                wheat -= 12
+                continue
+
+            # Otherwise spawn farmer if possible (to protect long-term wheat supply)
+            if can_spawn_farmer:
+                pair = pop_two_farmers()
+                if pair is None:
+                    break
+                for p in pair:
+                    assigned_spawn.append((p, GROUP_SPAWN_FARMER))
+                wheat -= 10
+                continue
+
+            break
+
+        # Assign spawn participants
+        for comp, grp in assigned_spawn:
+            environment.assign_group(comp, grp)
+
+        # Any remaining farmers stay to farm
+        for f in remaining_farmers:
+            environment.assign_group(f, GROUP_FARM)
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        # Group names (must match exactly)
+        GROUP_ATTACK = "attack"
+        GROUP_CAVE = "cave"
+        GROUP_VILLAGE = "village"
+
+        # Parameters for cave-side protection
+        max_attackers_in_cave = 2  # allow only this many to actually attack concurrently
+        low_hp_threshold = 2      # send back very low hp warriors to Village to avoid deaths
+
+        # Separate by role
+        warriors = [c for c in components if getattr(c, "role", "") == "Warrior"]
+        farmers = [c for c in components if getattr(c, "role", "") == "Farmer"]
+
+        # Farmers should be sent back to village immediately (they should not stay in cave)
+        for f in farmers:
+            environment.assign_group(f, GROUP_VILLAGE)
+
+        # For warriors: prefer healthiest to attack, send low-hp back to village, others idle in cave or returned based on cap
+        # Sort warriors by hp descending
+        warriors_sorted = sorted(warriors, key=lambda c: getattr(c, "hp", 0), reverse=True)
+
+        attackers_assigned = 0
+        for w in warriors_sorted:
+            hp = getattr(w, "hp", 0)
+            # If very low HP, pull them out to Village to preserve them
+            if hp <= low_hp_threshold:
+                environment.assign_group(w, GROUP_VILLAGE)
+                continue
+            if attackers_assigned < max_attackers_in_cave:
+                environment.assign_group(w, GROUP_ATTACK)
+                attackers_assigned += 1
+            else:
+                # Too many in cave; send extras back to village to keep Cave population low and protected
+                environment.assign_group(w, GROUP_VILLAGE)

@@ -1,0 +1,95 @@
+Loaded 2 messages from generated_adaptations\dragon\default\5nanolow_02.
+Querying LLM with prompt 01_01_user.
+LLM response saved to '01_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\default\5nanolow_02\code_01_02.py'.
+[33mTOKENS USED:
+Input: 1066, Output: 3262 (reasoning: 1856)
+Response time (seconds): 16.7
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_01_02 --variant=default
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\default\5nanolow_02\code_01_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_02", "log_dir.append": "/default/5nanolow_02/code_01_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_02.SmartAdaptation"} -s 1 -e 1
+    StdErr: 12 lines
+      File "C:\Users\micha\OneDrive - Univerzita Karlova\research\2024-LLM-DEECo\llm-adaptation\generated_adaptations\dragon\default\5nanolow_02\code_01_02.py", line 9, in __init__
+        super().__init__(**kwargs)
+    TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_02", "log_dir.append": "/default/5nanolow_02/code_01_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_02.SmartAdaptation"} -s 2 -e 2
+    StdErr: 12 lines
+      File "C:\Users\micha\OneDrive - Univerzita Karlova\research\2024-LLM-DEECo\llm-adaptation\generated_adaptations\dragon\default\5nanolow_02\code_01_02.py", line 9, in __init__
+        super().__init__(**kwargs)
+    TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_02", "log_dir.append": "/default/5nanolow_02/code_01_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_02.SmartAdaptation"} -s 3 -e 3
+    StdErr: 12 lines
+      File "C:\Users\micha\OneDrive - Univerzita Karlova\research\2024-LLM-DEECo\llm-adaptation\generated_adaptations\dragon\default\5nanolow_02\code_01_02.py", line 9, in __init__
+        super().__init__(**kwargs)
+    TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 01_03_test.
+LLM response saved to '01_04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\default\5nanolow_02\code_01_04.py'.
+[33mTOKENS USED:
+Input: 2623, Output: 991 (reasoning: 192)
+Response time (seconds): 9.2
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_01_04 --variant=default
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\default\5nanolow_02\code_01_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_04", "log_dir.append": "/default/5nanolow_02/code_01_04", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_04.SmartAdaptation"} -s 1 -e 1
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Helen
+    In 'assign_in_village': Component assigned into multiple groups: Michael
+    In 'assign_in_village': Component assigned into multiple groups: Helen
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_04", "log_dir.append": "/default/5nanolow_02/code_01_04", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_04.SmartAdaptation"} -s 2 -e 2
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Deborah
+    In 'assign_in_village': Component assigned into multiple groups: Donna
+    In 'assign_in_village': Component assigned into multiple groups: Deborah
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_04", "log_dir.append": "/default/5nanolow_02/code_01_04", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_04.SmartAdaptation"} -s 3 -e 3
+    StdErr: 60 lines
+    In 'assign_in_village': Component assigned into multiple groups: Charles
+    In 'assign_in_village': Component assigned into multiple groups: Deborah
+    In 'assign_in_village': Component assigned into multiple groups: Charles
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 01_05_test.
+LLM response saved to '01_06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\default\5nanolow_02\code_01_06.py'.
+[33mTOKENS USED:
+Input: 3721, Output: 1226 (reasoning: 192)
+Response time (seconds): 7.6
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_01_06 --variant=default
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\default\5nanolow_02\code_01_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_06", "log_dir.append": "/default/5nanolow_02/code_01_06", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_06", "log_dir.append": "/default/5nanolow_02/code_01_06", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_01_06", "log_dir.append": "/default/5nanolow_02/code_01_06", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_01_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 02_01_simulation.
+LLM response saved to '02_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\default\5nanolow_02\code_02_02.py'.
+[33mTOKENS USED:
+Input: 5075, Output: 1400 (reasoning: 256)
+Response time (seconds): 8.5
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_02_02 --variant=default
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\default\5nanolow_02\code_02_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_02_02", "log_dir.append": "/default/5nanolow_02/code_02_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_02_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_02_02", "log_dir.append": "/default/5nanolow_02/code_02_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_02_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_02_02", "log_dir.append": "/default/5nanolow_02/code_02_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_02_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_01_simulation.
+LLM response saved to '03_02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\default\5nanolow_02\code_03_02.py'.
+[33mTOKENS USED:
+Input: 6539, Output: 1158 (reasoning: 192)
+Response time (seconds): 8.5
+[0m
+Running tests: pytest generated_adaptations/tests -q --tb=short -rfExXpP --show-capture=no --color=no --example=dragon --adaptation_name=5nanolow_02/code_03_02 --variant=default
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\default\5nanolow_02\code_03_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_03_02", "log_dir.append": "/default/5nanolow_02/code_03_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_03_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_03_02", "log_dir.append": "/default/5nanolow_02/code_03_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_03_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "default/5nanolow_02/code_03_02", "log_dir.append": "/default/5nanolow_02/code_03_02", "adaptation_name": "generated_adaptations.dragon.default.5nanolow_02.code_03_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None

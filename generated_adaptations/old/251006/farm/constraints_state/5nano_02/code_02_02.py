@@ -1,0 +1,91 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Gather fields with positive threat levels
+        fields = getattr(environment, "fields", []) or []
+        threatening_fields = [f for f in fields if getattr(f, "threat_level", 0) > 0]
+
+        # Helper to compute center of a field
+        def center_of(field):
+            cx = (field.left + field.right) / 2.0
+            cy = (field.top + field.bottom) / 2.0
+            return cx, cy
+
+        # Determine the field to protect (highest threat)
+        best_field = None
+        if threatening_fields:
+            best_field = max(threatening_fields, key=lambda f: getattr(f, "threat_level", 0))
+
+        # If there is no field to protect, idle all drones
+        if best_field is None:
+            for drone in components:
+                if "idle" in group_ids:
+                    environment.assign_group(drone, "idle")
+                else:
+                    # Fallback to any valid group
+                    fallback = group_ids[0] if group_ids else None
+                    if fallback:
+                        environment.assign_group(drone, fallback)
+            return
+
+        best_group = f"protecting {best_field.id}"
+        if best_group not in group_ids:
+            # Can't assign to the best field; idle all
+            for drone in components:
+                if "idle" in group_ids:
+                    environment.assign_group(drone, "idle")
+                else:
+                    fallback = group_ids[0] if group_ids else None
+                    if fallback:
+                        environment.assign_group(drone, fallback)
+            return
+
+        # Compute how many drones are still needed to achieve full protection
+        needed = max(
+            0,
+            getattr(best_field, "drones_for_full_protection", 0)
+            - (getattr(best_field, "protecting_drones", 0) + getattr(best_field, "arriving_drones", 0))
+        )
+
+        # If we need drones, pick the closest ones to the field center
+        center_x, center_y = center_of(best_field)
+
+        candidates = []
+        for d in components:
+            # Skip drones already protecting the best field or en route to it
+            if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) == best_field.id:
+                continue
+            if getattr(d, "state", "") == "moving_to_field" and getattr(d, "target_id", None) == best_field.id:
+                continue
+            loc = getattr(d, "location", None)
+            dx = getattr(loc, "x", 0.0) if loc is not None else 0.0
+            dy = getattr(loc, "y", 0.0) if loc is not None else 0.0
+            dist = ((dx - center_x) ** 2 + (dy - center_y) ** 2) ** 0.5
+            candidates.append((dist, d))
+
+        candidates.sort(key=lambda t: t[0])
+        to_assign = [d for _, d in candidates[:needed]] if needed > 0 else []
+
+        # Assign chosen drones to the best_field protection group
+        for d in to_assign:
+            environment.assign_group(d, best_group)
+
+        # For all other drones, idle them if possible (or assign to a fallback if idle isn't available)
+        for d in components:
+            if d in to_assign:
+                continue
+            if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) == best_field.id:
+                # It is already protecting best_field but not in the proper group (edge case)
+                environment.assign_group(d, best_group)
+                continue
+            if "idle" in group_ids:
+                environment.assign_group(d, "idle")
+            else:
+                # Fallback to any available group to ensure every drone is assigned
+                fallback = group_ids[0] if group_ids else None
+                if fallback:
+                    environment.assign_group(d, fallback)

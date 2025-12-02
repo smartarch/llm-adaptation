@@ -16,6 +16,7 @@ This is a replication package for the paper *Feedback-based Automated Verificati
   * [`tests`](./generated_adaptations/tests) -- implementation of constraints verification as unit tests (inside the tests, the adaptation loop is executed with the generated AM)
   * [`prompts`](./generated_adaptations/prompts) -- prompt templates used when vibe coding (for feedback to the LLM)
   * [`prompts_user`](./generated_adaptations/prompts_user) -- initial prompts for vibe coding (these are automatically generated from the architecture specification DSL files)
+  * [`old`](./generated_adaptations/old) -- results of initial experiments (aligning the functional constraints with goals of the system, etc.), not used in the paper
 * common implementation
   * [base classes](./base_classes) -- base classes for components, simulation, adaptation (ensemble assignment strategy)
   * [main.py](./main.py) -- the main entry point for running the simulation

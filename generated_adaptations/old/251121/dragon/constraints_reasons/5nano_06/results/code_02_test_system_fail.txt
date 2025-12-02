@@ -1,0 +1,37 @@
+1
+...FFFF........FFFFssssssss                                              [100%]
+================================== FAILURES ===================================
+______________ TestAdaptSystem.test_no_assignment_errors[seed=1] ______________
+There were 6 assignment errors in total.
+______________ TestAdaptSystem.test_no_assignment_errors[seed=2] ______________
+There were 6 assignment errors in total.
+______________ TestAdaptSystem.test_no_assignment_errors[seed=3] ______________
+There were 6 assignment errors in total.
+_______ TestAdaptSystem.test_no_assignment_errors[no_initial_warriors] ________
+There were 6 assignment errors in total.
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Jennifer (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=2] __________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Jennifer (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=3] __________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Jennifer (Farmer)
+Each component must be assigned exactly once.
+___________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Jennifer (Farmer)
+Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_assignment_errors:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+8 failed, 11 passed, 8 skipped in 0.70s

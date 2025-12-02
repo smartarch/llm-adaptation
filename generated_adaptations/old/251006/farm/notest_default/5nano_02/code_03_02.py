@@ -1,0 +1,197 @@
+"""
+Improved adaptation strategy: multi-field protection with continuity and movement-awareness.
+
+Motivation:
+- The previous approach aggressively protected only the top-threat field or over-concentrated protection, leading to insufficient coverage on other threatened fields and limited protection of the most-threatened field.
+- We now implement a two-phase strategy:
+  1) Ensure the highest-threat field gets protected up to its full protection requirement, using drones closest to that field. Preserve drones already protecting that field when still needed.
+  2) With any remaining drones, distribute protection to other threatened fields, prioritizing fields with higher threat and lower current protection. Use drones closest to the corresponding field to minimize movement.
+
+Key points:
+- Always keep drones already protecting the top field if that field still needs protection (continuity to reduce unnecessary movement).
+- If the top field cannot be fully protected due to insufficient drones, allocate as many as possible to it using the nearest available drones (idle first, then others by distance).
+- For other fields, allocate remaining drones based on a priority score: threat_level * (1 - current_protection_ratio). This favors highly threatened fields with little protection.
+
+Implementation notes:
+- Uses field.drones_for_full_protection as the number of drones required for full protection for each field.
+- Drones are assigned to groups named "protecting {field.id}" when protecting a field, or "idle" when not protecting any field.
+- Drones are chosen for a field based on proximity to the field's center to reduce travel time.
+
+This strategy aims to reduce average damage by:
+- Ensuring top threat is protected when possible, then distributing residual protection efficiently to other threats.
+- Reducing drone movement by preferring drones closer to target fields and preserving continuity where beneficial.
+"""
+
+from typing import List
+import math
+
+# Import the base adaptation class
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        # Collect fields with positive threat levels
+        fields_threat = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+
+        # If no threatened fields, all drones go idle
+        if not fields_threat:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Identify the top-threat field (highest threat_level)
+        top_field = max(fields_threat, key=lambda f: getattr(f, "threat_level", 0.0))
+        top_group = f"protecting {top_field.id}"
+        top_group_available = top_group in group_ids
+
+        # Field center for distance calculations
+        top_center_x = (top_field.left + top_field.right) / 2.0
+        top_center_y = (top_field.top + top_field.bottom) / 2.0
+
+        def dist_to_top(d):
+            loc = getattr(d, "location", None)
+            if loc is None:
+                return float("inf")
+            x = getattr(loc, "x", 0.0)
+            y = getattr(loc, "y", 0.0)
+            dx = x - top_center_x
+            dy = y - top_center_y
+            return math.hypot(dx, dy)
+
+        # How many drones are needed for full protection of the top field
+        required_top = int(getattr(top_field, "drones_for_full_protection", len(components)))
+        if required_top < 0:
+            required_top = 0
+
+        # Current drones protecting top field
+        current_top = sum(
+            1 for c in components if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == top_field.id
+        )
+        need_top = max(0, required_top - current_top)
+
+        # Assignments to be finalized
+        assignments = {}
+
+        # Step 1: Preserve drones already protecting the top field if it still needs protection
+        if top_group_available:
+            for c in components:
+                if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == top_field.id:
+                    assignments[c] = top_group
+                    # If this drone was counted in current_top, it still contributes to the top protection
+                    if need_top > 0:
+                        need_top -= 1
+
+        # Step 1.5: If more drones are needed for the top field, pick closest available drones
+        if top_group_available and need_top > 0:
+            # Gather candidates not already assigned to top_group
+            candidates = []
+            for c in components:
+                if assignments.get(c) == top_group:
+                    continue
+                # Exclude drones already protecting the top field (they would be reassigned above)
+                if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == top_field.id:
+                    continue
+                candidates.append(c)
+
+            # Sort: idle drones first, then by distance to top field
+            candidates.sort(key=lambda d: (getattr(d, "state", "idle") != "idle", dist_to_top(d)))
+            for c in candidates:
+                if need_top <= 0:
+                    break
+                if top_group_available:
+                    assignments[c] = top_group
+                    need_top -= 1
+
+        # Step 2: Distribute remaining drones to other threatened fields
+        # Build list of other threatened fields
+        other_fields = [f for f in fields_threat if f.id != top_field.id]
+
+        # Required drones per other field
+        required_per_field = {f.id: int(getattr(f, "drones_for_full_protection", len(components))) for f in other_fields}
+        if any(v < 0 for v in required_per_field.values()):
+            required_per_field = {k: max(0, v) for k, v in required_per_field.items()}
+
+        # Current protecting per other field
+        protecting_counts = {f.id: 0 for f in other_fields}
+        for c in components:
+            if getattr(c, "state", None) == "protecting":
+                fid = getattr(c, "target_id", None)
+                if fid in protecting_counts:
+                    protecting_counts[fid] += 1
+
+        # Remaining protection per other field
+        remaining = {}
+        for f in other_fields:
+            rem = max(0, required_per_field.get(f.id, 0) - protecting_counts.get(f.id, 0))
+            remaining[f.id] = rem
+
+        # Priority per field: threat_level * (1 - current_protection_ratio)
+        priorities = []
+        for f in other_fields:
+            rem = remaining.get(f.id, 0)
+            if rem <= 0:
+                pr = 0.0
+            else:
+                threat = getattr(f, "threat_level", 0.0)
+                req = max(1, required_per_field.get(f.id, 1))
+                current = protecting_counts.get(f.id, 0)
+                ratio = min(1.0, current / req)
+                pr = float(threat) * (1.0 - ratio)
+            priorities.append((pr, f.id))
+        priorities.sort(reverse=True)
+
+        # Drones not yet assigned
+        unassigned = [c for c in components if c not in assignments]
+
+        # Function to compute distance to a field
+        def dist_to_field(drone, field):
+            loc = getattr(drone, "location", None)
+            if loc is None:
+                return float("inf")
+            x = getattr(loc, "x", 0.0)
+            y = getattr(loc, "y", 0.0)
+            cx = (field.left + field.right) / 2.0
+            cy = (field.top + field.bottom) / 2.0
+            return math.hypot(x - cx, y - cy)
+
+        # Step 2 allocation: fill by priority with preference for idle drones
+        for pr, fid in priorities:
+            if pr <= 0:
+                continue
+            if remaining.get(fid, 0) <= 0:
+                continue
+            gid = f"protecting {fid}"
+            if gid not in group_ids:
+                continue
+            # Target field
+            f = next((ff for ff in other_fields if ff.id == fid), None)
+            if f is None:
+                continue
+            # Sort unassigned by (state != 'idle', distance to field)
+            unassigned.sort(key=lambda d: (getattr(d, "state", "idle") != "idle",
+                                           dist_to_field(d, f)))
+            # Assign as many as needed
+            i = 0
+            while i < len(unassigned) and remaining.get(fid, 0) > 0:
+                c = unassigned[i]
+                assignments[c] = gid
+                remaining[fid] -= 1
+                unassigned.pop(i)  # remove and do not increment i
+            if not unassigned:
+                break
+
+        # Step 3: All remaining drones go idle
+        for c in unassigned:
+            assignments[c] = "idle"
+
+        # Apply assignments to the environment (ensure valid group_id)
+        for c, gid in assignments.items():
+            if gid is None:
+                gid = "idle"
+            if gid not in group_ids:
+                gid = "idle"
+            environment.assign_group(c, gid)

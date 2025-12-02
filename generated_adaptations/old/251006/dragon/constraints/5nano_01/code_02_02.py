@@ -1,0 +1,63 @@
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        # Separate villagers by role
+        farmers = [c for c in components if getattr(c, 'role', None) == 'Farmer']
+        warriors = [c for c in components if getattr(c, 'role', None) == 'Warrior']
+
+        # Safely read available wheat from the farm
+        wheat = 0
+        farm = getattr(environment, 'farm', None)
+        if farm is not None:
+            wheat = getattr(farm, 'wheat', 0)
+
+        # Strategy: Spawn warriors as a priority if wheat allows, then spawn farmers.
+        # Constraints:
+        # - Each warrior spawn costs 12 wheat and requires 2 Farmers (as 2-warrior block)
+        # - Each farmer spawn costs 10 wheat and requires 2 Farmers (as 2-farmer block)
+        # We aim to spawn at least some warriors when possible to improve combat odds.
+        max_possible_warrior_spawns = min(len(farmers) // 2, wheat // 12)
+
+        # If we can spawn warriors, do so as many as possible, then use remaining wheat for farmers.
+        Y = max_possible_warrior_spawns  # number of warrior-spawns (each spawns 2 warriors)
+        remaining_farmers_after_warriors = len(farmers) - 2 * Y
+
+        X = 0
+        if remaining_farmers_after_warriors > 0:
+            X = min(remaining_farmers_after_warriors // 2, (wheat - 12 * Y) // 10)
+
+        # Fallback: if no warriors can be spawned but there are farmers, spawn as many farmers as possible
+        # (handled by X above when Y == 0)
+
+        idx = 0
+        # Assign 2*Y farmers to the "spawn warrior" group
+        for _ in range(2 * Y):
+            if idx < len(farmers):
+                environment.assign_group(farmers[idx], 'spawn warrior')
+                idx += 1
+
+        # Assign 2*X farmers to the "spawn farmer" group
+        for _ in range(2 * X):
+            if idx < len(farmers):
+                environment.assign_group(farmers[idx], 'spawn farmer')
+                idx += 1
+
+        # Remaining farmers go to the regular farming group
+        for j in range(idx, len(farmers)):
+            environment.assign_group(farmers[j], 'farm')
+
+        # All Warriors should go to the Cave and prepare to attack
+        for w in warriors:
+            environment.assign_group(w, 'cave')
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        for c in components:
+            if getattr(c, 'role', None) == 'Warrior':
+                environment.assign_group(c, 'attack')
+            else:
+                # Farmers in cave go back to the Village to farm/spawn
+                environment.assign_group(c, 'village')

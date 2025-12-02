@@ -1,0 +1,168 @@
+import abc
+import math
+
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components, environment, group_ids, step: int):
+        """
+        Assign drones into:
+        - "idle": drones not protecting any field
+        - "protecting {field.id}": drones protecting a specific field
+
+        Strategy:
+        - Build a priority list of fields with threat_level > 0, sorted by threat descending.
+        - For the top-threated field, compute how many more drones are needed to reach full protection
+          based on field.drones_for_full_protection minus currently protecting drones.
+        - Reallocate drones to top field to reach full protection if possible, preferring closest drones not already protecting that field.
+        - If not enough drones remain to fully protect the top field, allocate as many of the closest drones as possible to the top field (partial protection).
+        - After handling the top field, optionally allocate remaining drones to other fields in descending threat order, repeating the same logic but allowing partial protection if full protection isn't possible.
+        - All remaining drones become idle.
+        """
+
+        # Build field list with computed centers and needed counts
+        fields = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+        field_info = []
+        for f in fields:
+            left = getattr(f, "left", 0)
+            top = getattr(f, "top", 0)
+            right = getattr(f, "right", 0)
+            bottom = getattr(f, "bottom", 0)
+            cx = (left + right) / 2.0
+            cy = (top + bottom) / 2.0
+            needed = getattr(f, "drones_for_full_protection", 0)
+            threat = getattr(f, "threat_level", 0)
+            field_info.append((f, threat, needed, cx, cy))
+
+        # Sort fields by threat descending
+        field_info.sort(key=lambda t: t[1], reverse=True)
+
+        # Helper: squared distance
+        def dist2(a, x, y):
+            dx = getattr(a, "location").x - x
+            dy = getattr(a, "location").y - y
+            return dx * dx + dy * dy
+
+        # Current protection status per field
+        current_protect = {}
+        for f, _, _, cx, cy in field_info:
+            # count drones currently protecting this field
+            count = 0
+            for d in components:
+                if getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == getattr(f, "id", None):
+                    count += 1
+            current_protect[f.id] = count
+
+        # Track which drones have been assigned in this step
+        assigned_indices = set()
+
+        # Build a list of drones for processing
+        drones = list(components)
+
+        # Helper to assign a drone to a group
+        def assign_to(drone, group_name):
+            environment.assign_group(drone, group_name)
+
+        # Helper to get indices of unassigned drones
+        def unassigned_indices():
+            return [i for i in range(len(drones)) if i not in assigned_indices]
+
+        # Step 1: Try to fully protect the top-threat field if possible
+        if field_info:
+            top_f, top_threat, top_needed, top_cx, top_cy = field_info[0]
+            top_id = top_f.id
+            current = current_protect.get(top_id, 0)
+            remaining_needed = max(0, top_needed - current)
+
+            # If there are drones already protecting this field, we don't move them.
+            # Gather unassigned drones (not currently protecting this field) to fill the gap
+            if remaining_needed > 0:
+                # List of candidate drones not currently protecting top field
+                candidates = []
+                for idx in unassigned_indices():
+                    d = drones[idx]
+                    # distance to top field center
+                    dx = d.location.x - top_cx
+                    dy = d.location.y - top_cy
+                    d2 = dx * dx + dy * dy
+                    candidates.append((d2, idx))
+
+                # Sort by distance and pick closest
+                candidates.sort(key=lambda t: t[0])
+                needed_to_take = min(remaining_needed, len(candidates))
+                for k in range(needed_to_take):
+                    idx = candidates[k][1]
+                    assigned_indices.add(idx)
+                    assign_to(drones[idx], f"protecting {top_id}")
+
+            # If after this, the top field is not fully protected, we may still have some drones
+            # to allocate to it to provide partial protection (best effort)
+            # Identify how many drones are now protecting top field
+            # (we'll allocate any remaining closest drones to top field as partial protection)
+            if current_protect[top_id] < top_needed:
+                # Recompute remaining slots after potential recent assignments
+                current = 0
+                for d in components:
+                    if getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == top_id:
+                        current += 1
+                remaining_needed = max(0, top_needed - current)
+
+                if remaining_needed > 0:
+                    # Collect available unassigned drones not already protecting top field
+                    candidates = []
+                    for idx in unassigned_indices():
+                        if any(idx == ai for ai in assigned_indices):
+                            continue
+                        d = drones[idx]
+                        dx = d.location.x - top_cx
+                        dy = d.location.y - top_cy
+                        d2 = dx * dx + dy * dy
+                        candidates.append((d2, idx))
+                    candidates.sort(key=lambda t: t[0])
+                    take = min(remaining_needed, len(candidates))
+                    for j in range(take):
+                        idx = candidates[j][1]
+                        assigned_indices.add(idx)
+                        assign_to(drones[idx], f"protecting {top_id}")
+
+        # Step 2: Allocate remaining drones to other fields in threat order
+        # We will attempt to fully protect as many fields as possible in order, using remaining drones.
+        for f, threat, needed, cx, cy in field_info[1:]:
+            field_id = f.id
+            # Count current protection for this field
+            current = 0
+            for d in components:
+                if getattr(d, "state", None) == "protecting" and getattr(d, "target_id", None) == field_id:
+                    current += 1
+            remaining_needed = max(0, needed - current)
+
+            if remaining_needed == 0:
+                continue
+
+            # Collect available drones (not yet assigned)
+            candidates = []
+            for idx in unassigned_indices():
+                if any(idx == ai for ai in assigned_indices):
+                    continue
+                d = drones[idx]
+                dx = d.location.x - cx
+                dy = d.location.y - cy
+                d2 = dx * dx + dy * dy
+                candidates.append((d2, idx))
+            candidates.sort(key=lambda t: t[0])
+
+            take = min(remaining_needed, len(candidates))
+            for t in range(take):
+                idx = candidates[t][1]
+                assigned_indices.add(idx)
+                assign_to(drones[idx], f"protecting {field_id}")
+
+        # Step 3: Any drones not assigned become idle
+        for idx, drone in enumerate(drones):
+            if idx in assigned_indices:
+                continue
+            assign_to(drone, "idle")

@@ -1,0 +1,28 @@
+Here is a report from running unit tests on your implementation:
+
+..Fssssssssssssssssssssssss                                              [100%]
+================================== FAILURES ===================================
+_____________ TestConfiguration.test_adaptation_class_is_correct ______________
+generated_adaptations\tests\test_generic.py:41: in test_adaptation_class_is_correct
+    module = importlib.import_module(f"generated_adaptations.{example}.{variant}.{adaptation_name.replace('/', '.')}")
+..\..\..\..\AppData\Local\Programs\Python\Python311\Lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:940: in exec_module
+    ???
+<frozen importlib._bootstrap>:241: in _call_with_frames_removed
+    ???
+generated_adaptations\dragon\system_reasons\5nano_03\code_02.py:6: in <module>
+    class SmartAdaptation(DragonHuntAdaptation):
+E   NameError: name 'DragonHuntAdaptation' is not defined
+================================ Test Results =================================
+1 failed, 2 passed, 24 skipped in 0.61s
+
+Update your code to fix the failing tests.

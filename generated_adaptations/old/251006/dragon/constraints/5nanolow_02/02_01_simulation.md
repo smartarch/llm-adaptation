@@ -1,0 +1,16 @@
+We evaluated your code in a simulation of the game. You achieved a win rate of 100%.
+
+Here are some statistics from the simulation:
+
+- games played: 3
+- wins (dragon is killed): 3
+- losses (dragon survives): 0
+- average number of turns (steps) to win: 12.0 (only the won games are counted, lower is better)
+- number of warriors (at the end of the game): 4.3 (if this number is low, it indicates that most warriors were killed by the dragon during the game)
+- number of farmers (at the end of the game): 4.7 (if this number is low, it indicates that most farmers were killed by the dragon during the game)
+- average number of farming villagers (throughout the whole game): 1.7 (if this number is low, it indicates not enough wheat is produced to spawn new villagers)
+- average number of attacking villagers (throughout the whole game): 1.6 (if this number is low, it indicates that there are not enough villagers or they are not attacking the dragon enough)
+- number of spawned warriors (throughout the whole game): 5.7 (if this number is low, it indicates that not enough new warriors are spawned)
+- number of spawned farmers (throughout the whole game): 3.3 (if this number is low, it indicates that not enough new farmers are spawned)
+
+Try to improve your code or come up with a different approach to reduce the damage to the fields even more.

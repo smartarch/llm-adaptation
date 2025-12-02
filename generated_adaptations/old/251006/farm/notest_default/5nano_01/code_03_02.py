@@ -1,0 +1,77 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Gather fields with non-zero threat
+        threatened_fields = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+        if not threatened_fields:
+            # No threat: put all drones to idle
+            for d in components:
+                environment.assign_group(d, "idle")
+            return
+
+        # Build field info: (field, center_x, center_y, required_drones)
+        field_infos = []
+        for f in threatened_fields:
+            cx = (f.left + f.right) / 2.0
+            cy = (f.top + f.bottom) / 2.0
+            required = int(getattr(f, "drones_for_full_protection", 0))
+            field_infos.append((f, cx, cy, required))
+
+        # Map field id to its protection group
+        field_to_group = {f.id: f"protecting {f.id}" for (f, _, _, _) in field_infos}
+
+        # Drones already protecting a field
+        protecting_by_field = {f.id: [] for (f, _, _, _) in field_infos}
+        for d in components:
+            if d.state == "protecting" and d.target_id in protecting_by_field:
+                protecting_by_field[d.target_id].append(d)
+
+        # Track allocation to ensure each drone is assigned once
+        final_group = {}
+        allocated = set()
+
+        # Sort fields by threat level (desc)
+        sorted_fields = sorted(field_infos, key=lambda t: t[0].threat_level, reverse=True)
+
+        # Field-level allocation: greedily fill to full protection
+        for f, cx, cy, required in sorted_fields:
+            fid = f.id
+            current = protecting_by_field.get(fid, [])
+            # Ensure currently protecting drones are assigned to their group
+            for d in current:
+                if d not in allocated:
+                    final_group[d] = f"protecting {fid}"
+                    allocated.add(d)
+
+            current_count = len(current)
+            needed = max(0, required - current_count)
+            if needed <= 0:
+                continue
+
+            # Collect candidates not yet allocated
+            candidates = []
+            for d in components:
+                if d in allocated:
+                    continue
+                dx = d.location.x - cx
+                dy = d.location.y - cy
+                dist = (dx*dx + dy*dy) ** 0.5
+                candidates.append((dist, d))
+            candidates.sort(key=lambda t: t[0])
+
+            for _, d in candidates[:needed]:
+                final_group[d] = f"protecting {fid}"
+                allocated.add(d)
+
+        # Any drones not allocated go idle
+        for d in components:
+            if d not in allocated:
+                final_group[d] = "idle"
+
+        # Apply all group assignments in a single pass
+        for d, grp in final_group.items():
+            environment.assign_group(d, grp)

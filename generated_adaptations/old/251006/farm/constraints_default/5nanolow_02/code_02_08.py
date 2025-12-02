@@ -1,0 +1,100 @@
+# Improved adaptation strategy:
+# - Protect fields in order of descending threat.
+# - First ensure the most threatened field reaches full protection.
+# - Then allocate any remaining drones to the next most-threatened fields, again aiming for full protection.
+# - Drones already protecting any field keep their current protection (to avoid churn).
+# - Any remaining idle drones are set to idle.
+
+from typing import List
+
+from generated_adaptations.base_classes.farm import FarmAdaptation  # type: ignore
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        # Collect fields with positive threat, sorted by threat (descending)
+        fields_with_threat = [
+            f for f in environment.fields if getattr(f, "threat_level", 0.0) > 0.0
+        ]
+        fields_with_threat.sort(
+            key=lambda f: float(getattr(f, "threat_level", 0.0)), reverse=True
+        )
+
+        if not fields_with_threat:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Map field_id -> current protectors count (only those currently protecting)
+        current_protecting = {}
+        for f in fields_with_threat:
+            current_protecting[getattr(f, "id")] = 0
+
+        for c in components:
+            if getattr(c, "state", None) == "protecting":
+                fid = getattr(c, "target_id", None)
+                if fid is not None and fid in current_protecting:
+                    current_protecting[fid] += 1
+
+        # Compute needs per field (including only threatened fields)
+        needs = {}
+        for f in fields_with_threat:
+            fid = f.id
+            required = 0
+            try:
+                required = int(getattr(f, "drones_for_full_protection", 0))
+            except Exception:
+                required = 0
+            needs[fid] = max(0, required - current_protecting.get(fid, 0))
+
+        # Identify the top field for quick reference
+        top_field = fields_with_threat[0]
+        top_id = top_field.id
+        top_needed = needs.get(top_id, 0)
+
+        # Step 1: keep drones already protecting, and assign others greedily without churn
+        # Build a list of candidate indices (not currently protecting anything)
+        candidate_indices = [i for i, c in enumerate(components) if getattr(c, "state", None) != "protecting"]
+
+        # First ensure top field reaches full protection
+        needed_top = max(0, top_needed)
+        for idx in candidate_indices[:]:
+            if needed_top <= 0:
+                break
+            c = components[idx]
+            environment.assign_group(c, f"protecting {top_id}")
+            candidate_indices.remove(idx)
+            needed_top -= 1
+
+        # Recompute needs after allocating to top field (to reflect the drones we just assigned)
+        # Update current_protecting and needs for all fields
+        for f in fields_with_threat:
+            fid = f.id
+            current = current_protecting.get(fid, 0)
+            # If we allocated to top field just now, update counts
+            if fid == top_id:
+                current += min(top_needed, max(0, len(components) - sum(1 for c in components if getattr(c, "state", None) == "protecting")))
+            required = 0
+            try:
+                required = int(getattr(f, "drones_for_full_protection", 0))
+            except Exception:
+                required = 0
+            needs[fid] = max(0, required - current)
+
+        # Step 2: allocate remaining drones to next most-threatened fields
+        for f in fields_with_threat[1:]:
+            fid = f.id
+            if needs.get(fid, 0) <= 0:
+                continue
+            while needs[fid] > 0 and candidate_indices:
+                idx = candidate_indices.pop(0)
+                c = components[idx]
+                environment.assign_group(c, f"protecting {fid}")
+                needs[fid] -= 1
+
+        # Step 3: any remaining drones become idle
+        for idx in candidate_indices:
+            c = components[idx]
+            environment.assign_group(c, "idle")

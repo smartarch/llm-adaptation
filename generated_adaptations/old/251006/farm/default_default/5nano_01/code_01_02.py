@@ -1,0 +1,76 @@
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def assign_drones(self, components, environment, group_ids, step: int):
+        # Collect fields with positive threat levels
+        fields = getattr(environment, "fields", [])
+        threat_fields = [f for f in fields if getattr(f, "threat_level", 0) > 0]
+
+        idle_group = "idle"
+
+        # If no threats, idle all drones
+        if not threat_fields:
+            for d in components:
+                environment.assign_group(d, idle_group)
+            return
+
+        # Choose the top field by threat level
+        top_field = max(threat_fields, key=lambda f: getattr(f, "threat_level", 0))
+        top_group = f"protecting {top_field.id}"
+
+        # Drones required for full protection
+        drones_for_full = getattr(top_field, "drones_for_full_protection", 0)
+        if drones_for_full is None:
+            drones_for_full = 0
+
+        # Count how many drones are currently protecting the top field
+        current_protectors = [
+            d for d in components
+            if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) == top_field.id
+        ]
+        n_current = len(current_protectors)
+
+        # Drones still needed to reach full protection
+        needed = max(0, int(drones_for_full) - n_current)
+
+        # Center of the top field for distance calculations
+        center_x = (getattr(top_field, "left", 0) + getattr(top_field, "right", 0)) / 2.0
+        center_y = (getattr(top_field, "top", 0) + getattr(top_field, "bottom", 0)) / 2.0
+
+        # First, explicitly assign drones already protecting the top field to the top_group
+        assigned_to_top = set()
+        for d in components:
+            if getattr(d, "state", "") == "protecting" and getattr(d, "target_id", None) == top_field.id:
+                environment.assign_group(d, top_group)
+                assigned_to_top.add(d)
+
+        # Prepare candidate drones (those not currently protecting the top field)
+        candidates = []
+        for d in components:
+            if d in assigned_to_top:
+                continue
+            loc = getattr(d, "location", None)
+            if loc is None:
+                dx = dy = 0.0
+            else:
+                dx = getattr(loc, "x", 0.0)
+                dy = getattr(loc, "y", 0.0)
+            dist2 = (dx - center_x) ** 2 + (dy - center_y) ** 2
+            candidates.append((dist2, d))
+
+        # Sort candidates by distance (closest first)
+        candidates.sort(key=lambda t: t[0])
+
+        # Move the closest drones to top_field until we have the required number
+        for i in range(min(needed, len(candidates))):
+            _, drone = candidates[i]
+            environment.assign_group(drone, top_group)
+            assigned_to_top.add(drone)
+
+        # All remaining drones go idle
+        for d in components:
+            if d not in assigned_to_top:
+                environment.assign_group(d, idle_group)

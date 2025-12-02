@@ -1,0 +1,23 @@
+1
+...F..F..............                                                    [100%]
+================================== FAILURES ===================================
+_________________ TestAdapt.test_no_assignment_errors[seed=1] _________________
+There were 630 assignment errors in total.
+_______________ TestAdapt.test_no_repeated_assignments[seed=1] ________________
+In 'assign_drones', 4 components were assigned more than once. Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdapt::test_no_assignment_errors:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdapt::test_no_repeated_assignments:
+ - failed for: seed=1
+ - passed for: all_protecting, some_moving_drones
+TestAdapt::test_no_invalid_groups:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdapt::test_all_assigned:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdapt::test_no_functional_constraints_violated:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdapt::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+2 failed, 19 passed in 3.12s

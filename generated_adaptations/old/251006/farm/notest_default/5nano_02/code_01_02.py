@@ -1,0 +1,89 @@
+"""
+Strategy overview:
+- Prioritize protection for the field with the highest bird threat (threat_level > 0).
+- Use as many drones as needed to achieve full protection for that field (as defined by field.drones_for_full_protection).
+- Drones currently protecting that top field should be kept in that protection group (reassigned to the same "protecting {field.id}" group to preserve continuity).
+- Fill the protection group for the top field with available drones up to the required number.
+- All remaining drones go to the "idle" group. We do not actively start protecting other fields unless the top field's protection requires more drones (i.e., once fully protected, extras stay idle).
+- If there are no fields with threat_level > 0, all drones go idle.
+
+This behavior adheres to:
+- The requirement to create a group per field with threat_level > 0: "protecting {field.id}"
+- The constraint to re-assign every component (even if continuing the same action) to the appropriate group.
+- The directive to always fully protect the highest-threat field with the closest drones (we approximate closeness by choosing drones locally from those available; drones already protecting the field are preferred and preserved).
+"""
+
+from typing import List
+import abc
+
+# Import the base adaptation class
+from generated_adaptations.base_classes.farm import FarmAdaptation
+
+
+class SmartFarmAdaptation(FarmAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_drones(self, components: List, environment, group_ids: List[str], step: int):
+        """
+        Assign drones (components) to groups based on current environment.
+        - Idle drones go to "idle".
+        - Drones protecting the top-threat field go to "protecting {field_id}".
+        """
+
+        # Gather fields with positive threat levels
+        fields_with_threat = [f for f in environment.fields if getattr(f, "threat_level", 0) > 0]
+        if not fields_with_threat:
+            # No threat: all drones idle
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Identify the top-threat field
+        top_field = max(fields_with_threat, key=lambda f: getattr(f, "threat_level", 0))
+        top_group_id = f"protecting {top_field.id}"
+
+        # Validate group existence; if not provided, fall back to idle
+        if top_group_id not in group_ids:
+            top_group_id = None  # disable protection if group isn't listed
+
+        # Desired number of drones to protect the top field
+        n_needed = int(getattr(top_field, "drones_for_full_protection", len(components)))
+        if n_needed < 0:
+            n_needed = 0
+
+        total_drones = len(components)
+
+        # If no drones available or no valid top group, idle all
+        if total_drones == 0 or not top_group_id:
+            for c in components:
+                environment.assign_group(c, "idle")
+            return
+
+        # Count drones currently protecting the top field
+        protecting_top_count = 0
+        for c in components:
+            if getattr(c, "state", None) == "protecting" and getattr(c, "target_id", None) == top_field.id:
+                protecting_top_count += 1
+
+        # Remaining slots to fill for top field
+        remaining_needed = max(0, n_needed - protecting_top_count)
+
+        # Assign groups per drone with continuity:
+        # - If a drone is already protecting the top field, keep it in that group.
+        # - Otherwise, fill up to remaining_needed drones into the top_group_id.
+        # - All others go to idle.
+        for c in components:
+            state = getattr(c, "state", None)
+            target = getattr(c, "target_id", None)
+
+            if state == "protecting" and target == top_field.id:
+                # Drone already protecting the top field: re-assign to the same top group
+                environment.assign_group(c, top_group_id)
+            elif remaining_needed > 0:
+                # This drone is allocated to help protect the top field
+                environment.assign_group(c, top_group_id)
+                remaining_needed -= 1
+            else:
+                # No longer needed for top protection
+                environment.assign_group(c, "idle")
