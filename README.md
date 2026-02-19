@@ -1,12 +1,13 @@
-# Feedback-based Automated Verification in Vibe Coding of CAS Adaptation Built on Constraint Logic
+# Vibe-Coding: Feedback-Based Automated Verification with No Human Code Inspection, a Feasibility Study
 
-This is a replication package for the paper *Feedback-based Automated Verification in Vibe Coding of CAS Adaptation Built on Constraint Logic* submitted to ICSA 2026.
+This is an accompanying material to the paper *Vibe-Coding: Feedback-Based Automated Verification with No Human Code Inspection, a Feasibility Study* submitted to VibeX'26.
 
 ## Contents
 
 * [`experiments`](./experiments) -- experiments (Jupyter notebooks) ran to produce results in the paper
 * [`generated_adaptations/dragon`](./generated_adaptations/dragon), [`generated_adaptations/farm`](./generated_adaptations/farm) -- the raw results (logs) of the experiments
 * [DSL](./DSL) -- the domain-specific languages for architecture specification (note that here, we use a YAML syntax instead of the syntax described in paper to simplify parsing) and functional constraints logic (FCL)
+  * [`constraint_examples.md`](./DSL/constraint_examples.md) -- examples of FCL constraints
   * [`constraints`](./DSL/constraints) -- implementation of FCL parsing and evaluation
   * [`dragon.yaml`](./DSL/dragon.yaml), [`drones.yaml`](./DSL/drones.yaml) (farm) -- architecture specifications for the two use cases
   * [`dragon_constraints.yaml`](./DSL/dragon_constraints.yaml), [`drones_constraints.yaml`](./DSL/drones_constraints.yaml) (farm) -- functional constraints for the two use cases
@@ -20,7 +21,7 @@ This is a replication package for the paper *Feedback-based Automated Verificati
 * common implementation
   * [base classes](./base_classes) -- base classes for components, simulation, adaptation (ensemble assignment strategy)
   * [main.py](./main.py) -- the main entry point for running the simulation
-* use cases -- implementation of the simulation, hand-coded adaptation strategies, configuration files 
+* use cases -- implementation of the simulation, hand-coded adaptation strategies, configuration files
   * [Smart Farm](./farm)
   * [Dragon Hunt](./dragon)
 * this repository also contains other files used for different experiments with LLMs (please ignore them for the purpose of this paper)
