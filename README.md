@@ -1,6 +1,6 @@
-# Vibe-Coding: Feedback-Based Automated Verification with No Human Code Inspection, a Feasibility Study
+# Automated Vibe Coding of a Controller for Collective Adaptive Systems
 
-This is an accompanying material to the paper *Vibe-Coding: Feedback-Based Automated Verification with No Human Code Inspection, a Feasibility Study* submitted to VibeX'26.
+This is an accompanying material to the paper *Automated Vibe Coding of a Controller for Collective Adaptive Systems* submitted to EAAI journal.
 
 ## Contents
 
