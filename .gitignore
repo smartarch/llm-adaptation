@@ -170,4 +170,9 @@ cython_debug/
 /results/**/*.png
 /results/**/*.pdf
 /results/**/RL*
-generated_adaptations/results/**/*.png
+/generated_adaptations/**/*.png
+/generated_adaptations/old/dragon
+/generated_adaptations/old/farm
+/generated_adaptations/old/generate_and_run_dragon.ipynb
+/generated_adaptations/old/generate_and_run_farm.ipynb
+/generated_adaptations/old/README.md
