@@ -1,0 +1,5 @@
+name.append: _p2
+log_dir.append: _p2
+adaptation_params:
+  prompt_template_params:
+    prompt: prompt2.jinja  # swapped order of components and ensembles

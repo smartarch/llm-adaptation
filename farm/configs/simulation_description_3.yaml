@@ -1,0 +1,14 @@
+name.append: _sd3
+log_dir.append: _sd3
+adaptation_params:
+  prompt_template_params:
+    domain_description: |
+      You are coordinating a smart farm and must manage a drone fleet that protects crops from birds. The main objective is to minimize crop damage across every field.
+
+      At the start, birds move around the farm randomly. At times they decide to feed, choose a target field, and fly toward it. Their preference over fields changes over time, and they are also more attracted to fields where more birds are already present. After a bird lands in a field, it waits for a fixed period before causing damage. Once damage is dealt, the bird either attacks another crop in the same field or leaves the area.
+
+      Every field has sensors that detect bird presence. A field with more birds reports a higher threat level.
+
+      A drone can be assigned to a target field; it then travels there and hovers above it. Because drone speed is 2, protection starts only after travel time. The drone scares birds within a certain radius, but fully protecting a field requires multiple drones. Scared birds may relocate within the same field and continue feeding. Only when a field is fully protected do birds flee away, so partial protection is not very effective, though still better than no protection.
+
+      Your task is to distribute drones among fields to reduce bird-caused damage as much as possible. You will repeatedly receive the current state (drone positions, threat levels, and similar information) and must assign drones to fields.

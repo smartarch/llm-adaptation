@@ -97,7 +97,8 @@ class JinjaPromptTemplate(PromptTemplate):
         super().__init__(**configuration)
 
         jinja_env = prepare_jinja_env()
-        self.template = jinja_env.get_template("prompt.jinja")
+        prompt_file = self.configuration.get("prompt", "prompt.jinja")
+        self.template = jinja_env.get_template(prompt_file)
 
         self.correct_assignments: dict[Component, str] = {}
 

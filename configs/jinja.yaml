@@ -3,3 +3,5 @@ log_dir.append: /jinja
 adaptation_params:
   config: true
   prompt_template: adaptations.jinja.JinjaPromptTemplate
+  prompt_template_params:
+    prompt: prompt.jinja

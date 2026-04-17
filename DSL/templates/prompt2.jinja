@@ -1,0 +1,112 @@
+{# Description (goal) #}
+{% if configuration.domain_description %}
+{% if configuration.step %}
+{{ configuration.domain_description.format(step) }}
+{% else %}
+{{ configuration.domain_description }}
+{% endif %}{# step #}
+
+{% endif %}{# description #}
+{# Ensemble assignments #}
+Your goal is to assign the following components into groups. Note that each component must be assigned to exactly one group.
+
+{% for _, assignment in configuration.assignments.items() %}
+{% set components = assignment.components|get_components %}
+{% set component_type = configuration.components[assignment.components.type] %}
+---
+The list of allowed groups for {{ assignment.components.description }}:
+{# Ensembles #}
+{% for ensemble in assignment.ensembles|get_ensembles %}
+{{ loop.index }}. {{ ensemble.name }}
+{% if ensemble.description %}   - {{ ensemble.description }}
+{% endif %}
+{% endfor %}{# ensemble #}
+
+{# Components to be assigned #}
+Components to be assigned: {{ assignment.components.description }} with their attributes {% for attribute, attribute_config in component_type.attributes.items() %}
+{% if attribute_config.description %}
+{{ attribute_config.name }} ({{ attribute_config.description }}){{ ", " if not loop.last else "" -}}
+{% endif %}{% endfor %}{# attribute type #}:
+
+{% if components|length > 0 %}
+{% for component in components %}
+- {{ component[component_type.id] }}:
+{% for attribute, attribute_config in component_type.attributes.items() %}
+{% if component|show_attr(attribute_config) %}
+  - {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+{% endif %}
+{% endfor %}{# attribute #}
+{% endfor %}{# component #}
+{% else %}
+(none)
+{% endif %}
+{% if assignment.strategy %}
+
+{{ assignment.strategy }}
+{% endif %}
+{% endfor %}{# assignment #}
+
+{# Beyond-control components #}
+---
+Here is the state of the environment that might be relevant for assigning the components above into groups:
+{% if configuration.beyond_control_components %}
+{% for _, component_group in configuration.beyond_control_components.items() %}
+{% set components = component_group|get_components(beyond_control=True) %}
+{% set component_type = configuration.components[component_group.type] %}
+
+{{ component_group.description }} with their attributes {% for attribute, attribute_config in component_type.attributes.items() %}
+{% if attribute_config.description %}
+{{ attribute_config.name }} ({{ attribute_config.description }}){{ ", " if not loop.last else "" -}}
+{% endif %}{% endfor %}{# attribute type #}:
+
+{% for component in component_group|get_components(beyond_control=True) %}
+{% if not component_group.singleton %}
+- {{ component[component_type.id] }}:
+{% endif %}
+{% for attribute, attribute_config in component_type.attributes.items() %}
+{% if component|show_attr(attribute_config) %}
+{% if not component_group.singleton %}  {% endif %}
+- {{ attribute_config.name }}: {{ component|get_attr(attribute, attribute_config) }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+---
+{% if configuration.strategy %}
+{{ configuration.strategy }}
+
+{% endif %}{# strategy #}
+{% if configuration.memory %}
+You have access to memory, where you can save information that might be useful for future decisions (e.g., save the current and past decisions, and describe the strategy that led to them). There is no need to save the state of the environment as the new state will be included in the next prompt.
+
+Use the `<memory>` and `</memory>` tags to save information in the memory (there should be only one pair of the tags). Note that the new memory will replace the old memory, so if you need to keep some information from the old memory, include it in the new memory.
+
+Here is the current memory that you saved in the previous step:
+<memory>
+{% if memory %}
+{{ memory }}
+{% else %}
+(empty)
+{% endif %}{# memory content #}
+</memory>
+
+{% endif%}{# memory #}
+{% if configuration.chain_of_thought %}
+Think step by step. First, reason about the question and write a short explanation of your answer. Then, write the group assignments.
+{#Think step by step. Reason about the problem and output all the intermediate steps. Then, write the final group assignments.#}
+
+{% endif%}{# chain-of-thought #}
+Use the `<answer>` and `</answer>` tags to mark the final answer. There should be only one pair of the tags and the final group assignment should be written between them. Do not use Markdown formatting or any additional comments in the final answer.
+
+{% for _, assignment in configuration.assignments.items() %}
+{% if configuration.answer_format == "component-first" %}
+For each of {{ assignment.components.description }}, write one line with the selected group in format "<name>: <group>". The group must be one of {% for ensemble in assignment.ensembles|get_ensembles %}"{{ ensemble.name }}"{{ ", " if not loop.last else "" }}{% endfor %}.
+{% elif configuration.answer_format == "ensemble-first" %}
+For each group, write one line. The line must start with the group name followed by a colon (':') and then a comma-separated list of {{ assignment.components.description }} (their names) assigned to the group.
+{% else %}
+{{ configuration.answer_format }}
+{% endif %}
+
+{% endfor %}
