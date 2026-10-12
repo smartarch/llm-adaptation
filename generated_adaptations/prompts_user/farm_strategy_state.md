@@ -135,5 +135,3 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 
 ---
 Always fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection, but not more. If the field is already fully protected, keep the drones there to continue protection. Don't leave the remaining drones idle: send them to the next most threatened fields, fully protecting as many as possible. Avoid reassigning drones between fields unnecessarily, since a drone needs time to fly to a new field.
-
-Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.

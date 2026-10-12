@@ -17,6 +17,7 @@ from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
 from langchain.schema import AIMessage, BaseMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 from adaptations.llm import LLMTokenUsage
 from generated_adaptations.generator_utils import adaptation_config, simulation_configs
@@ -33,11 +34,12 @@ def parse_arguments(cmdline_args=None):
     parser = argparse.ArgumentParser(description="Command-line arguments for the generator.")
     parser.add_argument("--folder", type=str, required=True, help="Path to the folder. The path should contain `{example}/{variant}/{folder}`")
     parser.add_argument("--max_iterations", type=int, default=10, help="")
-    parser.add_argument("--mode", choices=["system", "all", "result", "stats"], required=True, help="Mode of feedback to the LLM.\n"
+    parser.add_argument("--mode", choices=["system", "all", "result", "stats", "health"], required=True, help="Mode of feedback to the LLM.\n"
         "system=feedback from system unit tests\n"
         "all=feedback from system + user constraints unit tests\n"
         "results=feedback from simulation results\n"
-        "stats=feedback from simulation statistics (e.g., winrate, average damage, etc)")
+        "stats=feedback from simulation statistics (e.g., winrate, average damage, etc)\n" \
+        "health=HP of the dragon over time (only for the dragon example)")
     parser.add_argument("--simulation_runs", type=int, default=3, help="Number of runs of simulation for evaluation.")
     parser.add_argument("--llm", type=str, default="gpt-4.1-mini-2025-04-14", help="LLM to use.")
     if cmdline_args is None:
@@ -119,7 +121,17 @@ def load_llm(args):
             llm_kwargs[key] = value
     else:
         llm_name = args.llm
-    llm = ChatOpenAI(model=llm_name, **llm_kwargs)
+    provider, model = llm_name.split(":", 1)
+    if provider == "anthropic":
+        llm = ChatAnthropic(model=model, **llm_kwargs)
+    elif provider == "openai":
+        llm = ChatOpenAI(model=model, **llm_kwargs)
+    elif provider == "e-infra":
+        api_key = os.environ.get("E_INFRA_API_KEY")
+        base_url = "https://llm.ai.e-infra.cz/v1/"
+        llm = ChatOpenAI(model=model, **llm_kwargs, api_key=api_key, base_url=base_url)
+    else:
+        raise ValueError(f"Unsupported LLM provider: {provider}")
     return llm
 
 
@@ -156,7 +168,7 @@ def gather_feedback(args, folder, messages, iteration, code_file):
         else:
             simulation_report_file = f"{iteration * 2 + 1:02d}_test"
             append_test_report(test_report_all, messages, folder, simulation_report_file)
-    elif args.mode in ["result", "stats"]:
+    elif args.mode in ["result", "stats", "health"]:
         simulation_report_file = f"{iteration * 2 + 1:02d}_{args.mode}"
         append_simulation_report(simulation_results, messages, folder, simulation_report_file, args.mode)
     else:
@@ -306,6 +318,7 @@ def analyze_farm_simulation_results(log_files, folder, code_file):
 def analyze_dragon_simulation_results(log_files, folder, code_file):
     results = pd.DataFrame(columns=["win", "steps", "dragon_hp", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"])
 
+    dragon_hps = []
     for log_file in log_files:
         try:
             csv_file = log_file.replace(".ansi", ".csv")
@@ -320,6 +333,9 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
                                          csv_data.farmers_village.iloc[-1] + csv_data.farmers_cave.iloc[-1],
                                          csv_data.FARMING.mean(), csv_data.ATTACKING.mean(),
                                          csv_data.spawned_farmers.sum(), csv_data.spawned_warriors.sum()]
+            dragon_hp_list = csv_data.dragon_hp.tolist()
+            dragon_hp_list = [max(0, hp) for hp in dragon_hp_list]
+            dragon_hps.append(dragon_hp_list)
         except (FileNotFoundError, ValueError):
             pass
 
@@ -329,6 +345,10 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
     result["losses"] = len(log_files) - result["wins"]
     result["winrate"] = result["wins"] / len(log_files)
     result["steps"] = results[results["win"]].steps.mean() if len(results[results["win"]]) > 0 else None
+    result["dragon_hp_over_time"] = "\n".join(
+        f"Game {i}: " + ", ".join(str(hp) for hp in hps)
+        for i, hps in enumerate(dragon_hps, start=1)
+    )
 
     (folder / "results" / f"{code_file.stem}_simulation_result.json").write_text(json.dumps(result), encoding="utf-8")
 

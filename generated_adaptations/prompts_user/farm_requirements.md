@@ -56,5 +56,3 @@ The adaptation strategy must adhere to the following functional requirements:
 - There should not be too many idle drones. They can be utilized to protect other fields. At least half of the drones should be used for protection most of the time.
 - To keep the protection efficient, drones shouldn't change the field they are protecting too often. At least half of the drones should stay assigned to the same field at least 25% of the time.
 - Partial protection is not very effective, the birds flee away only if the field is fully protected. Prefer fully protecting fewer fields to partially protecting many fields.
-
-Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.
