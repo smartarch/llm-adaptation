@@ -1,6 +1,6 @@
 # Automated Vibe Coding of a Controller for Collective Adaptive Systems
 
-This is an accompanying material to the paper *Automated Vibe Coding of a Controller for Collective Adaptive Systems* submitted to EAAI journal.
+This is an accompanying material to the paper *Automated Vibe Coding of a Controller for Collective Adaptive Systems* submitted to JSS journal.
 
 ## Contents
 

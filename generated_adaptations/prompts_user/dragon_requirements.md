@@ -58,8 +58,6 @@ The Farm (accessible via `environment.farm`) with the following attributes (note
 - `wheat`: Current wheat amount
 
 ---
-All Warriors should go to the Cave, and then attack the Dragon. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary).
-
 The adaptation strategy must adhere to the following functional requirements:
 
 - To win the game, the Dragon must be killed.

@@ -48,8 +48,6 @@ Fields on the farm (accessible via `environment.fields`) with the following attr
 - `drones_for_full_protection`: for full protection
 
 ---
-Always fully protect the field with the highest threat level with the closest drones. Use as many drones as is required for full protection. If the field is already fully protected, keep the drones there to continue protection. The remaining drones can be idle or assigned to other fields.
-
 The adaptation strategy must adhere to the following functional requirements:
 
 - The most threatened field should be always fully protected.

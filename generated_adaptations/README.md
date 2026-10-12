@@ -10,6 +10,16 @@ See the [experiment notebooks](../experiments) for experiments using the vibe co
 
 The [`generator.py`](./generator.py) also performs the constraint verification (see below) and runs a simulation of the use case with the generated AM to collect metrics.
 
+## Prompt generation
+
+The prompts are prepared in [`prompts_user`](./prompts_user). They can be generated from the DSL architecture specification files (run this from the repository root directory):
+
+```bash
+python main.py dragon/configs/default.yaml generated_adaptations/jinja_prompt_generator.yaml DSL/dragon.yaml dragon/configs/strategy.yaml -e 1 -s 1
+```
+
+And similarly for the farm use case. The "functional requirements" (`*_requirements` variant of the prompt) are not yet generated automatically, but they can be added manually by copy-pasting the `reason` message for each constraint.
+
 ## Constraint verification via unit tests
 
 The constraint verification is implemented as unit tests in [`pytest`](https://docs.pytest.org/en/stable/) in the [`generated_adaptations/tests`](./tests) folder. The generic ("system") constraints are separated into several unit tests, while the functional ("user") constraints are grouped into a single unit test (the test loads the constraints from the architecture specification DSL files and uses the [FCL evaluator implementation](../DSL/constraints) for constraint evaluation). The files specific to each use case contain functions for setting up the initial state of the system (simulation) for testing.

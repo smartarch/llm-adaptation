@@ -58,6 +58,6 @@ The Farm (accessible via `environment.farm`) with the following attributes (note
 - `wheat`: Current wheat amount
 
 ---
-All Warriors should go to the Cave, and then attack the Dragon. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary).
+All Warriors should go to the Cave, and then stay there and attack the Dragon. Try to attack the Dragon early - at least once in the first 15 steps of the game. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary, so try to spawn at least two of each).
 
 Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.
