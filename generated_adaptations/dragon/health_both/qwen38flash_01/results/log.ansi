@@ -1,20 +1,254 @@
 Loaded 2 messages from generated_adaptations\dragon\health_both\qwen38flash_01.
 Querying LLM with prompt 01_user.
 [33mTOKENS USED:
-Input: 1349, Output: 45568 (reasoning: 43114)
-Response time (seconds): 1074.6
+Input: 1275, Output: 3232 (reasoning: 1974)
+Response time (seconds): 52.6
 [0m
 LLM response saved to '02_llm.md'.
 Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_02.py'.
 Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_02 --variant=health_both --tests=system
-Test exit code: 0
+Test exit code: 1
 Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_02 --variant=health_both --tests=functional
-Test exit code: 0
+Test exit code: 1
 Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_02 --variant=health_both --tests=all
-Test exit code: 0
+Test exit code: 1
 Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_02.py'.
   Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_02", "log_dir.append": "/health_both/qwen38flash_01/code_02", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_02.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
   Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_02", "log_dir.append": "/health_both/qwen38flash_01/code_02", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_02.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
   Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_02", "log_dir.append": "/health_both/qwen38flash_01/code_02", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_02.SmartAdaptation"} -s 3 -e 3
-Winrate: 1.0, avg. steps: 11.0
-The generated code produces a good result (iteration: 1). Stopping further iterations.
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_health.
+[33mTOKENS USED:
+Input: 3018, Output: 5035 (reasoning: 4070)
+Response time (seconds): 89.1
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_04 --variant=health_both --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_04 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_04 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_04", "log_dir.append": "/health_both/qwen38flash_01/code_04", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_04.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_04", "log_dir.append": "/health_both/qwen38flash_01/code_04", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_04.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_04", "log_dir.append": "/health_both/qwen38flash_01/code_04", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_04.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 05_health.
+[33mTOKENS USED:
+Input: 4468, Output: 2916 (reasoning: 1795)
+Response time (seconds): 45.5
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_06 --variant=health_both --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_06 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_06 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_06", "log_dir.append": "/health_both/qwen38flash_01/code_06", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_06.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_06", "log_dir.append": "/health_both/qwen38flash_01/code_06", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_06.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_06", "log_dir.append": "/health_both/qwen38flash_01/code_06", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_06.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 07_health.
+[33mTOKENS USED:
+Input: 6074, Output: 3369 (reasoning: 2522)
+Response time (seconds): 54.2
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_08 --variant=health_both --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_08 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_08 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_08", "log_dir.append": "/health_both/qwen38flash_01/code_08", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_08.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_08", "log_dir.append": "/health_both/qwen38flash_01/code_08", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_08.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_08", "log_dir.append": "/health_both/qwen38flash_01/code_08", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_08.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 09_health.
+[33mTOKENS USED:
+Input: 7406, Output: 2096 (reasoning: 1330)
+Response time (seconds): 27.1
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_10 --variant=health_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_10 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_10 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_10", "log_dir.append": "/health_both/qwen38flash_01/code_10", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_10.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_10", "log_dir.append": "/health_both/qwen38flash_01/code_10", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_10.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_10", "log_dir.append": "/health_both/qwen38flash_01/code_10", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_10.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 12.0
+Querying LLM with prompt 11_health.
+[33mTOKENS USED:
+Input: 8586, Output: 2043 (reasoning: 1125)
+Response time (seconds): 28.2
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_12 --variant=health_both --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_12 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_12 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_12", "log_dir.append": "/health_both/qwen38flash_01/code_12", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_12.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_12", "log_dir.append": "/health_both/qwen38flash_01/code_12", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_12.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_12", "log_dir.append": "/health_both/qwen38flash_01/code_12", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_12.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 13_health.
+[33mTOKENS USED:
+Input: 9989, Output: 2119 (reasoning: 1456)
+Response time (seconds): 31.8
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_14 --variant=health_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_14 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_14 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_14", "log_dir.append": "/health_both/qwen38flash_01/code_14", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_14.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_14", "log_dir.append": "/health_both/qwen38flash_01/code_14", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_14.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_14", "log_dir.append": "/health_both/qwen38flash_01/code_14", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_14.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 12.0
+Querying LLM with prompt 15_health.
+[33mTOKENS USED:
+Input: 11066, Output: 2227 (reasoning: 1480)
+Response time (seconds): 27.9
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_16 --variant=health_both --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_16 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_16 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_16", "log_dir.append": "/health_both/qwen38flash_01/code_16", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_16.SmartAdaptation"} -s 1 -e 1
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_16", "log_dir.append": "/health_both/qwen38flash_01/code_16", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_16.SmartAdaptation"} -s 2 -e 2
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_16", "log_dir.append": "/health_both/qwen38flash_01/code_16", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_16.SmartAdaptation"} -s 3 -e 3
+    StdErr: 300 lines
+                ^^^^^^^^^^^^^^^^^
+    AttributeError: 'DragonHuntSimulation' object has no attribute 'wheat'
+
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 17_health.
+[33mTOKENS USED:
+Input: 12298, Output: 2222 (reasoning: 1692)
+Response time (seconds): 27.9
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_18 --variant=health_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_18 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_18 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_18", "log_dir.append": "/health_both/qwen38flash_01/code_18", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_18.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_18", "log_dir.append": "/health_both/qwen38flash_01/code_18", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_18.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_18", "log_dir.append": "/health_both/qwen38flash_01/code_18", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_18.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 11.0
+Querying LLM with prompt 19_health.
+[33mTOKENS USED:
+Input: 13239, Output: 2215 (reasoning: 1625)
+Response time (seconds): 29.1
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\health_both\qwen38flash_01\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_20 --variant=health_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_20 --variant=health_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=qwen38flash_01/code_20 --variant=health_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\health_both\qwen38flash_01\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_20", "log_dir.append": "/health_both/qwen38flash_01/code_20", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_20.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_20", "log_dir.append": "/health_both/qwen38flash_01/code_20", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_20.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "health_both/qwen38flash_01/code_20", "log_dir.append": "/health_both/qwen38flash_01/code_20", "adaptation_name": "generated_adaptations.dragon.health_both.qwen38flash_01.code_20.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 12.0
+Reached the maximum number of iterations (10). Stopping.

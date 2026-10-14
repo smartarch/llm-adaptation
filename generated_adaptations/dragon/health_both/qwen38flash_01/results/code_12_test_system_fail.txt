@@ -1,0 +1,45 @@
+1
+...FFFFFFFFFFFFFFFFssssssss                                              [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] ______
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=2] ________________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=3] ________________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_________ TestAdaptSystem.test_no_invalid_groups[no_initial_warriors] _________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] _____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] _____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+__________________ TestAdaptSystem.test_all_assigned[seed=2] __________________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+__________________ TestAdaptSystem.test_all_assigned[seed=3] __________________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+___________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+AttributeError on line 18 in assign_in_village: 'DragonHuntSimulation' object has no attribute 'wheat'
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+16 failed, 3 passed, 8 skipped in 0.45s

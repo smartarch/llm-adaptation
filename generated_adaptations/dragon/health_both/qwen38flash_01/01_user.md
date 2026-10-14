@@ -70,5 +70,3 @@ The adaptation strategy must adhere to the following functional requirements:
 - At least a few new warriors should be spawned to increase the chance of killing the dragon.
 - All warriors should attack the Dragon after moving to the Cave.
 - At least half of the warriors should be in the Cave most of the time so they can attack the Dragon.
-
-Think step by step. First, reason about the task and analyze the problem. Then, describe the adaptation strategy. After that, write the Python code for the adaptation strategy.

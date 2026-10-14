@@ -1,0 +1,22 @@
+1
+...ssssssssssssssssFFF.....                                              [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Farmer Nancy should stay in the Village.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+Farmer Nancy should stay in the Village.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+Farmer Nancy should stay in the Village.
+
+Farmer Michael should stay in the Village.
+
+Farmer Maria should stay in the Village.
+
+Farmer Lisa should stay in the Village.
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3
+ - passed for: no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+3 failed, 8 passed, 16 skipped in 1.08s

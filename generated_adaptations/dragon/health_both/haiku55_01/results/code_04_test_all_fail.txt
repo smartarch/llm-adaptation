@@ -1,0 +1,30 @@
+1
+...................FFF.....                                              [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Farmer Jennifer should stay in the Village.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+Farmer Jennifer should stay in the Village.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+Farmer Jennifer should stay in the Village.
+
+Farmer Charles should stay in the Village.
+
+Farmer Carol should stay in the Village.
+
+Farmer Susan should stay in the Village.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3
+ - passed for: no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+3 failed, 24 passed in 1.40s

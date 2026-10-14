@@ -1,0 +1,47 @@
+1
+...FFFFFFFFFFFFFFF...                                                    [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+________ TestAdaptSystem.test_no_repeated_assignments[all_protecting] _________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+______ TestAdaptSystem.test_no_repeated_assignments[some_moving_drones] _______
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+___________ TestAdaptSystem.test_no_invalid_groups[all_protecting] ____________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_________ TestAdaptSystem.test_no_invalid_groups[some_moving_drones] __________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_________ TestAdaptSystem.test_no_invalid_assignments[all_protecting] _________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_______ TestAdaptSystem.test_no_invalid_assignments[some_moving_drones] _______
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+______________ TestAdaptSystem.test_all_assigned[all_protecting] ______________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+____________ TestAdaptSystem.test_all_assigned[some_moving_drones] ____________
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_ TestAdaptFunctional.test_no_functional_constraints_violated[all_protecting] _
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+_ TestAdaptFunctional.test_no_functional_constraints_violated[some_moving_drones] _
+UnboundLocalError on line 142 in assign_drones: cannot access local variable 'remaining_pool' where it is not associated with a value
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, all_protecting, some_moving_drones
+15 failed, 6 passed in 1.78s

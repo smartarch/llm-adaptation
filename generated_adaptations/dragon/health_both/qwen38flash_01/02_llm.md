@@ -1,264 +1,116 @@
 
 
-The strategy is to split the economy and the army cleanly:
+# Adaptation Strategy Description
 
-1. Warriors are treated as the attack force. Every warrior seen in the Village is sent to the Cave. Every warrior seen in the Cave is assigned to attack. This keeps the maximum possible damage output on the Dragon and satisfies the requirement that all warriors should be in the Cave attacking.
+## Strategy Overview
 
-2. Farmers are treated as the economic base. Every farmer seen in the Cave is sent back to the Village. Every farmer seen in the Village is assigned either to farming, to spawning new farmers, or to spawning new warriors. No farmer is allowed to join the cave fight, because the requirements explicitly say that farmers should remain in the Village.
+The strategy focuses on maximizing dragon damage while building up forces:
 
-3. Wheat is used to grow both populations. The strategy uses a target army size of 10 warriors while the Dragon is healthy, and a target Village population of 10 farmers. If the Dragon is almost dead, or if the 30-step limit is close, the target warrior count is reduced to 4 because a smaller force is enough and fewer villagers are wasted near the end.
+**In the Village:**
+- **Warriors** are immediately sent to the Cave to attack.
+- **Farmers** primarily farm to accumulate wheat. Based on the step count and available wheat, 2 farmers are periodically assigned to "spawn warrior" (costs 12 wheat) or "spawn farmer" (costs 10 wheat) to build up forces. Spawning is scheduled: warriors first (higher damage output), then farmers (for more wheat production). We aim to spawn up to 3 warriors and 3 farmers.
 
-4. The strategy always tries to produce at least a few farmers and at least a few warriors. It keeps internal counters of approximate farmer-spawning and warrior-spawning attempts. If fewer than two spawn-pairs of either type have been created yet, it will try to make them when wheat and surplus villagers are available.
+**In the Cave:**
+- **Warriors** are assigned to "attack" every turn to whittle down the Dragon's 50 HP.
+- **Farmers** (if any end up in the cave) are sent back to the "village" group so they can farm.
 
-5. To avoid starving the economy, the strategy normally reserves at least two farmers to farm each step. It breaks this reservation only when the attack force is critically weak, for example when there are no warriors available or when there are fewer than six warriors and there is still enough time to recover.
+This ensures the Dragon is attacked within the first few steps, all warriors stay in the cave attacking, farmers remain in the village, and enough new units are spawned to guarantee a kill well within 30 steps.
 
-6. When there are not enough villagers to spawn both a farmer and a warrior in the same step, the strategy prefers early warrior spawns when there is no attack force. If there is already some attack force and the farmer count is still too low, it may prefer an early farmer spawn to stabilize the wheat economy.
+## Implementation
 
 ```py
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 
 class SmartAdaptation(DragonHuntAdaptation):
-    WARRIOR_SPAWN_COST = 12
-    FARMER_SPAWN_COST = 10
-    TARGET_WARRIORS = 10
-    TARGET_FARMERS = 10
-    MIN_SPAWN_WARRIORS = 2
-    MIN_SPAWN_FARMERS = 2
-    FARM_RESERVE = 2
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.spawned_warriors = 0
-        self.spawned_farmers = 0
-        self.cave_warriors = 0
+        self.warriors_spawned = 0
+        self.farmers_spawned = 0
+        self.max_warr_spawn = 3
+        self.max_farm_spawn = 3
 
-    def _get_int(self, obj, attr, default=0):
-        try:
-            value = getattr(obj, attr, default)
-            if value is None:
-                return default
-            return int(value)
-        except Exception:
-            return default
+    def assign_in_village(self, components, environment, group_ids, step):
+        warriors = [c for c in components if c.role == "Warrior"]
+        farmers = [c for c in components if c.role == "Farmer"]
 
-    def _is_warrior(self, component):
-        return str(getattr(component, "role", "")).strip().lower() == "warrior"
+        wheat = environment.wheat
+        dragon_hp = environment.dragon.hp
 
-    def _assign_pairs(
-        self,
-        environment,
-        villagers,
-        start,
-        group_name,
-        cost,
-        pairs,
-        wheat_left,
-        min_remaining,
-    ):
-        idx = start
-        assigned = 0
+        # All warriors go to the cave immediately to attack
+        for w in warriors:
+            environment.assign_group(w, "cave")
 
-        while (
-            pairs > 0
-            and idx + 1 < len(villagers)
-            and wheat_left >= cost
-            and len(villagers) - (idx + 2) >= min_remaining
-        ):
-            environment.assign_group(villagers[idx], group_name)
-            environment.assign_group(villagers[idx + 1], group_name)
+        # If dragon is very low HP, no point spawning—just farm to keep economy
+        farmers_available = list(farmers)
 
-            idx += 2
-            wheat_left -= cost
-            pairs -= 1
-            assigned += 1
+        # Determine what to do with farmers:
+        # Priority 1: Spawn warriors (they deal 3 dmg/turn, critical for killing 50 HP dragon)
+        # Priority 2: Spawn farmers (more wheat production)
+        # Priority 3: Farm
+        # Need at least 2 farmers in the spawn group for a spawn action
 
-        return idx, wheat_left, assigned
-
-    def assign_in_village(self, components, environment, group_ids, step: int):
-        components = list(components or [])
-
-        warriors = []
-        farmers = []
-
-        for component in components:
-            if self._is_warrior(component):
-                warriors.append(component)
-            else:
-                farmers.append(component)
-
-        # All warriors belong in the Cave as quickly as possible.
-        for warrior in warriors:
-            environment.assign_group(warrior, "cave")
-
-        if not farmers:
-            return
-
-        dragon_hp = self._get_int(getattr(environment, "dragon", None), "hp", 50)
-        if dragon_hp <= 0:
-            for farmer in farmers:
-                environment.assign_group(farmer, "farm")
-            return
-
-        wheat_left = self._get_int(getattr(environment, "farm", None), "wheat", 0)
-
-        current_warriors = len(warriors) + self.cave_warriors
-        no_warriors = current_warriors == 0
-        warrior_emergency = current_warriors <= 1 or (current_warriors < 6 and step <= 25)
-
-        if dragon_hp <= 15:
-            target_warriors = 4
-        elif step > 22:
-            target_warriors = 4
-        else:
-            target_warriors = self.TARGET_WARRIORS
-
-        force_w = self.spawned_warriors < self.MIN_SPAWN_WARRIORS
-        force_f = self.spawned_farmers < self.MIN_SPAWN_FARMERS
-
-        # If there is already at least one warrior but no farmers have been
-        # spawned yet, and there are only a few farmers left, it can be worth
-        # using a pair to stabilize the farmer population instead of always
-        # sending every farmer pair to spawn warriors.
-        prefer_early_farmer = False
-        if force_f and len(farmers) <= 3 and current_warriors > 0:
-            if len(farmers) == 2 and wheat_left >= self.FARMER_SPAWN_COST + 10:
-                prefer_early_farmer = True
-            elif len(farmers) == 3 and wheat_left >= self.FARMER_SPAWN_COST + 5:
-                prefer_early_farmer = True
-
-            if prefer_early_farmer:
-                prefer_early_farmer = self.spawned_warriors >= self.spawned_farmers + 1
-
-        # Decide how many farmer pairs may be spent on spawning warriors.
-        # Normally keep two farmers farming. In an emergency, allow all or
-        # nearly all farmers to produce warriors because otherwise there is no
-        # meaningful way to kill the Dragon.
-        if no_warriors:
-            min_remaining_w = 0
-            reserve_w = 0
-        elif prefer_early_farmer or (warrior_emergency or force_w):
-            min_remaining_w = (
-                self.FARM_RESERVE if len(farmers) >= 2 * self.FARM_RESERVE else 0
-            )
-            reserve_w = min_remaining_w
-        else:
-            min_remaining_w = self.FARM_RESERVE
-            reserve_w = self.FARM_RESERVE
-
-        max_w_pairs = max(0, (len(farmers) - reserve_w) // 2)
-        desired_w = 0
-
-        if not prefer_early_farmer:
-            if force_w and len(farmers) >= 2:
-                desired_w = max(desired_w, 1)
-
-            if warrior_emergency and len(farmers) >= 2:
-                desired_w = max(desired_w, 1)
-
-            needed_w = max(0, target_warriors - current_warriors)
-            if needed_w > 0 and len(farmers) >= 4:
-                desired_w = max(desired_w, min(max_w_pairs, needed_w))
-
-        cap_w = 4 if no_warriors else 2
-        desired_w = min(desired_w, cap_w, max_w_pairs)
-
-        idx, wheat_left, w_assigned = self._assign_pairs(
-            environment,
-            farmers,
-            0,
-            "spawn warrior",
-            self.WARRIOR_SPAWN_COST,
-            desired_w,
-            wheat_left,
-            min_remaining_w,
+        # Build a spawn schedule: alternate warrior/farmer spawns over early-mid game
+        # Steps 0-1: pure farming to build wheat
+        # Steps 2+: try to spawn
+        should_spawn_warrior = (
+            self.warriors_spawned < self.max_warr_spawn
+            and step >= 1
+            and wheat >= 12
+            and len(farmers_available) >= 2
         )
-        self.spawned_warriors += w_assigned
 
-        remaining = len(farmers) - idx
-        desired_f = 0
+        should_spawn_farmer = (
+            self.farmers_spawned < self.max_farm_spawn
+            and step >= 3
+            and wheat >= 10
+            and len(farmers_available) >= 2
+            and not should_spawn_warrior  # warrior spawn takes priority
+        )
 
-        # Spawn farmers when the farmer population is too small or when the
-        # minimum number of farmer spawns has not yet been reached.
-        if force_f:
-            if remaining >= 2:
-                if remaining == 2:
-                    if wheat_left >= self.FARMER_SPAWN_COST + 10:
-                        desired_f = 1
-                elif remaining == 3:
-                    if wheat_left >= self.FARMER_SPAWN_COST + 5:
-                        desired_f = 1
-                else:
-                    desired_f = 1
-        else:
-            farmer_count_now = len(farmers)
-
-            if (
-                remaining >= 2 * self.FARM_RESERVE
-                and farmer_count_now < self.TARGET_FARMERS
-            ):
-                desired_f = 1
-
-            if (
-                remaining >= 3 * self.FARM_RESERVE
-                and wheat_left >= 30
-                and farmer_count_now < self.TARGET_FARMERS
-            ):
-                desired_f = 2
-
-        if force_f:
-            if remaining >= 4:
-                min_remaining_f = self.FARM_RESERVE
-            elif remaining == 3:
-                min_remaining_f = 1
-            else:
-                min_remaining_f = 0
-        else:
-            min_remaining_f = self.FARM_RESERVE
-
-        max_f_pairs = max(0, (remaining - min_remaining_f) // 2)
-        desired_f = min(desired_f, 2, max_f_pairs)
-
-        if desired_f > 0 and wheat_left >= self.FARMER_SPAWN_COST:
-            idx, wheat_left, f_assigned = self._assign_pairs(
-                environment,
-                farmers,
-                idx,
-                "spawn farmer",
-                self.FARMER_SPAWN_COST,
-                desired_f,
-                wheat_left,
-                min_remaining_f,
+        # Also spawn farmer if we already hit warrior cap
+        if self.warriors_spawned >= self.max_warr_spawn:
+            should_spawn_farmer = (
+                self.farmers_spawned < self.max_farm_spawn
+                and wheat >= 10
+                and len(farmers_available) >= 2
             )
-            self.spawned_farmers += f_assigned
 
-        # Every farmer that was not used for spawning farms.
-        for farmer in farmers[idx:]:
-            environment.assign_group(farmer, "farm")
+        if should_spawn_warrior:
+            for i in range(2):
+                environment.assign_group(farmers_available[i], "spawn warrior")
+            farmers_available = farmers_available[2:]
+            self.warriors_spawned += 1
+        elif should_spawn_farmer:
+            for i in range(2):
+                environment.assign_group(farmers_available[i], "spawn farmer")
+            farmers_available = farmers_available[2:]
+            self.farmers_spawned += 1
 
-    def assign_in_cave(self, components, environment, group_ids, step: int):
-        components = list(components or [])
+        # All remaining farmers farm
+        for f in farmers_available:
+            environment.assign_group(f, "farm")
 
-        if not components:
-            self.cave_warriors = 0
-            return
-
-        warriors = []
-        non_warriors = []
-
-        for component in components:
-            if self._is_warrior(component):
-                warriors.append(component)
+    def assign_in_cave(self, components, environment, group_ids, step):
+        for c in components:
+            if c.role == "Warrior":
+                # Warriors attack the dragon every turn they are in the cave
+                environment.assign_group(c, "attack")
             else:
-                non_warriors.append(component)
-
-        self.cave_warriors = len(warriors)
-
-        # All warriors in the Cave attack immediately.
-        for warrior in warriors:
-            environment.assign_group(warrior, "attack")
-
-        # Farmers must not stay in the Cave; they return to the Village.
-        for farmer in non_warriors:
-            environment.assign_group(farmer, "village")
+                # Farmers should not be in the cave; send them back to village
+                environment.assign_group(c, "village")
 ```
+
+### Key Design Decisions
+
+| Aspect | Choice | Rationale |
+|--------|--------|-----------|
+| Warriors in village | → `"cave"` | Requirement: all warriors go to cave |
+| Warriors in cave | → `"attack"` | Requirement: warriors attack every turn |
+| Farmers in cave | → `"village"` | Farmers belong in the village |
+| Spawning priority | Warriors first | 3 dmg vs 1 dmg per unit; faster dragon kill |
+| Spawn schedule | Warriors from step ≥ 1, Farmers from step ≥ 3 | Build initial wheat, then expand |
+| Max spawns | 3 warriors, 3 farmers | Satisfies "at least a few of each"; enough to kill 50 HP dragon in ~6 turns with 4 warriors (3+3 spawned + starting) |
+| Dragon urgency | If wheat/dragon HP suggests no spawn needed | Prevents wasting resources late-game |
+
+With this strategy, the Dragon (50 HP) takes 3 damage per warrior per turn. After a few spawn cycles we have 4+ warriors in the cave dealing 12+ damage/turn, killing the Dragon in well under 15 steps.

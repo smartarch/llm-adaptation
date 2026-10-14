@@ -1,0 +1,15 @@
+1
+...ssssssssssssssss..F...F.                                              [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated_at_the_end[seed=3] _
+Warrior Jason should attack the Dragon after moving to the Cave.
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=3
+ - passed for: seed=1, seed=2, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - failed for: seed=3
+ - passed for: seed=1, seed=2, no_initial_warriors
+2 failed, 9 passed, 16 skipped in 0.55s

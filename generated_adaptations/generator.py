@@ -86,12 +86,12 @@ def query_llm(llm, messages, folder, llm_response_file):
     end_time = time.time()
     LLMTokenUsage(response, response_time=end_time - start_time).print()
 
-    messages[llm_response_file] = AIMessage(content=response.content)
+    messages[llm_response_file] = AIMessage(content=response.text())
 
-    (folder / f"{llm_response_file}.md").write_text(response.content, encoding="utf-8")
+    (folder / f"{llm_response_file}.md").write_text(response.text(), encoding="utf-8")
     print(f"LLM response saved to '{llm_response_file}.md'.")
 
-    code_block = extract_code_block(response.content)
+    code_block = extract_code_block(response.text())
     if not code_block:
         print("No code block found in the LLM response.")
         return None
@@ -123,6 +123,7 @@ def load_llm(args):
         llm_name = args.llm
     provider, model = llm_name.split(":", 1)
     if provider == "anthropic":
+        llm_kwargs.setdefault("max_tokens", 16_000)
         llm = ChatAnthropic(model=model, **llm_kwargs)
     elif provider == "openai":
         llm = ChatOpenAI(model=model, **llm_kwargs)

@@ -1,0 +1,50 @@
+Here is a report from running unit tests on your implementation:
+
+...FFFFFFFFFFFFFFF...                                                    [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+NameError on line 85 in _match_group: name 're' is not defined
+________ TestAdaptSystem.test_no_repeated_assignments[all_protecting] _________
+NameError on line 85 in _match_group: name 're' is not defined
+______ TestAdaptSystem.test_no_repeated_assignments[some_moving_drones] _______
+NameError on line 85 in _match_group: name 're' is not defined
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+NameError on line 85 in _match_group: name 're' is not defined
+___________ TestAdaptSystem.test_no_invalid_groups[all_protecting] ____________
+NameError on line 85 in _match_group: name 're' is not defined
+_________ TestAdaptSystem.test_no_invalid_groups[some_moving_drones] __________
+NameError on line 85 in _match_group: name 're' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+NameError on line 85 in _match_group: name 're' is not defined
+_________ TestAdaptSystem.test_no_invalid_assignments[all_protecting] _________
+NameError on line 85 in _match_group: name 're' is not defined
+_______ TestAdaptSystem.test_no_invalid_assignments[some_moving_drones] _______
+NameError on line 85 in _match_group: name 're' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+NameError on line 85 in _match_group: name 're' is not defined
+______________ TestAdaptSystem.test_all_assigned[all_protecting] ______________
+NameError on line 85 in _match_group: name 're' is not defined
+____________ TestAdaptSystem.test_all_assigned[some_moving_drones] ____________
+NameError on line 85 in _match_group: name 're' is not defined
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+NameError on line 85 in _match_group: name 're' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[all_protecting] _
+NameError on line 85 in _match_group: name 're' is not defined
+_ TestAdaptFunctional.test_no_functional_constraints_violated[some_moving_drones] _
+NameError on line 85 in _match_group: name 're' is not defined
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, all_protecting, some_moving_drones
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, all_protecting, some_moving_drones
+15 failed, 6 passed in 1.78s
+
+Update your code to fix the failing tests.

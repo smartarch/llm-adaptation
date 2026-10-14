@@ -1,0 +1,107 @@
+## Analysis of the previous attempt
+
+Nine variants have scored 0%, so the problem is probably not a single tuning knob. The common pattern is that the army is too small when it first engages the Dragon, or the wheat economy is too weak to replace losses. Two details from the game rules matter here:
+
+1. **Farmer spawns pay back quickly.** A farmer costs 10 wheat and produces 5 wheat per step. The previous versions spent wheat on warriors (12 each, 2 wheat per step) before the economy had grown, so income stayed low for most of the game.
+2. **The Dragon only counterattacks when attacked.** Waiting in the Cave is free. Attacking with a small group gives the Dragon many rounds to kill warriors, while a batch of about 4 or more warriors kills it in only a few rounds (50 HP at 3 damage per warrior-hit).
+
+## Revised strategy: short economy window, then a larger strike
+
+- **Opening (steps 0 to 2):** All farmers stay on `"farm"` to build wheat. Warriors go to `"cave"` and wait there.
+- **Build phase:** Two farmers always stay on `"farm"`. If there are fewer than 4 farmers, pairs are spawned as farmers (10 wheat) to rebuild income. Otherwise, pairs are spawned as warriors (12 wheat).
+- **Strike:** Once 4 warriors are in the Cave, or step 10 is reached, the strike begins. This is a one-way switch. From then on, all warriors in the Cave attack every step, and new arrivals join immediately. Step 10 keeps the first attack well within the first 15 steps.
+- **Farmers:** They never enter the Cave. Any farmer that ends up there is sent back to `"village"`.
+
+This is an untested change. It trades a short economic head start for a strike with a threshold of 4 warriors instead of 5, and it starts the strike earlier.
+
+```py
+import abc
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    """
+    Short economy opening, then a batch strike.
+    - Steps 0-2: all farmers farm to build wheat; warriors wait in the Cave.
+    - Afterwards: two farmers always farm. If the farmer count is below 4,
+      pairs spawn farmers (10 wheat) to rebuild income; otherwise pairs
+      spawn warriors (12 wheat).
+    - Strike (one-way switch) when >=4 warriors are in the Cave or step >= 10.
+      Then all warriors in the Cave attack every step.
+    - Farmers never enter the Cave.
+    """
+
+    WARRIOR_SPAWN_COST = 12
+    FARMER_SPAWN_COST = 10
+    OPENING_STEPS = 3
+    MIN_FARMING = 2
+    MIN_FARMERS = 4
+    STRIKE_WARRIORS = 4
+    STRIKE_STEP = 10
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.strike = False
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        wheat = environment.farm.wheat
+
+        warriors = [c for c in components if c.role == "Warrior"]
+        farmers = [c for c in components if c.role == "Farmer"]
+
+        # Warriors always head to the Cave (they wait there until the strike).
+        for w in warriors:
+            environment.assign_group(w, "cave")
+
+        # Opening: everyone farms to build wheat.
+        if step < self.OPENING_STEPS:
+            for f in farmers:
+                environment.assign_group(f, "farm")
+            return
+
+        reserve = min(self.MIN_FARMING, len(farmers))
+        farming = farmers[:reserve]
+        available = farmers[reserve:]
+
+        spawn_farmer = []
+        spawn_warrior = []
+
+        # Rebuild the farmer economy if too few farmers remain.
+        if len(farmers) < self.MIN_FARMERS:
+            while len(available) >= 2 and wheat >= self.FARMER_SPAWN_COST:
+                spawn_farmer.extend(available[:2])
+                available = available[2:]
+                wheat -= self.FARMER_SPAWN_COST
+        else:
+            # Otherwise convert farmers into warriors while wheat allows.
+            while len(available) >= 2 and wheat >= self.WARRIOR_SPAWN_COST:
+                spawn_warrior.extend(available[:2])
+                available = available[2:]
+                wheat -= self.WARRIOR_SPAWN_COST
+
+        # Anyone left over keeps farming.
+        farming.extend(available)
+
+        for f in spawn_farmer:
+            environment.assign_group(f, "spawn farmer")
+        for f in spawn_warrior:
+            environment.assign_group(f, "spawn warrior")
+        for f in farming:
+            environment.assign_group(f, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        warriors_in_cave = [c for c in components if c.role == "Warrior"]
+
+        # One-way switch: start the strike once a batch is gathered
+        # or the time limit for the first attack is reached.
+        if not self.strike and (len(warriors_in_cave) >= self.STRIKE_WARRIORS
+                                or step >= self.STRIKE_STEP):
+            self.strike = True
+
+        for c in components:
+            if c.role == "Warrior":
+                environment.assign_group(c, "attack" if self.strike else "cave")
+            else:
+                # Farmers never fight; send them back to the Village.
+                environment.assign_group(c, "village")
+```

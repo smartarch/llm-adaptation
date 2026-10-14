@@ -1,0 +1,56 @@
+Loaded 2 messages from generated_adaptations\farm\generic_requirements\qwen38flash_01.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1145, Output: 3925 (reasoning: 2594)
+Response time (seconds): 135.3
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\farm\generic_requirements\qwen38flash_01\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_02 --variant=generic_requirements --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_02 --variant=generic_requirements --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_02 --variant=generic_requirements --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\generic_requirements\qwen38flash_01\code_02.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_02", "log_dir.append": "/generic_requirements/qwen38flash_01/code_02", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_02.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_02", "log_dir.append": "/generic_requirements/qwen38flash_01/code_02", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_02.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_02", "log_dir.append": "/generic_requirements/qwen38flash_01/code_02", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_02.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 86.7
+Querying LLM with prompt 03_pass.
+[33mTOKENS USED:
+Input: 2547, Output: 3622 (reasoning: 1446)
+Response time (seconds): 101.8
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\farm\generic_requirements\qwen38flash_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_04 --variant=generic_requirements --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_04 --variant=generic_requirements --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_04 --variant=generic_requirements --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\farm\generic_requirements\qwen38flash_01\code_04.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_04", "log_dir.append": "/generic_requirements/qwen38flash_01/code_04", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_04.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_04", "log_dir.append": "/generic_requirements/qwen38flash_01/code_04", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_04.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_04", "log_dir.append": "/generic_requirements/qwen38flash_01/code_04", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_04.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 135.0
+Querying LLM with prompt 05_pass.
+[33mTOKENS USED:
+Input: 4795, Output: 2525 (reasoning: 1049)
+Response time (seconds): 77.8
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\farm\generic_requirements\qwen38flash_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_06 --variant=generic_requirements --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_06 --variant=generic_requirements --tests=functional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=farm --adaptation_name=qwen38flash_01/code_06 --variant=generic_requirements --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\farm\generic_requirements\qwen38flash_01\code_06.py'.
+  Run #1/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_06", "log_dir.append": "/generic_requirements/qwen38flash_01/code_06", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_06.SmartFarmAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_06", "log_dir.append": "/generic_requirements/qwen38flash_01/code_06", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_06.SmartFarmAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py farm/configs/default.yaml generated_adaptations/configs/generated.yaml farm/configs/config_no_battery.yaml DSL/drones.yaml --extra_config={"name": "generic_requirements/qwen38flash_01/code_06", "log_dir.append": "/generic_requirements/qwen38flash_01/code_06", "adaptation_name": "generated_adaptations.farm.generic_requirements.qwen38flash_01.code_06.SmartFarmAdaptation"} -s 3 -e 3
+Average damage: 48.7
+The generated code produces a good result (iteration: 3). Stopping further iterations.
