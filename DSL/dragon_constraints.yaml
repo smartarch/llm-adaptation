@@ -27,11 +27,15 @@ adaptation_params:  # this is purely technical
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in AttackEn`))"
         reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
-      warriors_should_be_in_cave:
+      eat_regularly:
+        constraint: "always(forall villager in `VillagerComps`: `villager.steps_since_meal >= MEAL_INTERVAL - 1` implies `villager in EatEn`)"
+        reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps and must eat now (step {step}), otherwise they starve."
+      keep_attacking:
         variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "within(`0.8 * MAX`, MAX, `len([v for v in Warriors if v.location == Map.CAVE]) >= 0.5 * len(Warriors)`)"
-        reason: "At least half of the warriors should be in the Cave most of the time so they can attack the Dragon."
+          MAX_GAP: "2"  # the Dragon can be left without an attack for at most 2 consecutive steps
+          gap: "len(AttackEn) == 0 and DragonComps[0].fight_started"
+        constraint: "always(within(`MAX_GAP`, `-MAX_GAP`, `gap`) implies `not gap`)"
+        reason: "The Dragon was not attacked for more than {MAX_GAP} steps in a row (step {step}), so it regenerates its health. Keep attacking it without longer breaks."
       game_is_won:
         constraint: "within(1, MAX, `DragonComps[0].hp <= 0`)"
         reason: "To win the game, the Dragon must be killed."

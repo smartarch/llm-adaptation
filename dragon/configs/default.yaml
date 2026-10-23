@@ -20,7 +20,15 @@ warrior:
   Farming: 2
   SpawnCost: 12
 
+# the parameters were tuned with dragon/tuning.py (see dragon/README.md)
 dragon:
-  HP: 50
+  HP: 100
   FireAttackProb: 0.4
   EatAttackProb: 0.2
+  Regeneration: 5  # HP regained in each step without an attack (after the first attack), 0 = no regeneration
+
+meals:
+  interval: 6  # a villager must eat at least once in every 6 consecutive steps, otherwise they starve (null = no meals needed)
+  cost: 1  # wheat consumed by one meal
+  starvation_damage: 1  # HP lost in each step without a meal once the interval is exceeded
+  hungry_cannot_attack: true  # starving villagers (interval exceeded) deal no damage to the Dragon

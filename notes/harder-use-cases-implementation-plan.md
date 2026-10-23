@@ -403,6 +403,30 @@ You decide the final parameters and constraints, and `DRAGON_GOOD_STEPS` ([gener
 * The farm snapshot still matches `phase2/`, as a regression check.
 * Stop and report with the table (no commit). The final parameters and constraints are set after your decision.
 
+### Outcome of Phase 3 (added after the implementation)
+
+The planned values above (HP 50, N = 8, R = 3) were only the starting point. Some changes went beyond the plan:
+
+* **Tuning by grid search.** At HP 50 the game is too short for the meals to matter: every baseline won in 11–13 steps, even the one that never eats. The parameters were therefore tuned:
+  * a grid search over the meal interval N ∈ {6, 8}, the weakness flag and the regeneration R ∈ {0, 5, 10}, with HP 100 and 30 steps;
+  * the script is [`dragon/tuning.py`](../dragon/tuning.py), and the results and reasoning are in [`dragon/README.md`](../dragon/README.md);
+  * earlier exploratory runs also tried N = 5, Dragon HP 120/150, 40 steps, starvation damage 2, larger waves of `assemble_and_strike`, a stricter `MAX_GAP`, and a weapons mechanic (dull weapons instead of meals).
+* **Weakness added** (`meals.hungry_cannot_attack`): starving villagers deal no damage to the Dragon.
+  * Without it, ignoring the meals is a viable exploit: let the warriors starve while attacking and keep spawning new ones. `greedy_no_meals` then sometimes wins, and faster than the baselines that respect the meals, but unreliably.
+  * The flag is independent of the other meal parameters.
+  * The weapons mechanic served the same purpose but did not close the exploit (newly spawned warriors have sharp weapons), so it was removed.
+* **Chosen parameters:** Dragon HP = 100, N = 6, R = 5, weakness on, 30 steps. `DRAGON_GOOD_STEPS` = 25.
+* **Baselines:**
+  * `greedy_no_meals`, the renamed original baseline;
+  * `greedy_with_meals`, which eats just in time, without coordination or wheat reserve;
+  * `staggered_meals`, the reference AM, which passes all constraints;
+  * `assemble_and_strike`, which attacks in waves and violates `keep_attacking`.
+* **Prompts:** the domain description now also states that moving between the Village and the Cave takes one step, which the meal timing depends on.
+* **Constraints:** kept as planned (without `warriors_should_be_in_cave`). They will be aligned once we see what the LLMs produce. `pointless_trip` (§B.7) was tried only in the experiments.
+* **Open decisions for after the LLM pilot:**
+  * **The `hungry_villagers` situation.** It is the only situation in which `greedy_with_meals` fails a constraint (`eat_regularly`, at N = 6). In it, a warrior with `steps_since_meal = 3` is sent to the Cave and cannot return in time to eat; in the other four situations the baseline passes every constraint. Decide whether to keep the situation, depending on whether it gives useful feedback for the LLM-generated AMs or only makes the task stricter than intended.
+  * The exact form and thresholds of the constraints (e.g. `MAX_GAP`, `spawn_at_least_a_few_farmers`, adding `pointless_trip`).
+
 ---
 
 ## Phase 4: Smart Farm, batteries and charging

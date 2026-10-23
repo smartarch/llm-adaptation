@@ -12,6 +12,7 @@ class VillagerState(enum.StrEnum):
     MOVING_TO_CAVE = "moving_to_cave"
     ATTACKING = "attacking"
     SPAWNING = "spawning_new_villager"
+    EATING = "eating"
 
 
 class Villager(Component):
@@ -31,21 +32,41 @@ class Villager(Component):
         self.log_state = VillagerState.IDLE  # for logging
         self.hp = self.HP
         self.name = get_name()
+        self.steps_since_meal = 0  # number of consecutive steps without a meal (new villagers start fed)
 
     def actuate(self):
         self.log_state = self.state
-        if self.state == VillagerState.IDLE or self.state == VillagerState.SPAWNING:
+        if self.state == VillagerState.EATING and self.location == Map.VILLAGE and self.simulation.farm.wheat >= self.simulation.meal_cost:
+            self.simulation.farm.wheat -= self.simulation.meal_cost
+            self.steps_since_meal = 0
+        else:
+            self.steps_since_meal += 1
+
+        if self.state in (VillagerState.IDLE, VillagerState.SPAWNING, VillagerState.EATING):
             pass
         elif self.state == VillagerState.FARMING and self.location == Map.VILLAGE:
             self.simulation.farm.new_wheat += self.Farming
         elif self.state == VillagerState.ATTACKING and self.location == Map.CAVE:
-            self.simulation.dragon.get_attacked(self.Attack)
+            self.attack()
         elif self.state == VillagerState.MOVING_TO_VILLAGE:
             self.location = Map.VILLAGE
             self.state = VillagerState.IDLE
         elif self.state == VillagerState.MOVING_TO_CAVE:
             self.location = Map.CAVE
             self.state = VillagerState.IDLE
+
+        # starvation: the villager did not eat for `meal_interval` consecutive steps
+        if self.is_starving and self.simulation.starvation_damage:
+            self.get_attacked(self.simulation.starvation_damage)
+
+    @property
+    def is_starving(self) -> bool:
+        return bool(self.simulation.meal_interval) and self.steps_since_meal >= self.simulation.meal_interval
+
+    def attack(self):
+        if self.simulation.hungry_cannot_attack and self.is_starving:
+            return  # too weak to fight
+        self.simulation.dragon.get_attacked(self.Attack)
 
     @property
     def role(self):

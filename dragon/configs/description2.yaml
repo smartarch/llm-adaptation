@@ -4,9 +4,11 @@ adaptation_params:  # this is purely technical
   prompt_template_params:  # this is purely technical
     domain_description: |
       You play a computer game. The goal is to kill a Dragon as fast as possible.
-      The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
+      The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon. Moving between the Village and the Cave takes one step.
       There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon. Farmers start with 4 HP, produce 5 wheat when farming, and deal 1 damage when attacking. Warriors start with 6 HP, produce 2 wheat when farming, and deal 3 damage when attacking.
       To spawn a new villager, at least two villagers must be in the "spawn" group and some wheat is consumed (12 for warriors, 10 for farmers).
+      Villagers need to eat regularly, and food is available only in the Village: a villager in the "eat" group eats a meal, which consumes 1 wheat. A villager that does not eat for 6 consecutive steps starves: they lose 1 HP in each step until they eat, and they are too weak to deal any damage to the Dragon. New villagers are spawned fed.
       When the Dragon is attacked, it can attack back. With 40% probability, it will cause 1 damage to every villager in the Cave, and with 20% probability, it will eat one random villager in the Cave. Dead villagers are removed from the game. If all the villagers die, you lose the game.
-      The Dragon starts with 50 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step {}.
+      After the Dragon is attacked for the first time, it regenerates 5 HP in each step in which nobody attacks it.
+      The Dragon starts with 100 HP and you win the game when it dies. If you don't kill the Dragon within 30 steps, you lose the game. This is step {}.
     step: true

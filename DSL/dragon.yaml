@@ -21,7 +21,10 @@ adaptation_params:  # this is purely technical
           state:
             name: "State"
             format: "lambda value: value.value"
-            description: '"idle", "farming", "moving_to_village", "moving_to_cave", "attacking", or "spawning_new_villager"'
+            description: '"idle", "farming", "moving_to_village", "moving_to_cave", "attacking", "spawning_new_villager", or "eating"'
+          steps_since_meal:
+            name: "Steps since last meal"
+            description: "number of consecutive steps in which the villager did not eat"
 
     ensembles:
       Farm:
@@ -45,11 +48,15 @@ adaptation_params:  # this is purely technical
       GoToVillage:
         name: "village"
         description: "Go to the Village"
+      Eat:
+        name: "eat"
+        description: "Eat a meal (consumes 1 wheat)"
 
     domain_description: |
       You play a computer game. The goal is to kill a Dragon as fast as possible.
       The Dragon lives in a Cave near a Village. The player controls villagers. The villagers can either be in the Village and work on a farm (and produce wheat) or they can go to the Cave, where they can attack the Dragon.
       There are two types of villagers - farmers and warriors. Farmers produce more wheat when they work on a farm, and warriors deal more damage to the Dragon.
+      Villagers need to eat regularly in the Village, otherwise they starve. The Dragon regenerates when nobody attacks it.
 
     beyond_control_components:
       dragon:
@@ -69,7 +76,7 @@ adaptation_params:  # this is purely technical
           type: Villager
           if: "lambda component: component.location == Map.VILLAGE"
           description: "Villagers in the Village"
-        ensembles: [Farm, GoToCave, SpawnFarmer, SpawnWarrior]
+        ensembles: [Farm, GoToCave, SpawnFarmer, SpawnWarrior, Eat]
       assign_in_cave:
         components:
           type: Villager
@@ -86,6 +93,8 @@ adaptation_params:  # this is purely technical
         seed: 3
       no_initial_warriors:
         arrange: "generated_adaptations.tests.dragon.remove_warriors"
+      hungry_villagers:
+        arrange: "generated_adaptations.tests.dragon.hungry_villagers"
 
     strategy: ""  # optional
     strategy_interface:

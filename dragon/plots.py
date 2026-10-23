@@ -20,8 +20,8 @@ def draw_plots(file_name: str, show=False):
     axes[0].legend(loc='upper right')
 
     # Area Chart of Villager states
-    area_cols = ["FARMING", "SPAWNING", "IDLE", "ATTACKING", "MOVING_TO_VILLAGE", "MOVING_TO_CAVE"]
-    colors = ["tab:green", "tab:blue", "tab:gray", "tab:red", "tab:olive", "tab:brown"]
+    area_cols = ["FARMING", "SPAWNING", "IDLE", "ATTACKING", "MOVING_TO_VILLAGE", "MOVING_TO_CAVE", "EATING"]
+    colors = ["tab:green", "tab:blue", "tab:gray", "tab:red", "tab:olive", "tab:brown", "tab:orange"]
     df[area_cols + ['step']].plot.area(ax=axes[1], color=colors, x='step')
     axes[1].set_ylabel('Villager Count')
     axes[1].set_title('Villager States')

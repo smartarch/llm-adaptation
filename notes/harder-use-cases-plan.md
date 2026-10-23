@@ -107,6 +107,11 @@ The **default initial state (all drones full)** is therefore the hard state; sta
 1. hide `steps_since_meal`, so the AM must keep its own record;
 2. the Dragon's shield: damage only if at least 3 villagers attack at once.
 
+**Update after the implementation:** the values above (N = 8, R = 3, HP 50) were the starting point.
+* The final parameters were set by a grid search: Dragon HP 100, N = 6, R = 5, 30 steps (see [`dragon/README.md`](../dragon/README.md)).
+* A **weakness** rule was added, so that starving villagers deal no damage. Without it, ignoring the meals and letting the warriors starve while attacking sometimes wins the game.
+* Details are in the "Outcome of Phase 3" section of [the implementation plan](./harder-use-cases-implementation-plan.md).
+
 ## 5. FCL semantics and verifier
 
 **Semantics we propose to adopt.**

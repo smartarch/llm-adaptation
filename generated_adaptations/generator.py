@@ -27,7 +27,7 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 
 
 FARM_GOOD_DAMAGE = 60  # damage threshold for a good adaptation in the farm example
-DRAGON_GOOD_STEPS = 15  # average steps threshold for a good adaptation in the dragon example
+DRAGON_GOOD_STEPS = 25  # average steps threshold for a good adaptation in the dragon example (staggered_meals baseline: 21.6, see dragon/README.md)
 
 
 def parse_arguments(cmdline_args=None):

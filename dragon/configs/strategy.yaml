@@ -2,4 +2,4 @@ name.append: _strategy
 log_dir.append: _strategy
 adaptation_params:  # this is purely technical
   prompt_template_params:  # this is purely technical
-    strategy: "All Warriors should go to the Cave, and then stay there and attack the Dragon. Try to attack the Dragon early - at least once in the first 15 steps of the game. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary so try to spawn at least two of each)."
+    strategy: "All Warriors should go to the Cave and attack the Dragon; they return to the Village only to eat and then go back to the Cave. Try to attack the Dragon early - at least once in the first 15 steps of the game. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary so try to spawn at least two of each). Every villager must eat at least once in every 6 consecutive steps, so plan the meals in advance (a Warrior needs one step to return from the Cave to the Village). Plan the meals of the Warriors so that the Dragon is never left unattacked for more than 2 steps in a row, because it regenerates."

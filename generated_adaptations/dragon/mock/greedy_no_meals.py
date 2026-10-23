@@ -1,4 +1,4 @@
-"""All Warriors should go to the Cave, and then attack the Dragon. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary)."""
+"""Greedy strategy without meals (the original baseline): all Warriors go to the Cave and attack the Dragon, all Farmers stay in the Village and farm or spawn new villagers. Nobody ever eats."""
 from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
 
 class SmartAdaptation(DragonHuntAdaptation):
