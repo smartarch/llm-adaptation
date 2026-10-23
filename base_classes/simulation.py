@@ -1,11 +1,20 @@
 import abc
 import sys
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Iterator, NamedTuple, Optional, TYPE_CHECKING
 import traceback
 
 from DSL.dsl_utils import DSLConfiguration, EnsembleInstance
 from base_classes.components import Component
 from base_classes.ensembles import ResolvedEnsemble
+
+if TYPE_CHECKING:
+    from DSL.constraints.constraint import UserConstraint
+
+
+class AssignedGroup(NamedTuple):
+    """Group assigned to a component, together with the assignment (method) in which it was assigned."""
+    assignment: str | None
+    group_id: str
 
 
 class AssignmentError(Exception):
@@ -48,7 +57,10 @@ class MissingAssignmentError(AssignmentError):
 
 
 class UserConstraintError(AssignmentError):
-    pass
+    def __init__(self, message: str, constraint_name: str | None = None, step: int | None = None):
+        self.constraint_name = constraint_name
+        self.step = step
+        super().__init__(message)
 
 
 class InvalidAssignmentError(AssignmentError):
@@ -67,8 +79,10 @@ class Simulation(abc.ABC):
         self.stats = None
 
         self.current_assignment: str | None = None  # name of the assignment method currently being executed, if any
-        self.assignments: dict[Component, str] = {}
+        self.assignments: dict[Component, AssignedGroup] = {}
         self.assignment_errors: list[AssignmentError] = []
+        self.user_constraints_enabled = True  # can be disabled, e.g., when arranging the initial state of a test
+        self._initial_constraint_errors: list[UserConstraintError] = []  # violations found in the initial state
         self.steps: int = config["steps"]
         self.step: Optional[int] = None
         self.adapt_every = self.config.get("adaptation_params", {}).get("adapt_every", 1)
@@ -83,6 +97,8 @@ class Simulation(abc.ABC):
 
     def run_simulation(self, steps=None):
         simulation_steps: int = steps if steps is not None else self.steps  # type: ignore
+        self.reset_assignments()
+        self.start_user_constraints(simulation_steps)
         for step in range(1, simulation_steps + 1):
             print(f"Step: {step}")
             self.step = step
@@ -147,15 +163,14 @@ class Simulation(abc.ABC):
         """Returns the classes and global functions as a dictionary that can be used in `eval`."""
         return {
             "environment": self,
-            "MAX": self.steps - (self.step if self.step is not None else 1) + 1,  # remaining steps (including current)
         }
 
     def assign_group(self, component: Component, group_id: str) -> AssignmentError | None:
         try:
             if component not in self.components:
                 raise UnknownComponentError(str(component))
-            self._check_group(component, group_id)
-            self.assignments[component] = group_id
+            self._check_group(component, group_id, self.current_assignment)
+            self.assignments[component] = AssignedGroup(self.current_assignment, group_id)
             return None
         except AssignmentError as error:
             self.append_assignment_error(error)
@@ -167,8 +182,8 @@ class Simulation(abc.ABC):
         self.assignment_errors.append(error)
 
     @abc.abstractmethod
-    def _check_group(self, component: Component, group_id: str):
-        """Checks whether a component can be assigned to a group. Should throw an error if the assignment is invalid."""
+    def _check_group(self, component: Component, group_id: str, assignment: str | None):
+        """Checks whether a component can be assigned to a group (in the given assignment method, None if not known). Should throw an error if the assignment is invalid."""
         pass
 
     def _apply_assignments(self):
@@ -177,49 +192,58 @@ class Simulation(abc.ABC):
         for error in self.assignment_errors:
             self.assignment_error_handler(error)
 
-        for component, group_id in self.assignments.items():
-            self._assign_group(component, group_id)
+        for component, (assignment, group_id) in self.assignments.items():
+            self._assign_group(component, group_id, assignment)
 
     def check_missing_assignments(self, components_to_be_assigned):
         for component in components_to_be_assigned:
             if component not in self.assignments:
                 self.append_assignment_error(MissingAssignmentError(component))
 
-    def check_user_constraints(self):
+    def _user_constraint_groups(self) -> Iterator[tuple[list["UserConstraint"], list[Component], list[ResolvedEnsemble]]]:
+        """Yields the constraints together with the components and ensembles they see (per assignment, then global)."""
         # per assignment constraints
         for assignment_name, constraints in self.assignment_constraints.items():
             components = self.dsl_config.load_components_for_assignment(self, assignment_name)
             all_components = list(components.values()) + self.beyond_control_components
             ensemble_instances = self.dsl_config.load_ensemble_instances_for_assignment(self, assignment_name)
-            resolved_ensembles = self._resolve_ensembles(ensemble_instances)
-            for constraint in constraints:
-                for violation in constraint.check(self, all_components, resolved_ensembles):
-                    self.assignment_errors.append(UserConstraintError(violation))
+            yield constraints, all_components, self._resolve_ensembles(ensemble_instances)
 
         # global constraints
         components = self.dsl_config.load_components_for_all_assignments(self)
         all_components = list(components.values()) + self.beyond_control_components
         ensemble_instances = self.dsl_config.load_ensemble_instances_for_all_assignments(self)
-        resolved_ensembles = self._resolve_ensembles(ensemble_instances)
-        for constraint in self.global_constraints:
-            for violation in constraint.check(self, all_components, resolved_ensembles):
-                self.assignment_errors.append(UserConstraintError(violation))
+        yield self.global_constraints, all_components, self._resolve_ensembles(ensemble_instances)
+
+    def start_user_constraints(self, trace_length: int):
+        """Start monitoring the user constraints for a new run (the current state is the initial state, without assignments)."""
+        self._initial_constraint_errors = []
+        if not self.user_constraints_enabled:
+            return
+        for constraints, components, resolved_ensembles in self._user_constraint_groups():
+            for constraint in constraints:
+                for step, reason in constraint.start(self, trace_length, components, resolved_ensembles):
+                    self._initial_constraint_errors.append(UserConstraintError(reason, constraint.name, step))
+
+    def check_user_constraints(self):
+        if not self.user_constraints_enabled:
+            return
+        # violations in the initial state are reported together with the first step
+        self.assignment_errors.extend(self._initial_constraint_errors)
+        self._initial_constraint_errors = []
+
+        for constraints, components, resolved_ensembles in self._user_constraint_groups():
+            for constraint in constraints:
+                for step, reason in constraint.check(self, components, resolved_ensembles):
+                    self.assignment_errors.append(UserConstraintError(reason, constraint.name, step))
 
     def check_user_constraints_end(self):
-        # per assignment constraints
-        for assignment_name, constraints in self.assignment_constraints.items():
-            components = self.dsl_config.load_components_for_assignment(self, assignment_name)
-            all_components = list(components.values()) + self.beyond_control_components
+        if not self.user_constraints_enabled:
+            return
+        for constraints in [*self.assignment_constraints.values(), self.global_constraints]:
             for constraint in constraints:
-                for violation in constraint.check_end(self, all_components):
-                    self.assignment_errors.append(UserConstraintError(violation))
-
-        # global constraints
-        components = self.dsl_config.load_components_for_all_assignments(self)
-        all_components = list(components.values()) + self.beyond_control_components
-        for constraint in self.global_constraints:
-            for violation in constraint.check_end(self, all_components):
-                self.assignment_errors.append(UserConstraintError(violation))
+                for step, reason in constraint.check_end():
+                    self.assignment_errors.append(UserConstraintError(reason, constraint.name, step))
 
         # print all errors
         if len(self.assignment_errors) > 0:
@@ -229,14 +253,18 @@ class Simulation(abc.ABC):
 
     def _resolve_ensembles(self, ensemble_instances: list[EnsembleInstance]):
         resolved_ensembles = []
-        # load members for each ensemble
+        # load members for each ensemble (the group name is unique only within an assignment)
         for ensemble_instance in ensemble_instances:
-            members = [c for c, e in self.assignments.items() if e == ensemble_instance.name]
+            members = [
+                component for component, (assignment, group_id) in self.assignments.items()
+                if group_id == ensemble_instance.name
+                and (ensemble_instance.assignment is None or assignment is None or assignment == ensemble_instance.assignment)
+            ]
             resolved_ensembles.append(ResolvedEnsemble(ensemble_instance, members))
         return resolved_ensembles
 
     @abc.abstractmethod
-    def _assign_group(self, component: Component, group_id: str):
+    def _assign_group(self, component: Component, group_id: str, assignment: str | None):
         pass
 
     def reset_assignments(self):

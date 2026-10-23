@@ -1,50 +1,45 @@
-// Temporal logic DSL with Python expressions
-// - Base operator: within(n, t, `python_predicate`)
-// - Derived: scattered(n, `pred`), consequent(t, `pred`), always(`pred`), once(`pred`), next(`pred`)
-// - Boolean composition: implies
-// - Quantifiers: forall x in `python_set_expr`: FORMULA
-// - Python sub-expressions are enclosed in backticks `...` and evaluated
+// Functional Constraints Logic (FCL) with Python predicates
+// - within(n, t, `pred`): `pred` holds at least n times within the next t states (t > 0, strict future window)
+//                         or within the previous |t| states (t < 0, strict past window)
+// - always(formula): the formula holds in every following state (= within(MAX, MAX, formula))
+// - forall x in `set`: formula
+// - antecedent implies consequent (antecedent: predicate or past within; consequent: predicate or future within)
+// - Python sub-expressions are enclosed in backticks `...` and evaluated in the current state
 
 start: formula
-     | implication
-     | forall
 
-formula: py_expr
-       | temporal
+?formula: forall
+        | always
+        | implication
+        | within
+        | py_expr
 
-implication: formula "implies" formula
+forall: "forall" NAME "in" py_expr ":" formula
 
-temporal: within_call
-        | scattered_call
-        | consequent_call
-        | always_call
-        | once_call
-        | next_call
+always: "always" "(" formula ")"
 
+within: "within" "(" num "," num "," py_expr ")"
 
-within_call: "within" "(" num_arg "," num_arg "," py_expr ")"
-scattered_call: "scattered" "(" num_arg "," py_expr ")"
-consequent_call: "consequent" "(" num_arg "," py_expr ")"
-always_call: "always" "(" py_expr ")"
-once_call: "once" "(" py_expr ")"
-next_call: "next" "(" py_expr ")"
+implication: antecedent "implies" consequent
+?antecedent: within | py_expr
+?consequent: within | py_expr
 
-// num_arg can be a NUMBER or a py_expr
-num_arg: NUMBER | MAX | py_expr
-
-forall: "forall" NAME "in" py_expr ":" (formula | implication)
+?num: SIGNED_INT -> number
+    | MAX -> max_const
+    | BEG -> beg_const
+    | py_expr
 
 // Backtick-delimited Python expression; supports escaping backticks with \`
 py_expr: PY_EXPR
 
 PY_EXPR: /`([^`\\]|\\.)*`/
 
-NUMBER: /[0-9]+/
-
 MAX: "MAX"
+BEG: "BEG"
 
 NAME: /[a-zA-Z_][a-zA-Z0-9_]*/
 
+%import common.SIGNED_INT
 %import common.WS
 %ignore WS
 

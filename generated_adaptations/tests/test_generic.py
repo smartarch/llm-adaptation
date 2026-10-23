@@ -92,10 +92,34 @@ def assert_no_invalid_assignments(assignment_errors, fail=fail_without_traceback
         fail("\n".join(invalid_assignment.message for invalid_assignment in invalid_assignments))
 
 
+MAX_MESSAGES_PER_CONSTRAINT = 3  # number of distinct messages shown for each violated constraint
+MAX_STEPS_LISTED = 10  # number of steps listed for a repeatedly violated constraint
+
+
+def format_functional_constraint_violations(violations: list[UserConstraintError]) -> str:
+    """Group the violations by constraint, show a few distinct messages and summarize the repeated ones."""
+    grouped: dict[str | None, list[UserConstraintError]] = {}
+    for violation in violations:
+        grouped.setdefault(violation.constraint_name, []).append(violation)
+
+    parts = []
+    for group in grouped.values():
+        messages = list(dict.fromkeys(violation.message for violation in group))  # distinct, in order
+        text = "\n".join(messages[:MAX_MESSAGES_PER_CONSTRAINT])
+        if len(group) > 1:
+            steps = sorted({violation.step for violation in group if violation.step is not None})
+            steps_text = ", ".join(str(step) for step in steps[:MAX_STEPS_LISTED])
+            if len(steps) > MAX_STEPS_LISTED:
+                steps_text += ", ..."
+            text += f"\n(violated {len(group)} times in total, at steps {steps_text})"
+        parts.append(text)
+    return "\n\n".join(parts)
+
+
 def assert_no_functional_constraints_violated(assignment_errors, fail=fail_without_traceback):
     functional_constraint_violations = filter_errors(assignment_errors, UserConstraintError)
     if functional_constraint_violations:
-        fail("\n\n".join([error.message for error in functional_constraint_violations]))
+        fail(format_functional_constraint_violations(functional_constraint_violations))
 
 
 @pytest.mark.dependency(depends=["TestConfiguration::test_adaptation_class_is_correct"])
@@ -219,7 +243,14 @@ class TestAdaptFunctional(TestAdaptBase):
     def test_no_functional_constraints_violated(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
-        self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_functional_constraints_violated, immediate=False)
+        violations: list[UserConstraintError] = []
+
+        def collect_violations(assignment_errors, fail):
+            violations.extend(filter_errors(assignment_errors, UserConstraintError))
+
+        self.run_simulation_with_assert_after_each_adapt(simulation, steps, collect_violations, immediate=False)
+        if violations:
+            fail_without_traceback(format_functional_constraint_violations(violations))
 
     def test_no_functional_constraints_violated_at_the_end(self, situation, simulation_class):
         simulation = self.init_simulation(situation, simulation_class)

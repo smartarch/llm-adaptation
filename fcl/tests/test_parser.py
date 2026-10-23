@@ -2,68 +2,86 @@ import pytest
 from lark.exceptions import LarkError
 
 import fcl
-from fcl.ast import ForAll, Implies, PyExpr, TemporalHistory, TemporalWithin
+from fcl.ast import Always, ForAll, Implies, Pred, Within
 
 
-def test_py_expr():
+def test_pred():
     formula = fcl.parse("`x > 1`")
-    assert isinstance(formula, PyExpr)
+    assert isinstance(formula, Pred)
     assert formula.code == "x > 1"
 
 
 def test_escaped_backtick():
     formula = fcl.parse(r"`'\`'`")
-    assert isinstance(formula, PyExpr)
+    assert isinstance(formula, Pred)
     assert formula.code == "'`'"
 
 
-@pytest.mark.parametrize("text, min_occurrences, window", [
+@pytest.mark.parametrize("text, n, t", [
     ("within(2, 5, `p`)", 2, 5),
-    ("scattered(3, `p`)", 3, "MAX"),
-    ("consequent(4, `p`)", 4, 4),
-    ("always(`p`)", "MAX", "MAX"),
-    ("once(`p`)", 1, "MAX"),
-    ("next(`p`)", 1, 1),
+    ("within(1, -3, `p`)", 1, -3),
+    ("within(MAX, MAX, `p`)", "MAX", "MAX"),
+    ("within(1, BEG, `p`)", 1, "BEG"),
 ])
-def test_temporal_operators(text, min_occurrences, window):
+def test_within(text, n, t):
     formula = fcl.parse(text)
-    assert isinstance(formula, TemporalWithin)
-
-    def value(arg):
-        return arg.code if isinstance(arg, PyExpr) else arg
-
-    assert value(formula.min_occurrences) == min_occurrences
-    assert value(formula.window) == window
-    assert formula.expr.code == "p"
+    assert isinstance(formula, Within)
+    assert formula.n == n
+    assert formula.t == t
+    assert formula.pred.code == "p"
 
 
 def test_python_expression_as_number():
     formula = fcl.parse("within(`0.8 * MAX`, MAX, `p`)")
-    assert isinstance(formula.min_occurrences, PyExpr)
-    assert formula.min_occurrences.code == "0.8 * MAX"
+    assert isinstance(formula.n, Pred)
+    assert formula.n.code == "0.8 * MAX"
 
 
-def test_implication_with_temporal_antecedent_uses_history():
-    formula = fcl.parse("consequent(1, `a`) implies once(`b`)")
+def test_always():
+    formula = fcl.parse("always(forall x in `xs`: `x > 0` implies within(1, 3, `x > 1`))")
+    assert isinstance(formula, Always)
+    assert isinstance(formula.body, ForAll)
+    assert isinstance(formula.body.body, Implies)
+
+
+def test_implication_with_past_antecedent():
+    formula = fcl.parse("within(2, -2, `a`) implies `b`")
     assert isinstance(formula, Implies)
-    assert isinstance(formula.left, TemporalHistory)
-    assert isinstance(formula.right, TemporalWithin)
+    assert isinstance(formula.left, Within)
+    assert isinstance(formula.right, Pred)
 
 
-def test_forall():
-    formula = fcl.parse("forall x in `xs`: always(`x > 0`)")
+def test_nested_forall():
+    formula = fcl.parse("forall x in `xs`: forall y in `ys`: `x != y`")
     assert isinstance(formula, ForAll)
-    assert formula.var == "x"
-    assert formula.set_expr.code == "xs"
-    assert isinstance(formula.body, TemporalWithin)
+    assert isinstance(formula.body, ForAll)
 
 
-def test_forall_with_implication():
-    formula = fcl.parse("forall x in `xs`: `x > 0` implies once(`x > 1`)")
-    assert isinstance(formula, ForAll)
-    assert isinstance(formula.body, Implies)
+def test_str_round_trip():
+    text = "always(forall x in `xs`: within(1, -2, `a`) implies within(`0.5 * MAX`, MAX, `x in b`))"
+    assert str(fcl.parse(text)) == text
+    assert str(fcl.parse(str(fcl.parse(text)))) == text
 
 
-def test_syntax_error():
+@pytest.mark.parametrize("text", [
+    "always(p)",  # predicate must be in backticks
+    "once(`p`)",  # removed syntactic sugar
+    "scattered(2, `p`)",
+    "consequent(2, `p`)",
+    "next(`p`)",
+    "within(1, 2, always(`p`))",  # only a predicate inside within
+])
+def test_syntax_errors(text):
     with pytest.raises(LarkError):
-        fcl.parse("always(p)")  # predicate must be in backticks
+        fcl.parse(text)
+
+
+@pytest.mark.parametrize("text", [
+    "within(1, 2, `a`) implies `b`",  # future within in antecedent
+    "`a` implies within(1, -2, `b`)",  # past within in consequent
+    "always(always(`p`))",  # nested always
+    "always(forall x in `xs`: always(`p`))",
+])
+def test_unsupported_formulas(text):
+    with pytest.raises(fcl.FCLError):
+        fcl.parse(text)

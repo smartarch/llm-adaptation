@@ -91,7 +91,7 @@ class DragonHuntSimulation(Simulation):
             "Farm": Farm,
         }
 
-    def _check_group(self, component: "Villager", group_id: str):
+    def _check_group(self, component: "Villager", group_id: str, assignment: str | None):
         if component in self.assignments:
             raise ComponentAlreadyAssignedError(component)
 
@@ -106,8 +106,8 @@ class DragonHuntSimulation(Simulation):
 
         # check if there is enough wheat to spawn villagers
         if group_id in ("spawn farmer", "spawn warrior"):
-            spawn_farmer_members = sum(1 for g in self.assignments.values() if g == "spawn farmer")
-            spawn_warrior_members = sum(1 for g in self.assignments.values() if g == "spawn warrior")
+            spawn_farmer_members = sum(1 for g in self.assignments.values() if g.group_id == "spawn farmer")
+            spawn_warrior_members = sum(1 for g in self.assignments.values() if g.group_id == "spawn warrior")
             if group_id == "spawn farmer":
                 spawn_farmer_members += 1
             else:
@@ -118,7 +118,7 @@ class DragonHuntSimulation(Simulation):
             if wheat_consumption > self.farm.wheat:
                 raise InvalidAssignmentError(f'Not enough wheat to spawn new villager. Cannot assign "{component}" to "{group_id}".')
 
-    def _assign_group(self, component: "Villager", group_id: str):
+    def _assign_group(self, component: "Villager", group_id: str, assignment: str | None):
         from dragon.components.villagers import VillagerState
 
         if component.location == Map.VILLAGE:

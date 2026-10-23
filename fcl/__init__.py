@@ -2,7 +2,8 @@
 
 See README.md in this folder for the syntax, semantics and API.
 """
+from fcl.ast import FCLError
 from fcl.monitor import Formula, Monitor, State, Violation
 from fcl.parser import parse
 
-__all__ = ["parse", "Monitor", "Violation", "Formula", "State"]
+__all__ = ["parse", "Monitor", "Violation", "Formula", "State", "FCLError"]

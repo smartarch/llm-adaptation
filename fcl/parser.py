@@ -1,99 +1,76 @@
 import os
 from lark import Lark, Transformer, v_args
 
-from fcl.ast import ASTNode, PyExpr, TemporalHistory, TemporalWithin, Implies, ForAll
+from fcl.ast import Always, FCLError, ForAll, Implies, Node, Pred, Within
 
 
 _GRAMMAR_PATH = os.path.join(os.path.dirname(__file__), 'grammar.lark')
 
-class ConstraintParser:
-    def __init__(self):
-        with open(_GRAMMAR_PATH, encoding='utf-8') as f:
-            grammar = f.read()
-        self.lark = Lark(grammar, parser='lalr', start='start')
-
-    def parse(self, text: str):
-        """Parse a DSL constraint string and return the Lark parse tree."""
-        return self.lark.parse(text)
-
 
 @v_args(inline=True)
-class ConstraintASTTransformer(Transformer):
-    """AST transformer"""
+class _ASTTransformer(Transformer):
+    """Transforms the Lark parse tree into the FCL AST."""
 
     def start(self, child):
-        # Unwrap the top-level 'start' rule for a cleaner AST
-        return child
-
-    def formula(self, child):
-        # Unwrap the 'formula' rule
-        return child
-
-    def temporal(self, child):
-        # Unwrap the 'temporal' rule (for all temporal operators)
         return child
 
     def py_expr(self, token):
         # Strip backticks, unescape \`
         code = str(token)[1:-1].replace('\\`', '`')
-        return PyExpr(code)
+        return Pred(code)
 
-    def num_arg(self, child):
-        # Unwrap the 'num_arg' rule
-        return child
+    def number(self, token):
+        return int(token)
 
-    def within_call(self, min_occurrences, window, expr):
-        return TemporalWithin(min_occurrences, window, expr)
+    def max_const(self, _token):
+        return "MAX"
 
-    def scattered_call(self, min_occurrences, expr):
-        # scattered(n, expr) => within(n, MAX, expr)
-        return TemporalWithin(min_occurrences, PyExpr("MAX"), expr)
+    def beg_const(self, _token):
+        return "BEG"
 
-    def consequent_call(self, window, expr):
-        # consequent(t, expr) => within(t, t, expr)
-        return TemporalWithin(window, window, expr)
+    def within(self, n, t, pred):
+        return Within(n, t, pred)
 
-    def always_call(self, expr):
-        # always(expr) => within(MAX, MAX, expr)
-        return TemporalWithin(PyExpr("MAX"), PyExpr("MAX"), expr)
-
-    def once_call(self, expr):
-        # once(expr) => within(1, MAX, expr)
-        return TemporalWithin(1, PyExpr("MAX"), expr)
-
-    def next_call(self, expr):
-        # next(expr) => within(1, 1, expr)
-        return TemporalWithin(1, 1, expr)
+    def always(self, body):
+        _check_no_always(body, "always(...) cannot be nested in another always(...)")
+        return Always(body)
 
     def implication(self, left, right):
-        if isinstance(left, TemporalWithin):
-            # Antecedent is temporal: use history-based evaluation
-            left = TemporalHistory(
-                left.min_occurrences,
-                left.window,
-                left.expr
-            )
+        if isinstance(left, Within) and isinstance(left.t, int) and left.t > 0:
+            raise FCLError(f"Antecedent of an implication must be a predicate or a past within (t < 0): {left}")
+        if isinstance(right, Within) and isinstance(right.t, int) and right.t < 0:
+            raise FCLError(f"Consequent of an implication must be a predicate or a future within (t > 0): {right}")
         return Implies(left, right)
 
     def forall(self, var, set_expr, body):
         return ForAll(str(var), set_expr, body)
 
-    def NAME(self, token):
-        return str(token)
 
-    def NUMBER(self, token):
-        return int(token)
-
-    def MAX(self, token):
-        return PyExpr("MAX")
+def _check_no_always(node: Node, message: str):
+    if isinstance(node, Always):
+        raise FCLError(message)
+    if isinstance(node, ForAll):
+        _check_no_always(node.body, message)
 
 
-# Singleton parser + transformer
-_parser = ConstraintParser()
-_transformer = ConstraintASTTransformer()
+def _create_parser() -> Lark:
+    with open(_GRAMMAR_PATH, encoding='utf-8') as f:
+        grammar = f.read()
+    return Lark(grammar, parser='lalr', start='start', transformer=_ASTTransformer())
 
 
-def parse(text: str) -> ASTNode:
-    """Parse an FCL formula (in the DSL syntax) into an AST (`Formula`)."""
-    parsed = _parser.parse(text)
-    return _transformer.transform(parsed)
+_parser = _create_parser()
+
+
+def parse(text: str) -> Node:
+    """Parse an FCL formula (in the DSL syntax) into an AST (`Formula`).
+
+    Raises `lark.exceptions.LarkError` for syntax errors and `fcl.FCLError` for formulas outside the implemented subset.
+    """
+    try:
+        return _parser.parse(text)
+    except Exception as e:
+        # errors raised in the transformer are wrapped by lark
+        if isinstance(getattr(e, "orig_exc", None), FCLError):
+            raise e.orig_exc from None
+        raise

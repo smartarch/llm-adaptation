@@ -361,6 +361,7 @@ dragon:
 
 * Keep `seed=1..3` and `no_initial_warriors`.
 * Add `hungry_villagers`: an arrange step that sets uneven `steps_since_meal` values, so that a fixed schedule from step 0 does not work.
+* *(Added after Phase 2.)* Reconsider the trigger of `all_warriors_should_go_to_cave`. It currently reads `warrior.location == Map.VILLAGE and warrior not in GoToCaveEn and MAX > 0` (in the Village and not being sent right now). An alternative is "after a warrior returns to the Village (e.g. to eat), it goes back to the Cave" (trigger: `warrior in GoToVillageEn`), plus a second trigger for newly spawned warriors, who never return. Choose the form that reads better with the meals.
 
 ### Baselines (in `generated_adaptations/dragon/mock/`, descriptive names)
 
@@ -460,6 +461,7 @@ You decide the final parameters and constraints, and `DRAGON_GOOD_STEPS` ([gener
 
 * Keep `seed=1`, which is the hard case with all drones fully charged.
 * Keep `all_protecting` and `some_moving_drones`. With batteries, their arrange step now leaves the drones with partly used batteries.
+  * *(Added after Phase 2.)* Make these two situations **longer** (e.g. 20–50 steps instead of `steps: 1`). Since Phase 2, `MAX` is the real run length, so in a 1-step run the "X % of the time" constraints (`consistency`, `closeness`, ...) must hold in the single step, which is not meaningful. Currently `protect_by_threat` fails `consistency` and `closeness` in these situations for this reason.
 * Add `seed=2` with the full 300 steps, if the test runtime allows.
 
 ### Baselines

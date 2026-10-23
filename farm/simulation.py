@@ -69,7 +69,7 @@ class SmartFarmSimulation(Simulation):
     def terminatedDrones(self):
         return filter(lambda d: d.state == DroneState.TERMINATED, self.drones)
 
-    def _check_group(self, drone: Drone, group_id: str):
+    def _check_group(self, drone: Drone, group_id: str, assignment: str | None):
         if drone in self.assignments:
             raise ComponentAlreadyAssignedError(drone)
         if group_id.strip() == "idle":
@@ -89,7 +89,7 @@ class SmartFarmSimulation(Simulation):
                 return field
         raise KeyError
 
-    def _assign_group(self, drone: Drone, group_id: str):
+    def _assign_group(self, drone: Drone, group_id: str, assignment: str | None):
         if group_id.strip() == "idle":
             drone.assignTarget(None)
         elif group_id.strip().startswith("protecting"):
@@ -107,9 +107,12 @@ class SmartFarmSimulation(Simulation):
         self.random_assign_drones(drones)
 
         should_adapt = self.should_adapt
+        user_constraints_enabled = self.user_constraints_enabled
         self.should_adapt = lambda _step: False
+        self.user_constraints_enabled = False  # the arrangement is not part of the monitored run
         self.run_simulation(steps)
         self.should_adapt = should_adapt
+        self.user_constraints_enabled = user_constraints_enabled
 
     def random_assign_drones(self, drones=None):
         if drones is None:

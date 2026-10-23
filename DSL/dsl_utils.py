@@ -47,7 +47,7 @@ class DSLConfiguration(UserDict):
         ensembles_config = assignment_config["ensembles"]
         ensemble_types = self.data["ensembles"]
 
-        return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components + simulation.beyond_control_components, simulation))
+        return list(get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, simulation.components + simulation.beyond_control_components, simulation, assignment_name))
 
     def load_constraints(self, simulation, assignment_name) -> Iterator["UserConstraint"]:
         if assignment_name is not None:
@@ -90,10 +90,10 @@ def get_attr(component, attribute, config):
     return formatter.format(value)
 
 
-def get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, components, environment):
+def get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, components, environment, assignment=None):
     for ensemble_config in ensembles_config:
         if isinstance(ensemble_config, str):  # singleton
-            yield EnsembleInstance(type=ensemble_config, **ensemble_types[ensemble_config])
+            yield EnsembleInstance(type=ensemble_config, **ensemble_types[ensemble_config], assignment=assignment)
         else:  # instance for each component
             ensemble_type = ensemble_types[ensemble_config["type"]]
             component_type = eval(ensemble_config["foreach"], environment.get_globals())
@@ -105,7 +105,7 @@ def get_ensemble_instances_for_assignment(ensembles_config, ensemble_types, comp
             name_generator = eval(ensemble_type["name"])
 
             for component in filtered_components:
-                ensemble = EnsembleInstance(type=ensemble_config["type"], name=name_generator(component))
+                ensemble = EnsembleInstance(type=ensemble_config["type"], name=name_generator(component), assignment=assignment)
                 if "description" in ensemble_type:
                     ensemble.description = ensemble_type["description"]
                 # if the ensemble has parameters, the component is the first parameter
@@ -122,6 +122,7 @@ class EnsembleInstance:
     name: str
     description: str | None = None
     param: Component | None = None
+    assignment: str | None = None  # name of the assignment (method) the ensemble belongs to
 
 
 @dataclasses.dataclass
