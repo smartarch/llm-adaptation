@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Any, Union
 import abc
 
-from utils import HashableDict
+from fcl.utils import HashableDict
 
 
 def resolve_number(expr: Union[int, "PyExpr"], step: int, context: dict[str, Any], bindings: dict[str, Any]) -> int:
@@ -126,7 +126,7 @@ class Implies(ASTNode):
 
     def __repr__(self):
         return f"Implies({self.left!r}, {self.right!r})"
-    
+
     def evaluate(self, *args) -> bool | list["TemporalObligation"]:
         right_eval = self.right.evaluate(*args)  # we need to evaluate right side anyway to evaluate existing obligations
         if self.left.evaluate(*args):
@@ -135,8 +135,9 @@ class Implies(ASTNode):
 
 
 class ForAllViolation:
-    def __init__(self, context: dict[str, Any]):
+    def __init__(self, context: dict[str, Any], bindings: dict[str, Any]):
         self.context = context
+        self.bindings = bindings
 
 
 class ForAll(ASTNode):
@@ -157,5 +158,5 @@ class ForAll(ASTNode):
             if isinstance(eval_result, list):
                 result.extend(eval_result)
             if eval_result is False:
-                result.append(ForAllViolation(context | bindings_e))
+                result.append(ForAllViolation(context, bindings_e))
         return result

@@ -1,10 +1,10 @@
 import os
 from lark import Lark, Transformer, v_args
 
-from DSL.constraints.evaluation import PyExpr, TemporalHistory, TemporalWithin, Implies, ForAll
+from fcl.ast import ASTNode, PyExpr, TemporalHistory, TemporalWithin, Implies, ForAll
 
 
-_GRAMMAR_PATH = os.path.join(os.path.dirname(__file__), 'grammar-simple.lark')
+_GRAMMAR_PATH = os.path.join(os.path.dirname(__file__), 'grammar.lark')
 
 class ConstraintParser:
     def __init__(self):
@@ -24,7 +24,7 @@ class ConstraintASTTransformer(Transformer):
     def start(self, child):
         # Unwrap the top-level 'start' rule for a cleaner AST
         return child
-    
+
     def formula(self, child):
         # Unwrap the 'formula' rule
         return child
@@ -92,21 +92,8 @@ class ConstraintASTTransformer(Transformer):
 _parser = ConstraintParser()
 _transformer = ConstraintASTTransformer()
 
-def parse_constraint(text: str):
+
+def parse(text: str) -> ASTNode:
+    """Parse an FCL formula (in the DSL syntax) into an AST (`Formula`)."""
     parsed = _parser.parse(text)
     return _transformer.transform(parsed)
-
-
-if __name__ == "__main__":
-    examples = [
-        "once(`len(attack) >= 1`)",
-        "forall field in `fields`: always(`len(protecting[field]) <= field.drones_for_full_protection`)",
-        "scattered(3, `len(spawn_farmer) >= 2 or len(spawn_warrior) >= 2`)",
-        "once(`len(cave) >= 1`) implies once(`len(attack) >= 1`)",
-    ]
-    for example in examples:
-        print(f"Parsing: {example}")
-        print(_parser.parse(example).pretty())
-        ast = parse_constraint(example)
-        print("AST:", ast)
-        print()

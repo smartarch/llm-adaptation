@@ -2,8 +2,8 @@ import dataclasses
 from collections import UserDict
 from typing import Iterator, Callable
 
+import fcl
 from DSL.constraints.constraint import UserConstraint
-from DSL.constraints.parser import parse_constraint
 from base_classes.components import Component
 
 
@@ -56,11 +56,9 @@ class DSLConfiguration(UserDict):
             config = self.data.get("constraints", {})
 
         for constraint_name, constraint in config.items():
-            ast = parse_constraint(constraint["constraint"])
-            print(ast)  # TODO: remove after debugging
             yield UserConstraint(
                 name=constraint_name,
-                ast=ast,
+                formula=fcl.parse(constraint["constraint"]),
                 reason=constraint["reason"],
                 variables=constraint.get("variables", {})
             )

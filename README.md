@@ -8,10 +8,11 @@ This is an accompanying material to the paper *Automated Vibe Coding of a Contro
 * [`generated_adaptations/dragon`](./generated_adaptations/dragon), [`generated_adaptations/farm`](./generated_adaptations/farm) -- the raw results (logs) of the experiments
 * [DSL](./DSL) -- the domain-specific languages for architecture specification (note that here, we use a YAML syntax instead of the syntax described in paper to simplify parsing) and functional constraints logic (FCL)
   * [`constraint_examples.md`](./DSL/constraint_examples.md) -- examples of FCL constraints
-  * [`constraints`](./DSL/constraints) -- implementation of FCL parsing and evaluation
+  * [`constraints`](./DSL/constraints) -- integration of the functional constraints into the simulator (building the state, formatting the feedback)
   * [`dragon.yaml`](./DSL/dragon.yaml), [`drones.yaml`](./DSL/drones.yaml) (farm) -- architecture specifications for the two use cases
   * [`dragon_constraints.yaml`](./DSL/dragon_constraints.yaml), [`drones_constraints.yaml`](./DSL/drones_constraints.yaml) (farm) -- functional constraints for the two use cases
   * Jinja [`templates`](./DSL/templates) for prompt generation
+* [`fcl`](./fcl) -- standalone implementation of FCL parsing and online monitoring (see its [README](./fcl/README.md))
 * [`generated_adaptations`](./generated_adaptations) -- implementation of the vibe-coding and constraint verification tools
   * [`generator.py`](./generated_adaptations/generator.py) -- the main script for vibe coding (this is used in the Jupyter notebooks in `experiments`)
   * [`tests`](./generated_adaptations/tests) -- implementation of constraints verification as unit tests (inside the tests, the adaptation loop is executed with the generated AM)

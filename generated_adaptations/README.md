@@ -22,7 +22,7 @@ And similarly for the farm use case. The "functional requirements" (`*_requireme
 
 ## Constraint verification via unit tests
 
-The constraint verification is implemented as unit tests in [`pytest`](https://docs.pytest.org/en/stable/) in the [`generated_adaptations/tests`](./tests) folder. The generic ("system") constraints are separated into several unit tests, while the functional ("user") constraints are grouped into a single unit test (the test loads the constraints from the architecture specification DSL files and uses the [FCL evaluator implementation](../DSL/constraints) for constraint evaluation). The files specific to each use case contain functions for setting up the initial state of the system (simulation) for testing.
+The constraint verification is implemented as unit tests in [`pytest`](https://docs.pytest.org/en/stable/) in the [`generated_adaptations/tests`](./tests) folder. The generic ("system") constraints are separated into several unit tests, while the functional ("user") constraints are grouped into a single unit test (the test loads the constraints from the architecture specification DSL files and uses the [FCL monitor](../fcl/README.md) for constraint evaluation, see also [`DSL/constraints`](../DSL/constraints/README.md)). The files specific to each use case contain functions for setting up the initial state of the system (simulation) for testing.
 
 ### Running the tests from command line
 

@@ -1,6 +1,7 @@
 import dataclasses
 from typing import Any, TYPE_CHECKING, Iterator
-from DSL.constraints.evaluation import ASTNode, ForAll, TemporalObligation, ForAllViolation
+
+from fcl import Formula, Monitor, Violation
 from base_classes.components import Component
 
 if TYPE_CHECKING:
@@ -11,33 +12,32 @@ if TYPE_CHECKING:
 @dataclasses.dataclass
 class UserConstraint:
     name: str
-    ast: ASTNode
+    formula: Formula
     reason: str  # f-string that will be evaluated later with context
     variables: dict[str, str]
-    obligations: list[TemporalObligation] = dataclasses.field(default_factory=list)
+    monitor: Monitor = dataclasses.field(init=False)
+
+    def __post_init__(self):
+        self.monitor = Monitor(self.formula)
 
     def check(self, simulation: "Simulation", components: list[Component], resolved_ensembles: list["ResolvedEnsemble"]) -> Iterator[str]:
         context = self.prepare_context(simulation, components, resolved_ensembles)
         step: int = simulation.step  # type: ignore
-        result = self.ast.evaluate(step, context, {})
-        if isinstance(result, list):
-            for r in result:
-                if isinstance(r, TemporalObligation):
-                    if r not in self.obligations:
-                        self.obligations.append(r)
-                elif isinstance(r, ForAllViolation):
-                    yield self.format_reason(r.context)
-        if result is False:
-            yield self.format_reason(context)
+        for violation in self.monitor.step(context, step):
+            yield self.format_reason(violation)
 
     def check_end(self, simulation: "Simulation", components: list[Component]) -> Iterator[str]:
-        # FIXME: this is probably useless as MAX is the final step so all obligations should have been resolved already
         context = self.prepare_context(simulation, components, [])
-        for obligation in self.obligations:
-            if not obligation.resolved and simulation.step >= obligation.end_step and obligation.occurrences < obligation.min_occurrences:
-                yield self.format_reason(context | obligation.bound_variables)
+        step: int = simulation.step  # type: ignore
+        for violation in self.monitor.finish(context, step):
+            yield self.format_reason(violation)
 
-    def format_reason(self, context: dict[str, Any]) -> str:
+    def format_reason(self, violation: Violation) -> str:
+        context = dict(violation.state) | dict(violation.bindings) | {
+            "step": violation.step,
+            "trigger_step": violation.trigger_step,
+            "trigger_state": violation.trigger_state,
+        }
         return eval(f'f"{self.reason}"', context)
 
     def prepare_context(self, simulation: "Simulation", components: list[Component], resolved_ensembles: list["ResolvedEnsemble"]):
@@ -64,7 +64,7 @@ class UserConstraint:
                 if isinstance(c, eval(component_type, simulation.get_globals()))
             ]
         return context
-    
+
     def ensembles_to_eval(self, simulation: "Simulation", resolved_ensembles: list["ResolvedEnsemble"]):
         context: dict[str, dict["Component", "ResolvedEnsemble"] | "ResolvedEnsemble" | None] = {}
         for ensemble_type, ensemble_config in simulation.dsl_config.data["ensembles"].items():
