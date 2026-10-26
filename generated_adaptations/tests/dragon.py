@@ -7,9 +7,7 @@ def remove_warriors(simulation):
     return simulation
 
 
-def hungry_villagers(simulation):
-    """Arrange the simulation to a state where the villagers are hungry to a different extent."""
-    interval = simulation.meal_interval or 8
-    for i, villager in enumerate(simulation.components):
-        villager.steps_since_meal = (3 * i + 2) % (interval - 1)  # e.g. 2, 5, 1 for interval 8 (all can still eat in time)
+def set_initial_wheat(simulation, wheat: int):
+    """Arrange the simulation to start with a different amount of wheat (everything else as in the config)."""
+    simulation.farm.wheat = wheat
     return simulation

@@ -72,5 +72,6 @@ The adaptation strategy must adhere to the following functional requirements:
 - At least a few new farmers should be spawned to increase the chance of killing the Dragon.
 - At least a few new warriors should be spawned to increase the chance of killing the Dragon.
 - All warriors should attack the Dragon after moving to the Cave.
+- A warrior that has not eaten for 3 or more steps should not be sent to the Cave (they would have to return to eat before attacking the Dragon), they should eat first.
 - Every villager must eat at least once in every 6 consecutive steps (a villager that has not eaten for 5 steps must eat now), otherwise they starve.
 - The Dragon must not be left unattacked for more than 2 steps in a row (after it was attacked for the first time), otherwise it regenerates its health.

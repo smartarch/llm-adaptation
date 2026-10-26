@@ -360,7 +360,7 @@ dragon:
 ### Situations
 
 * Keep `seed=1..3` and `no_initial_warriors`.
-* Add `hungry_villagers`: an arrange step that sets uneven `steps_since_meal` values, so that a fixed schedule from step 0 does not work.
+* ~~Add `hungry_villagers`: an arrange step that sets uneven `steps_since_meal` values, so that a fixed schedule from step 0 does not work.~~ Replaced by the initial-wheat situations (see the outcome of Phase 3).
 * *(Added after Phase 2.)* Reconsider the trigger of `all_warriors_should_go_to_cave`. It currently reads `warrior.location == Map.VILLAGE and warrior not in GoToCaveEn and MAX > 0` (in the Village and not being sent right now). An alternative is "after a warrior returns to the Village (e.g. to eat), it goes back to the Cave" (trigger: `warrior in GoToVillageEn`), plus a second trigger for newly spawned warriors, who never return. Choose the form that reads better with the meals.
 
 ### Baselines (in `generated_adaptations/dragon/mock/`, descriptive names)
@@ -422,10 +422,18 @@ The planned values above (HP 50, N = 8, R = 3) were only the starting point. Som
   * `staggered_meals`, the reference AM, which passes all constraints;
   * `assemble_and_strike`, which attacks in waves and violates `keep_attacking`.
 * **Prompts:** the domain description now also states that moving between the Village and the Cave takes one step, which the meal timing depends on.
-* **Constraints:** kept as planned (without `warriors_should_be_in_cave`). They will be aligned once we see what the LLMs produce. `pointless_trip` (§B.7) was tried only in the experiments.
+* **Constraints:** kept as planned (without `warriors_should_be_in_cave`). They will be aligned once we see what the LLMs produce.
+  * `pointless_trip` (§B.7) was added as `no_pointless_trip_to_cave`, so that we can see whether it fires for the LLM-generated AMs in the pilot. It has a matching sentence in the strategy and the requirements.
+* **Additional baseline `greedy_eat_last`:** it spawns before eating and sends villagers to eat without checking the wheat, a mistake an LLM is likely to make.
+  * With the default initial wheat (10) the mistake never shows. With most other initial amounts of wheat it appears naturally; there it is caught both by the system constraints (an invalid "eat" assignment and an unassigned villager) and by `eat_regularly`.
+* **Situations: `hungry_villagers` replaced by two situations with a different initial amount of wheat** (arrange function `set_initial_wheat` with the parameter `wheat`; everything else as in the config):
+  * `initial_wheat=15` (default seed 42) and `initial_wheat=15,seed=1`. The same amount with two seeds indicates (also to the LLM) that the amount of wheat is the cause.
+  * Sweep over wheat 10/12/15/20/25 × seeds 42/1/2/3: with wheat 15, both greedy variants fail for every seed (`greedy_eat_last`: system errors + `eat_regularly`; `greedy_with_meals`: `eat_regularly` + `no_pointless_trip_to_cave`), so the situation does not depend on the seed. With 20/25 wheat, it depends on the seed. `staggered_meals` passes every combination.
+* **Not expressible:** "after going to the Village, a villager eats before returning to the Cave" needs a *since*/*until* operator, which FCL does not have.
+  * Nested `within` would only express "go to the Village ⇒ eventually eat, and after that eventually go to the Cave", which still allows going to the Cave before eating.
+  * The bounded past form ("not eaten in the last k steps ⇒ not sent to the Cave") is what `no_pointless_trip_to_cave` checks, using the meal counter.
 * **Open decisions for after the LLM pilot:**
-  * **The `hungry_villagers` situation.** It is the only situation in which `greedy_with_meals` fails a constraint (`eat_regularly`, at N = 6). In it, a warrior with `steps_since_meal = 3` is sent to the Cave and cannot return in time to eat; in the other four situations the baseline passes every constraint. Decide whether to keep the situation, depending on whether it gives useful feedback for the LLM-generated AMs or only makes the task stricter than intended.
-  * The exact form and thresholds of the constraints (e.g. `MAX_GAP`, `spawn_at_least_a_few_farmers`, adding `pointless_trip`).
+  * The exact form and thresholds of the constraints (e.g. `MAX_GAP`, `spawn_at_least_a_few_farmers`, keeping `no_pointless_trip_to_cave`).
 
 ---
 

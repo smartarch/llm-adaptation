@@ -27,6 +27,14 @@ adaptation_params:  # this is purely technical
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in AttackEn`))"
         reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
+      no_pointless_trip_to_cave:
+        # A warrior sent to the Cave arrives in the next step and must leave the Cave one step before eating, so it can
+        # attack at least once only if it has not been without a meal for more than MEAL_INTERVAL - 4 steps.
+        # (Cannot be checked directly in FCL, it refutes "the trip to the Cave can still be useful".)
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+        constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn` implies `warrior.steps_since_meal <= MEAL_INTERVAL - 4`)"
+        reason: "Warrior {warrior} was sent to the Cave at step {step}, but they have not eaten for {warrior.steps_since_meal} steps, so they will have to return to eat before they can attack the Dragon. Let them eat first."
       eat_regularly:
         constraint: "always(forall villager in `VillagerComps`: `villager.steps_since_meal >= MEAL_INTERVAL - 1` implies `villager in EatEn`)"
         reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps and must eat now (step {step}), otherwise they starve."

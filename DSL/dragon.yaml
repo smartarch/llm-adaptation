@@ -93,8 +93,15 @@ adaptation_params:  # this is purely technical
         seed: 3
       no_initial_warriors:
         arrange: "generated_adaptations.tests.dragon.remove_warriors"
-      hungry_villagers:
-        arrange: "generated_adaptations.tests.dragon.hungry_villagers"
+      initial_wheat=15:
+        arrange: "generated_adaptations.tests.dragon.set_initial_wheat"
+        params:
+          wheat: 15
+      initial_wheat=15,seed=1:
+        seed: 1
+        arrange: "generated_adaptations.tests.dragon.set_initial_wheat"
+        params:
+          wheat: 15
 
     strategy: ""  # optional
     strategy_interface:

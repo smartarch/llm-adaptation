@@ -4,7 +4,8 @@ For each parameter combination and baseline, it reports:
  * the win rate, the average number of steps to win, and the average remaining HP of the Dragon in the lost games,
    over the runs from the default initial state with seeds 1..SEEDS,
  * the functional constraints (DSL/dragon_constraints.yaml) violated in the test situations (DSL/dragon.yaml),
-   with the number of situations in which each constraint was violated.
+   with the number of situations in which each constraint was violated; violations of the generic (system)
+   constraints are reported as "system: <error type>".
 
 Usage (from the repository root): python dragon/tuning.py > tuning.md
 
@@ -12,18 +13,19 @@ This script was generated using Claude Code.
 """
 import contextlib
 import copy
+import functools
 import importlib
 import io
 import itertools
 from collections import Counter
 
 from base_classes.adaptation import import_adaptation
-from base_classes.simulation import UserConstraintError
+from base_classes.simulation import AssignmentError, UserConstraintError
 from dragon.simulation import DragonHuntSimulation
 from generated_adaptations.generator_utils import simulation_configs, adaptation_config, reset_component_counters
 from utils import read_configs, nested_update, set_random_seed
 
-BASELINES = ["greedy_no_meals", "greedy_with_meals", "staggered_meals", "assemble_and_strike"]
+BASELINES = ["greedy_no_meals", "greedy_with_meals", "greedy_eat_last", "staggered_meals", "assemble_and_strike"]
 SEEDS = 10
 STEPS = 30
 HP = 100
@@ -51,7 +53,7 @@ def situations(config: dict):
         arrange = None
         if "arrange" in situation:
             module, func = situation["arrange"].rsplit(".", 1)
-            arrange = getattr(importlib.import_module(module), func)
+            arrange = functools.partial(getattr(importlib.import_module(module), func), **situation.get("params", {}))
         yield name, situation.get("seed", 42), arrange
 
 
@@ -70,6 +72,7 @@ def run(config: dict, seed: int, arrange=None) -> tuple[bool, int, int, set[str]
         simulation.run_simulation(config["steps"])
         errors += simulation.assignment_errors  # violations at the end of the run
     violated = {e.constraint_name for e in errors if isinstance(e, UserConstraintError)}
+    violated |= {f"system: {type(e).__name__}" for e in errors if isinstance(e, AssignmentError) and not isinstance(e, UserConstraintError)}
     return simulation.dragon.hp <= 0, simulation.step, simulation.dragon.hp, violated
 
 
@@ -81,7 +84,7 @@ METRICS = {
     "win_rate": "Win rate",
     "steps": "Average number of steps to win",
     "lost_hp": "Average remaining HP of the Dragon in lost games",
-    "violations": "Violated constraints (number of test situations in which the constraint was violated)",
+    "violations": "Violated constraints (number of test situations in which the constraint was violated; generic constraints are prefixed with \"system\")",
 }
 
 

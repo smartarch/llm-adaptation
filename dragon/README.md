@@ -26,6 +26,7 @@ Hand-written adaptation managers in [`generated_adaptations/dragon/mock`](../gen
 | --- | --- |
 | [`greedy_no_meals`](../generated_adaptations/dragon/mock/greedy_no_meals.py) | All warriors attack, the farmers farm and spawn new villagers, nobody ever eats. |
 | [`greedy_with_meals`](../generated_adaptations/dragon/mock/greedy_with_meals.py) | Like `greedy_no_meals`, but the villagers eat when they would otherwise starve: warriors return from the Cave just in time to eat. There is no coordination of the meals and no wheat reserve. |
+| [`greedy_eat_last`](../generated_adaptations/dragon/mock/greedy_eat_last.py) | Like `greedy_with_meals`, but it decides about spawning before the meals and sends the villagers to eat without checking that there is wheat left (a likely mistake of a generated AM). Eating then fails when the wheat was spent on spawning. |
 | [`staggered_meals`](../generated_adaptations/dragon/mock/staggered_meals.py) | The reference strategy. It keeps attacking continuously and staggers the warriors' meals, so that the Dragon is not left unattacked. It reserves wheat for the meals that are due, and a warrior that is too hungry eats before going to the Cave. |
 | [`assemble_and_strike`](../generated_adaptations/dragon/mock/assemble_and_strike.py) | The warriors gather in the Village, eat, and attack together in waves (4 warriors, or all of them from step 10). The whole wave returns to eat together, which leaves gaps between the waves. |
 
@@ -34,7 +35,7 @@ Hand-written adaptation managers in [`generated_adaptations/dragon/mock`](../gen
 The parameters were tuned with [`tuning.py`](./tuning.py) (`python dragon/tuning.py`, run from the repository root). For each parameter combination and baseline, it reports:
 
 * the win rate, the average number of steps to win, and the average remaining HP of the Dragon in lost games, over 10 runs (seeds 1–10) from the default initial state;
-* the functional constraints ([`DSL/dragon_constraints.yaml`](../DSL/dragon_constraints.yaml)) violated in the 5 test situations from [`DSL/dragon.yaml`](../DSL/dragon.yaml), with the number of situations in which each was violated. The situations are seeds 1–3, `no_initial_warriors` and `hungry_villagers`.
+* the functional constraints ([`DSL/dragon_constraints.yaml`](../DSL/dragon_constraints.yaml)) violated in the 6 test situations from [`DSL/dragon.yaml`](../DSL/dragon.yaml), with the number of situations in which each was violated. The situations are seeds 1–3, `no_initial_warriors`, `initial_wheat=15` and `initial_wheat=15,seed=1` (the default setup, only with a different initial amount of wheat).
 
 ### Grid search (Dragon HP = 100, 30 steps)
 
@@ -42,77 +43,76 @@ The grid covers the meal interval N, the weakness flag (`hungry_cannot_attack`) 
 
 #### Win rate
 
-| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `staggered_meals` | `assemble_and_strike` |
-| --- | --- | --- | --- | --- | --- | --- |
-| 6 | off | 0 | 30% | 100% | 100% | 100% |
-| 6 | off | 5 | 30% | 100% | 100% | 100% |
-| 6 | off | 10 | 30% | 100% | 100% | 100% |
-| 6 | on | 0 | 0% | 100% | 100% | 100% |
-| 6 | on | 5 | 0% | 100% | 100% | 100% |
-| 6 | on | 10 | 0% | 100% | 100% | 100% |
-| 8 | off | 0 | 80% | 100% | 100% | 100% |
-| 8 | off | 5 | 80% | 100% | 100% | 100% |
-| 8 | off | 10 | 80% | 100% | 100% | 100% |
-| 8 | on | 0 | 30% | 100% | 100% | 100% |
-| 8 | on | 5 | 30% | 100% | 100% | 100% |
-| 8 | on | 10 | 30% | 100% | 100% | 100% |
+| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `greedy_eat_last` | `staggered_meals` | `assemble_and_strike` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 6 | off | 0 | 30% | 100% | 100% | 100% | 100% |
+| 6 | off | 5 | 30% | 100% | 100% | 100% | 100% |
+| 6 | off | 10 | 30% | 100% | 100% | 100% | 100% |
+| 6 | on | 0 | 0% | 100% | 100% | 100% | 100% |
+| 6 | on | 5 | 0% | 100% | 100% | 100% | 100% |
+| 6 | on | 10 | 0% | 100% | 100% | 100% | 100% |
+| 8 | off | 0 | 80% | 100% | 100% | 100% | 100% |
+| 8 | off | 5 | 80% | 100% | 100% | 100% | 100% |
+| 8 | off | 10 | 80% | 100% | 100% | 100% | 100% |
+| 8 | on | 0 | 30% | 100% | 100% | 100% | 100% |
+| 8 | on | 5 | 30% | 100% | 100% | 100% | 100% |
+| 8 | on | 10 | 30% | 100% | 100% | 100% | 100% |
 
 #### Average number of steps to win
 
-| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `staggered_meals` | `assemble_and_strike` |
-| --- | --- | --- | --- | --- | --- | --- |
-| 6 | off | 0 | 14.3 | 19.5 | 21.2 | 18.8 |
-| 6 | off | 5 | 14.3 | 19.8 | 21.6 | 20.5 |
-| 6 | off | 10 | 14.3 | 19.9 | 21.8 | 23.0 |
-| 6 | on | 0 | n/a | 19.5 | 21.2 | 18.8 |
-| 6 | on | 5 | n/a | 19.8 | 21.6 | 20.5 |
-| 6 | on | 10 | n/a | 19.9 | 21.8 | 23.0 |
-| 8 | off | 0 | 15.2 | 17.2 | 18.3 | 18.4 |
-| 8 | off | 5 | 15.5 | 17.4 | 18.4 | 19.1 |
-| 8 | off | 10 | 15.5 | 17.4 | 18.4 | 19.4 |
-| 8 | on | 0 | 15.3 | 17.2 | 18.3 | 18.4 |
-| 8 | on | 5 | 15.7 | 17.4 | 18.4 | 19.1 |
-| 8 | on | 10 | 15.7 | 17.4 | 18.4 | 19.4 |
+| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `greedy_eat_last` | `staggered_meals` | `assemble_and_strike` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 6 | off | 0 | 14.3 | 19.5 | 19.5 | 21.2 | 18.8 |
+| 6 | off | 5 | 14.3 | 19.8 | 19.8 | 21.6 | 20.5 |
+| 6 | off | 10 | 14.3 | 19.9 | 19.9 | 21.8 | 23.0 |
+| 6 | on | 0 | n/a | 19.5 | 19.5 | 21.2 | 18.8 |
+| 6 | on | 5 | n/a | 19.8 | 19.8 | 21.6 | 20.5 |
+| 6 | on | 10 | n/a | 19.9 | 19.9 | 21.8 | 23.0 |
+| 8 | off | 0 | 15.2 | 17.2 | 17.2 | 18.3 | 18.4 |
+| 8 | off | 5 | 15.5 | 17.4 | 17.4 | 18.4 | 19.1 |
+| 8 | off | 10 | 15.5 | 17.4 | 17.4 | 18.4 | 19.4 |
+| 8 | on | 0 | 15.3 | 17.2 | 17.2 | 18.3 | 18.4 |
+| 8 | on | 5 | 15.7 | 17.4 | 17.4 | 18.4 | 19.1 |
+| 8 | on | 10 | 15.7 | 17.4 | 17.4 | 18.4 | 19.4 |
 
 #### Average remaining HP of the Dragon in lost games
 
-| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `staggered_meals` | `assemble_and_strike` |
-| --- | --- | --- | --- | --- | --- | --- |
-| 6 | off | 0 | 23.3 | n/a | n/a | n/a |
-| 6 | off | 5 | 92.0 | n/a | n/a | n/a |
-| 6 | off | 10 | 100.0 | n/a | n/a | n/a |
-| 6 | on | 0 | 42.1 | n/a | n/a | n/a |
-| 6 | on | 5 | 100.0 | n/a | n/a | n/a |
-| 6 | on | 10 | 100.0 | n/a | n/a | n/a |
-| 8 | off | 0 | 25.0 | n/a | n/a | n/a |
-| 8 | off | 5 | 97.5 | n/a | n/a | n/a |
-| 8 | off | 10 | 100.0 | n/a | n/a | n/a |
-| 8 | on | 0 | 17.3 | n/a | n/a | n/a |
-| 8 | on | 5 | 79.3 | n/a | n/a | n/a |
-| 8 | on | 10 | 100.0 | n/a | n/a | n/a |
+| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `greedy_eat_last` | `staggered_meals` | `assemble_and_strike` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 6 | off | 0 | 23.3 | n/a | n/a | n/a | n/a |
+| 6 | off | 5 | 92.0 | n/a | n/a | n/a | n/a |
+| 6 | off | 10 | 100.0 | n/a | n/a | n/a | n/a |
+| 6 | on | 0 | 42.1 | n/a | n/a | n/a | n/a |
+| 6 | on | 5 | 100.0 | n/a | n/a | n/a | n/a |
+| 6 | on | 10 | 100.0 | n/a | n/a | n/a | n/a |
+| 8 | off | 0 | 25.0 | n/a | n/a | n/a | n/a |
+| 8 | off | 5 | 97.5 | n/a | n/a | n/a | n/a |
+| 8 | off | 10 | 100.0 | n/a | n/a | n/a | n/a |
+| 8 | on | 0 | 17.3 | n/a | n/a | n/a | n/a |
+| 8 | on | 5 | 79.3 | n/a | n/a | n/a | n/a |
+| 8 | on | 10 | 100.0 | n/a | n/a | n/a | n/a |
 
-#### Violated constraints (number of test situations in which the constraint was violated)
+#### Violated constraints (number of test situations in which the constraint was violated; generic constraints are prefixed with "system")
 
-| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `staggered_meals` | `assemble_and_strike` |
-| --- | --- | --- | --- | --- | --- | --- |
-| 6 | off | 0 | `eat_regularly` (5), `game_is_won` (3), `keep_attacking` (3), `spawn_at_least_a_few_farmers` (3) | `eat_regularly` (1) | none | `keep_attacking` (5) |
-| 6 | off | 5 | `eat_regularly` (5), `game_is_won` (3), `keep_attacking` (3), `spawn_at_least_a_few_farmers` (3) | `eat_regularly` (1) | none | `keep_attacking` (5) |
-| 6 | off | 10 | `eat_regularly` (5), `game_is_won` (3), `keep_attacking` (3), `spawn_at_least_a_few_farmers` (3) | `eat_regularly` (1) | none | `keep_attacking` (5) |
-| 6 | on | 0 | `eat_regularly` (5), `game_is_won` (5), `keep_attacking` (5), `spawn_at_least_a_few_farmers` (5) | `eat_regularly` (1) | none | `keep_attacking` (5) |
-| 6 | on | 5 | `eat_regularly` (5), `game_is_won` (5), `keep_attacking` (5), `spawn_at_least_a_few_farmers` (5) | `eat_regularly` (1) | none | `keep_attacking` (5) |
-| 6 | on | 10 | `eat_regularly` (5), `game_is_won` (5), `keep_attacking` (5), `spawn_at_least_a_few_farmers` (5) | `eat_regularly` (1) | none | `keep_attacking` (5) |
-| 8 | off | 0 | `eat_regularly` (5), `game_is_won` (1), `keep_attacking` (1) | none | none | `keep_attacking` (5) |
-| 8 | off | 5 | `eat_regularly` (5), `game_is_won` (1), `keep_attacking` (1) | none | none | `keep_attacking` (5) |
-| 8 | off | 10 | `eat_regularly` (5), `game_is_won` (1), `keep_attacking` (1) | none | none | `keep_attacking` (5) |
-| 8 | on | 0 | `eat_regularly` (5), `game_is_won` (3), `keep_attacking` (3), `spawn_at_least_a_few_farmers` (1) | none | none | `keep_attacking` (5) |
-| 8 | on | 5 | `eat_regularly` (5), `game_is_won` (3), `keep_attacking` (3), `spawn_at_least_a_few_farmers` (1) | none | none | `keep_attacking` (5) |
-| 8 | on | 10 | `eat_regularly` (5), `game_is_won` (3), `keep_attacking` (3), `spawn_at_least_a_few_farmers` (1) | none | none | `keep_attacking` (5) |
+| N | weakness | R | `greedy_no_meals` | `greedy_with_meals` | `greedy_eat_last` | `staggered_meals` | `assemble_and_strike` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 6 | off | 0 | `eat_regularly` (6), `game_is_won` (5), `keep_attacking` (5), `spawn_at_least_a_few_farmers` (5) | `eat_regularly` (2), `no_pointless_trip_to_cave` (2) | `eat_regularly` (2), `system: InvalidAssignmentError` (2), `system: MissingAssignmentError` (2) | none | `keep_attacking` (6) |
+| 6 | off | 5 | `eat_regularly` (6), `game_is_won` (5), `keep_attacking` (5), `spawn_at_least_a_few_farmers` (5) | `eat_regularly` (2), `no_pointless_trip_to_cave` (2) | `eat_regularly` (2), `system: InvalidAssignmentError` (2), `system: MissingAssignmentError` (2) | none | `keep_attacking` (6) |
+| 6 | off | 10 | `eat_regularly` (6), `game_is_won` (5), `keep_attacking` (5), `spawn_at_least_a_few_farmers` (5) | `eat_regularly` (2), `no_pointless_trip_to_cave` (2) | `eat_regularly` (2), `system: InvalidAssignmentError` (2), `system: MissingAssignmentError` (2) | none | `keep_attacking` (6) |
+| 6 | on | 0 | `eat_regularly` (6), `game_is_won` (6), `keep_attacking` (6), `spawn_at_least_a_few_farmers` (6) | `eat_regularly` (2), `no_pointless_trip_to_cave` (2) | `eat_regularly` (2), `system: InvalidAssignmentError` (2), `system: MissingAssignmentError` (2) | none | `keep_attacking` (6) |
+| 6 | on | 5 | `eat_regularly` (6), `game_is_won` (6), `keep_attacking` (6), `spawn_at_least_a_few_farmers` (6) | `eat_regularly` (2), `no_pointless_trip_to_cave` (2) | `eat_regularly` (2), `system: InvalidAssignmentError` (2), `system: MissingAssignmentError` (2) | none | `keep_attacking` (6) |
+| 6 | on | 10 | `eat_regularly` (6), `game_is_won` (6), `keep_attacking` (6), `spawn_at_least_a_few_farmers` (6) | `eat_regularly` (2), `no_pointless_trip_to_cave` (2) | `eat_regularly` (2), `system: InvalidAssignmentError` (2), `system: MissingAssignmentError` (2) | none | `keep_attacking` (6) |
+| 8 | off | 0 | `eat_regularly` (6), `game_is_won` (1), `keep_attacking` (1) | none | `eat_regularly` (1), `system: InvalidAssignmentError` (1), `system: MissingAssignmentError` (1) | none | `keep_attacking` (6) |
+| 8 | off | 5 | `eat_regularly` (6), `game_is_won` (1), `keep_attacking` (1) | none | `eat_regularly` (1), `system: InvalidAssignmentError` (1), `system: MissingAssignmentError` (1) | none | `keep_attacking` (6) |
+| 8 | off | 10 | `eat_regularly` (6), `game_is_won` (1), `keep_attacking` (1) | none | `eat_regularly` (1), `system: InvalidAssignmentError` (1), `system: MissingAssignmentError` (1) | none | `keep_attacking` (6) |
+| 8 | on | 0 | `eat_regularly` (6), `game_is_won` (2), `keep_attacking` (2) | none | `eat_regularly` (1), `system: InvalidAssignmentError` (1), `system: MissingAssignmentError` (1) | none | `keep_attacking` (6) |
+| 8 | on | 5 | `eat_regularly` (6), `game_is_won` (2), `keep_attacking` (2) | none | `eat_regularly` (1), `system: InvalidAssignmentError` (1), `system: MissingAssignmentError` (1) | none | `keep_attacking` (6) |
+| 8 | on | 10 | `eat_regularly` (6), `game_is_won` (2), `keep_attacking` (2) | none | `eat_regularly` (1), `system: InvalidAssignmentError` (1), `system: MissingAssignmentError` (1) | none | `keep_attacking` (6) |
 
 ### Observations and the chosen parameters
 
 * **Dragon HP 100 (instead of 50)** makes the game long enough that every warrior has to eat several times.
-* **N = 6 rather than 8:** the warriors return to eat more often. `staggered_meals` then needs 21–22 steps instead of 18, and `greedy_with_meals` violates `eat_regularly` in the `hungry_villagers` situation.
-  * In that situation, a hungry warrior is sent to the Cave and cannot return in time to eat.
+* **N = 6 rather than 8:** the warriors return to eat more often. `staggered_meals` then needs 21–22 steps instead of 18, and the greedy baselines violate the meal constraints in both initial-wheat situations (with N = 8, only `greedy_eat_last` fails, in one of them).
   * N = 5 turned out to be too tight in earlier experiments: even `staggered_meals` then violated `keep_attacking` and occasionally lost.
 * **Weakness on:** without it, ignoring the meals is a viable "exploit".
   * Without weakness, `greedy_no_meals` lets the warriors starve while attacking, keeps spawning new ones, and wins 30 % of the games at N = 6 (80 % at N = 8).
@@ -127,3 +127,10 @@ The grid covers the meal interval N, the weakness flag (`hungry_cannot_attack`) 
 
   It also gives the reason in the story for the `keep_attacking` constraint (never leave the Dragon unattacked for more than 2 steps in a row). Of the baselines, only `assemble_and_strike` violates that constraint, even though it wins about as fast as `staggered_meals`.
 * **Larger waves did not remove the gaps** of `assemble_and_strike` (earlier experiments with 6 and 8 warriors). With N = 6, one wave can attack for only about 3 steps, so several waves are needed anyway. With larger waves, the first attack also comes too late for the "attack in the first 15 steps" constraint.
+* **Spawning before eating (`greedy_eat_last`).** With the default initial wheat (10), this mistake never shows: no meal is ever missing wheat.
+  * With other initial amounts of wheat (2 farmers and 1 warrior), the mistake appeared for most of the amounts we tried between 0 and 40 (e.g. 12, 15, 25 or 34); only 10 and a few others avoided it. A villager returns to eat, but the wheat was already spent on spawning.
+  * The test situations `initial_wheat=15` and `initial_wheat=15,seed=1` therefore start with 15 wheat (with the default seed 42 and with seed 1). With 15 wheat, both greedy variants fail for every seed we tried (42, 1, 2, 3). Two seeds with the same amount also hint that the amount of wheat is the problem. The system constraints catch the mistake ("Not enough wheat for a meal", and a villager without an assignment), and so does `eat_regularly`.
+  * `greedy_with_meals` (which checks the wheat but keeps no reserve) also runs out of wheat for some meals with such initial amounts.
+* **`no_pointless_trip_to_cave`.** It reports a warrior sent to the Cave too hungry to attack even once before returning to eat. It fires at the step of the mistake, which can be earlier than the resulting `eat_regularly` violation, or even without one (the warrior returns and eats in time, but the trip was useless).
+  * Among the baselines, it is violated only by the greedy ones, in the initial-wheat situations. It never fires for `staggered_meals` or `assemble_and_strike`.
+  * It is an example of a constraint that FCL cannot check directly: whether the trip can still be useful depends on the future. The constraint uses a necessary condition based on the meal counter.
