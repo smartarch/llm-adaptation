@@ -1,0 +1,182 @@
+Loaded 2 messages from generated_adaptations\dragon\metrics_both\deepseek4flash_01.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1609, Output: 24989 (reasoning: 23689)
+Response time (seconds): 356.7
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_02 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_02 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_02 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_02", "log_dir.append": "/metrics_both/deepseek4flash_01/code_02", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_02", "log_dir.append": "/metrics_both/deepseek4flash_01/code_02", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_02", "log_dir.append": "/metrics_both/deepseek4flash_01/code_02", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_result.
+[33mTOKENS USED:
+Input: 2980, Output: 24371 (reasoning: 23439)
+Response time (seconds): 338.5
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_04 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_04 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_04 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_04", "log_dir.append": "/metrics_both/deepseek4flash_01/code_04", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_04.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_04", "log_dir.append": "/metrics_both/deepseek4flash_01/code_04", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_04.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_04", "log_dir.append": "/metrics_both/deepseek4flash_01/code_04", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_04.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 23.0
+Querying LLM with prompt 05_result.
+[33mTOKENS USED:
+Input: 3985, Output: 15773 (reasoning: 14755)
+Response time (seconds): 257.4
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_06 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_06 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_06 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_06", "log_dir.append": "/metrics_both/deepseek4flash_01/code_06", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_06", "log_dir.append": "/metrics_both/deepseek4flash_01/code_06", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_06", "log_dir.append": "/metrics_both/deepseek4flash_01/code_06", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 19.333333333333332
+Querying LLM with prompt 07_result.
+[33mTOKENS USED:
+Input: 5076, Output: 11488 (reasoning: 10287)
+Response time (seconds): 190.2
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_08 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_08 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_08 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_08", "log_dir.append": "/metrics_both/deepseek4flash_01/code_08", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_08.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_08", "log_dir.append": "/metrics_both/deepseek4flash_01/code_08", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_08.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_08", "log_dir.append": "/metrics_both/deepseek4flash_01/code_08", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_08.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 19.0
+Querying LLM with prompt 09_result.
+[33mTOKENS USED:
+Input: 6350, Output: 16978 (reasoning: 15666)
+Response time (seconds): 354.3
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_10 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_10 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_10 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_10", "log_dir.append": "/metrics_both/deepseek4flash_01/code_10", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_10.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_10", "log_dir.append": "/metrics_both/deepseek4flash_01/code_10", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_10.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_10", "log_dir.append": "/metrics_both/deepseek4flash_01/code_10", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_10.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 22.333333333333332
+Querying LLM with prompt 11_result.
+[33mTOKENS USED:
+Input: 7735, Output: 26194 (reasoning: 25128)
+Response time (seconds): 535.6
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_12 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_12 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_12 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_12", "log_dir.append": "/metrics_both/deepseek4flash_01/code_12", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_12.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_12", "log_dir.append": "/metrics_both/deepseek4flash_01/code_12", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_12.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_12", "log_dir.append": "/metrics_both/deepseek4flash_01/code_12", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_12.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 18.666666666666668
+Querying LLM with prompt 13_result.
+[33mTOKENS USED:
+Input: 8874, Output: 3146 (reasoning: 2037)
+Response time (seconds): 94.1
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_14 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_14 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_14 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_14", "log_dir.append": "/metrics_both/deepseek4flash_01/code_14", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_14.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_14", "log_dir.append": "/metrics_both/deepseek4flash_01/code_14", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_14.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_14", "log_dir.append": "/metrics_both/deepseek4flash_01/code_14", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_14.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 17.666666666666668
+Querying LLM with prompt 15_result.
+[33mTOKENS USED:
+Input: 10056, Output: 2562 (reasoning: 1379)
+Response time (seconds): 59.3
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_16 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_16 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_16 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_16", "log_dir.append": "/metrics_both/deepseek4flash_01/code_16", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_16.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_16", "log_dir.append": "/metrics_both/deepseek4flash_01/code_16", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_16.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_16", "log_dir.append": "/metrics_both/deepseek4flash_01/code_16", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_16.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 22.333333333333332
+Querying LLM with prompt 17_result.
+[33mTOKENS USED:
+Input: 11312, Output: 2843 (reasoning: 1813)
+Response time (seconds): 71.0
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_18 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_18 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_18 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_18", "log_dir.append": "/metrics_both/deepseek4flash_01/code_18", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_18.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_18", "log_dir.append": "/metrics_both/deepseek4flash_01/code_18", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_18.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_18", "log_dir.append": "/metrics_both/deepseek4flash_01/code_18", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_18.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 17.666666666666668
+Querying LLM with prompt 19_result.
+[33mTOKENS USED:
+Input: 12415, Output: 8200 (reasoning: 7038)
+Response time (seconds): 213.8
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_20 --variant=metrics_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_20 --variant=metrics_both --tests=functional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no --example=dragon --adaptation_name=deepseek4flash_01/code_20 --variant=metrics_both --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\metrics_both\deepseek4flash_01\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_20", "log_dir.append": "/metrics_both/deepseek4flash_01/code_20", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_20.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_20", "log_dir.append": "/metrics_both/deepseek4flash_01/code_20", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_20.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "metrics_both/deepseek4flash_01/code_20", "log_dir.append": "/metrics_both/deepseek4flash_01/code_20", "adaptation_name": "generated_adaptations.dragon.metrics_both.deepseek4flash_01.code_20.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 18.666666666666668
+Reached the maximum number of iterations (10). Stopping.

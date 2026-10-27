@@ -1,0 +1,18 @@
+1
+...ssssssssssssssssssssssssF..F........                                  [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Villager Deborah has not eaten for 5 steps and must eat now (step 20), otherwise they starve.
+Villager Mark has not eaten for 5 steps and must eat now (step 20), otherwise they starve.
+(violated 2 times in total, at steps 20)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+Villager Sandra has not eaten for 5 steps and must eat now (step 8), otherwise they starve.
+Villager Sandra has not eaten for 6 steps and must eat now (step 9), otherwise they starve.
+(violated 2 times in total, at steps 8, 9)
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, no_initial_warriors
+ - passed for: seed=2, seed=3, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+2 failed, 13 passed, 24 skipped in 1.03s

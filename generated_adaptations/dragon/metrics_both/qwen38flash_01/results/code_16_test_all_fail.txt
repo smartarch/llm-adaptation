@@ -1,0 +1,75 @@
+1
+...............FFFFFFFFFFFF.FF.FF......                                  [100%]
+================================== FAILURES ===================================
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Linda" to "spawn warrior".
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] _____________
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Michelle" to "eat".
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] _____________
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Daniel" to "eat".
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Edward" to "eat".
+______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Linda" to "spawn warrior".
+________ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15] ________
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Daniel" to "eat".
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Edward" to "eat".
+____ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15,seed=1] _____
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Daniel" to "eat".
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Edward" to "eat".
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Linda (Farmer)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=2] __________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Michelle (Warrior)
+Each component must be assigned exactly once.
+__________________ TestAdaptSystem.test_all_assigned[seed=3] __________________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Daniel (Farmer), Edward (Farmer)
+Each component must be assigned exactly once.
+___________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Linda (Farmer)
+Each component must be assigned exactly once.
+_____________ TestAdaptSystem.test_all_assigned[initial_wheat=15] _____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Daniel (Farmer), Edward (Farmer)
+Each component must be assigned exactly once.
+_________ TestAdaptSystem.test_all_assigned[initial_wheat=15,seed=1] __________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Daniel (Farmer), Edward (Farmer)
+Each component must be assigned exactly once.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+Villager Michelle has not eaten for 5 steps and must eat now (step 10), otherwise they starve.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+Villager Daniel has not eaten for 5 steps and must eat now (step 12), otherwise they starve.
+Villager Edward has not eaten for 5 steps and must eat now (step 12), otherwise they starve.
+Villager William has not eaten for 5 steps and must eat now (step 13), otherwise they starve.
+(violated 6 times in total, at steps 12, 13, 14, 15, 16)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15] _
+Villager Daniel has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Edward has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+(violated 2 times in total, at steps 6)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Daniel has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Edward has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Linda has not eaten for 5 steps and must eat now (step 18), otherwise they starve.
+(violated 3 times in total, at steps 6, 18)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=2, seed=3, initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=1, no_initial_warriors
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+16 failed, 23 passed in 1.95s

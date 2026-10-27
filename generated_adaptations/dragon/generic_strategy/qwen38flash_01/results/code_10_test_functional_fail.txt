@@ -1,0 +1,57 @@
+1
+...ssssssssssssssssssssssssFFFFFF......                                  [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Villager Sandra has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Kenneth has not eaten for 5 steps and must eat now (step 19), otherwise they starve.
+Villager Anthony has not eaten for 5 steps and must eat now (step 22), otherwise they starve.
+(violated 3 times in total, at steps 6, 19, 22)
+
+The Dragon was not attacked for more than 2 steps in a row (step 24), so it regenerates its health. Keep attacking it without longer breaks.
+
+To win the game, the Dragon must be killed.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+Villager Sandra has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Deborah has not eaten for 5 steps and must eat now (step 9), otherwise they starve.
+(violated 2 times in total, at steps 6, 9)
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+Villager Betty has not eaten for 5 steps and must eat now (step 15), otherwise they starve.
+Villager Dorothy has not eaten for 5 steps and must eat now (step 19), otherwise they starve.
+Villager Kenneth has not eaten for 5 steps and must eat now (step 19), otherwise they starve.
+(violated 3 times in total, at steps 15, 19)
+
+The Dragon was not attacked for more than 2 steps in a row (step 26), so it regenerates its health. Keep attacking it without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 27), so it regenerates its health. Keep attacking it without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 28), so it regenerates its health. Keep attacking it without longer breaks.
+(violated 5 times in total, at steps 26, 27, 28, 29, 30)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+Villager Deborah has not eaten for 5 steps and must eat now (step 9), otherwise they starve.
+Villager Donna has not eaten for 5 steps and must eat now (step 11), otherwise they starve.
+(violated 2 times in total, at steps 9, 11)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15] _
+Villager Donald has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Sandra has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager John has not eaten for 5 steps and must eat now (step 7), otherwise they starve.
+(violated 7 times in total, at steps 6, 7, 8, 9, 16, 17)
+
+The Dragon was not attacked for more than 2 steps in a row (step 25), so it regenerates its health. Keep attacking it without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 26), so it regenerates its health. Keep attacking it without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 27), so it regenerates its health. Keep attacking it without longer breaks.
+(violated 6 times in total, at steps 25, 26, 27, 28, 29, 30)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Donald has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Sandra has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager John has not eaten for 5 steps and must eat now (step 7), otherwise they starve.
+(violated 5 times in total, at steps 6, 7, 8, 22)
+
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 24 skipped in 1.21s

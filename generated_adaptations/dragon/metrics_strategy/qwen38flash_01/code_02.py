@@ -1,0 +1,94 @@
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step):
+        wheat = environment.farm.wheat
+
+        warriors = [c for c in components if c.role == "Warrior"]
+        farmers = [c for c in components if c.role == "Farmer"]
+
+        # --- Warriors in Village: eat if hungry, otherwise return to Cave ---
+        for w in warriors:
+            if w.steps_since_meal >= 4:
+                environment.assign_group(w, "eat")
+            elif w.steps_since_meal <= 2:
+                # Safe to send: will arrive at Cave with steps_since_meal <= 3,
+                # guaranteeing at least one attack before needing to return.
+                environment.assign_group(w, "cave")
+            else:
+                # steps_since_meal == 3: eat to be safe, avoid arriving at 4+
+                environment.assign_group(w, "eat")
+
+        # --- Farmers in Village: handle eating, spawning, farming ---
+        hungry_farmers = []
+        available_farmers = []
+        for f in farmers:
+            if f.steps_since_meal >= 4:
+                environment.assign_group(f, "eat")
+                hungry_farmers.append(f)
+            else:
+                available_farmers.append(f)
+
+        # Count total warriors (rough proxy: warriors present + those in cave)
+        # For spawning logic, use step-based heuristic since we can't see Cave contents
+        # directly from here.
+
+        # Spawning logic: use available (non-hungry) farmers in pairs
+        spawn_pairs_needed = 0
+        spawn_type = None
+
+        if step <= 8 and wheat >= 12 and len(available_farmers) >= 2:
+            # Priority: spawn Warriors early for damage
+            spawn_pairs_needed = 1
+            spawn_type = "spawn warrior"
+        elif step <= 14 and wheat >= 12 and len(available_farmers) >= 2:
+            spawn_pairs_needed = 1
+            spawn_type = "spawn warrior"
+        elif step <= 18 and wheat >= 10 and len(available_farmers) >= 2:
+            # Spawn a Farmer to boost wheat economy
+            spawn_pairs_needed = 1
+            spawn_type = "spawn farmer"
+        elif step > 18 and wheat >= 12 and len(available_farmers) >= 4:
+            # Late game: one more warrior if we can afford it
+            spawn_pairs_needed = 1
+            spawn_type = "spawn warrior"
+
+        if spawn_pairs_needed > 0 and spawn_type:
+            environment.assign_group(available_farmers[0], spawn_type)
+            environment.assign_group(available_farmers[1], spawn_type)
+            remaining_farmers = available_farmers[2:]
+        else:
+            remaining_farmers = available_farmers
+
+        # All remaining farmers farm
+        for f in remaining_farmers:
+            environment.assign_group(f, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step):
+        dragon_hp = environment.dragon.hp
+
+        for c in components:
+            if c.role == "Warrior":
+                # If Dragon is nearly dead, push through hunger
+                if dragon_hp <= 12:
+                    environment.assign_group(c, "attack")
+                elif c.steps_since_meal >= 4:
+                    # Must leave to eat: arrive Village at scm=5, eat safely
+                    environment.assign_group(c, "village")
+                else:
+                    environment.assign_group(c, "attack")
+            elif c.role == "Farmer":
+                # Farmers in cave (rare) should still help
+                if c.steps_since_meal >= 4:
+                    environment.assign_group(c, "village")
+                elif dragon_hp <= 12:
+                    environment.assign_group(c, "attack")
+                else:
+                    # Farmers only deal 1 dmg; better to farm in Village
+                    # but if they're already here, they can still chip in
+                    # unless they need to eat soon
+                    environment.assign_group(c, "village")

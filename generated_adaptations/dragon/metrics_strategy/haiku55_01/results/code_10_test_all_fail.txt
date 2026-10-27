@@ -1,0 +1,20 @@
+1
+................................F......                                  [100%]
+================================== FAILURES ===================================
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Brian has not eaten for 5 steps and must eat now (step 20), otherwise they starve.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+1 failed, 38 passed in 3.26s

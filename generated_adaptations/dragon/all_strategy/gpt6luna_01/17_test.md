@@ -1,0 +1,51 @@
+Here is a report from running unit tests on your implementation:
+
+...........................FFFFFF......                                  [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Villager Helen has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Helen has not eaten for 5 steps and must eat now (step 13), otherwise they starve.
+Villager Richard has not eaten for 5 steps and must eat now (step 27), otherwise they starve.
+(violated 3 times in total, at steps 6, 13, 27)
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+Villager Helen has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Charles has not eaten for 5 steps and must eat now (step 8), otherwise they starve.
+(violated 2 times in total, at steps 6, 8)
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+Villager Maria has not eaten for 5 steps and must eat now (step 14), otherwise they starve.
+Villager Kimberly has not eaten for 5 steps and must eat now (step 19), otherwise they starve.
+Villager Maria has not eaten for 5 steps and must eat now (step 21), otherwise they starve.
+(violated 5 times in total, at steps 14, 19, 21, 25, 29)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+Villager Charles has not eaten for 5 steps and must eat now (step 8), otherwise they starve.
+Villager Maria has not eaten for 5 steps and must eat now (step 14), otherwise they starve.
+Villager Sarah has not eaten for 5 steps and must eat now (step 18), otherwise they starve.
+(violated 3 times in total, at steps 8, 14, 18)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15] _
+Villager Helen has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Charles has not eaten for 5 steps and must eat now (step 8), otherwise they starve.
+Villager Sarah has not eaten for 5 steps and must eat now (step 10), otherwise they starve.
+(violated 3 times in total, at steps 6, 8, 10)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Helen has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Helen has not eaten for 5 steps and must eat now (step 13), otherwise they starve.
+Villager Kimberly has not eaten for 5 steps and must eat now (step 17), otherwise they starve.
+(violated 4 times in total, at steps 6, 13, 17, 24)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 33 passed in 2.37s
+
+Update your code to fix the failing tests.

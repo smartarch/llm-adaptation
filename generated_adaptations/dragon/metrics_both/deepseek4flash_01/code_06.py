@@ -1,0 +1,88 @@
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.last_attack_step = -10
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        wheat = environment.farm.wheat
+        farmers = [c for c in components if c.role == 'Farmer']
+
+        # --- decide who must eat ---
+        to_eat = set()
+        for c in components:
+            if c.steps_since_meal >= 5:
+                to_eat.add(c)                       # mandatory (avoid starving)
+            elif c.role == 'Warrior' and c.steps_since_meal >= 4:
+                to_eat.add(c)                       # refresh a returning warrior
+
+        avail = [f for f in farmers if f not in to_eat]
+        reserve = len(components) + 2               # wheat kept for upcoming meals
+        spend = max(0, wheat - reserve)
+        spawn = {}                                   # component -> group id
+
+        # --- build a small farmer economy early (need >=2 new farmers) ---
+        if len(farmers) < 4 and step <= 10 and len(avail) >= 2 and spend >= 10:
+            max_new = (4 - len(farmers) + 1) // 2
+            k_f = min(len(avail) // 2, spend // 10, max(max_new, 1))
+            i = 0
+            done = 0
+            while done < k_f and i + 1 < len(avail):
+                spawn[avail[i]] = 'spawn farmer'
+                spawn[avail[i + 1]] = 'spawn farmer'
+                i += 2
+                done += 1
+            if done:
+                avail = avail[i:]
+                spend -= 10 * done
+
+        # --- spawn as many warriors as farmers + wheat allow (multiple pairs!) ---
+        k_w = min(len(avail) // 2, spend // 12)
+        for j in range(k_w):
+            spawn[avail[2 * j]] = 'spawn warrior'
+            spawn[avail[2 * j + 1]] = 'spawn warrior'
+
+        # --- assign every component exactly once ---
+        for c in components:
+            if c in to_eat:
+                environment.assign_group(c, 'eat')
+            elif c in spawn:
+                environment.assign_group(c, spawn[c])
+            elif c.role == 'Warrior':
+                if c.steps_since_meal < 4:
+                    environment.assign_group(c, 'cave')   # go attack
+                else:
+                    environment.assign_group(c, 'eat')
+            else:
+                environment.assign_group(c, 'farm')
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        warriors = [c for c in components if c.role == 'Warrior']
+        go_home = set(c for c in components if c.role != 'Warrior')
+
+        # Warriors not fed for 6+ steps are too weak -> return to eat
+        for w in warriors:
+            if w.steps_since_meal >= 6:
+                go_home.add(w)
+
+        attackers = [w for w in warriors if w not in go_home]
+
+        # Guarantee the dragon is never left unattacked for >2 steps:
+        # if nobody is free to attack, keep the freshest warrior in the Cave
+        # (even if weak it still prevents regeneration).
+        if not attackers and warriors and (step - self.last_attack_step) >= 3:
+            keep = min(warriors, key=lambda x: x.steps_since_meal)
+            go_home.discard(keep)
+            attackers = [keep]
+
+        attacked = False
+        for c in components:
+            if c in go_home:
+                environment.assign_group(c, 'village')
+            else:
+                environment.assign_group(c, 'attack')
+                attacked = True
+
+        if attacked:
+            self.last_attack_step = step

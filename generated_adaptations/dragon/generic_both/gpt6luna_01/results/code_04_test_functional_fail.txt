@@ -1,0 +1,35 @@
+1
+...ssssssssssssssssssssssssFFFFFF......                                  [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Villager Jennifer has not eaten for 5 steps and must eat now (step 14), otherwise they starve.
+Villager Kimberly has not eaten for 5 steps and must eat now (step 17), otherwise they starve.
+Villager George has not eaten for 5 steps and must eat now (step 19), otherwise they starve.
+(violated 3 times in total, at steps 14, 17, 19)
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+The Dragon was not attacked for more than 2 steps in a row (step 6), so it regenerates its health. Keep attacking it without longer breaks.
+
+Villager Margaret has not eaten for 5 steps and must eat now (step 13), otherwise they starve.
+Villager Jennifer has not eaten for 5 steps and must eat now (step 14), otherwise they starve.
+(violated 2 times in total, at steps 13, 14)
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+The Dragon was not attacked for more than 2 steps in a row (step 6), so it regenerates its health. Keep attacking it without longer breaks.
+
+Villager Kimberly has not eaten for 5 steps and must eat now (step 17), otherwise they starve.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+Villager Sandra has not eaten for 5 steps and must eat now (step 11), otherwise they starve.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15] _
+Villager Sarah has not eaten for 5 steps and must eat now (step 15), otherwise they starve.
+Villager Kimberly has not eaten for 5 steps and must eat now (step 16), otherwise they starve.
+(violated 2 times in total, at steps 15, 16)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Jason has not eaten for 5 steps and must eat now (step 6), otherwise they starve.
+Villager Kimberly has not eaten for 5 steps and must eat now (step 16), otherwise they starve.
+Villager Paul has not eaten for 5 steps and must eat now (step 19), otherwise they starve.
+(violated 3 times in total, at steps 6, 16, 19)
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 24 skipped in 1.16s

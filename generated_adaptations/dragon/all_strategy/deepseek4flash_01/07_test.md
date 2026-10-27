@@ -1,0 +1,27 @@
+Here is a report from running unit tests on your implementation:
+
+..............................F........                                  [100%]
+================================== FAILURES ===================================
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+The Dragon was not attacked for more than 2 steps in a row (step 30), so it regenerates its health. Keep attacking it without longer breaks.
+
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: no_initial_warriors
+ - passed for: seed=1, seed=2, seed=3, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+1 failed, 38 passed in 2.89s
+
+Update your code to fix the failing tests.

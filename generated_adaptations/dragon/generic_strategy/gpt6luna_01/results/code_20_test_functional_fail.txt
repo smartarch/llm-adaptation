@@ -1,0 +1,29 @@
+1
+...ssssssssssssssssssssssssFFFFFF......                                  [100%]
+================================== FAILURES ===================================
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=1] _____
+Villager James has not eaten for 5 steps and must eat now (step 24), otherwise they starve.
+
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=2] _____
+Villager Ronald has not eaten for 5 steps and must eat now (step 12), otherwise they starve.
+_____ TestAdaptFunctional.test_no_functional_constraints_violated[seed=3] _____
+Villager Jennifer has not eaten for 5 steps and must eat now (step 20), otherwise they starve.
+
+At least a few new farmers should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[no_initial_warriors] _
+Villager Donald has not eaten for 5 steps and must eat now (step 18), otherwise they starve.
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15] _
+Villager Ronald has not eaten for 5 steps and must eat now (step 12), otherwise they starve.
+Villager Donald has not eaten for 5 steps and must eat now (step 18), otherwise they starve.
+(violated 2 times in total, at steps 12, 18)
+_ TestAdaptFunctional.test_no_functional_constraints_violated[initial_wheat=15,seed=1] _
+Villager James has not eaten for 5 steps and must eat now (step 23), otherwise they starve.
+================================ Test Results =================================
+TestAdaptFunctional::test_no_functional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptFunctional::test_no_functional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 24 skipped in 1.09s
