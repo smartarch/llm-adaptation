@@ -63,7 +63,7 @@ The Farm (accessible via `environment.farm`) with the following attributes (note
 - `wheat`: Current wheat amount
 
 ---
-All Warriors should go to the Cave and attack the Dragon. They return to the Village only to eat and then go back to the Cave. Try to attack the Dragon early - at least once in the first 15 steps of the game. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary so try to spawn at least two of each). Every villager must eat at least once in every 6 consecutive steps, so plan the meals accordingly. Do not send a hungry Warrior to the Cave if they would have to return to eat before attacking the Dragon at least once - let them eat first. Plan the meals of the Warriors so that the Dragon is never left unattacked for more than 2 steps in a row, because it regenerates.
+All Warriors should go to the Cave and attack the Dragon. They return to the Village only to eat and then go back to the Cave. Try to attack the Dragon early - at least once in the first 15 steps of the game. All Farmers should stay in Village and farm or spawn new villagers (both Farmers and Warriors are necessary so try to spawn at least two of each). Every villager must eat at least once in every 6 consecutive steps, so plan the meals accordingly so that no villager starves. Moving from the Cave to the Village takes one step, so a Warrior who has not eaten for 4 steps must leave the Cave to eat in time. Do not send a hungry Warrior to the Cave if they would have to return to eat before attacking the Dragon at least once - let them eat first. Plan the meals of the Warriors so that the Dragon is never left unattacked for more than 2 steps in a row (once there are at least two Warriors), because it regenerates.
 
 The adaptation strategy must adhere to the following functional requirements:
 
@@ -75,5 +75,6 @@ The adaptation strategy must adhere to the following functional requirements:
 - At least a few new warriors should be spawned to increase the chance of killing the Dragon.
 - All warriors should attack the Dragon after moving to the Cave.
 - A warrior that has not eaten for 3 or more steps should not be sent to the Cave (they would have to return to eat before attacking the Dragon), they should eat first.
-- Every villager must eat at least once in every 6 consecutive steps (a villager that has not eaten for 5 steps must eat now), otherwise they starve.
-- The Dragon must not be left unattacked for more than 2 steps in a row (after it was attacked for the first time), otherwise it regenerates its health.
+- Every villager must eat at least once in every 6 consecutive steps, otherwise they starve.
+- A villager in the Cave that has not eaten for 4 or more steps must go to the Village (moving takes one step), so that they can eat in time.
+- When there are at least two warriors, the Dragon must not be left unattacked for more than 2 steps in a row (after it was attacked for the first time), otherwise it regenerates its health.

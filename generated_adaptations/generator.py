@@ -382,16 +382,21 @@ def main(cmdline_args=None):
     args = parse_arguments(cmdline_args)
     folder = Path(args.folder)
     (folder / "results").mkdir(parents=True, exist_ok=True)
-    sys.stdout = Logger(folder / "results" / "log.ansi")
+    log_file = folder / "results" / "log.ansi"
+    if log_file.exists():
+        print(f"Error: The experiment in {folder} was already ran (log exists). Aborting.")
+        return
 
     messages = load_messages(folder)
-    print(f"Loaded {len(messages)} messages from {folder}.")
     if "01_user" not in messages:
         print(f"Error: Prompt is missing in {folder}. Create a prompt file named '01_user.md' in the folder.")
         return
     if len(messages) > 2:
-        print(f"Error: experiment in {folder} was already ran. Aborting.")
+        print(f"Error: The experiment in {folder} was already ran (too many messages exist: {len(messages)}). Aborting.")
         return
+    
+    sys.stdout = Logger(log_file)
+    print(f"Loaded {len(messages)} messages from {folder}.")
 
     llm = load_llm(args)
 

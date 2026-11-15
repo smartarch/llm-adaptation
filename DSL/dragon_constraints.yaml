@@ -35,15 +35,22 @@ adaptation_params:  # this is purely technical
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn` implies `warrior.steps_since_meal <= MEAL_INTERVAL - 4`)"
         reason: "Warrior {warrior} was sent to the Cave at step {step}, but they have not eaten for {warrior.steps_since_meal} steps, so they will have to return to eat before they can attack the Dragon. Let them eat first."
+      leave_cave_in_time:
+        # moving to the Village takes one step, so a warrior must leave the Cave when they still have two steps left
+        # to eat in time (they eat in the step after arriving, when steps_since_meal == MEAL_INTERVAL - 1)
+        constraint: "always(forall villager in `VillagerComps`: `villager.location == Map.CAVE and villager.steps_since_meal >= MEAL_INTERVAL - 2` implies `villager in GoToVillageEn`)"
+        reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps and is still in the Cave (step {step}). Moving to the Village takes one step, so they must go to the Village now to be able to eat in time."
       eat_regularly:
-        constraint: "always(forall villager in `VillagerComps`: `villager.steps_since_meal >= MEAL_INTERVAL - 1` implies `villager in EatEn`)"
-        reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps and must eat now (step {step}), otherwise they starve."
+        # steps_since_meal reaches MEAL_INTERVAL in the step after the villager should have eaten (the villager is starving)
+        constraint: "always(forall villager in `VillagerComps`: `villager.steps_since_meal < MEAL_INTERVAL`)"
+        reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps, so they are starving (step {step}). Every villager must eat at least once in every {MEAL_INTERVAL} consecutive steps."
       keep_attacking:
         variables:
           MAX_GAP: "2"  # the Dragon can be left without an attack for at most 2 consecutive steps
-          gap: "len(AttackEn) == 0 and DragonComps[0].fight_started"
+          # gaps count only when there are at least two warriors (a single warrior cannot keep attacking while eating)
+          gap: "len(AttackEn) == 0 and DragonComps[0].fight_started and len([v for v in VillagerComps if v.role == 'Warrior']) >= 2"
         constraint: "always(within(`MAX_GAP`, `-MAX_GAP`, `gap`) implies `not gap`)"
-        reason: "The Dragon was not attacked for more than {MAX_GAP} steps in a row (step {step}), so it regenerates its health. Keep attacking it without longer breaks."
+        reason: "The Dragon was not attacked for more than {MAX_GAP} steps in a row (step {step}), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks."
       game_is_won:
         constraint: "within(1, MAX, `DragonComps[0].hp <= 0`)"
         reason: "To win the game, the Dragon must be killed."

@@ -432,6 +432,11 @@ The planned values above (HP 50, N = 8, R = 3) were only the starting point. Som
 * **Not expressible:** "after going to the Village, a villager eats before returning to the Cave" needs a *since*/*until* operator, which FCL does not have.
   * Nested `within` would only express "go to the Village ⇒ eventually eat, and after that eventually go to the Cave", which still allows going to the Cave before eating.
   * The bounded past form ("not eaten in the last k steps ⇒ not sent to the Cave") is what `no_pointless_trip_to_cave` checks, using the meal counter.
+* **First LLM pilot (24 runs: prompts `strategy`/`both` × feedback `generic`/`all`/`metrics` × 4 LLMs):** 20 runs produced an AM that wins every game, 7 produced a valid AM. Constraint changes made after the analysis (details in `dragon/README.md`):
+  * `eat_regularly` is now `always(forall villager: steps_since_meal < MEAL_INTERVAL)` (no villager starves).
+  * New `leave_cave_in_time`: a villager in the Cave with `steps_since_meal >= MEAL_INTERVAL - 2` must go to the Village.
+  * `keep_attacking` counts gaps only when at least two warriors are alive.
+  * All constraints are still required. Splitting them into required and optional (e.g. attack in the first 15 steps, spawn a few villagers, `keep_attacking`) is to be discussed with the team.
 * **Open decisions for after the LLM pilot:**
   * The exact form and thresholds of the constraints (e.g. `MAX_GAP`, `spawn_at_least_a_few_farmers`, keeping `no_pointless_trip_to_cave`).
 
