@@ -12,8 +12,8 @@ from base_classes.adaptation import import_adaptation
 from base_classes.simulation import ComponentAlreadyAssignedError, AssignmentError, InvalidGroupError, \
     MissingAssignmentError, UserConstraintError, InvalidAssignmentError, Simulation
 from generated_adaptations.generator_utils import adaptation_class_name, adaptation_class, simulation_configs, \
-    adaptation_config
-from generated_adaptations.tests.conftest import load_constraints
+    adaptation_config, optional_constraint_names
+from generated_adaptations.tests.conftest import run_system, load_required, load_optional
 from utils import read_configs, nested_update, set_random_seed
 
 T = TypeVar('T', bound=AssignmentError)
@@ -116,8 +116,8 @@ def format_functional_constraint_violations(violations: list[UserConstraintError
     return "\n\n".join(parts)
 
 
-def assert_no_functional_constraints_violated(assignment_errors, fail=fail_without_traceback):
-    functional_constraint_violations = filter_errors(assignment_errors, UserConstraintError)
+def assert_no_functional_constraints_violated(assignment_errors, fail=fail_without_traceback, include=lambda violation: True):
+    functional_constraint_violations = [violation for violation in filter_errors(assignment_errors, UserConstraintError) if include(violation)]
     if functional_constraint_violations:
         fail(format_functional_constraint_violations(functional_constraint_violations))
 
@@ -132,7 +132,7 @@ class TestAdaptBase:
         variant = metafunc.config.getoption("variant")
         adaptation_name = metafunc.config.getoption("adaptation_name")
         tests = metafunc.config.getoption("tests")
-        config = read_configs(simulation_configs(example, load_constraints(tests)))
+        config = read_configs(simulation_configs(example, required=load_required(tests), optional=load_optional(tests)))
         config = nested_update(config, adaptation_config(adaptation_name, example, variant))
 
         situations_config = config.get("adaptation_params", {}).get("prompt_template_params", {}).get("situations", {})
@@ -204,7 +204,7 @@ class TestAdaptSystem(TestAdaptBase):
 
     @pytest.fixture(scope="class", autouse=True)
     def skip(self, tests):
-        if tests not in ("all", "system"):
+        if not run_system(tests):
             pytest.skip("Skipping system constraints tests.")
 
     # def test_no_assignment_errors(self, situation, simulation_class):
@@ -233,27 +233,65 @@ class TestAdaptSystem(TestAdaptBase):
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, assert_no_missing_assignments)
 
 
-class TestAdaptFunctional(TestAdaptBase):
+class TestAdaptFunctionalBase(TestAdaptBase):
+    """Checks the functional constraints selected by `include` (required or optional ones)."""
 
-    @pytest.fixture(scope="class", autouse=True)
-    def skip(self, tests):
-        if tests not in ("all", "functional"):
-            pytest.skip("Skipping functional constraints tests.")
+    @staticmethod
+    def include(violation: UserConstraintError, example) -> bool:
+        raise NotImplementedError
 
-    def test_no_functional_constraints_violated(self, situation, simulation_class):
+    def check_functional_constraints(self, situation, simulation_class, example):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
         violations: list[UserConstraintError] = []
 
         def collect_violations(assignment_errors, fail):
-            violations.extend(filter_errors(assignment_errors, UserConstraintError))
+            violations.extend(violation for violation in filter_errors(assignment_errors, UserConstraintError) if self.include(violation, example))
 
         self.run_simulation_with_assert_after_each_adapt(simulation, steps, collect_violations, immediate=False)
         if violations:
             fail_without_traceback(format_functional_constraint_violations(violations))
 
-    def test_no_functional_constraints_violated_at_the_end(self, situation, simulation_class):
+    def check_functional_constraints_at_the_end(self, situation, simulation_class, example):
         simulation = self.init_simulation(situation, simulation_class)
         steps = situation.steps
         simulation.run_simulation(steps)
-        assert_no_functional_constraints_violated(simulation.assignment_errors)
+        assert_no_functional_constraints_violated(simulation.assignment_errors, include=lambda violation: self.include(violation, example))
+
+
+class TestAdaptRequiredConstraints(TestAdaptFunctionalBase):
+    """Required functional constraints: together with the system constraints, they determine the validity of the AM."""
+
+    @pytest.fixture(scope="class", autouse=True)
+    def skip(self, tests):
+        if not load_required(tests):
+            pytest.skip("Skipping required functional constraints tests.")
+
+    @staticmethod
+    def include(violation, example):
+        return violation.constraint_name not in optional_constraint_names(example)
+
+    def test_no_required_constraints_violated(self, situation, simulation_class, example):
+        self.check_functional_constraints(situation, simulation_class, example)
+
+    def test_no_required_constraints_violated_at_the_end(self, situation, simulation_class, example):
+        self.check_functional_constraints_at_the_end(situation, simulation_class, example)
+
+
+class TestAdaptOptionalConstraints(TestAdaptFunctionalBase):
+    """Optional functional constraints: recommendations for winning the game, they do not determine the validity of the AM."""
+
+    @pytest.fixture(scope="class", autouse=True)
+    def skip(self, tests):
+        if not load_optional(tests):
+            pytest.skip("Skipping optional functional constraints tests.")
+
+    @staticmethod
+    def include(violation, example):
+        return violation.constraint_name in optional_constraint_names(example)
+
+    def test_no_optional_constraints_violated(self, situation, simulation_class, example):
+        self.check_functional_constraints(situation, simulation_class, example)
+
+    def test_no_optional_constraints_violated_at_the_end(self, situation, simulation_class, example):
+        self.check_functional_constraints_at_the_end(situation, simulation_class, example)

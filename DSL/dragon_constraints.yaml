@@ -1,56 +1,34 @@
 adaptation_params:  # this is purely technical
   prompt_template_params:  # this is purely technical
+    # Required functional constraints: they determine whether the AM is valid (optional ones are in dragon_constraints_optional.yaml).
     # All constraints are global, i.e., they see all the villagers and all the ensembles
     # (constraints defined per assignment would see only the villagers of that assignment).
     constraints:
+      game_is_won:
+        constraint: "within(1, MAX, `DragonComps[0].hp <= 0`)"
+        reason: "To win the game, the Dragon must be killed."
       all_warriors_should_go_to_cave:
         variables:
           Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
         constraint: "always(forall warrior in `Warriors`: `warrior.location == Map.VILLAGE and warrior not in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in GoToCaveEn`))"
         reason: "Warrior {warrior} should go to the Cave to attack the Dragon."
+      attack_after_moving_to_cave:
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+        constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in AttackEn`))"
+        reason: "Warrior {warrior} should attack the Dragon after moving to the Cave."
       all_farmers_should_stay_in_village:
         variables:
           Farmers: "[v for v in VillagerComps if v.role == 'Farmer']"
         constraint: "always(forall farmer in `Farmers`: `farmer.location == Map.VILLAGE`)"
         reason: "Farmer {farmer} should stay in the Village."
       spawn_at_least_a_few_farmers:
-        constraint: "within(2, MAX, `len(SpawnFarmerEn) >= 2`)"
-        reason: "At least a few new farmers should be spawned to increase the chance of killing the Dragon."
+        constraint: "within(1, MAX, `len(SpawnFarmerEn) >= 2`)"
+        reason: "At least one new farmer should be spawned to increase the chance of killing the Dragon."
       spawn_at_least_a_few_warriors:
         constraint: "within(2, MAX, `len(SpawnWarriorEn) >= 2`)"
-        reason: "At least a few new warriors should be spawned to increase the chance of killing the Dragon."
-      attack_at_least_once_during_first_half:
-        constraint: "within(1, 15, `len(AttackEn) > 0`)"
-        reason: "The Dragon should be attacked at least once in the first 15 steps of the game."
-      attack_after_moving_to_cave:
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in AttackEn`))"
-        reason: "Warrior {warrior.name} should attack the Dragon after moving to the Cave."
-      no_pointless_trip_to_cave:
-        # A warrior sent to the Cave arrives in the next step and must leave the Cave one step before eating, so it can
-        # attack at least once only if it has not been without a meal for more than MEAL_INTERVAL - 4 steps.
-        # (Cannot be checked directly in FCL, it refutes "the trip to the Cave can still be useful".)
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn` implies `warrior.steps_since_meal <= MEAL_INTERVAL - 4`)"
-        reason: "Warrior {warrior} was sent to the Cave at step {step}, but they have not eaten for {warrior.steps_since_meal} steps, so they will have to return to eat before they can attack the Dragon. Let them eat first."
-      leave_cave_in_time:
-        # moving to the Village takes one step, so a warrior must leave the Cave when they still have two steps left
-        # to eat in time (they eat in the step after arriving, when steps_since_meal == MEAL_INTERVAL - 1)
-        constraint: "always(forall villager in `VillagerComps`: `villager.location == Map.CAVE and villager.steps_since_meal >= MEAL_INTERVAL - 2` implies `villager in GoToVillageEn`)"
-        reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps and is still in the Cave (step {step}). Moving to the Village takes one step, so they must go to the Village now to be able to eat in time."
+        reason: "At least two new warriors should be spawned to increase the chance of killing the Dragon."
       eat_regularly:
         # steps_since_meal reaches MEAL_INTERVAL in the step after the villager should have eaten (the villager is starving)
         constraint: "always(forall villager in `VillagerComps`: `villager.steps_since_meal < MEAL_INTERVAL`)"
         reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps, so they are starving (step {step}). Every villager must eat at least once in every {MEAL_INTERVAL} consecutive steps."
-      keep_attacking:
-        variables:
-          MAX_GAP: "2"  # the Dragon can be left without an attack for at most 2 consecutive steps
-          # gaps count only when there are at least two warriors (a single warrior cannot keep attacking while eating)
-          gap: "len(AttackEn) == 0 and DragonComps[0].fight_started and len([v for v in VillagerComps if v.role == 'Warrior']) >= 2"
-        constraint: "always(within(`MAX_GAP`, `-MAX_GAP`, `gap`) implies `not gap`)"
-        reason: "The Dragon was not attacked for more than {MAX_GAP} steps in a row (step {step}), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks."
-      game_is_won:
-        constraint: "within(1, MAX, `DragonComps[0].hp <= 0`)"
-        reason: "To win the game, the Dragon must be killed."

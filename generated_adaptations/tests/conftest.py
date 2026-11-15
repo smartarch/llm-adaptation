@@ -9,11 +9,22 @@ def pytest_addoption(parser):
     parser.addoption("--example", action="store")
     parser.addoption("--variant", action="store", default="default")
     parser.addoption("--adaptation_name", action="store")
-    parser.addoption("--tests", choices=["system", "all", "functional"], required=True)
+    # system/functional/optional = only the system tests / required functional constraints / optional functional constraints,
+    # required = system tests + required functional constraints (validity of the AM), all = everything
+    parser.addoption("--tests", choices=["system", "functional", "optional", "required", "all"], required=True)
 
 
-def load_constraints(tests):
-    return tests in ("all", "functional")
+def run_system(tests):
+    return tests in ("system", "required", "all")
+
+
+def load_required(tests):
+    return tests in ("functional", "required", "all")
+
+
+def load_optional(tests):
+    return tests in ("optional", "all")
+
 
 @pytest.fixture(scope="session")
 def adaptation_name(pytestconfig):
@@ -42,7 +53,7 @@ def simulation_class(example):
 
 @pytest.fixture(scope="session")
 def simulation_configs(example, tests):
-    return generator_utils.simulation_configs(example, constraints=load_constraints(tests))
+    return generator_utils.simulation_configs(example, required=load_required(tests), optional=load_optional(tests))
 
 
 @pytest.fixture(scope="session")

@@ -1,3 +1,8 @@
+from pathlib import Path
+
+from utils import read_yaml
+
+
 def simulation_class(example):
     if example == "farm":
         from farm.simulation import SmartFarmSimulation as Simulation
@@ -8,18 +13,34 @@ def simulation_class(example):
     return Simulation
 
 
-def simulation_configs(example, constraints):
+CONSTRAINT_FILES = {  # (required, optional) functional constraints; the optional file may not exist
+    "farm": ("DSL/drones_constraints.yaml", "DSL/drones_constraints_optional.yaml"),
+    "dragon": ("DSL/dragon_constraints.yaml", "DSL/dragon_constraints_optional.yaml"),
+}
+
+
+def simulation_configs(example, required=False, optional=False):
     if example == "farm":
         configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "farm/configs/config_no_battery.yaml", "DSL/drones.yaml"]
-        if constraints:
-            configs.append("DSL/drones_constraints.yaml")
     elif example == "dragon":
         configs = ["dragon/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "DSL/dragon.yaml"]
-        if constraints:
-            configs.append("DSL/dragon_constraints.yaml")
     else:
         raise ValueError(f"Unknown example: {example}")
+    required_file, optional_file = CONSTRAINT_FILES[example]
+    if required:
+        configs.append(required_file)
+    if optional and Path(optional_file).exists():
+        configs.append(optional_file)
     return configs
+
+
+def optional_constraint_names(example) -> set[str]:
+    """Names of the optional functional constraints (they do not determine the validity of the AM)."""
+    optional_file = CONSTRAINT_FILES[example][1]
+    if not Path(optional_file).exists():
+        return set()
+    config = read_yaml(optional_file)
+    return set(config.get("adaptation_params", {}).get("prompt_template_params", {}).get("constraints", {}))
 
 
 # TODO: can we load this from the DSL?

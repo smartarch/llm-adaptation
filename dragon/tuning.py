@@ -3,7 +3,8 @@
 For each parameter combination and baseline, it reports:
  * the win rate, the average number of steps to win, and the average remaining HP of the Dragon in the lost games,
    over the runs from the default initial state with seeds 1..SEEDS,
- * the functional constraints (DSL/dragon_constraints.yaml) violated in the test situations (DSL/dragon.yaml),
+ * the functional constraints (DSL/dragon_constraints.yaml and the optional ones from DSL/dragon_constraints_optional.yaml,
+   marked "(opt.)") violated in the test situations (DSL/dragon.yaml),
    with the number of situations in which each constraint was violated; violations of the generic (system)
    constraints are reported as "system: <error type>".
 
@@ -22,10 +23,11 @@ from collections import Counter
 from base_classes.adaptation import import_adaptation
 from base_classes.simulation import AssignmentError, UserConstraintError
 from dragon.simulation import DragonHuntSimulation
-from generated_adaptations.generator_utils import simulation_configs, adaptation_config, reset_component_counters
+from generated_adaptations.generator_utils import simulation_configs, adaptation_config, reset_component_counters, \
+    optional_constraint_names
 from utils import read_configs, nested_update, set_random_seed
 
-BASELINES = ["greedy_no_meals", "greedy_with_meals", "greedy_eat_last", "staggered_meals", "assemble_and_strike"]
+BASELINES = ["greedy_no_meals", "greedy_with_meals", "greedy_with_reserve", "greedy_eat_last", "staggered_meals", "assemble_and_strike"]
 SEEDS = 10
 STEPS = 30
 HP = 100
@@ -37,7 +39,7 @@ GRID = {
 
 
 def make_config(baseline: str, params: dict) -> dict:
-    config = read_configs(simulation_configs("dragon", True))
+    config = read_configs(simulation_configs("dragon", required=True, optional=True))
     config = copy.deepcopy(nested_update(config, adaptation_config(baseline, "dragon", "mock")))
     config["steps"] = STEPS
     config["dragon"]["HP"] = params.get("hp", HP)
@@ -71,7 +73,8 @@ def run(config: dict, seed: int, arrange=None) -> tuple[bool, int, int, set[str]
         simulation.assignment_errors_handler = lambda errs: errors.extend(errs)
         simulation.run_simulation(config["steps"])
         errors += simulation.assignment_errors  # violations at the end of the run
-    violated = {e.constraint_name for e in errors if isinstance(e, UserConstraintError)}
+    optional = optional_constraint_names("dragon")
+    violated = {e.constraint_name + (" (opt.)" if e.constraint_name in optional else "") for e in errors if isinstance(e, UserConstraintError)}
     violated |= {f"system: {type(e).__name__}" for e in errors if isinstance(e, AssignmentError) and not isinstance(e, UserConstraintError)}
     return simulation.dragon.hp <= 0, simulation.step, simulation.dragon.hp, violated
 
@@ -84,7 +87,7 @@ METRICS = {
     "win_rate": "Win rate",
     "steps": "Average number of steps to win",
     "lost_hp": "Average remaining HP of the Dragon in lost games",
-    "violations": "Violated constraints (number of test situations in which the constraint was violated; generic constraints are prefixed with \"system\")",
+    "violations": "Violated constraints (number of test situations in which the constraint was violated; generic constraints are prefixed with \"system\", optional ones are marked \"(opt.)\")",
 }
 
 

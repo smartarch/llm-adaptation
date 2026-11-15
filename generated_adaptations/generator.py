@@ -27,19 +27,20 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 
 
 FARM_GOOD_DAMAGE = 60  # damage threshold for a good adaptation in the farm example
-DRAGON_GOOD_STEPS = 25  # average steps threshold for a good adaptation in the dragon example (staggered_meals baseline: 21.6, see dragon/README.md)
+DRAGON_GOOD_STEPS = 30  # average steps threshold for a good adaptation in the dragon example - anything that wins is good enough now
 
 
 def parse_arguments(cmdline_args=None):
     parser = argparse.ArgumentParser(description="Command-line arguments for the generator.")
     parser.add_argument("--folder", type=str, required=True, help="Path to the folder. The path should contain `{example}/{variant}/{folder}`")
     parser.add_argument("--max_iterations", type=int, default=10, help="")
-    parser.add_argument("--mode", choices=["system", "all", "result", "stats", "health"], required=True, help="Mode of feedback to the LLM.\n"
-        "system=feedback from system unit tests\n"
-        "all=feedback from system + user constraints unit tests\n"
-        "results=feedback from simulation results\n"
-        "stats=feedback from simulation statistics (e.g., winrate, average damage, etc)\n" \
-        "health=HP of the dragon over time (only for the dragon example)")
+    parser.add_argument("--mode", choices=["stats", "progress", "system", "required", "all", "result"], required=True, help="Mode of feedback to the LLM.\n"
+        "stats=simulation statistics averaged over the runs (e.g., winrate, average damage, etc)\n"
+        "progress=simulation metrics step by step for each run (only for the dragon example)\n"
+        "system=feedback from the system constraints (unit tests)\n"
+        "required=feedback from the system + required functional constraints\n"
+        "all=feedback from the system + required + optional functional constraints\n"
+        "result=simulation result only (winrate/damage)")
     parser.add_argument("--simulation_runs", type=int, default=3, help="Number of runs of simulation for evaluation.")
     parser.add_argument("--llm", type=str, default="gpt-4.1-mini-2025-04-14", help="LLM to use.")
     if cmdline_args is None:
@@ -146,30 +147,25 @@ def gather_feedback(args, folder, messages, iteration, code_file):
         return False
 
     # run the tests and the simulation with the generated code
-    test_result_system, test_report_system = test_code(folder, code_file, "system")
-    test_result_functional, test_report_functional = test_code(folder, code_file, "functional")
-    test_result_all, test_report_all = test_code(folder, code_file, "all")
+    # (each group of constraints separately, so that all of them are recorded for the analysis)
+    test_results = {tests: test_code(folder, code_file, tests) for tests in ["system", "functional", "optional"]}
+    if args.mode in ["required", "all"]:  # the report used as the feedback (all tests of the level in one run)
+        test_results[args.mode] = test_code(folder, code_file, args.mode)
     simulation_results = run_simulation(folder, code_file, args.simulation_runs)
 
-    if verdict(folder, simulation_results, test_result_all):
+    if verdict(folder, simulation_results, test_results["system"][0], test_results["functional"][0]):
         return True
 
     # provide feedback to the LLM
-    if args.mode == "system":
-        if test_result_system == pytest.ExitCode.OK:
+    if args.mode in ["system", "required", "all"]:
+        test_result, test_report = test_results[args.mode]
+        if test_result == pytest.ExitCode.OK:
             test_report_file = f"{iteration * 2 + 1:02d}_pass"
             append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
         else:
             simulation_report_file = f"{iteration * 2 + 1:02d}_test"
-            append_test_report(test_report_system, messages, folder, simulation_report_file)
-    elif args.mode == "all":
-        if test_result_all == pytest.ExitCode.OK:
-            test_report_file = f"{iteration * 2 + 1:02d}_pass"
-            append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
-        else:
-            simulation_report_file = f"{iteration * 2 + 1:02d}_test"
-            append_test_report(test_report_all, messages, folder, simulation_report_file)
-    elif args.mode in ["result", "stats", "health"]:
+            append_test_report(test_report, messages, folder, simulation_report_file)
+    elif args.mode in ["stats", "progress", "result"]:
         simulation_report_file = f"{iteration * 2 + 1:02d}_{args.mode}"
         append_simulation_report(simulation_results, messages, folder, simulation_report_file, args.mode)
     else:
@@ -177,9 +173,10 @@ def gather_feedback(args, folder, messages, iteration, code_file):
     return False
 
 
-def verdict(folder, simulation_results, test_result_all):
+def verdict(folder, simulation_results, test_result_system, test_result_functional):
     example, _ = get_example_variant(folder)
-    all_tests_passed = test_result_all == pytest.ExitCode.OK
+    # the AM is valid if it satisfies the system and the required functional constraints (optional ones are only feedback)
+    all_tests_passed = test_result_system == pytest.ExitCode.OK and test_result_functional == pytest.ExitCode.OK
 
     if example == "farm":
         damage = simulation_results["damage"]
@@ -200,11 +197,11 @@ def verdict(folder, simulation_results, test_result_all):
 ### Unit tests
 
 
-def test_code(folder, code_file, tests: Literal["system", "all", "functional"]):
+def test_code(folder, code_file, tests: Literal["system", "functional", "optional", "required", "all"]):
     example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
-        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExX", "--show-capture=no", "--color=no",
+        "pytest", "generated_adaptations/tests", "-q", "--tb=short", "-rfExX", "--show-capture=no", "--color=no", "-p", "no:cacheprovider",
         f"--example={example}", f"--adaptation_name={adaptation_name}", f"--variant={variant}", f"--tests={tests}"
     ]
     print(f"Running tests ({tests}):", " ".join(cmd))
@@ -245,9 +242,9 @@ def prepare_config(folder, code_file):
 
 def run_simulation(folder, code_file, repeats=3, start=1):
     print(f"Running simulation for '{code_file}'.")
-    example, variant = get_example_variant(folder)
+    example, _ = get_example_variant(folder)
 
-    configs = simulation_configs(example=example, constraints=variant == "constraints")
+    configs = simulation_configs(example=example)
     extra_config = '--extra_config=' + json.dumps(prepare_config(folder, code_file))
 
     log_files = []
@@ -316,40 +313,65 @@ def analyze_farm_simulation_results(log_files, folder, code_file):
     return result
 
 
-def analyze_dragon_simulation_results(log_files, folder, code_file):
-    results = pd.DataFrame(columns=["win", "steps", "dragon_hp", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"])
+# metrics shown step by step in the "progress" feedback (column title -> function of the simulation log)
+DRAGON_PROGRESS_COLUMNS = {
+    "step": lambda csv: csv.step,
+    "Dragon HP": lambda csv: csv.dragon_hp.clip(lower=0),
+    "wheat": lambda csv: csv.wheat,
+    "farmers": lambda csv: csv.farmers_village + csv.farmers_cave,
+    "warriors": lambda csv: csv.warriors_village + csv.warriors_cave,
+    "attacking": lambda csv: csv.ATTACKING,
+    "farming": lambda csv: csv.FARMING,
+    "eating": lambda csv: csv.EATING,
+    "starving": lambda csv: csv.starving,
+    "spawned farmers": lambda csv: csv.spawned_farmers,
+    "spawned warriors": lambda csv: csv.spawned_warriors,
+    "killed by Dragon": lambda csv: csv.killed_by_dragon,
+    "starved to death": lambda csv: csv.starved_to_death,
+}
 
-    dragon_hps = []
+
+def dragon_progress_table(csv_data) -> str:
+    columns = {title: column(csv_data).tolist() for title, column in DRAGON_PROGRESS_COLUMNS.items()}
+    lines = ["| " + " | ".join(columns) + " |", "|" + " --- |" * len(columns)]
+    for row in zip(*columns.values()):
+        lines.append("| " + " | ".join(str(value) for value in row) + " |")
+    return "\n".join(lines)
+
+
+def analyze_dragon_simulation_results(log_files, folder, code_file):
+    results = pd.DataFrame(columns=["win", "steps", "dragon_hp", "warriors", "farmers", "spawned_warriors", "spawned_farmers",
+                                    "killed_by_dragon", "starved_to_death", "attacking", "farming", "eating", "starving", "steps_without_attack"])
+
+    progress = []
     for log_file in log_files:
         try:
             csv_file = log_file.replace(".ansi", ".csv")
             csv_data = pd.read_csv(csv_file, encoding="utf-8")
 
-            dragon_hp = csv_data.dragon_hp.min()
-            if dragon_hp < 0:
-                dragon_hp = 0
-            results.loc[len(results)] = [any(csv_data.dragon_hp <= 0), csv_data.step.max(),
-                                         dragon_hp,
+            won = any(csv_data.dragon_hp <= 0)
+            attacked = csv_data.ATTACKING > 0
+            started = attacked.cumsum() > 0  # from the first attack on
+            results.loc[len(results)] = [won, csv_data.step.max(),
+                                         max(0, csv_data.dragon_hp.iloc[-1]),
                                          csv_data.warriors_village.iloc[-1] + csv_data.warriors_cave.iloc[-1],
                                          csv_data.farmers_village.iloc[-1] + csv_data.farmers_cave.iloc[-1],
-                                         csv_data.FARMING.mean(), csv_data.ATTACKING.mean(),
-                                         csv_data.spawned_farmers.sum(), csv_data.spawned_warriors.sum()]
-            dragon_hp_list = csv_data.dragon_hp.tolist()
-            dragon_hp_list = [max(0, hp) for hp in dragon_hp_list]
-            dragon_hps.append(dragon_hp_list)
-        except (FileNotFoundError, ValueError):
+                                         csv_data.spawned_warriors.sum(), csv_data.spawned_farmers.sum(),
+                                         csv_data.killed_by_dragon.sum(), csv_data.starved_to_death.sum(),
+                                         csv_data.ATTACKING.mean(), csv_data.FARMING.mean(), csv_data.EATING.mean(), csv_data.starving.mean(),
+                                         int((started & ~attacked).sum())]
+            outcome = f"won in {csv_data.step.max()} steps" if won else f"lost, the Dragon has {max(0, csv_data.dragon_hp.iloc[-1])} HP left"
+            progress.append(f"Game {len(progress) + 1} ({outcome}):\n\n{dragon_progress_table(csv_data)}")
+        except (FileNotFoundError, ValueError, AttributeError):
             pass
 
-    result = results[["dragon_hp", "warriors", "farmers", "farming", "attacking", "spawned_farmers", "spawned_warriors"]].mean().to_dict()
+    result = results.drop(columns=["win", "steps"]).astype(float).mean().to_dict()
     result["games_played"] = len(log_files)
     result["wins"] = int(results["win"].sum())
     result["losses"] = len(log_files) - result["wins"]
     result["winrate"] = result["wins"] / len(log_files)
     result["steps"] = results[results["win"]].steps.mean() if len(results[results["win"]]) > 0 else None
-    result["dragon_hp_over_time"] = "\n".join(
-        f"Game {i}: " + ", ".join(str(hp) for hp in hps)
-        for i, hps in enumerate(dragon_hps, start=1)
-    )
+    result["progress"] = "\n\n".join(progress)
 
     (folder / "results" / f"{code_file.stem}_simulation_result.json").write_text(json.dumps(result), encoding="utf-8")
 
@@ -360,6 +382,8 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
 def append_simulation_report(results, messages, folder, report_file, mode):
     example, _ = get_example_variant(folder)
     if example == "farm":
+        if mode == "progress":
+            raise ValueError("The 'progress' feedback is not supported for the farm example.")
         prompt_template = PromptTemplate.from_file(f"generated_adaptations/prompts/farm_{mode}.md", encoding="utf-8")
         simulation_prompt = prompt_template.format(**results)
     elif example == "dragon":

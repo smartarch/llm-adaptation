@@ -40,6 +40,13 @@ class DragonHuntSimulation(Simulation):
         self.spawn_warrior_ensemble = []
 
         self.last_components = self.components[:]  # for logging
+        self.reset_step_counters()
+
+    def reset_step_counters(self):
+        """Per-step counters for logging (starving villagers and deaths by cause)."""
+        self.starving_this_step = 0
+        self.killed_by_dragon_this_step = 0
+        self.starved_to_death_this_step = 0
 
     @staticmethod
     def set_config_values(config: dict):
@@ -51,6 +58,7 @@ class DragonHuntSimulation(Simulation):
 
     def simulation_step(self, step):
         self.last_components = self.components[:]  # for logging
+        self.reset_step_counters()
         super().simulation_step(step)
 
         # spawn new villagers

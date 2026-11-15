@@ -2,6 +2,13 @@
 
 The functional (user) constraints are defined in the `*_constraints.yaml` files next to the architecture specification (e.g. [`DSL/dragon_constraints.yaml`](../dragon_constraints.yaml)). They are evaluated with the [`fcl`](../../fcl/README.md) package, which documents the syntax and semantics of the formulas.
 
+The constraints are either **required** or **optional**:
+
+* The required constraints are in `*_constraints.yaml`. Together with the system constraints, they determine whether the AM is valid.
+* The optional constraints are in `*_constraints_optional.yaml`, e.g. [`DSL/dragon_constraints_optional.yaml`](../dragon_constraints_optional.yaml). They are recommendations that help to win the game: they only give additional feedback.
+
+Both files have the same format and are merged into one configuration, see `simulation_configs` and `optional_constraint_names` in [`generator_utils.py`](../../generated_adaptations/generator_utils.py). The optional file may be missing; the farm currently has none.
+
 ## Definition of a constraint
 
 ```yaml

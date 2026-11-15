@@ -56,8 +56,10 @@ class Villager(Component):
             self.state = VillagerState.IDLE
 
         # starvation: the villager did not eat for `meal_interval` consecutive steps
-        if self.is_starving and self.simulation.starvation_damage:
-            self.get_attacked(self.simulation.starvation_damage)
+        if self.is_starving:
+            self.simulation.starving_this_step += 1
+            if self.simulation.starvation_damage:
+                self.get_attacked(self.simulation.starvation_damage, cause="starvation")
 
     @property
     def is_starving(self) -> bool:
@@ -72,12 +74,16 @@ class Villager(Component):
     def role(self):
         return
 
-    def get_attacked(self, damage):
+    def get_attacked(self, damage, cause="dragon"):
         self.hp -= damage
         if self.hp <= 0:
-            self.die()
+            self.die(cause)
 
-    def die(self):
+    def die(self, cause="dragon"):
+        if cause == "starvation":
+            self.simulation.starved_to_death_this_step += 1
+        else:
+            self.simulation.killed_by_dragon_this_step += 1
         self.simulation.remove_component(self)
 
     def __repr__(self):

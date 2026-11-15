@@ -66,13 +66,16 @@ The Farm (accessible via `environment.farm`) with the following attributes (note
 The adaptation strategy must adhere to the following functional requirements:
 
 - To win the game, the Dragon must be killed.
-- The Dragon should be attacked at least once in the first 15 steps of the game.
 - All warriors should go to the Cave to attack the Dragon.
-- All farmers should stay in the Village.
-- At least a few new farmers should be spawned to increase the chance of killing the Dragon.
-- At least a few new warriors should be spawned to increase the chance of killing the Dragon.
 - All warriors should attack the Dragon after moving to the Cave.
-- A warrior that has not eaten for 3 or more steps should not be sent to the Cave (they would have to return to eat before attacking the Dragon), they should eat first.
+- All farmers should stay in the Village.
+- At least one new farmer should be spawned to increase the chance of killing the Dragon.
+- At least two new warriors should be spawned to increase the chance of killing the Dragon.
 - Every villager must eat at least once in every 6 consecutive steps, otherwise they starve.
-- A villager in the Cave that has not eaten for 4 or more steps must go to the Village (moving takes one step), so that they can eat in time.
-- When there are at least two warriors, the Dragon must not be left unattacked for more than 2 steps in a row (after it was attacked for the first time), otherwise it regenerates its health.
+
+In addition, the following optional requirements are recommendations that help to win the game (they are not mandatory):
+
+- The Dragon should be attacked at least once in the first 15 steps of the game.
+- A warrior that has not eaten for 3 or more steps should not be sent to the Cave (they would have to return to eat before attacking the Dragon), they should eat first.
+- A villager in the Cave that has not eaten for 4 or more steps should go to the Village (moving takes one step), so that they can eat in time.
+- When there are at least two warriors, the Dragon should not be left unattacked for more than 2 steps in a row (after it was attacked for the first time), otherwise it regenerates its health.
