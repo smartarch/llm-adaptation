@@ -1,0 +1,16 @@
+1
+...ssssssssssssssssssssssss....FF......ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Betty has not eaten for 6 steps, so they are starving (step 24). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+To win the game, the Dragon must be killed.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+2 failed, 13 passed, 36 skipped in 1.24s

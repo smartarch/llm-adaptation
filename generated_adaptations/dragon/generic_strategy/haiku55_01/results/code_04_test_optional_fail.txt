@@ -1,0 +1,18 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFF........                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Warrior Steven was sent to the Cave at step 8, but they have not eaten for 5 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Warrior Steven was sent to the Cave at step 8, but they have not eaten for 5 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+The Dragon was not attacked for more than 2 steps in a row (step 18), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Warrior Steven was sent to the Cave at step 8, but they have not eaten for 5 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors
+ - passed for: initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+4 failed, 11 passed, 36 skipped in 0.74s

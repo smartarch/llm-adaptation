@@ -1,0 +1,116 @@
+## Fixes
+
+The three remaining failures are the Dragon-kill requirement. The 4-step Cave stay was too risky before because a Warrior that returned late could starve when wheat ran short. Rejecting the change outright gave up the extra attack steps, so this version makes the stay conditional on food.
+
+- **Wheat-aware Cave stay.** In the Cave, a Warrior keeps attacking until it has gone 4 unfed steps, but only when the farm holds at least one wheat per Warrior in the Cave. Otherwise the limit drops back to 3, so the Warriors return while they can still be fed.
+- **Wheat reserved for hungry Warriors.** In the Village, a spawn is only issued if the wheat left after this step's meals still covers the Warriors who will be hungry next step. This prevents spawns from starving the returning Warriors.
+- **Existing safeguards kept.** Hungry villagers are still fed first, limited by wheat. Warriors with 2 or more unfed steps are fed before anything else. The required minimum of one Farmer and two Warriors is still enforced.
+
+I could not run the simulator, so these changes are not verified against the three failing scenarios. The reserve rule may also reduce spawning in some runs.
+
+```py
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    """
+    Priority-based strategy:
+      - In the Village, villagers eat once they have gone 2 steps unfed (most hungry first,
+        limited by wheat).
+      - Spawning: one Farmer is spawned first (required), then Warriors whenever wheat allows
+        after reserving wheat for Warriors that will be hungry next step.
+      - Fed Warriors go to the Cave and attack. In the Cave a Warrior stays while it has gone
+        fewer than 4 unfed steps if there is enough wheat for all Cave Warriors to eat on
+        return; otherwise it stays while fewer than 3 unfed steps. Then it returns to the
+        Village and eats on arrival.
+    """
+
+    EAT_THRESHOLD_VILLAGE = 2
+    CAVE_RETURN_THRESHOLD = 3
+    CAVE_STAY_THRESHOLD = 4
+    WARRIOR_SPAWN_COST = 12
+    FARMER_SPAWN_COST = 10
+    LAST_SPAWN_STEP = 25
+    MIN_FARMER_SPAWNS = 1
+    MIN_WARRIOR_SPAWNS = 2
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.farmers_spawned = 0
+        self.warriors_spawned = 0
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        wheat = max(environment.farm.wheat, 0)
+
+        # Most hungry villagers first.
+        ordered = sorted(components, key=lambda c: c.steps_since_meal, reverse=True)
+
+        # Feed hungry villagers, limited by available wheat.
+        hungry = [c for c in ordered if c.steps_since_meal >= self.EAT_THRESHOLD_VILLAGE]
+        eat_list = hungry[:wheat]
+        eat_ids = {id(c) for c in eat_list}
+        budget = wheat - len(eat_list)
+
+        # Warriors not fed this step will need wheat next step; keep it reserved.
+        reserve = sum(
+            1 for c in ordered
+            if id(c) not in eat_ids and c.role == "Warrior"
+            and c.steps_since_meal + 1 >= self.EAT_THRESHOLD_VILLAGE
+        )
+
+        # Farmers not eating this step are the spawn candidates.
+        farmers = [c for c in ordered if id(c) not in eat_ids and c.role == "Farmer"]
+
+        spawn_group = None  # (group name, members)
+        if step <= self.LAST_SPAWN_STEP and len(farmers) >= 2:
+            can_farmer = budget - reserve >= self.FARMER_SPAWN_COST
+            can_warrior = budget - reserve >= self.WARRIOR_SPAWN_COST
+            need_farmer = self.farmers_spawned < self.MIN_FARMER_SPAWNS
+            need_warrior = self.warriors_spawned < self.MIN_WARRIOR_SPAWNS
+
+            if need_farmer and not need_warrior and can_farmer:
+                spawn_group = ("spawn farmer", farmers[:2])
+                budget -= self.FARMER_SPAWN_COST
+                self.farmers_spawned += 1
+            elif can_warrior:
+                spawn_group = ("spawn warrior", farmers[:2])
+                budget -= self.WARRIOR_SPAWN_COST
+                self.warriors_spawned += 1
+            elif can_farmer:
+                spawn_group = ("spawn farmer", farmers[:2])
+                budget -= self.FARMER_SPAWN_COST
+                self.farmers_spawned += 1
+
+        spawn_ids = {id(c) for c in spawn_group[1]} if spawn_group else set()
+
+        # Assign every villager to exactly one group.
+        for c in ordered:
+            cid = id(c)
+            if cid in eat_ids:
+                environment.assign_group(c, "eat")
+            elif cid in spawn_ids:
+                environment.assign_group(c, spawn_group[0])
+            elif c.role == "Farmer":
+                environment.assign_group(c, "farm")
+            elif c.steps_since_meal >= self.EAT_THRESHOLD_VILLAGE:
+                # Unfed warrior that could not be fed this step: stay and eat later.
+                environment.assign_group(c, "farm")
+            else:
+                # Fed warrior: go attack the Dragon.
+                environment.assign_group(c, "cave")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        wheat = max(environment.farm.wheat, 0)
+
+        # Stay longer in the Cave only if there is wheat for every Warrior to eat on return.
+        if wheat >= len(components):
+            stay_limit = self.CAVE_STAY_THRESHOLD
+        else:
+            stay_limit = self.CAVE_RETURN_THRESHOLD
+
+        for c in components:
+            if c.role == "Warrior" and c.steps_since_meal < stay_limit:
+                environment.assign_group(c, "attack")
+            else:
+                environment.assign_group(c, "village")
+```

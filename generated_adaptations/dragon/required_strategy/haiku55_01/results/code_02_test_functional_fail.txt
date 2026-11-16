@@ -1,0 +1,59 @@
+1
+...ssssssssssssssssssssssssF.FFFF......ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+To win the game, the Dragon must be killed.
+
+Warrior Jeff should go to the Cave to attack the Dragon.
+(violated 6 times in total, at steps 30)
+
+Warrior Jeff should attack the Dragon after moving to the Cave.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+To win the game, the Dragon must be killed.
+
+Warrior Donald should go to the Cave to attack the Dragon.
+Warrior Charles should go to the Cave to attack the Dragon.
+(violated 9 times in total, at steps 30)
+
+Warrior Donald should attack the Dragon after moving to the Cave.
+Warrior Charles should attack the Dragon after moving to the Cave.
+(violated 2 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+
+Warrior Donald should go to the Cave to attack the Dragon.
+Warrior Jeff should go to the Cave to attack the Dragon.
+(violated 17 times in total, at steps 30)
+
+Warrior Donald should attack the Dragon after moving to the Cave.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+To win the game, the Dragon must be killed.
+
+Warrior James should go to the Cave to attack the Dragon.
+Warrior Charles should go to the Cave to attack the Dragon.
+Warrior Jeff should go to the Cave to attack the Dragon.
+(violated 31 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+To win the game, the Dragon must be killed.
+
+Warrior Donna should go to the Cave to attack the Dragon.
+(violated 7 times in total, at steps 30)
+
+Warrior Donna should attack the Dragon after moving to the Cave.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=2
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+5 failed, 10 passed, 36 skipped in 1.05s

@@ -1,0 +1,49 @@
+1
+...ssssssssssssssssssssssssFFFFFF......ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager David has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Dorothy has not eaten for 6 steps, so they are starving (step 15). Every villager must eat at least once in every 6 consecutive steps.
+Villager Linda has not eaten for 6 steps, so they are starving (step 18). Every villager must eat at least once in every 6 consecutive steps.
+(violated 5 times in total, at steps 7, 15, 18, 20, 21)
+
+To win the game, the Dragon must be killed.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager David has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Dorothy has not eaten for 6 steps, so they are starving (step 15). Every villager must eat at least once in every 6 consecutive steps.
+Villager Charles has not eaten for 6 steps, so they are starving (step 16). Every villager must eat at least once in every 6 consecutive steps.
+(violated 8 times in total, at steps 7, 15, 16, 17, 18, 19, 20, 21)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+At least two new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+At least two new warriors should be spawned to increase the chance of killing the Dragon.
+
+To win the game, the Dragon must be killed.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager David has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Dorothy has not eaten for 6 steps, so they are starving (step 8). Every villager must eat at least once in every 6 consecutive steps.
+Villager Charles has not eaten for 6 steps, so they are starving (step 15). Every villager must eat at least once in every 6 consecutive steps.
+(violated 6 times in total, at steps 7, 8, 15, 16, 17, 18)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager David has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Dorothy has not eaten for 6 steps, so they are starving (step 8). Every villager must eat at least once in every 6 consecutive steps.
+Villager Dorothy has not eaten for 6 steps, so they are starving (step 15). Every villager must eat at least once in every 6 consecutive steps.
+(violated 6 times in total, at steps 7, 8, 15, 17, 18, 20)
+
+To win the game, the Dragon must be killed.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.86s

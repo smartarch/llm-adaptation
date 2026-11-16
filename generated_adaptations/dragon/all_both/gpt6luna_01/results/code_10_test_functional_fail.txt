@@ -1,0 +1,29 @@
+1
+...ssssssssssssssssssssssssFFFFFF......ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Carol has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Michael has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Carol has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Michael has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7)
+
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.91s

@@ -1,0 +1,97 @@
+1
+...........................FFFFFF......FFFFFF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager Linda has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Linda has not eaten for 6 steps, so they are starving (step 14). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7, 14)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager Linda has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Deborah has not eaten for 6 steps, so they are starving (step 11). Every villager must eat at least once in every 6 consecutive steps.
+Villager Linda has not eaten for 6 steps, so they are starving (step 14). Every villager must eat at least once in every 6 consecutive steps.
+(violated 6 times in total, at steps 7, 11, 14, 15, 21, 22)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+Villager Linda has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Linda has not eaten for 6 steps, so they are starving (step 14). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7, 14)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+Villager Kimberly has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+Villager Kimberly has not eaten for 6 steps, so they are starving (step 16). Every villager must eat at least once in every 6 consecutive steps.
+Villager Deborah has not eaten for 6 steps, so they are starving (step 17). Every villager must eat at least once in every 6 consecutive steps.
+(violated 3 times in total, at steps 9, 16, 17)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Brian has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Linda has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Kimberly has not eaten for 6 steps, so they are starving (step 8). Every villager must eat at least once in every 6 consecutive steps.
+(violated 3 times in total, at steps 7, 8)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Brian has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Linda has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Kimberly has not eaten for 6 steps, so they are starving (step 8). Every villager must eat at least once in every 6 consecutive steps.
+(violated 4 times in total, at steps 7, 8, 14)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Warrior Linda was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Linda was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 2 times in total, at steps 5, 12)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Warrior Linda was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Deborah was sent to the Cave at step 9, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Linda was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 7 times in total, at steps 5, 9, 12, 13, 19, 20, 26)
+
+The Dragon was not attacked for more than 2 steps in a row (step 21), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 22), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 2 times in total, at steps 21, 22)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Warrior Linda was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Linda was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 2 times in total, at steps 5, 12)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Warrior Kimberly was sent to the Cave at step 7, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Kimberly was sent to the Cave at step 14, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Deborah was sent to the Cave at step 15, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 3 times in total, at steps 7, 14, 15)
+
+The Dragon was not attacked for more than 2 steps in a row (step 16), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 17), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 2 times in total, at steps 16, 17)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Warrior Linda was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Kimberly was sent to the Cave at step 6, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Linda was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 3 times in total, at steps 5, 6, 12)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Warrior Linda was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Kimberly was sent to the Cave at step 6, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Linda was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 3 times in total, at steps 5, 6, 12)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+12 failed, 39 passed in 3.61s

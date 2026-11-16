@@ -1,0 +1,58 @@
+Here is a report from running unit tests on your implementation:
+
+...................FF....FFFFFFFF..................                      [100%]
+================================== FAILURES ===================================
+________ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15] ________
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Sandra" to "eat".
+____ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15,seed=1] _____
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Sandra" to "eat".
+_____________ TestAdaptSystem.test_all_assigned[initial_wheat=15] _____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Sandra (Warrior)
+Each component must be assigned exactly once.
+_________ TestAdaptSystem.test_all_assigned[initial_wheat=15,seed=1] __________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Sandra (Warrior)
+Each component must be assigned exactly once.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Michelle has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Sandra has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7)
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Michelle has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Sandra has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7)
+
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptSystem::test_all_assigned:
+ - failed for: initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+10 failed, 41 passed in 3.62s
+
+Update your code to fix the failing tests.

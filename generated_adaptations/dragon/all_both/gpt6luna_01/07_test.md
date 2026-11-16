@@ -1,0 +1,55 @@
+Here is a report from running unit tests on your implementation:
+
+...........................FFFFFF......F.FFFF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager Laura has not eaten for 6 steps, so they are starving (step 14). Every villager must eat at least once in every 6 consecutive steps.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Laura has not eaten for 6 steps, so they are starving (step 8). Every villager must eat at least once in every 6 consecutive steps.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Kenneth has not eaten for 6 steps, so they are starving (step 12). Every villager must eat at least once in every 6 consecutive steps.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 12). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Villager Kenneth has not eaten for 4 steps and is still in the Cave (step 5). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 6). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 6). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Kenneth has not eaten for 4 steps and is still in the Cave (step 10). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 2 times in total, at steps 6, 10)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=2
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+11 failed, 40 passed in 4.44s
+
+Update your code to fix the failing tests.

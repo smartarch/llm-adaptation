@@ -1,0 +1,27 @@
+1
+...ssssssssssssssssssssssssFFFFFF......ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+
+Warrior Maria should attack the Dragon after moving to the Cave.
+(violated 2 times in total, at steps 30)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+To win the game, the Dragon must be killed.
+
+Warrior Margaret should attack the Dragon after moving to the Cave.
+(violated 3 times in total, at steps 30)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 1.15s

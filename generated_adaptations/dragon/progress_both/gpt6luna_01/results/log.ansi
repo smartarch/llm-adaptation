@@ -1,0 +1,56 @@
+Loaded 2 messages from generated_adaptations\dragon\progress_both\gpt6luna_01.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1580, Output: 4817 (reasoning: 4002)
+Response time (seconds): 66.2
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\progress_both\gpt6luna_01\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_02 --variant=progress_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_02 --variant=progress_both --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_02 --variant=progress_both --tests=optional
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\progress_both\gpt6luna_01\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_02", "log_dir.append": "/progress_both/gpt6luna_01/code_02", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_02", "log_dir.append": "/progress_both/gpt6luna_01/code_02", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_02", "log_dir.append": "/progress_both/gpt6luna_01/code_02", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_progress.
+[33mTOKENS USED:
+Input: 6286, Output: 2980 (reasoning: 2158)
+Response time (seconds): 37.4
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\progress_both\gpt6luna_01\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_04 --variant=progress_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_04 --variant=progress_both --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_04 --variant=progress_both --tests=optional
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\progress_both\gpt6luna_01\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_04", "log_dir.append": "/progress_both/gpt6luna_01/code_04", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_04.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_04", "log_dir.append": "/progress_both/gpt6luna_01/code_04", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_04.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_04", "log_dir.append": "/progress_both/gpt6luna_01/code_04", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_04.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 18.0
+Querying LLM with prompt 05_progress.
+[33mTOKENS USED:
+Input: 10533, Output: 2669 (reasoning: 1841)
+Response time (seconds): 34.0
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\progress_both\gpt6luna_01\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_06 --variant=progress_both --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_06 --variant=progress_both --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=gpt6luna_01/code_06 --variant=progress_both --tests=optional
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\progress_both\gpt6luna_01\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_06", "log_dir.append": "/progress_both/gpt6luna_01/code_06", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_06", "log_dir.append": "/progress_both/gpt6luna_01/code_06", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "progress_both/gpt6luna_01/code_06", "log_dir.append": "/progress_both/gpt6luna_01/code_06", "adaptation_name": "generated_adaptations.dragon.progress_both.gpt6luna_01.code_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 19.666666666666668
+The generated code produces a good result (iteration: 3). Stopping further iterations.

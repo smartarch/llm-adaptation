@@ -1,0 +1,114 @@
+## Fixes
+
+The failing tests show three problems in the previous version:
+
+1. **Warriors were not reaching the Cave.** Fed warriors with `hp <= 2` were kept on the farm, and warriors with `steps_since_meal >= 3` bounced between village and cave, so many of them never attacked.
+2. **Warriors were sent away from the Cave too early.** The 3-step threshold caused constant round trips. Warriors can safely stay in the Cave for several steps, so I now let them attack for up to 3 steps since their last meal, then return.
+3. **No farmer was ever spawned.** The farmer spawn required 30 spare wheat, which the game never reached. The new version spawns at least one farmer as soon as the wheat cost is covered.
+
+**Revised village logic**
+- Warriors eat on every village visit once they have gone at least one step without eating, then go back to the Cave on the next step. Every healthy warrior in the Village is sent to the Cave, regardless of HP. Starvation is handled by eating first.
+- Farmers eat once they reach 4 steps without a meal. Otherwise they keep farming.
+- Two non-eating farmers form a spawn pair. The first farmer spawn is attempted as soon as there is enough wheat for it. After that, warrior spawns take priority, followed by further farmer spawns when wheat is plentiful.
+- Each villager gets exactly one group assignment.
+
+**Revised cave logic**
+- Warriors attack while `hp > 2` and `steps_since_meal <= 3`. Otherwise they return to the Village.
+- Farmers always return to the Village.
+
+```py
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    """
+    Warrior surge strategy (revised):
+      - Every fed warrior in the Village goes to the Cave and attacks.
+      - Warriors eat on each Village visit, so they can stay in the Cave
+        for several steps without starving.
+      - Farmers stay in the Village, eat when needed and farm wheat.
+      - At least one farmer is spawned early; surplus wheat then goes to
+        warrior spawns.
+    """
+
+    WARRIOR_EAT_AFTER = 1     # warriors eat on arrival in the Village once they have been away
+    FARMER_EAT_AFTER = 4      # farmers eat before reaching the 6-step starvation limit
+    CAVE_MAX_STEPS = 3        # warriors in the Cave attack only while steps_since_meal <= this
+    RETREAT_HP = 2            # warriors at or below this HP leave the Cave
+    WHEAT_RESERVE = 2
+    WARRIOR_COST = 12
+    FARMER_COST = 10
+    SPAWN_CUTOFF_STEP = 22    # stop spawning late in the fight
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._farmer_spawned = False
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        wheat = environment.farm.wheat
+
+        eat_group = []
+        warriors = []
+        farmers = []
+
+        for c in components:
+            if c.role == "Warrior":
+                if c.steps_since_meal >= self.WARRIOR_EAT_AFTER:
+                    eat_group.append(c)
+                else:
+                    warriors.append(c)
+            else:
+                if c.steps_since_meal >= self.FARMER_EAT_AFTER:
+                    eat_group.append(c)
+                else:
+                    farmers.append(c)
+
+        # Each meal costs 1 wheat.
+        spendable = wheat - len(eat_group) - self.WHEAT_RESERVE
+
+        for c in eat_group:
+            environment.assign_group(c, "eat")
+
+        # Spawning uses farmers that are not eating.
+        spawn_pool = list(farmers)
+        spawned = set()
+
+        if step < self.SPAWN_CUTOFF_STEP:
+            # Guarantee at least one farmer spawn when affordable.
+            if not self._farmer_spawned and len(spawn_pool) >= 2 \
+                    and spendable >= self.FARMER_COST:
+                pair = spawn_pool[:2]
+                spawn_pool = spawn_pool[2:]
+                for c in pair:
+                    environment.assign_group(c, "spawn farmer")
+                    spawned.add(id(c))
+                spendable -= self.FARMER_COST
+                self._farmer_spawned = True
+
+            # Warriors are the main damage source; spawn them whenever affordable.
+            while len(spawn_pool) >= 2 and spendable >= self.WARRIOR_COST:
+                pair = spawn_pool[:2]
+                spawn_pool = spawn_pool[2:]
+                for c in pair:
+                    environment.assign_group(c, "spawn warrior")
+                    spawned.add(id(c))
+                spendable -= self.WARRIOR_COST
+
+        # Every fed warrior goes to the Cave.
+        for c in warriors:
+            environment.assign_group(c, "cave")
+
+        # Remaining farmers keep farming.
+        for c in spawn_pool:
+            if id(c) not in spawned:
+                environment.assign_group(c, "farm")
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        for c in components:
+            if (c.role == "Warrior"
+                    and c.hp > self.RETREAT_HP
+                    and c.steps_since_meal <= self.CAVE_MAX_STEPS):
+                environment.assign_group(c, "attack")
+            else:
+                environment.assign_group(c, "village")
+```

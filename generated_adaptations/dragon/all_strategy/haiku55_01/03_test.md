@@ -1,0 +1,55 @@
+Here is a report from running unit tests on your implementation:
+
+...........................FFFFFF......FF..FF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager Margaret has not eaten for 6 steps, so they are starving (step 21). Every villager must eat at least once in every 6 consecutive steps.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Sharon has not eaten for 6 steps, so they are starving (step 12). Every villager must eat at least once in every 6 consecutive steps.
+
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Sharon has not eaten for 6 steps, so they are starving (step 12). Every villager must eat at least once in every 6 consecutive steps.
+
+To win the game, the Dragon must be killed.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+The Dragon was not attacked for more than 2 steps in a row (step 16), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Warrior Margaret was sent to the Cave at step 19, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+
+The Dragon was not attacked for more than 2 steps in a row (step 26), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Warrior Sharon was sent to the Cave at step 10, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Warrior Sharon was sent to the Cave at step 10, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=3, no_initial_warriors
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+10 failed, 41 passed in 4.30s
+
+Update your code to fix the failing tests.

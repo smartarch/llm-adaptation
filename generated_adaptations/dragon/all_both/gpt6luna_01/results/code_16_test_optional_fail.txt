@@ -1,0 +1,21 @@
+1
+...ssssssssssssssssssssssssssssssssssss.F.FF.......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+The Dragon was not attacked for more than 2 steps in a row (step 29), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+The Dragon was not attacked for more than 2 steps in a row (step 9), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 15), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 21), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 4 times in total, at steps 9, 15, 21, 27)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+The Dragon was not attacked for more than 2 steps in a row (step 24), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 25), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 2 times in total, at steps 24, 25)
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=2, no_initial_warriors, initial_wheat=15
+ - passed for: seed=1, seed=3, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+3 failed, 12 passed, 36 skipped in 0.84s

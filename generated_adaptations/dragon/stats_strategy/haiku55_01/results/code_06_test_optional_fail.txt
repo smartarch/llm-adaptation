@@ -1,0 +1,22 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFF.........                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+The Dragon was not attacked for more than 2 steps in a row (step 13), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 14), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 15), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 3 times in total, at steps 13, 14, 15)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+The Dragon was not attacked for more than 2 steps in a row (step 13), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 14), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 15), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 4 times in total, at steps 13, 14, 15, 16)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+The Dragon was not attacked for more than 2 steps in a row (step 11), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3
+ - passed for: no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+3 failed, 12 passed, 36 skipped in 0.94s

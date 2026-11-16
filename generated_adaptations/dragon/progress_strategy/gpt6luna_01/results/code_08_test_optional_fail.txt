@@ -1,0 +1,38 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Villager Ruth has not eaten for 5 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 4 steps and is still in the Cave (step 23). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 5 steps and is still in the Cave (step 24). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 3 times in total, at steps 18, 23, 24)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Villager Donald has not eaten for 4 steps and is still in the Cave (step 17). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Ruth has not eaten for 4 steps and is still in the Cave (step 17). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 5 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 4 times in total, at steps 17, 18)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Villager Donald has not eaten for 4 steps and is still in the Cave (step 23). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Ruth has not eaten for 4 steps and is still in the Cave (step 23). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 5 steps and is still in the Cave (step 24). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 4 times in total, at steps 23, 24)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Villager Donald has not eaten for 4 steps and is still in the Cave (step 17). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Ruth has not eaten for 4 steps and is still in the Cave (step 17). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 5 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 5 times in total, at steps 17, 18, 19)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Villager Ruth has not eaten for 5 steps and is still in the Cave (step 12). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Ruth has not eaten for 6 steps and is still in the Cave (step 13). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 2 times in total, at steps 12, 13)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Villager Ruth has not eaten for 5 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 4 steps and is still in the Cave (step 23). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Donald has not eaten for 5 steps and is still in the Cave (step 24). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 3 times in total, at steps 18, 23, 24)
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.75s

@@ -1,0 +1,14 @@
+1
+...ssssssssssssssssssssssssssssssssssss.....F......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Warrior David was sent to the Cave at step 19, but they have not eaten for 5 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Robert was sent to the Cave at step 19, but they have not eaten for 5 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 2 times in total, at steps 19)
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+1 failed, 14 passed, 36 skipped in 0.63s

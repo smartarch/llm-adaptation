@@ -1,0 +1,45 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Warrior Thomas was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Thomas was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 2 times in total, at steps 5, 12)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Warrior Thomas was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior James was sent to the Cave at step 9, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Thomas was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 7 times in total, at steps 5, 9, 12, 13, 19, 20, 26)
+
+The Dragon was not attacked for more than 2 steps in a row (step 21), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 22), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 2 times in total, at steps 21, 22)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Warrior Thomas was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Thomas was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 2 times in total, at steps 5, 12)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Warrior Dorothy was sent to the Cave at step 7, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Dorothy was sent to the Cave at step 14, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior James was sent to the Cave at step 15, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 3 times in total, at steps 7, 14, 15)
+
+The Dragon was not attacked for more than 2 steps in a row (step 16), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+The Dragon was not attacked for more than 2 steps in a row (step 17), although there are at least two Warriors, so it regenerates its health. Plan the meals of the Warriors so that the Dragon is attacked without longer breaks.
+(violated 2 times in total, at steps 16, 17)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Warrior Thomas was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Dorothy was sent to the Cave at step 6, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Thomas was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 3 times in total, at steps 5, 6, 12)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Warrior Thomas was sent to the Cave at step 5, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Dorothy was sent to the Cave at step 6, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+Warrior Thomas was sent to the Cave at step 12, but they have not eaten for 4 steps, so they will have to return to eat before they can attack the Dragon. Let them eat first.
+(violated 3 times in total, at steps 5, 6, 12)
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.80s

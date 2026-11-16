@@ -1,0 +1,85 @@
+The reliable runs suggest keeping the Warrior spawning and meal schedule unchanged: changing the return timing risks leaving the Cave undefended. This version makes just one measured adjustment: healthy Farmers join the attack below 20 Dragon HP rather than 15, while Farmers who need food stay in the Village. That adds late damage without sacrificing the farm during most of the fight.
+
+```py
+from generated_adaptations.base_classes.dragon import DragonHuntAdaptation
+
+
+class SmartAdaptation(DragonHuntAdaptation):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def assign_in_village(self, components, environment, group_ids, step: int):
+        villagers = list(components)
+        dragon_hp = environment.dragon.hp
+        wheat = max(0, environment.farm.wheat)
+        assignments = {}
+
+        # Feed villagers nearing starvation first, prioritizing Warriors on ties.
+        meal_order = sorted(
+            villagers,
+            key=lambda v: (
+                -v.steps_since_meal,
+                0 if v.role == "Warrior" else 1,
+            ),
+        )
+        for v in meal_order:
+            if v.steps_since_meal >= 5 and wheat >= 1:
+                assignments[v] = "eat"
+                wheat -= 1
+
+        # Fed Warriors should return to the Cave promptly.
+        for v in villagers:
+            if v.role == "Warrior" and v not in assignments:
+                assignments[v] = "cave"
+
+        farmers = [
+            v for v in villagers
+            if v.role == "Farmer" and v not in assignments
+        ]
+
+        if dragon_hp <= 20:
+            # In the final phase, healthy Farmers add damage; hungry ones stay
+            # in the Village where they can eat.
+            for v in farmers:
+                assignments[v] = (
+                    "cave" if v.steps_since_meal < 4 else "farm"
+                )
+        else:
+            # Continue investing surplus wheat in Warriors while preserving a
+            # small meal reserve and, when possible, one active Farmer.
+            reserve = 2
+            keep_farming = 1 if len(farmers) >= 3 else 0
+            candidates = max(0, len(farmers) - keep_farming)
+            pairs = min(
+                candidates // 2,
+                max(0, wheat - reserve) // 12,
+            )
+
+            for v in farmers[:2 * pairs]:
+                assignments[v] = "spawn warrior"
+            for v in farmers[2 * pairs:]:
+                assignments[v] = "farm"
+
+        # Explicitly assign every villager in the Village.
+        for v in villagers:
+            environment.assign_group(v, assignments.get(v, "farm"))
+
+    def assign_in_cave(self, components, environment, group_ids, step: int):
+        dragon_hp = environment.dragon.hp
+
+        for v in components:
+            if v.role == "Farmer":
+                group = (
+                    "attack"
+                    if dragon_hp <= 20 and v.steps_since_meal < 4
+                    else "village"
+                )
+            elif v.steps_since_meal >= 4 or v.hp <= 1:
+                # Return early enough to travel home and eat safely.
+                group = "village"
+            else:
+                group = "attack"
+
+            # Explicitly assign every villager in the Cave.
+            environment.assign_group(v, group)
+```
