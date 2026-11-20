@@ -86,6 +86,12 @@ The grammar is in [`grammar.lark`](./grammar.lark). Syntax errors raise `lark.ex
 ### End of the trace
 
 * **Only the regular end of the trace is supported**, i.e. after `trace_length` calls of `step`. All obligations are resolved by then, because their windows are truncated by `MAX`.
+* **The final state** (optional, `Monitor(..., final_state=True)`): the state `s_f` after the end of the trace is passed to `finish(final_state)`.
+  * Why: in the simulator, `s_i` is observed *before* step `i` is executed, so the effects of the last step (e.g., the Dragon killed in the last step) would otherwise never be seen.
+  * `s_f` only resolves the obligations whose window reaches the end of the trace: their predicate is evaluated once more in `s_f`, i.e. `s_f` counts as one more state of their window. These obligations are therefore not reported as violated in `s_k` any more, but in `finish`, which still reports them at the step `k` (with `s_f` as the state).
+  * The bodies of `always` are not evaluated in `s_f`, past windows ignore it, and it does not change `MAX`. `within(n, 0, p)`, e.g. `within(1, MAX, p)` in `s_k`, is still an empty window.
+  * `s_f` can only satisfy obligations, it never adds a violation. In the simulator, it is the system after the last step without any assignment (all ensembles are empty), so only predicates about the state of the system (not about the ensembles) can be satisfied there.
+  * The obligations that become unsatisfiable before the end of the trace are reported one step later than without `s_f` (one more state of their window can still satisfy them).
 * **A premature end** (calling `finish` earlier) is not supported by the online monitor.
   * With a shorter trace, `MAX` would have been smaller, so different obligations would have been created, e.g. ones guarded by `MAX > 0`.
   * The pending obligations are therefore discarded without a verdict. Violations reported before the premature end remain valid.
@@ -98,10 +104,10 @@ The grammar is in [`grammar.lark`](./grammar.lark). Syntax errors raise `lark.ex
 ## API
 
 * **`fcl.parse(text) -> Formula`** parses a formula. The AST is immutable, so the same formula can be monitored repeatedly.
-* **`fcl.Monitor(formula, trace_length)`** is the online monitor of one trace:
+* **`fcl.Monitor(formula, trace_length, final_state=False)`** is the online monitor of one trace:
   * `start(initial_state) -> list[Violation]`: evaluate the formula in `s_0`;
   * `step(state, existing_objects=None) -> list[Violation]`: process the next state;
-  * `finish() -> list[Violation]`: end of the trace (see above);
+  * `finish(final_state=None, existing_objects=None) -> list[Violation]`: end of the trace, optionally with the final state (see above);
   * `is_complete`: whether all `trace_length` states have been processed.
 * **`fcl.State`** = `Mapping[str, Collection | Any]`. It maps the names used in the predicates to values.
   * Sets (components of a type, members of an ensemble, ...) can be any set-like collection supporting `in`, `len` and iteration.

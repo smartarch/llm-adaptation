@@ -3,19 +3,21 @@ from typing import Any
 import fcl
 
 
-def run_trace(formula_text: str, states: list[dict[str, Any]], finish_after: int | None = None) -> list[fcl.Violation]:
+def run_trace(formula_text: str, states: list[dict[str, Any]], finish_after: int | None = None,
+              final_state: dict[str, Any] | None = None) -> list[fcl.Violation]:
     """Monitor the formula over a hand-made trace and return all violations (including those found at the end).
 
     `states[0]` is the initial state s_0, `states[1:]` are the states s_1, ..., s_k (so `trace_length = len(states) - 1`).
     If `finish_after` is given, the trace ends prematurely after that many steps.
+    If `final_state` is given, the monitor is created with `final_state=True` and the state is passed to `finish`.
     """
     trace_length = len(states) - 1
-    monitor = fcl.Monitor(fcl.parse(formula_text), trace_length)
+    monitor = fcl.Monitor(fcl.parse(formula_text), trace_length, final_state=final_state is not None)
     violations = monitor.start(states[0])
     steps = states[1:] if finish_after is None else states[1:finish_after + 1]
     for state in steps:
         violations += monitor.step(state)
-    violations += monitor.finish()
+    violations += monitor.finish(final_state)
     return violations
 
 

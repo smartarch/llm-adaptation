@@ -214,6 +214,59 @@ def test_violations_found_before_premature_end_are_reported():
     assert steps_of(run_trace("always(`p`)", states, finish_after=2)) == [1]
 
 
+# --- final state (after the end of the trace) ---
+
+def test_final_state_satisfies_obligation_reaching_the_end():
+    states = trace(p=[False, False, False])
+    assert steps_of(run_trace("within(1, MAX, `p`)", states)) == [2]
+    assert run_trace("within(1, MAX, `p`)", states, final_state={"p": True}) == []
+    violations = run_trace("within(1, MAX, `p`)", states, final_state={"p": False})
+    assert steps_of(violations) == [2]
+    assert violations[0].trigger_step == 0
+
+
+def test_final_state_counts_as_one_more_occurrence():
+    states = trace(p=[False, True, False])
+    assert run_trace("within(2, MAX, `p`)", states, final_state={"p": True}) == []
+    assert len(run_trace("within(3, MAX, `p`)", states, final_state={"p": True})) == 1
+
+
+def test_final_state_does_not_extend_earlier_windows():
+    # the window of the obligation created in s_0 ends in s_1 (not at the end of the trace)
+    states = trace(p=[False, False, False, False])
+    assert steps_of(run_trace("within(1, 1, `p`)", states, final_state={"p": True})) == [1]
+
+
+def test_final_state_does_not_evaluate_always():
+    states = trace(p=[True, True, True])
+    assert run_trace("always(`p`)", states, final_state={"p": False}) == []
+    # an obligation created in the last but one state (its window is the last state) can be satisfied in the final state
+    formula = "always(`p` implies within(1, MAX, `q`))"
+    states = trace(p=[False, True, False], q=[False, False, False])
+    assert run_trace(formula, states, final_state={"p": False, "q": True}) == []
+    assert steps_of(run_trace(formula, states, final_state={"p": False, "q": False})) == [2]
+    assert steps_of(run_trace(formula, states)) == [2]
+    # within(1, MAX, ...) in the last state is an empty window (MAX = 0), i.e. violated immediately as before
+    states = trace(p=[False, False, True], q=[False, False, False])
+    assert steps_of(run_trace(formula, states, final_state={"p": False, "q": True})) == [2]
+
+
+def test_final_state_is_ignored_after_premature_end():
+    states = trace(p=[False, False, False, False])
+    assert run_trace("within(1, MAX, `p`)", states, finish_after=2, final_state={"p": False}) == []
+
+
+def test_final_state_drops_removed_objects():
+    a, b = Obj("a"), Obj("b")
+    formula = fcl.parse("always(forall x in `xs`: `x in sent` implies within(1, MAX, `x in done`))")
+    monitor = fcl.Monitor(formula, 2, final_state=True)
+    monitor.start({"xs": [a, b], "sent": set(), "done": set()})
+    assert monitor.step({"xs": [a, b], "sent": {a, b}, "done": set()}) == []
+    assert monitor.step({"xs": [a, b], "sent": set(), "done": set()}) == []
+    violations = monitor.finish({"xs": [a], "sent": set(), "done": set()}, existing_objects=[a])
+    assert [v.bindings["x"] for v in violations] == [a]
+
+
 def test_monitor_lifecycle_errors():
     monitor = fcl.Monitor(fcl.parse("`p`"), 1)
     with pytest.raises(RuntimeError):

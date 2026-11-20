@@ -240,9 +240,10 @@ class Simulation(abc.ABC):
     def check_user_constraints_end(self):
         if not self.user_constraints_enabled:
             return
-        for constraints in [*self.assignment_constraints.values(), self.global_constraints]:
+        # the final state after the last step (the assignments are reset, i.e., all ensembles are empty)
+        for constraints, components, resolved_ensembles in self._user_constraint_groups():
             for constraint in constraints:
-                for step, reason in constraint.check_end():
+                for step, reason in constraint.check_end(self, components, resolved_ensembles):
                     self.assignment_errors.append(UserConstraintError(reason, constraint.name, step))
 
         # print all errors

@@ -20,7 +20,9 @@ class UserConstraint:
 
     def start(self, simulation: "Simulation", trace_length: int, components: list[Component], resolved_ensembles: list["ResolvedEnsemble"]) -> Iterator[tuple[int, str]]:
         """Start monitoring a new run (with the initial state of the system); yields (step, reason) of violations."""
-        self.monitor = Monitor(self.formula, trace_length)
+        # the states are observed before each step is executed, so the state after the last step is passed to
+        # finish() as the final state (e.g., the Dragon killed in the last step)
+        self.monitor = Monitor(self.formula, trace_length, final_state=True)
         context = self.prepare_context(simulation, components, resolved_ensembles)
         for violation in self.monitor.start(context):
             yield violation.step, self.format_reason(violation)
@@ -33,11 +35,14 @@ class UserConstraint:
         for violation in self.monitor.step(context, existing_objects=existing_objects):
             yield violation.step, self.format_reason(violation)
 
-    def check_end(self) -> Iterator[tuple[int, str]]:
-        """Finish the run; yields (step, reason) of violations."""
+    def check_end(self, simulation: "Simulation", components: list[Component], resolved_ensembles: list["ResolvedEnsemble"]) -> Iterator[tuple[int, str]]:
+        """Finish the run (the current state is the final state after the last step, without assignments);
+        yields (step, reason) of violations."""
         if self.monitor is None:
             return
-        for violation in self.monitor.finish():
+        context = self.prepare_context(simulation, components, resolved_ensembles)
+        existing_objects = simulation.components + simulation.beyond_control_components
+        for violation in self.monitor.finish(context, existing_objects=existing_objects):
             yield violation.step, self.format_reason(violation)
 
     def format_reason(self, violation: Violation) -> str:

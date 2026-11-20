@@ -3,6 +3,11 @@
 The monitored trace consists of the initial state s_0 (passed to `Monitor.start`) and the states s_1, ..., s_k
 (passed to `Monitor.step`), where k is the `trace_length`. In the state s_i, the constants are `MAX = k - i`
 (number of remaining states) and `BEG = i` (number of previous states).
+
+Optionally (`final_state=True`), the final state s_f after the end of the trace can be passed to `Monitor.finish`.
+It only resolves the obligations whose window reaches the end of the trace (their predicate is evaluated once more
+in s_f); the bodies of `always` are not evaluated in s_f and it does not change `MAX`. This is useful when s_i is the
+state before the i-th step of a simulation is executed (s_f is then the state after the last step).
 """
 import dataclasses
 import math
@@ -59,14 +64,16 @@ class _Obligation:
 class Monitor:
     """Online monitor of an FCL formula over a trace of a known length.
 
-    Usage: `start(initial_state)`, then `step(state)` for each of the `trace_length` states, then `finish()`.
+    Usage: `start(initial_state)`, then `step(state)` for each of the `trace_length` states, then `finish()`
+    (or `finish(final_state)` if the monitor was created with `final_state=True`).
     """
 
-    def __init__(self, formula: Formula, trace_length: int):
+    def __init__(self, formula: Formula, trace_length: int, final_state: bool = False):
         if trace_length < 0:
             raise ValueError("trace_length must be non-negative")
         self.formula = formula
         self.trace_length = trace_length
+        self.final_state = final_state  # the obligations reaching the end of the trace are resolved in finish(final_state)
         self.index: int | None = None  # index of the last processed state
         self.obligations: list[_Obligation] = []
         self.always_instances: list[tuple[Always, dict[str, Any]]] = []
@@ -117,10 +124,15 @@ class Monitor:
 
         return violations
 
-    def finish(self) -> list[Violation]:
+    def finish(self, final_state: State | None = None, existing_objects: Iterable[Any] | None = None) -> list[Violation]:
         """Finish the monitoring at the end of the trace.
 
-        At the regular end of the trace (after `trace_length` steps), all obligations are already resolved.
+        Without `final_state=True` (see `__init__`), all obligations are already resolved at the regular end of the
+        trace (after `trace_length` steps). With it, the obligations whose window reaches the end of the trace are
+        still pending: their predicate is evaluated in `final_state` (if given), and the ones that still do not have
+        enough occurrences are reported as violations (in the step `trace_length`). The bodies of `always` are not
+        evaluated in `final_state`. `existing_objects` has the same meaning as in `step`.
+
         A premature end (fewer steps) is not supported by the online monitor: the pending obligations are
         discarded without a verdict (with a shorter trace, `MAX` would be smaller, so different obligations
         would have been created).
@@ -128,8 +140,17 @@ class Monitor:
         if self.index is None or self.index < self.trace_length:
             self.obligations = []
             return []
-        # cannot happen (all windows end at the latest in the last state), kept as a safety net
-        violations = [self._obligation_violation(o, o.trigger_state) for o in self.obligations if o.occurred < o.required]
+        if existing_objects is not None:
+            self._discard_bindings_not_in(existing_objects)
+        if final_state is not None and self.final_state:
+            env = self._env(final_state)
+            for obligation in self.obligations:
+                if self._holds(obligation.node.pred, env, obligation.bindings):
+                    obligation.occurred += 1
+        else:
+            env = None
+        violations = [self._obligation_violation(o, env if env is not None else o.trigger_state)
+                      for o in self.obligations if o.occurred < o.required]
         self.obligations = []
         return violations
 
@@ -191,7 +212,7 @@ class Monitor:
         t = self._resolve(node.t, env, bindings)
         window_end = self.index + min(t, env["MAX"])
         obligation = _Obligation(node, bindings, self.index, env, required, window_end)
-        if window_end - self.index < required:  # the (truncated) window is too short
+        if window_end - self.index + self._final_bonus(obligation) < required:  # the (truncated) window is too short
             violations.append(self._obligation_violation(obligation, env))
         else:
             self.obligations.append(obligation)
@@ -203,10 +224,14 @@ class Monitor:
             obligation.occurred += 1
         if obligation.occurred >= obligation.required:
             return True
-        remaining = obligation.window_end - self.index
+        remaining = obligation.window_end - self.index + self._final_bonus(obligation)
         if obligation.required - obligation.occurred > remaining:
             return False
         return None
+
+    def _final_bonus(self, obligation: _Obligation) -> int:
+        """1 if the obligation can still occur in the final state (see `finish`), otherwise 0."""
+        return 1 if self.final_state and obligation.window_end == self.trace_length else 0
 
     def _past(self, node: Within, t: int, env: dict[str, Any], bindings: dict[str, Any]) -> bool:
         """Evaluate a past (or empty, t = 0) window and record the predicate value of the current state."""
