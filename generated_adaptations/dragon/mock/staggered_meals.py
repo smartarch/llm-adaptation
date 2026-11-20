@@ -73,9 +73,10 @@ class SmartAdaptation(DragonHuntAdaptation):
         leaving = [w for w in warriors if turns_left(w, environment) <= 0]
         staying = [w for w in warriors if w not in leaving]
 
-        # stagger the trips: if nobody leaves now but several warriors will have to leave soon, send one of them earlier
+        # stagger the trips: if nobody leaves now but several warriors will have to leave in the next step, send one of
+        # them earlier (only one attack earlier, so that every trip has at least two attacks)
         if not leaving and len(staying) >= 2:
-            soon = sorted((w for w in staying if turns_left(w, environment) <= 2), key=lambda w: turns_left(w, environment))
+            soon = sorted((w for w in staying if turns_left(w, environment) <= 1), key=lambda w: turns_left(w, environment))
             if len(soon) >= 2:
                 leaving.append(soon[0])
                 staying.remove(soon[0])

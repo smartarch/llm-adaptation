@@ -61,6 +61,14 @@ The Dragon (accessible via `environment.dragon`) with the following attributes (
 - `hp`: Health
 The Farm (accessible via `environment.farm`) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `wheat`: Current wheat amount
+The list of all Warriors (both in the Village and in the Cave, accessible via `environment.warriors`; only for observation, the villagers are assigned to groups via `components` in the method for their location) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
+- `hp`: Health
+- `steps_since_meal`: Steps since last meal (number of consecutive steps in which the villager did not eat)
+- `location`: Location ("Village" or "Cave")
+The list of all Farmers (both in the Village and in the Cave, accessible via `environment.farmers`; only for observation, the villagers are assigned to groups via `components` in the method for their location) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
+- `hp`: Health
+- `steps_since_meal`: Steps since last meal (number of consecutive steps in which the villager did not eat)
+- `location`: Location ("Village" or "Cave")
 
 ---
-To win the game, the Dragon must be killed within 30 steps. All Warriors should go to the Cave and then attack the Dragon. All Farmers should stay in Village and farm wheat or spawn new villagers. Spawn enough new villagers (both Farmers and Warriors) to increase the chance of killing the Dragon. Every villager must eat at least once in every 6 consecutive steps. Plan the meals in advance so that no villager starves - Warriors need one step to get back to the Village and it might be necessary to keep wheat in reserve for future meals.
+To win the game, the Dragon must be killed within 30 steps. All Warriors should go to the Cave and then attack the Dragon at least twice before they return to eat. All Farmers should stay in the Village. Every villager must eat at least once in every 6 consecutive steps. Plan the meals in advance so that no villager starves - Warriors need one step to get back to the Village and it might be necessary to keep wheat in reserve for future meals. If there is enough wheat to spawn a new villager and still keep a wheat reserve for meals in the next step, the Farmers in the Village should spawn a new villager (both Farmers and Warriors are necessary to win the game), otherwise, they should farm wheat. If no Warriors are alive, a new one should be spawned within 5 steps.

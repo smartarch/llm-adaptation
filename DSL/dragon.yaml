@@ -25,6 +25,10 @@ adaptation_params:  # this is purely technical
           steps_since_meal:
             name: "Steps since last meal"
             description: "number of consecutive steps in which the villager did not eat"
+          location:
+            name: "Location"
+            format: "lambda value: value.value"
+            description: '"Village" or "Cave"'
 
     ensembles:
       Farm:
@@ -69,6 +73,18 @@ adaptation_params:  # this is purely technical
         singleton: true
         description: "The Farm"
         access: environment.farm
+      # all villagers (also those not passed to the current assign method), e.g. for planning the wheat reserve
+      # (only for the AM generation prompt; the villagers are not beyond-control components in the simulation)
+      warriors:
+        type: Villager
+        singleton: false
+        description: "The list of all Warriors (both in the Village and in the Cave; only for observation, the villagers are assigned to groups via `components` in the method for their location)"
+        access: environment.warriors
+      farmers:
+        type: Villager
+        singleton: false
+        description: "The list of all Farmers (both in the Village and in the Cave; only for observation, the villagers are assigned to groups via `components` in the method for their location)"
+        access: environment.farmers
 
     assignments:
       assign_in_village:

@@ -76,6 +76,16 @@ class DragonHuntSimulation(Simulation):
     def should_adapt(self, step):
         return super().should_adapt(step) and len(self.components) > 0
 
+    @property
+    def warriors(self) -> list["Villager"]:
+        """All Warriors (in the Village and in the Cave), observable by the AM (a new list in every call)."""
+        return [c for c in self.components if c.role == "Warrior"]
+
+    @property
+    def farmers(self) -> list["Villager"]:
+        """All Farmers (in the Village and in the Cave), observable by the AM (a new list in every call)."""
+        return [c for c in self.components if c.role == "Farmer"]
+
     def get_villagers_in(self, location: "Map") -> list["Villager"]:
         from dragon.components.villagers import Villager
         return [villager for villager in self.components if isinstance(villager, Villager) and villager.location == location]
@@ -161,9 +171,10 @@ class DragonHuntSimulation(Simulation):
                     component.state = VillagerState.ATTACKING
 
 
-class Map(enum.Enum):
-    VILLAGE = enum.auto()
-    CAVE = enum.auto()
+class Map(str, enum.Enum):
+    # str values, so that the location can be compared with a string in the AM (e.g., `villager.location == "Cave"`)
+    VILLAGE = "Village"
+    CAVE = "Cave"
 
 
 class Farm(Component):

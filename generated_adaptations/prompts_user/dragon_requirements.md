@@ -61,21 +61,24 @@ The Dragon (accessible via `environment.dragon`) with the following attributes (
 - `hp`: Health
 The Farm (accessible via `environment.farm`) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
 - `wheat`: Current wheat amount
+The list of all Warriors (both in the Village and in the Cave, accessible via `environment.warriors`; only for observation, the villagers are assigned to groups via `components` in the method for their location) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
+- `hp`: Health
+- `steps_since_meal`: Steps since last meal (number of consecutive steps in which the villager did not eat)
+- `location`: Location ("Village" or "Cave")
+The list of all Farmers (both in the Village and in the Cave, accessible via `environment.farmers`; only for observation, the villagers are assigned to groups via `components` in the method for their location) with the following attributes (note that the attributes are read-only and they do not update when a component is assigned to a group):
+- `hp`: Health
+- `steps_since_meal`: Steps since last meal (number of consecutive steps in which the villager did not eat)
+- `location`: Location ("Village" or "Cave")
 
 ---
 The adaptation strategy must adhere to the following functional requirements:
 
 - To win the game, the Dragon must be killed.
 - All warriors should go to the Cave to attack the Dragon.
-- All warriors should attack the Dragon after moving to the Cave.
+- After moving to the Cave, a warrior should attack the Dragon at least 2 times in the next 4 steps.
 - All farmers should stay in the Village.
 - At least one new farmer should be spawned to increase the chance of killing the Dragon.
-- At least two new warriors should be spawned to increase the chance of killing the Dragon.
+- When there are no warriors, a new warrior should be spawned within 5 steps.
+- If there is enough wheat to spawn a new villager and still keep a wheat reserve for eating, a new villager should be spawned (except in the last 5 steps).
 - Every villager must eat at least once in every 6 consecutive steps, otherwise they starve.
-
-In addition, the following optional requirements are recommendations that help to win the game (they are not mandatory):
-
-- The Dragon should be attacked at least once in the first 15 steps of the game.
-- A warrior that has not eaten for 3 or more steps should not be sent to the Cave (they would have to return to eat before attacking the Dragon), they should eat first.
-- A villager in the Cave that has not eaten for 4 or more steps should go to the Village (moving takes one step), so that they can eat in time.
-- When there are at least two warriors, the Dragon should not be left unattacked for more than 2 steps in a row (after it was attacked for the first time), otherwise it regenerates its health.
+- Enough wheat must be kept in reserve so that all villagers that have to eat in the next step can eat (meals and spawning consume wheat, farming produces it).
