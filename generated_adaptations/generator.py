@@ -27,7 +27,7 @@ load_dotenv(find_dotenv(), override=True)  # take environment variables from .en
 
 
 FARM_GOOD_DAMAGE = 60  # damage threshold for a good adaptation in the farm example
-DRAGON_GOOD_STEPS = 30  # average steps threshold for a good adaptation in the dragon example - anything that wins is good enough now
+DRAGON_GOOD_STEPS = 23  # average steps threshold for a good adaptation in the dragon example
 
 
 def parse_arguments(cmdline_args=None):
@@ -161,13 +161,18 @@ def gather_feedback(args, folder, messages, iteration, code_file):
         test_result, test_report = test_results[args.mode]
         if test_result == pytest.ExitCode.OK:
             test_report_file = f"{iteration * 2 + 1:02d}_pass"
-            append_simulation_report(simulation_results, messages, folder, test_report_file, "testpass")
+            append_feedback(simulation_results, messages, folder, test_report_file, "testpass")
         else:
-            simulation_report_file = f"{iteration * 2 + 1:02d}_test"
-            append_test_report(test_report, messages, folder, simulation_report_file)
+            test_report_file = f"{iteration * 2 + 1:02d}_test"
+            mode = "testfail"
+            if args.mode == "all" and test_results["optional"][0] != pytest.ExitCode.OK:
+                # optional constraints violated -> tell the LLM that only the system and required tests must be fixed
+                required_passed = test_results["system"][0] == pytest.ExitCode.OK and test_results["functional"][0] == pytest.ExitCode.OK
+                mode = "test_req_pass_opt_fail" if required_passed else "test_req_fail_opt_fail"
+            append_feedback({**simulation_results, "test_report": test_report}, messages, folder, test_report_file, mode)
     elif args.mode in ["stats", "progress", "result"]:
         simulation_report_file = f"{iteration * 2 + 1:02d}_{args.mode}"
-        append_simulation_report(simulation_results, messages, folder, simulation_report_file, args.mode)
+        append_feedback(simulation_results, messages, folder, simulation_report_file, args.mode)
     else:
         raise ValueError(f"Unrecognized mode: {args.mode}")
     return False
@@ -215,13 +220,6 @@ def test_code(folder, code_file, tests: Literal["system", "functional", "optiona
     if result.returncode not in [pytest.ExitCode.OK, pytest.ExitCode.TESTS_FAILED]:
         raise RuntimeError(f"Error in running tests:\n{result.stderr}")
     return result.returncode, result.stdout + result.stderr
-
-
-def append_test_report(test_report, messages, folder, test_report_file):
-    prompt_template = PromptTemplate.from_file("generated_adaptations/prompts/test.md", encoding="utf-8")
-    test_prompt = prompt_template.format(test_report=test_report)
-    (folder / f"{test_report_file}.md").write_text(test_prompt, encoding="utf-8")
-    messages[test_report_file] = HumanMessage(content=test_prompt)
 
 
 def append_missing_code_block(messages, folder, test_report_file):
@@ -379,7 +377,7 @@ def analyze_dragon_simulation_results(log_files, folder, code_file):
     return result
 
 
-def append_simulation_report(results, messages, folder, report_file, mode):
+def append_feedback(results, messages, folder, report_file, mode):
     example, _ = get_example_variant(folder)
     if example == "farm":
         if mode == "progress":

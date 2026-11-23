@@ -81,4 +81,4 @@ The adaptation strategy must adhere to the following functional requirements:
 - When there are no warriors, a new warrior should be spawned within 5 steps.
 - If there is enough wheat to spawn a new villager and still keep a wheat reserve for eating, a new villager should be spawned (except in the last 5 steps).
 - Every villager must eat at least once in every 6 consecutive steps, otherwise they starve.
-- Enough wheat must be kept in reserve so that all villagers that have to eat in the next step can eat (meals and spawning consume wheat, farming produces it).
+- Enough wheat must be kept in reserve so that all villagers that have to eat in the next step can eat.

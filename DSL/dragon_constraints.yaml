@@ -7,53 +7,15 @@ adaptation_params:  # this is purely technical
       game_is_won:
         constraint: "within(1, MAX, `DragonComps[0].hp <= 0`)"
         reason: "To win the game, the Dragon must be killed."
-      all_warriors_should_go_to_cave:
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-        constraint: "always(forall warrior in `Warriors`: `warrior.location == Map.VILLAGE and warrior not in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in GoToCaveEn`))"
-        reason: "Warrior {warrior} should go to the Cave to attack the Dragon."
-      attack_after_moving_to_cave:
-        # A warrior sent to the Cave right after eating can attack 3 times before they have to return to eat
-        # (assumes a non-hungry warrior; other constraints make the warriors go to the Cave after eating).
-        # Near the end of the game, the number of attacks is limited by the remaining steps.
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-          ATTACKS: "2"
-          WINDOW: "4"
-        constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn and MAX > 0` implies within(`min(ATTACKS, MAX)`, `WINDOW`, `warrior in AttackEn`))"
-        reason: "Warrior {warrior} moved to the Cave at step {trigger_step}, but they did not attack the Dragon at least {ATTACKS} times in the next {WINDOW} steps. After moving to the Cave, a warrior should attack the Dragon at least {ATTACKS} times before returning to the Village."
-      all_farmers_should_stay_in_village:
-        variables:
-          Farmers: "[v for v in VillagerComps if v.role == 'Farmer']"
-        constraint: "always(forall farmer in `Farmers`: `farmer.location == Map.VILLAGE`)"
-        reason: "Farmer {farmer} should stay in the Village."
-      spawn_at_least_a_few_farmers:
-        constraint: "within(1, MAX, `len(SpawnFarmerEn) >= 2`)"
-        reason: "At least one new farmer should be spawned to increase the chance of killing the Dragon."
-      spawn_warrior_when_none_left:
-        # replaces "spawn at least two warriors" (LLMs spawned exactly two and stopped spawning when they died)
-        variables:
-          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
-          SPAWN_WITHIN: "5"
-        constraint: "always(`len(Warriors) == 0 and len(SpawnWarriorEn) < 2 and MAX >= SPAWN_WITHIN` implies within(1, `SPAWN_WITHIN`, `len(SpawnWarriorEn) >= 2`))"
-        reason: "There were no Warriors at step {trigger_step}, so nobody could attack the Dragon, but no new Warrior was spawned in the next {SPAWN_WITHIN} steps. When there are no Warriors, a new Warrior should be spawned soon."
-      spawn_when_enough_wheat:
-        # "Enough wheat" = the cost of a Warrior (the more expensive villager, so that the AM can save for a Warrior instead
-        # of being forced to spawn a Farmer) + a reserve of one meal for every villager. It is more than keep_wheat_reserve
-        # requires (meals due in the next step), so spawning any villager never violates keep_wheat_reserve.
-        # Spawning is not required in the last LAST_STEPS steps (a new villager would not help any more).
-        variables:
-          WARRIOR_COST: "12"
-          Wheat: "FarmComps[0].wheat"
-          RESERVE: "len(VillagerComps) * environment.meal_cost"
-          LAST_STEPS: "5"
-          FreeFarmers: "[v for v in VillagerComps if v.role == 'Farmer' and v.location == Map.VILLAGE and v not in EatEn]"
-        constraint: "always(`Wheat >= WARRIOR_COST + RESERVE and len(FreeFarmers) >= 2 and MAX >= LAST_STEPS` implies `len(SpawnFarmerEn) >= 2 or len(SpawnWarriorEn) >= 2`)"
-        reason: "At step {step}, there were {Wheat} wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager ({RESERVE} wheat), and {len(FreeFarmers)} Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming."
       eat_regularly:
         # steps_since_meal reaches MEAL_INTERVAL in the step after the villager should have eaten (the villager is starving)
         constraint: "always(forall villager in `VillagerComps`: `villager.steps_since_meal < MEAL_INTERVAL`)"
         reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps, so they are starving (step {step}). Every villager must eat at least once in every {MEAL_INTERVAL} consecutive steps."
+      leave_cave_in_time:
+        # moving to the Village takes one step, so a warrior must leave the Cave when they still have two steps left
+        # to eat in time (they eat in the step after arriving, when steps_since_meal == MEAL_INTERVAL - 1)
+        constraint: "always(forall villager in `VillagerComps`: `villager.location == Map.CAVE and villager.steps_since_meal >= MEAL_INTERVAL - 2` implies `villager in GoToVillageEn`)"
+        reason: "Villager {villager} has not eaten for {villager.steps_since_meal} steps and is still in the Cave (step {step}). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time."
       keep_wheat_reserve:
         # The constraints are checked before the step is simulated, so the wheat left after the step is computed from the
         # assignments: meals and spawning consume wheat, farming produces it (spawn costs as in dragon/configs).

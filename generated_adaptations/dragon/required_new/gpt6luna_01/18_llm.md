@@ -1,0 +1,1 @@
+The failures are consistent with sending surplus farmers to the Cave too early: reduced wheat production left no food for meals due the following step. I’m reverting that acceleration and keeping farmers in the Village until the Dragon is nearly defeated. This restores the more reliable strategy that previously passed the tests with a 100% simulation win rate.
