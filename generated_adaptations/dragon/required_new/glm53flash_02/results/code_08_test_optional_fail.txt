@@ -1,0 +1,106 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFFFFFFFF                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+At step 2, there was 22 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 29 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 36 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 6 times in total, at steps 2, 3, 4, 7, 8, 24)
+
+Warrior Charles moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Charles moved to the Cave at step 24, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Dorothy moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 3 times in total, at steps 20, 27, 30)
+
+Farmer David should stay in the Village.
+Farmer Edward should stay in the Village.
+(violated 7 times in total, at steps 25, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+At step 2, there was 22 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 29 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 36 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 5 times in total, at steps 2, 3, 4, 7, 8)
+
+Warrior Charles moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Elizabeth moved to the Cave at step 25, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 2 times in total, at steps 20, 28)
+
+Farmer David should stay in the Village.
+Farmer Edward should stay in the Village.
+(violated 7 times in total, at steps 25, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+At step 2, there was 22 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 29 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 36 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 11 times in total, at steps 2, 3, 4, 7, 8, 16, 17, 21, 22, 23, ...)
+
+Warrior Charles moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Dorothy moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 2 times in total, at steps 20, 30)
+
+Farmer David should stay in the Village.
+Farmer Edward should stay in the Village.
+(violated 8 times in total, at steps 25, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 30 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 35 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 8 times in total, at steps 2, 3, 4, 6, 8, 9, 12, 13)
+
+There were no Warriors at step 1, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+
+Warrior Donald moved to the Cave at step 19, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+
+Farmer David should stay in the Village.
+Farmer Edward should stay in the Village.
+(violated 7 times in total, at steps 25, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 2, there was 27 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 34 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 6 times in total, at steps 1, 2, 3, 4, 7, 8)
+
+Warrior Charles moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Charles moved to the Cave at step 24, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Dorothy moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 3 times in total, at steps 20, 27, 30)
+
+Farmer David should stay in the Village.
+Farmer Edward should stay in the Village.
+(violated 8 times in total, at steps 25, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 2, there was 27 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 34 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 7 times in total, at steps 1, 2, 3, 4, 7, 8, 24)
+
+Warrior Charles moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Charles moved to the Cave at step 24, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Dorothy moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 3 times in total, at steps 20, 27, 30)
+
+Farmer David should stay in the Village.
+Farmer Edward should stay in the Village.
+(violated 7 times in total, at steps 25, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=1] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=2] _
+Warrior Donald moved to the Cave at step 26, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=3] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[no_initial_warriors] _
+Warrior Charles moved to the Cave at step 26, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15,seed=1] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+12 failed, 3 passed, 36 skipped in 0.98s

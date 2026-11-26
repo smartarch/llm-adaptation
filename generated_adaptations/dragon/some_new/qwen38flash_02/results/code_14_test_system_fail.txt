@@ -1,0 +1,25 @@
+1
+...FFFFFF..................ssssssssssssssssssssssss                      [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+In 'assign_in_village', 1 components were assigned more than once. Each component must be assigned exactly once.
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+In 'assign_in_village', 1 components were assigned more than once. Each component must be assigned exactly once.
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+In 'assign_in_village', 1 components were assigned more than once. Each component must be assigned exactly once.
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] ______
+In 'assign_in_village', 1 components were assigned more than once. Each component must be assigned exactly once.
+_______ TestAdaptSystem.test_no_repeated_assignments[initial_wheat=15] ________
+In 'assign_in_village', 1 components were assigned more than once. Each component must be assigned exactly once.
+____ TestAdaptSystem.test_no_repeated_assignments[initial_wheat=15,seed=1] ____
+In 'assign_in_village', 1 components were assigned more than once. Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 21 passed, 24 skipped in 0.53s

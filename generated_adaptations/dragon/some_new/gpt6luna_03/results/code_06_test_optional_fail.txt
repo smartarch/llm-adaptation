@@ -1,0 +1,98 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFFFFFFFF                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Farmer Linda should stay in the Village.
+(violated 9 times in total, at steps 2, 3, 4, 10, 13, 14, 15, 23, 24)
+
+Warrior Margaret moved to the Cave at step 9, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Margaret moved to the Cave at step 20, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Sandra moved to the Cave at step 24, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 3 times in total, at steps 12, 23, 28)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Farmer Linda should stay in the Village.
+(violated 11 times in total, at steps 2, 3, 4, 10, 13, 14, 15, 20, 24, 25, ...)
+
+Warrior Margaret moved to the Cave at step 9, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Margaret moved to the Cave at step 19, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Margaret moved to the Cave at step 23, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 3 times in total, at steps 12, 22, 27)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Farmer Linda should stay in the Village.
+(violated 5 times in total, at steps 2, 3, 4, 7, 8)
+
+At step 6, there was 28 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+
+There were no Warriors at step 4, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 5, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 6, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+(violated 21 times in total, at steps 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Farmer Linda should stay in the Village.
+(violated 6 times in total, at steps 2, 3, 4, 7, 8, 9)
+
+There were no Warriors at step 1, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 2, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 3, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+(violated 24 times in total, at steps 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ...)
+
+At step 6, there was 28 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 11, there was 46 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 12, there was 56 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 13 times in total, at steps 6, 11, 12, 13, 14, 16, 17, 18, 19, 21, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Farmer Linda should stay in the Village.
+(violated 12 times in total, at steps 3, 4, 9, 12, 13, 14, 18, 19, 23, 24, ...)
+
+Warrior Margaret moved to the Cave at step 2, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Margaret moved to the Cave at step 8, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Donna moved to the Cave at step 13, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 7 times in total, at steps 6, 11, 17, 21, 26)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Farmer Linda should stay in the Village.
+(violated 8 times in total, at steps 3, 4, 9, 12, 13, 14, 17, 18)
+
+Warrior Margaret moved to the Cave at step 2, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Margaret moved to the Cave at step 8, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Donna moved to the Cave at step 13, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 8 times in total, at steps 6, 11, 17, 22, 27)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=1] _
+Warrior Edward should go to the Cave to attack the Dragon.
+Warrior Laura should go to the Cave to attack the Dragon.
+(violated 3 times in total, at steps 30)
+
+Warrior Donna moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=2] _
+Warrior Margaret moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=3] _
+There were no Warriors at step 25, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[no_initial_warriors] _
+There were no Warriors at step 25, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15] _
+Warrior Donna should go to the Cave to attack the Dragon.
+Warrior Brian should go to the Cave to attack the Dragon.
+(violated 19 times in total, at steps 30)
+
+Warrior Margaret moved to the Cave at step 27, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15,seed=1] _
+Warrior Donna moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Brian moved to the Cave at step 28, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 2 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+12 failed, 3 passed, 36 skipped in 1.44s

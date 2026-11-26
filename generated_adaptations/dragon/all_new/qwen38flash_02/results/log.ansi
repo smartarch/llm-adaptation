@@ -1,0 +1,218 @@
+Loaded 2 messages from generated_adaptations\dragon\all_new\qwen38flash_02.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1543, Output: 12434 (reasoning: 11083)
+Response time (seconds): 260.8
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_02 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_02 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_02 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_02 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_02", "log_dir.append": "/all_new/qwen38flash_02/code_02", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_02", "log_dir.append": "/all_new/qwen38flash_02/code_02", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_02", "log_dir.append": "/all_new/qwen38flash_02/code_02", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_test.
+[33mTOKENS USED:
+Input: 6072, Output: 25812 (reasoning: 24752)
+Response time (seconds): 523.1
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_04 --variant=all_new --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_04 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_04 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_04 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_04", "log_dir.append": "/all_new/qwen38flash_02/code_04", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_04.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_04", "log_dir.append": "/all_new/qwen38flash_02/code_04", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_04.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_04", "log_dir.append": "/all_new/qwen38flash_02/code_04", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_04.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 23.333333333333332
+Querying LLM with prompt 05_test.
+[33mTOKENS USED:
+Input: 8442, Output: 5786 (reasoning: 4452)
+Response time (seconds): 116.3
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_06 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_06 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_06 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_06 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_06", "log_dir.append": "/all_new/qwen38flash_02/code_06", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_06", "log_dir.append": "/all_new/qwen38flash_02/code_06", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_06", "log_dir.append": "/all_new/qwen38flash_02/code_06", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 21.0
+Querying LLM with prompt 07_test.
+[33mTOKENS USED:
+Input: 12825, Output: 6354 (reasoning: 4927)
+Response time (seconds): 118.9
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_08 --variant=all_new --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_08 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_08 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_08 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_08", "log_dir.append": "/all_new/qwen38flash_02/code_08", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_08.SmartAdaptation"} -s 1 -e 1
+    StdErr: 10 lines
+    In 'assign_in_village': Missing assignment for: Brian
+    In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Brian" to "spawn warrior".
+    In 'assign_in_village': Missing assignment for: Brian
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_08", "log_dir.append": "/all_new/qwen38flash_02/code_08", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_08.SmartAdaptation"} -s 2 -e 2
+    StdErr: 6 lines
+    In 'assign_in_village': Missing assignment for: Dorothy
+    In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Dorothy" to "spawn warrior".
+    In 'assign_in_village': Missing assignment for: Dorothy
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_08", "log_dir.append": "/all_new/qwen38flash_02/code_08", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_08.SmartAdaptation"} -s 3 -e 3
+    StdErr: 8 lines
+    In 'assign_in_village': Missing assignment for: Kimberly
+    In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Kimberly" to "spawn warrior".
+    In 'assign_in_village': Missing assignment for: Kimberly
+Winrate: 0.3, avg. steps: 25.0
+Querying LLM with prompt 09_test.
+[33mTOKENS USED:
+Input: 15780, Output: 7702 (reasoning: 6425)
+Response time (seconds): 154.0
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_10 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_10 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_10 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_10 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_10", "log_dir.append": "/all_new/qwen38flash_02/code_10", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_10.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_10", "log_dir.append": "/all_new/qwen38flash_02/code_10", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_10.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_10", "log_dir.append": "/all_new/qwen38flash_02/code_10", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_10.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.7, avg. steps: 22.0
+Querying LLM with prompt 11_test.
+[33mTOKENS USED:
+Input: 17905, Output: 4446 (reasoning: 3178)
+Response time (seconds): 93.6
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_12 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_12 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_12 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_12 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_12", "log_dir.append": "/all_new/qwen38flash_02/code_12", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_12.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_12", "log_dir.append": "/all_new/qwen38flash_02/code_12", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_12.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_12", "log_dir.append": "/all_new/qwen38flash_02/code_12", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_12.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.7, avg. steps: 22.0
+Querying LLM with prompt 13_test.
+[33mTOKENS USED:
+Input: 19942, Output: 4686 (reasoning: 3221)
+Response time (seconds): 131.7
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_14 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_14 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_14 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_14 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_14", "log_dir.append": "/all_new/qwen38flash_02/code_14", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_14.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_14", "log_dir.append": "/all_new/qwen38flash_02/code_14", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_14.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_14", "log_dir.append": "/all_new/qwen38flash_02/code_14", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_14.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 15_test.
+[33mTOKENS USED:
+Input: 25357, Output: 3132 (reasoning: 1581)
+Response time (seconds): 68.7
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_16 --variant=all_new --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_16 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_16 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_16 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_16", "log_dir.append": "/all_new/qwen38flash_02/code_16", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_16.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_16", "log_dir.append": "/all_new/qwen38flash_02/code_16", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_16.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_16", "log_dir.append": "/all_new/qwen38flash_02/code_16", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_16.SmartAdaptation"} -s 3 -e 3
+    StdErr: 4 lines
+    In 'assign_in_village': Missing assignment for: Thomas
+    In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Thomas" to "spawn warrior".
+    In 'assign_in_village': Missing assignment for: Thomas
+Winrate: 0.3, avg. steps: 30.0
+Querying LLM with prompt 17_test.
+[33mTOKENS USED:
+Input: 28416, Output: 5108 (reasoning: 3721)
+Response time (seconds): 102.4
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_18 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_18 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_18 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_18 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_18", "log_dir.append": "/all_new/qwen38flash_02/code_18", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_18.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_18", "log_dir.append": "/all_new/qwen38flash_02/code_18", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_18.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_18", "log_dir.append": "/all_new/qwen38flash_02/code_18", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_18.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 21.0
+Querying LLM with prompt 19_test.
+[33mTOKENS USED:
+Input: 30739, Output: 2594 (reasoning: 1230)
+Response time (seconds): 52.2
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\qwen38flash_02\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_20 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_20 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_20 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=qwen38flash_02/code_20 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\qwen38flash_02\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_20", "log_dir.append": "/all_new/qwen38flash_02/code_20", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_20.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_20", "log_dir.append": "/all_new/qwen38flash_02/code_20", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_20.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/qwen38flash_02/code_20", "log_dir.append": "/all_new/qwen38flash_02/code_20", "adaptation_name": "generated_adaptations.dragon.all_new.qwen38flash_02.code_20.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 21.0
+Reached the maximum number of iterations (10). Stopping.

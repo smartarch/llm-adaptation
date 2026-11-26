@@ -1,0 +1,32 @@
+1
+...ssssssssssssssssssssssssssssssssssssF.FF....FFF.                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+There were no Warriors at step 11, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 12, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 13, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+(violated 3 times in total, at steps 16, 17, 18)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+There were no Warriors at step 18, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 19, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 20, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+(violated 7 times in total, at steps 23, 24, 25, 26, 27, 28, 29)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+There were no Warriors at step 1, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 23, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+There were no Warriors at step 24, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+(violated 3 times in total, at steps 6, 28, 29)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=3] _
+There were no Warriors at step 25, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[no_initial_warriors] _
+There were no Warriors at step 25, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15] _
+There were no Warriors at step 25, so nobody could attack the Dragon, but no new Warrior was spawned in the next 5 steps. When there are no Warriors, a new Warrior should be spawned soon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=3, no_initial_warriors
+ - passed for: seed=2, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=3, no_initial_warriors, initial_wheat=15
+ - passed for: seed=1, seed=2, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.57s

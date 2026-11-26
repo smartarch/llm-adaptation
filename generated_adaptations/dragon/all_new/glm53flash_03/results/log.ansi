@@ -1,0 +1,214 @@
+Loaded 2 messages from generated_adaptations\dragon\all_new\glm53flash_03.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 1489, Output: 1318 (reasoning: 362)
+Response time (seconds): 13.9
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_02 --variant=all_new --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_02 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_02 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_02 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_02", "log_dir.append": "/all_new/glm53flash_03/code_02", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_02.SmartAdaptation"} -s 1 -e 1
+    StdErr: 58 lines
+    In 'assign_in_village': Missing assignment for: George
+    In 'assign_in_village': Invalid group for Villager in Village: "4". It must be one of "farm", "cave", "spawn farmer", "spawn warrior", "eat".
+    In 'assign_in_village': Missing assignment for: George
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_02", "log_dir.append": "/all_new/glm53flash_03/code_02", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_02.SmartAdaptation"} -s 2 -e 2
+    StdErr: 58 lines
+    In 'assign_in_village': Missing assignment for: Joseph
+    In 'assign_in_village': Invalid group for Villager in Village: "4". It must be one of "farm", "cave", "spawn farmer", "spawn warrior", "eat".
+    In 'assign_in_village': Missing assignment for: Joseph
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_02", "log_dir.append": "/all_new/glm53flash_03/code_02", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_02.SmartAdaptation"} -s 3 -e 3
+    StdErr: 58 lines
+    In 'assign_in_village': Missing assignment for: Margaret
+    In 'assign_in_village': Invalid group for Villager in Village: "4". It must be one of "farm", "cave", "spawn farmer", "spawn warrior", "eat".
+    In 'assign_in_village': Missing assignment for: Margaret
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_test.
+[33mTOKENS USED:
+Input: 7390, Output: 1053 (reasoning: 181)
+Response time (seconds): 10.0
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_04 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_04 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_04 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_04 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_04", "log_dir.append": "/all_new/glm53flash_03/code_04", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_04.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_04", "log_dir.append": "/all_new/glm53flash_03/code_04", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_04.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_04", "log_dir.append": "/all_new/glm53flash_03/code_04", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_04.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 05_test.
+[33mTOKENS USED:
+Input: 12026, Output: 1941 (reasoning: 952)
+Response time (seconds): 18.1
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_06 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_06 --variant=all_new --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_06 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_06 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_06", "log_dir.append": "/all_new/glm53flash_03/code_06", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_06", "log_dir.append": "/all_new/glm53flash_03/code_06", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_06", "log_dir.append": "/all_new/glm53flash_03/code_06", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 26.0
+Querying LLM with prompt 07_test.
+[33mTOKENS USED:
+Input: 13654, Output: 1318 (reasoning: 464)
+Response time (seconds): 20.7
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_08 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_08 --variant=all_new --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_08 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_08 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_08", "log_dir.append": "/all_new/glm53flash_03/code_08", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_08.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_08", "log_dir.append": "/all_new/glm53flash_03/code_08", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_08.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_08", "log_dir.append": "/all_new/glm53flash_03/code_08", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_08.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 26.333333333333332
+Querying LLM with prompt 09_test.
+[33mTOKENS USED:
+Input: 15112, Output: 989 (reasoning: 40)
+Response time (seconds): 8.5
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_10 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_10 --variant=all_new --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_10 --variant=all_new --tests=optional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_10 --variant=all_new --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_10", "log_dir.append": "/all_new/glm53flash_03/code_10", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_10.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_10", "log_dir.append": "/all_new/glm53flash_03/code_10", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_10.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_10", "log_dir.append": "/all_new/glm53flash_03/code_10", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_10.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 25.666666666666668
+Querying LLM with prompt 11_pass.
+[33mTOKENS USED:
+Input: 16145, Output: 1091 (reasoning: 215)
+Response time (seconds): 9.0
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_12 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_12 --variant=all_new --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_12 --variant=all_new --tests=optional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_12 --variant=all_new --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_12", "log_dir.append": "/all_new/glm53flash_03/code_12", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_12.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_12", "log_dir.append": "/all_new/glm53flash_03/code_12", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_12.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_12", "log_dir.append": "/all_new/glm53flash_03/code_12", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_12.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 25.333333333333332
+Querying LLM with prompt 13_pass.
+[33mTOKENS USED:
+Input: 17105, Output: 2716 (reasoning: 1677)
+Response time (seconds): 33.5
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_14 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_14 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_14 --variant=all_new --tests=optional
+Test exit code: 1
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_14 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_14", "log_dir.append": "/all_new/glm53flash_03/code_14", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_14.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_14", "log_dir.append": "/all_new/glm53flash_03/code_14", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_14.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_14", "log_dir.append": "/all_new/glm53flash_03/code_14", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_14.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 26.0
+Querying LLM with prompt 15_test.
+[33mTOKENS USED:
+Input: 20843, Output: 1144 (reasoning: 138)
+Response time (seconds): 11.7
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_16 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_16 --variant=all_new --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_16 --variant=all_new --tests=optional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_16 --variant=all_new --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_16", "log_dir.append": "/all_new/glm53flash_03/code_16", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_16.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_16", "log_dir.append": "/all_new/glm53flash_03/code_16", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_16.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_16", "log_dir.append": "/all_new/glm53flash_03/code_16", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_16.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 25.666666666666668
+Querying LLM with prompt 17_pass.
+[33mTOKENS USED:
+Input: 21933, Output: 2896 (reasoning: 1911)
+Response time (seconds): 40.3
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_18 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_18 --variant=all_new --tests=functional
+Test exit code: 0
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_18 --variant=all_new --tests=optional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_18 --variant=all_new --tests=all
+Test exit code: 0
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_18", "log_dir.append": "/all_new/glm53flash_03/code_18", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_18.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_18", "log_dir.append": "/all_new/glm53flash_03/code_18", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_18.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_18", "log_dir.append": "/all_new/glm53flash_03/code_18", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_18.SmartAdaptation"} -s 3 -e 3
+Winrate: 1.0, avg. steps: 25.666666666666668
+Querying LLM with prompt 19_pass.
+[33mTOKENS USED:
+Input: 23002, Output: 1602 (reasoning: 596)
+Response time (seconds): 21.0
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\all_new\glm53flash_03\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_20 --variant=all_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_20 --variant=all_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_20 --variant=all_new --tests=optional
+Test exit code: 0
+Running tests (all): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=glm53flash_03/code_20 --variant=all_new --tests=all
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\all_new\glm53flash_03\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_20", "log_dir.append": "/all_new/glm53flash_03/code_20", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_20.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_20", "log_dir.append": "/all_new/glm53flash_03/code_20", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_20.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "all_new/glm53flash_03/code_20", "log_dir.append": "/all_new/glm53flash_03/code_20", "adaptation_name": "generated_adaptations.dragon.all_new.glm53flash_03.code_20.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.7, avg. steps: 23.5
+Reached the maximum number of iterations (10). Stopping.

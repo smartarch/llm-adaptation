@@ -1,0 +1,39 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 30 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 40 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 16 times in total, at steps 2, 3, 4, 6, 7, 8, 9, 12, 13, 16, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 30 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 40 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 18 times in total, at steps 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 30 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 6, there was 26 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 15 times in total, at steps 2, 3, 6, 7, 9, 11, 12, 14, 16, 17, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+At step 4, there was 18 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 6, there was 26 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 7, there was 36 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 16 times in total, at steps 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 2, there was 25 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 35 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 19 times in total, at steps 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 2, there was 25 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 3, there was 35 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 17 times in total, at steps 1, 2, 3, 4, 6, 7, 8, 9, 12, 13, ...)
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.68s

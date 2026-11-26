@@ -1,0 +1,57 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFFFFFFFF                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 28 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 5, there was 38 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 13 times in total, at steps 2, 4, 5, 7, 8, 11, 14, 16, 17, 19, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 28 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 5, there was 38 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 15 times in total, at steps 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+At step 2, there was 20 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 5, there was 16 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 7, there was 24 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 12 times in total, at steps 2, 5, 7, 10, 11, 14, 16, 17, 20, 22, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+At step 5, there was 16 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 7, there was 24 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 8, there was 34 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 14 times in total, at steps 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 2, there was 25 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 33 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 17 times in total, at steps 1, 2, 4, 5, 7, 8, 10, 11, 13, 14, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 2, there was 25 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 4, there was 33 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 14 times in total, at steps 1, 2, 4, 5, 7, 8, 11, 14, 16, 17, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=1] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=2] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=3] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[no_initial_warriors] _
+Warrior Jennifer should go to the Cave to attack the Dragon.
+(violated 11 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15] _
+Warrior Jeff should go to the Cave to attack the Dragon.
+(violated 13 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15,seed=1] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+12 failed, 3 passed, 36 skipped in 0.97s

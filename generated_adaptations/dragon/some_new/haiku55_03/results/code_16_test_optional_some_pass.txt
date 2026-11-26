@@ -1,0 +1,8 @@
+0
+...ssssssssssssssssssssssssssssssssssss............                      [100%]
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+15 passed, 36 skipped in 0.71s

@@ -1,0 +1,34 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFF..F...                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Farmer Brian should stay in the Village.
+Farmer Helen should stay in the Village.
+(violated 8 times in total, at steps 24, 25, 28, 29)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Farmer Brian should stay in the Village.
+Farmer Helen should stay in the Village.
+(violated 4 times in total, at steps 17, 18)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Farmer Brian should stay in the Village.
+Farmer Helen should stay in the Village.
+(violated 8 times in total, at steps 27, 28, 29, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Farmer Brian should stay in the Village.
+(violated 3 times in total, at steps 20, 23, 24)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Farmer Helen should stay in the Village.
+(violated 4 times in total, at steps 17, 18, 19, 20)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Farmer Brian should stay in the Village.
+Farmer Helen should stay in the Village.
+(violated 6 times in total, at steps 23, 24, 25)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=3] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=3
+ - passed for: seed=1, seed=2, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+7 failed, 8 passed, 36 skipped in 0.81s

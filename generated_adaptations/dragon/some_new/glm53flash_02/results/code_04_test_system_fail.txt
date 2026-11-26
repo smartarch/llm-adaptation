@@ -1,0 +1,21 @@
+1
+..................F.....F..ssssssssssssssssssssssss                      [100%]
+================================== FAILURES ===================================
+______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+In 'assign_in_village': Not enough wheat to spawn new villager. Cannot assign "Edward" to "spawn warrior".
+___________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Edward (Farmer)
+Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: no_initial_warriors
+ - passed for: seed=1, seed=2, seed=3, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - failed for: no_initial_warriors
+ - passed for: seed=1, seed=2, seed=3, initial_wheat=15, initial_wheat=15,seed=1
+2 failed, 25 passed, 24 skipped in 0.45s

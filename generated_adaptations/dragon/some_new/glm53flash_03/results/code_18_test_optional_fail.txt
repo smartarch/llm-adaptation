@@ -1,0 +1,42 @@
+1
+...ssssssssssssssssssssssssssssssssssssFFFFFFF.....                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=1] __
+Farmer Elizabeth should stay in the Village.
+
+Warrior William moved to the Cave at step 21, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Edward moved to the Cave at step 21, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior William moved to the Cave at step 24, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 6 times in total, at steps 24, 25, 27, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=2] __
+Farmer Elizabeth should stay in the Village.
+(violated 5 times in total, at steps 10, 13, 14, 15, 16)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Farmer Edward should stay in the Village.
+Farmer Kevin should stay in the Village.
+Farmer Elizabeth should stay in the Village.
+(violated 15 times in total, at steps 9, 10, 11, 12, 15, 18, 19, 20, 21, 24, ...)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Farmer Edward should stay in the Village.
+(violated 8 times in total, at steps 9, 10, 11, 12, 17, 18, 28, 29)
+
+Warrior John moved to the Cave at step 17, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior John moved to the Cave at step 19, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior John moved to the Cave at step 22, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 5 times in total, at steps 20, 22, 25, 28, 30)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Farmer Elizabeth should stay in the Village.
+(violated 7 times in total, at steps 9, 10, 14, 15, 16, 19, 20)
+
+Warrior William moved to the Cave at step 14, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Farmer Elizabeth should stay in the Village.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=1] _
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=1
+ - passed for: seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+7 failed, 8 passed, 36 skipped in 0.84s

@@ -20,16 +20,17 @@ The `--mode` option selects the feedback given to the LLM after each iteration:
 | `progress` | simulation metrics step by step for each run (Dragon Hunt only) | `prompts/dragon_progress.md` |
 | `system` | report of the system constraints (unit tests) + simulation result | `prompts/{example}_testfail.md` |
 | `required` | report of the system + required functional constraints + simulation result | `prompts/{example}_testfail.md` |
-| `all` | report of the system + required + optional functional constraints + simulation result | `prompts/{example}_testfail.md`, `prompts/dragon_test_req_{pass,fail}_opt_fail.md` (see below) |
+| `some` | report of the system + required + the "some" optional functional constraints + simulation result | `prompts/{example}_testfail.md`, `prompts/dragon_test_req_{pass,fail}_opt_fail.md` (see below) |
+| `all` | report of the system + required + all optional functional constraints + simulation result | `prompts/{example}_testfail.md`, `prompts/dragon_test_req_{pass,fail}_opt_fail.md` (see below) |
 | `result` | only the simulation result (win rate / damage); currently not used in the experiments | `prompts/{example}_result.md` |
 
 When the tests of the mode pass, but the simulation result is not good enough, `prompts/{example}_testpass.md` is used instead.
 
-In mode `all`, when an optional constraint is violated, the prompt says that only the system and required tests must be fixed: `prompts/dragon_test_req_pass_opt_fail.md` if the system and required tests pass, `prompts/dragon_test_req_fail_opt_fail.md` otherwise. If only the system or required tests fail, `prompts/{example}_testfail.md` is used as in the other modes. The farm does not have these prompts yet.
+In modes `some` and `all`, when an optional constraint (of the mode) is violated, the prompt says that only the system and required tests must be fixed: `prompts/dragon_test_req_pass_opt_fail.md` if the system and required tests pass, `prompts/dragon_test_req_fail_opt_fail.md` otherwise. If only the system or required tests fail, `prompts/{example}_testfail.md` is used as in the other modes. The farm does not have these prompts yet.
 
 The AM is **valid** if it satisfies the system and the required functional constraints; the optional constraints only give feedback. The loop stops when the AM is valid and the simulation result is good enough (`verdict`).
 
-In every iteration, the system, required and optional constraints are also checked separately (`results/code_XX_test_{system,functional,optional}_{pass,fail}.txt`) for the analysis. In modes `required` and `all`, the report of that level is saved as well (`results/code_XX_test_{required,all}_*.txt`).
+In every iteration, the system, required and all optional constraints are also checked separately (`results/code_XX_test_{system,functional,optional}_{pass,fail}.txt`) for the analysis (in mode `some`, also the "some" optional constraints: `results/code_XX_test_optional_some_*.txt`). In modes `required`, `some` and `all`, the report of that level is saved as well (`results/code_XX_test_{required,some,all}_*.txt`).
 
 ## Prompt generation
 
@@ -56,9 +57,11 @@ The `--example`, `--variant`, `--adaptation_name` and `--tests` options select t
 
 * `system`: only the system constraints;
 * `functional`: only the required functional constraints;
-* `optional`: only the optional functional constraints;
+* `optional_some`: only the "some" optional functional constraints;
+* `optional`: only the optional functional constraints (all of them);
 * `required`: system + required functional constraints (validity of the AM);
-* `all`: system + required + optional functional constraints.
+* `some`: system + required + the "some" optional functional constraints;
+* `all`: system + required + all optional functional constraints.
 
 For example:
 

@@ -1,0 +1,202 @@
+Loaded 2 messages from generated_adaptations\dragon\required_new\haiku55_02.
+Querying LLM with prompt 01_user.
+[33mTOKENS USED:
+Input: 2182, Output: 5321 (reasoning: 0)
+Response time (seconds): 25.8
+[0m
+LLM response saved to '02_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_02.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_02 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_02 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_02 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_02 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_02.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_02", "log_dir.append": "/required_new/haiku55_02/code_02", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_02.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_02", "log_dir.append": "/required_new/haiku55_02/code_02", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_02.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_02", "log_dir.append": "/required_new/haiku55_02/code_02", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_02.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.0, avg. steps: None
+Querying LLM with prompt 03_test.
+[33mTOKENS USED:
+Input: 4911, Output: 5803 (reasoning: 0)
+Response time (seconds): 27.4
+[0m
+LLM response saved to '04_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_04.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_04 --variant=required_new --tests=system
+Test exit code: 1
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_04 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_04 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_04 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_04.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_04", "log_dir.append": "/required_new/haiku55_02/code_04", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_04.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_04", "log_dir.append": "/required_new/haiku55_02/code_04", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_04.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_04", "log_dir.append": "/required_new/haiku55_02/code_04", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_04.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 22.0
+Querying LLM with prompt 05_test.
+[33mTOKENS USED:
+Input: 8035, Output: 4603 (reasoning: 0)
+Response time (seconds): 20.5
+[0m
+LLM response saved to '06_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_06.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_06 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_06 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_06 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_06 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_06.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_06", "log_dir.append": "/required_new/haiku55_02/code_06", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_06.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_06", "log_dir.append": "/required_new/haiku55_02/code_06", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_06.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_06", "log_dir.append": "/required_new/haiku55_02/code_06", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_06.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 23.0
+Querying LLM with prompt 07_test.
+[33mTOKENS USED:
+Input: 11073, Output: 4628 (reasoning: 0)
+Response time (seconds): 21.4
+[0m
+LLM response saved to '08_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_08.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_08 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_08 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_08 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_08 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_08.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_08", "log_dir.append": "/required_new/haiku55_02/code_08", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_08.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_08", "log_dir.append": "/required_new/haiku55_02/code_08", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_08.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_08", "log_dir.append": "/required_new/haiku55_02/code_08", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_08.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 22.0
+Querying LLM with prompt 09_test.
+[33mTOKENS USED:
+Input: 14021, Output: 3699 (reasoning: 0)
+Response time (seconds): 15.0
+[0m
+LLM response saved to '10_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_10.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_10 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_10 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_10 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_10 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_10.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_10", "log_dir.append": "/required_new/haiku55_02/code_10", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_10.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_10", "log_dir.append": "/required_new/haiku55_02/code_10", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_10.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_10", "log_dir.append": "/required_new/haiku55_02/code_10", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_10.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.7, avg. steps: 25.0
+Querying LLM with prompt 11_test.
+[33mTOKENS USED:
+Input: 17093, Output: 3732 (reasoning: 0)
+Response time (seconds): 15.6
+[0m
+LLM response saved to '12_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_12.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_12 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_12 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_12 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_12 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_12.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_12", "log_dir.append": "/required_new/haiku55_02/code_12", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_12.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_12", "log_dir.append": "/required_new/haiku55_02/code_12", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_12.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_12", "log_dir.append": "/required_new/haiku55_02/code_12", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_12.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.7, avg. steps: 24.0
+Querying LLM with prompt 13_test.
+[33mTOKENS USED:
+Input: 20168, Output: 3949 (reasoning: 0)
+Response time (seconds): 16.9
+[0m
+LLM response saved to '14_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_14.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_14 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_14 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_14 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_14 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_14.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_14", "log_dir.append": "/required_new/haiku55_02/code_14", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_14.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_14", "log_dir.append": "/required_new/haiku55_02/code_14", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_14.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_14", "log_dir.append": "/required_new/haiku55_02/code_14", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_14.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 19.0
+Querying LLM with prompt 15_test.
+[33mTOKENS USED:
+Input: 23344, Output: 4239 (reasoning: 0)
+Response time (seconds): 18.0
+[0m
+LLM response saved to '16_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_16.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_16 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_16 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_16 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_16 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_16.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_16", "log_dir.append": "/required_new/haiku55_02/code_16", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_16.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_16", "log_dir.append": "/required_new/haiku55_02/code_16", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_16.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_16", "log_dir.append": "/required_new/haiku55_02/code_16", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_16.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 19.0
+Querying LLM with prompt 17_test.
+[33mTOKENS USED:
+Input: 28012, Output: 3246 (reasoning: 0)
+Response time (seconds): 12.5
+[0m
+LLM response saved to '18_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_18.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_18 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_18 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_18 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_18 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_18.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_18", "log_dir.append": "/required_new/haiku55_02/code_18", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_18.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_18", "log_dir.append": "/required_new/haiku55_02/code_18", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_18.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_18", "log_dir.append": "/required_new/haiku55_02/code_18", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_18.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 26.0
+Querying LLM with prompt 19_test.
+[33mTOKENS USED:
+Input: 31358, Output: 4054 (reasoning: 0)
+Response time (seconds): 17.1
+[0m
+LLM response saved to '20_llm.md'.
+Code block saved to 'generated_adaptations\dragon\required_new\haiku55_02\code_20.py'.
+Running tests (system): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_20 --variant=required_new --tests=system
+Test exit code: 0
+Running tests (functional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_20 --variant=required_new --tests=functional
+Test exit code: 1
+Running tests (optional): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_20 --variant=required_new --tests=optional
+Test exit code: 1
+Running tests (required): pytest generated_adaptations/tests -q --tb=short -rfExX --show-capture=no --color=no -p no:cacheprovider --example=dragon --adaptation_name=haiku55_02/code_20 --variant=required_new --tests=required
+Test exit code: 1
+Running simulation for 'generated_adaptations\dragon\required_new\haiku55_02\code_20.py'.
+  Run #1/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_20", "log_dir.append": "/required_new/haiku55_02/code_20", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_20.SmartAdaptation"} -s 1 -e 1
+  Run #2/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_20", "log_dir.append": "/required_new/haiku55_02/code_20", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_20.SmartAdaptation"} -s 2 -e 2
+  Run #3/3: python main.py dragon/configs/default.yaml generated_adaptations/configs/generated.yaml DSL/dragon.yaml --extra_config={"name": "required_new/haiku55_02/code_20", "log_dir.append": "/required_new/haiku55_02/code_20", "adaptation_name": "generated_adaptations.dragon.required_new.haiku55_02.code_20.SmartAdaptation"} -s 3 -e 3
+Winrate: 0.3, avg. steps: 26.0
+Reached the maximum number of iterations (10). Stopping.

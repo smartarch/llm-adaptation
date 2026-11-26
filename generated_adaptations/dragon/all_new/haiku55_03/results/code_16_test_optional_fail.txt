@@ -1,0 +1,43 @@
+1
+...ssssssssssssssssssssssssssssssssssss...F..FFFFFF                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+Warrior Donald moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=1] _
+Warrior Linda should go to the Cave to attack the Dragon.
+Warrior Ronald should go to the Cave to attack the Dragon.
+(violated 6 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=2] _
+Warrior Ronald should go to the Cave to attack the Dragon.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[seed=3] _
+Warrior Patricia should go to the Cave to attack the Dragon.
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[no_initial_warriors] _
+Warrior Donald should go to the Cave to attack the Dragon.
+Warrior Elizabeth should go to the Cave to attack the Dragon.
+(violated 12 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15] _
+Warrior Robert should go to the Cave to attack the Dragon.
+Warrior Linda should go to the Cave to attack the Dragon.
+(violated 7 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated_at_the_end[initial_wheat=15,seed=1] _
+Warrior Donald should go to the Cave to attack the Dragon.
+(violated 9 times in total, at steps 30)
+
+At least one new farmer should be spawned to increase the chance of killing the Dragon.
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: no_initial_warriors
+ - passed for: seed=1, seed=2, seed=3, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+7 failed, 8 passed, 36 skipped in 0.90s

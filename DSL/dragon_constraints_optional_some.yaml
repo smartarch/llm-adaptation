@@ -1,0 +1,30 @@
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
+    # Optional functional constraints used in the "some" and "all" experiments (spawning new villagers): they only give
+    # additional feedback (the strategy for winning the game), they do not determine whether the AM is valid.
+    # The other optional constraints (used only in "all") are in dragon_constraints_optional_other.yaml.
+    # They are merged with the required ones in dragon_constraints.yaml.
+    constraints:
+      spawn_warrior_when_none_left:
+        # replaces "spawn at least two warriors" (LLMs spawned exactly two and stopped spawning when they died)
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+          SPAWN_WITHIN: "5"
+        constraint: "always(`len(Warriors) == 0 and len(SpawnWarriorEn) < 2 and MAX >= SPAWN_WITHIN` implies within(1, `SPAWN_WITHIN`, `len(SpawnWarriorEn) >= 2`))"
+        reason: "There were no Warriors at step {trigger_step}, so nobody could attack the Dragon, but no new Warrior was spawned in the next {SPAWN_WITHIN} steps. When there are no Warriors, a new Warrior should be spawned soon."
+      spawn_when_enough_wheat:
+        # "Enough wheat" = the cost of a Warrior (the more expensive villager, so that the AM can save for a Warrior instead
+        # of being forced to spawn a Farmer) + a reserve of one meal for every villager. It is more than keep_wheat_reserve
+        # requires (meals due in the next step), so spawning any villager never violates keep_wheat_reserve.
+        # Spawning is not required in the last LAST_STEPS steps (a new villager would not help any more) and when there
+        # are already MAX_VILLAGERS villagers (the fastest AMs keep farmers farming and do not spawn right before the kill;
+        # with the cap, the constraint only applies to the initial build-up, see the analysis of the pilot AMs).
+        variables:
+          WARRIOR_COST: "12"
+          Wheat: "FarmComps[0].wheat"
+          RESERVE: "len(VillagerComps) * environment.meal_cost"
+          LAST_STEPS: "5"
+          MAX_VILLAGERS: "5"
+          FreeFarmers: "[v for v in VillagerComps if v.role == 'Farmer' and v.location == Map.VILLAGE and v not in EatEn]"
+        constraint: "always(`Wheat >= WARRIOR_COST + RESERVE and len(FreeFarmers) >= 2 and MAX >= LAST_STEPS and len(VillagerComps) < MAX_VILLAGERS` implies `len(SpawnFarmerEn) >= 2 or len(SpawnWarriorEn) >= 2`)"
+        reason: "At step {step}, there was {Wheat} wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than {MAX_VILLAGERS} villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming."

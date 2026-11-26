@@ -1,0 +1,61 @@
+1
+...FFFFFFFFFFFFFFFFFFFFFFFFssssssssssssssssssssssss                      [100%]
+================================== FAILURES ===================================
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=1] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=2] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+____________ TestAdaptSystem.test_no_repeated_assignments[seed=3] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+______ TestAdaptSystem.test_no_repeated_assignments[no_initial_warriors] ______
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_______ TestAdaptSystem.test_no_repeated_assignments[initial_wheat=15] ________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+____ TestAdaptSystem.test_no_repeated_assignments[initial_wheat=15,seed=1] ____
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=1] ________________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=2] ________________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_______________ TestAdaptSystem.test_no_invalid_groups[seed=3] ________________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_________ TestAdaptSystem.test_no_invalid_groups[no_initial_warriors] _________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+__________ TestAdaptSystem.test_no_invalid_groups[initial_wheat=15] ___________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_______ TestAdaptSystem.test_no_invalid_groups[initial_wheat=15,seed=1] _______
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=1] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=2] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_____________ TestAdaptSystem.test_no_invalid_assignments[seed=3] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+______ TestAdaptSystem.test_no_invalid_assignments[no_initial_warriors] _______
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+________ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15] ________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+____ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15,seed=1] _____
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=1] __________________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=2] __________________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+__________________ TestAdaptSystem.test_all_assigned[seed=3] __________________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+___________ TestAdaptSystem.test_all_assigned[no_initial_warriors] ____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_____________ TestAdaptSystem.test_all_assigned[initial_wheat=15] _____________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+_________ TestAdaptSystem.test_all_assigned[initial_wheat=15,seed=1] __________
+NameError on line 60 in _apply: name 'environment_assign' is not defined
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+24 failed, 3 passed, 24 skipped in 0.37s

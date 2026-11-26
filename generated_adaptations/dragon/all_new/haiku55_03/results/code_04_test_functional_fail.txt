@@ -1,0 +1,21 @@
+1
+...ssssssssssssssssssssssss....F.F.FF..ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Only 1 wheat will be left after step 21 (after the meals, spawning and farming in this step), but 3 villagers will have to eat in the next step (Jeff, Patricia, Donna). Keep enough wheat in reserve for the meals that are due.
+
+Villager Donna has not eaten for 6 steps, so they are starving (step 23). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[seed=1] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[seed=3] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: initial_wheat=15
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - failed for: seed=1, seed=3, no_initial_warriors
+ - passed for: seed=2, initial_wheat=15, initial_wheat=15,seed=1
+4 failed, 11 passed, 36 skipped in 0.75s

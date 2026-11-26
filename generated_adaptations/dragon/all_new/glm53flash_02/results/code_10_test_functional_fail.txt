@@ -1,0 +1,21 @@
+1
+...ssssssssssssssssssssssssFFFFFF......ssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager Michelle has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager Michelle has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+Villager Michelle has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+Villager Margaret has not eaten for 6 steps, so they are starving (step 13). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Michelle has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Michelle has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 9 passed, 36 skipped in 0.92s

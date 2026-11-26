@@ -1,0 +1,21 @@
+1
+....................F.....Fssssssssssssssssssssssss                      [100%]
+================================== FAILURES ===================================
+____ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15,seed=1] _____
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Mary" to "eat".
+_________ TestAdaptSystem.test_all_assigned[initial_wheat=15,seed=1] __________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Mary (Warrior)
+Each component must be assigned exactly once.
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+TestAdaptSystem::test_all_assigned:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+2 failed, 25 passed, 24 skipped in 0.51s

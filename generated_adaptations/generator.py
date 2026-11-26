@@ -34,12 +34,13 @@ def parse_arguments(cmdline_args=None):
     parser = argparse.ArgumentParser(description="Command-line arguments for the generator.")
     parser.add_argument("--folder", type=str, required=True, help="Path to the folder. The path should contain `{example}/{variant}/{folder}`")
     parser.add_argument("--max_iterations", type=int, default=10, help="")
-    parser.add_argument("--mode", choices=["stats", "progress", "system", "required", "all", "result"], required=True, help="Mode of feedback to the LLM.\n"
+    parser.add_argument("--mode", choices=["stats", "progress", "system", "required", "some", "all", "result"], required=True, help="Mode of feedback to the LLM.\n"
         "stats=simulation statistics averaged over the runs (e.g., winrate, average damage, etc)\n"
         "progress=simulation metrics step by step for each run (only for the dragon example)\n"
         "system=feedback from the system constraints (unit tests)\n"
         "required=feedback from the system + required functional constraints\n"
-        "all=feedback from the system + required + optional functional constraints\n"
+        "some=feedback from the system + required + the \"some\" subset of the optional functional constraints\n"
+        "all=feedback from the system + required + all optional functional constraints\n"
         "result=simulation result only (winrate/damage)")
     parser.add_argument("--simulation_runs", type=int, default=3, help="Number of runs of simulation for evaluation.")
     parser.add_argument("--llm", type=str, default="gpt-4.1-mini-2025-04-14", help="LLM to use.")
@@ -148,8 +149,10 @@ def gather_feedback(args, folder, messages, iteration, code_file):
 
     # run the tests and the simulation with the generated code
     # (each group of constraints separately, so that all of them are recorded for the analysis)
-    test_results = {tests: test_code(folder, code_file, tests) for tests in ["system", "functional", "optional"]}
-    if args.mode in ["required", "all"]:  # the report used as the feedback (all tests of the level in one run)
+    optional_tests = {"some": "optional_some", "all": "optional"}  # optional constraints of the mode
+    test_results = {tests: test_code(folder, code_file, tests)
+                    for tests in ["system", "functional", "optional"] + (["optional_some"] if args.mode == "some" else [])}
+    if args.mode in ["required", "some", "all"]:  # the report used as the feedback (all tests of the level in one run)
         test_results[args.mode] = test_code(folder, code_file, args.mode)
     simulation_results = run_simulation(folder, code_file, args.simulation_runs)
 
@@ -157,7 +160,7 @@ def gather_feedback(args, folder, messages, iteration, code_file):
         return True
 
     # provide feedback to the LLM
-    if args.mode in ["system", "required", "all"]:
+    if args.mode in ["system", "required", "some", "all"]:
         test_result, test_report = test_results[args.mode]
         if test_result == pytest.ExitCode.OK:
             test_report_file = f"{iteration * 2 + 1:02d}_pass"
@@ -165,7 +168,7 @@ def gather_feedback(args, folder, messages, iteration, code_file):
         else:
             test_report_file = f"{iteration * 2 + 1:02d}_test"
             mode = "testfail"
-            if args.mode == "all" and test_results["optional"][0] != pytest.ExitCode.OK:
+            if args.mode in optional_tests and test_results[optional_tests[args.mode]][0] != pytest.ExitCode.OK:
                 # optional constraints violated -> tell the LLM that only the system and required tests must be fixed
                 required_passed = test_results["system"][0] == pytest.ExitCode.OK and test_results["functional"][0] == pytest.ExitCode.OK
                 mode = "test_req_pass_opt_fail" if required_passed else "test_req_fail_opt_fail"
@@ -202,7 +205,7 @@ def verdict(folder, simulation_results, test_result_system, test_result_function
 ### Unit tests
 
 
-def test_code(folder, code_file, tests: Literal["system", "functional", "optional", "required", "all"]):
+def test_code(folder, code_file, tests: Literal["system", "functional", "optional_some", "optional", "required", "some", "all"]):
     example, variant = get_example_variant(folder)
     adaptation_name = folder.stem + "/" + code_file.stem
     cmd = [
@@ -418,6 +421,7 @@ def main(cmdline_args=None):
         return
     
     sys.stdout = Logger(log_file)
+    sys.stderr = Logger(folder / "results" / "log.err", sys.stderr, create_on_first_write=True)  # created only if there are errors
     print(f"Loaded {len(messages)} messages from {folder}.")
 
     llm = load_llm(args)

@@ -9,21 +9,24 @@ def pytest_addoption(parser):
     parser.addoption("--example", action="store")
     parser.addoption("--variant", action="store", default="default")
     parser.addoption("--adaptation_name", action="store")
-    # system/functional/optional = only the system tests / required functional constraints / optional functional constraints,
-    # required = system tests + required functional constraints (validity of the AM), all = everything
-    parser.addoption("--tests", choices=["system", "functional", "optional", "required", "all"], required=True)
+    # system/functional/optional_some/optional = only the system tests / required functional constraints /
+    # the "some" subset of the optional functional constraints / all optional functional constraints,
+    # required = system tests + required functional constraints (validity of the AM),
+    # some = required + the "some" optional constraints, all = everything
+    parser.addoption("--tests", choices=["system", "functional", "optional_some", "optional", "required", "some", "all"], required=True)
 
 
 def run_system(tests):
-    return tests in ("system", "required", "all")
+    return tests in ("system", "required", "some", "all")
 
 
 def load_required(tests):
-    return tests in ("functional", "required", "all")
+    return tests in ("functional", "required", "some", "all")
 
 
 def load_optional(tests):
-    return tests in ("optional", "all")
+    """Which optional constraints are loaded: False, "some" or "all"."""
+    return {"optional_some": "some", "some": "some", "optional": "all", "all": "all"}.get(tests, False)
 
 
 @pytest.fixture(scope="session")

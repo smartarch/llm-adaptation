@@ -1,0 +1,29 @@
+adaptation_params:  # this is purely technical
+  prompt_template_params:  # this is purely technical
+    # The other optional functional constraints, used only in the "all" experiments (together with the ones in
+    # dragon_constraints_optional_some.yaml): they only give additional feedback (the strategy for winning the game),
+    # they do not determine whether the AM is valid. They are merged with the required ones in dragon_constraints.yaml.
+    constraints:
+      all_warriors_should_go_to_cave:
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+        constraint: "always(forall warrior in `Warriors`: `warrior.location == Map.VILLAGE and warrior not in GoToCaveEn and MAX > 0` implies within(1, MAX, `warrior in GoToCaveEn`))"
+        reason: "Warrior {warrior} should go to the Cave to attack the Dragon."
+      attack_after_moving_to_cave:
+        # A warrior sent to the Cave right after eating can attack 3 times before they have to return to eat
+        # (assumes a non-hungry warrior; other constraints make the warriors go to the Cave after eating).
+        # Near the end of the game, the number of attacks is limited by the remaining steps.
+        variables:
+          Warriors: "[v for v in VillagerComps if v.role == 'Warrior']"
+          ATTACKS: "2"
+          WINDOW: "4"
+        constraint: "always(forall warrior in `Warriors`: `warrior in GoToCaveEn and MAX > 0` implies within(`min(ATTACKS, MAX)`, `WINDOW`, `warrior in AttackEn`))"
+        reason: "Warrior {warrior} moved to the Cave at step {trigger_step}, but they did not attack the Dragon at least {ATTACKS} times in the next {WINDOW} steps. After moving to the Cave, a warrior should attack the Dragon at least {ATTACKS} times before returning to the Village."
+      all_farmers_should_stay_in_village:
+        variables:
+          Farmers: "[v for v in VillagerComps if v.role == 'Farmer']"
+        constraint: "always(forall farmer in `Farmers`: `farmer.location == Map.VILLAGE`)"
+        reason: "Farmer {farmer} should stay in the Village."
+      spawn_at_least_a_few_farmers:
+        constraint: "within(1, MAX, `len(SpawnFarmerEn) >= 2`)"
+        reason: "At least one new farmer should be spawned to increase the chance of killing the Dragon."

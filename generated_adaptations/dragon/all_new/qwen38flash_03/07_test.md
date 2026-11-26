@@ -1,0 +1,96 @@
+Here is a report from running unit tests on your implementation:
+
+...........................FFFFFF........F.FF......                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 5). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 7). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 12). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 7 times in total, at steps 5, 7, 12, 13, 15, 21, 22)
+
+Villager Margaret has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Deborah has not eaten for 6 steps, so they are starving (step 17). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 7, 17)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 5). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 7). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Mary has not eaten for 4 steps and is still in the Cave (step 9). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 7 times in total, at steps 5, 7, 9, 12, 13, 15, 16)
+
+Villager Margaret has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Laura has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+Villager Mary has not eaten for 6 steps, so they are starving (step 11). Every villager must eat at least once in every 6 consecutive steps.
+(violated 6 times in total, at steps 7, 9, 11, 14, 15, 17)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 5). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager John has not eaten for 4 steps and is still in the Cave (step 13). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Joseph has not eaten for 4 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 7 times in total, at steps 5, 13, 18, 21, 24, 25, 26)
+
+Villager John has not eaten for 6 steps, so they are starving (step 15). Every villager must eat at least once in every 6 consecutive steps.
+Villager Joseph has not eaten for 6 steps, so they are starving (step 20). Every villager must eat at least once in every 6 consecutive steps.
+Villager Anthony has not eaten for 6 steps, so they are starving (step 23). Every villager must eat at least once in every 6 consecutive steps.
+(violated 4 times in total, at steps 15, 20, 23, 26)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 7). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Mary has not eaten for 4 steps and is still in the Cave (step 9). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager John has not eaten for 4 steps and is still in the Cave (step 13). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 6 times in total, at steps 7, 9, 13, 15, 21, 22)
+
+Villager Laura has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+Villager Mary has not eaten for 6 steps, so they are starving (step 11). Every villager must eat at least once in every 6 consecutive steps.
+Villager John has not eaten for 6 steps, so they are starving (step 15). Every villager must eat at least once in every 6 consecutive steps.
+(violated 4 times in total, at steps 9, 11, 15, 17)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 5). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 7). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Mary has not eaten for 4 steps and is still in the Cave (step 9). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 7 times in total, at steps 5, 7, 9, 12, 15, 16, 19)
+
+Villager Margaret has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager Laura has not eaten for 6 steps, so they are starving (step 9). Every villager must eat at least once in every 6 consecutive steps.
+Villager Mary has not eaten for 6 steps, so they are starving (step 11). Every villager must eat at least once in every 6 consecutive steps.
+(violated 5 times in total, at steps 7, 9, 11, 14, 17)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 5). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Laura has not eaten for 4 steps and is still in the Cave (step 7). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Margaret has not eaten for 4 steps and is still in the Cave (step 12). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 7 times in total, at steps 5, 7, 12, 18, 20, 22)
+
+Villager Margaret has not eaten for 6 steps, so they are starving (step 7). Every villager must eat at least once in every 6 consecutive steps.
+Villager John has not eaten for 6 steps, so they are starving (step 14). Every villager must eat at least once in every 6 consecutive steps.
+Villager Joseph has not eaten for 6 steps, so they are starving (step 20). Every villager must eat at least once in every 6 consecutive steps.
+(violated 4 times in total, at steps 7, 14, 20, 22)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+At step 15, there was 16 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+At step 1, there was 15 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+At step 9, there was 16 wheat, which is enough to spawn a new villager and still keep a reserve of one meal for every villager. When there are fewer than 5 villagers, enough wheat and free farmers, two Farmers should spawn a new villager instead of farming.
+(violated 2 times in total, at steps 1, 9)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=3, initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, no_initial_warriors
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+9 failed, 42 passed in 3.18s
+
+Update your code to fix the failing tests. Only the system and required tests need to be fixed, the optional tests are just hints for improving your solution.
+
+We also evaluated your code in a simulation of the game. You achieved a win rate of 100%. The average number of turns (steps) to win was 22.0 (only the won games are counted, N/A if all games are lost).
+
+Try to improve your code or come up with a different approach to win the game in fewer turns.

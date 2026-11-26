@@ -1,0 +1,47 @@
+1
+....................F.....F.....F........F.FF......                      [100%]
+================================== FAILURES ===================================
+____ TestAdaptSystem.test_no_invalid_assignments[initial_wheat=15,seed=1] _____
+In 'assign_in_village': Not enough wheat for a meal. Cannot assign "Nancy" to "eat".
+_________ TestAdaptSystem.test_all_assigned[initial_wheat=15,seed=1] __________
+The following components have not been assigned to a group:
+- in 'assign_in_village': Nancy (Warrior)
+Each component must be assigned exactly once.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Only 0 wheat will be left after step 12 (after the meals, spawning and farming in this step), but 1 villagers will have to eat in the next step (Nancy). Keep enough wheat in reserve for the meals that are due.
+
+Villager Nancy has not eaten for 6 steps, so they are starving (step 14). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+Warrior Mark moved to the Cave at step 20, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Mark moved to the Cave at step 23, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 2 times in total, at steps 24, 26)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15] _
+Warrior Richard moved to the Cave at step 16, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Richard moved to the Cave at step 18, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 2 times in total, at steps 19, 21)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[initial_wheat=15,seed=1] _
+Warrior Nancy moved to the Cave at step 21, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+Warrior Nancy moved to the Cave at step 23, but they did not attack the Dragon at least 2 times in the next 4 steps. After moving to the Cave, a warrior should attack the Dragon at least 2 times before returning to the Village.
+(violated 2 times in total, at steps 24, 26)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+TestAdaptSystem::test_all_assigned:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=3, initial_wheat=15, initial_wheat=15,seed=1
+ - passed for: seed=1, seed=2, no_initial_warriors
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+6 failed, 45 passed in 5.63s

@@ -5,9 +5,11 @@ The functional (user) constraints are defined in the `*_constraints.yaml` files 
 The constraints are either **required** or **optional**:
 
 * The required constraints are in `*_constraints.yaml`. Together with the system constraints, they determine whether the AM is valid.
-* The optional constraints are in `*_constraints_optional.yaml`, e.g. [`DSL/dragon_constraints_optional.yaml`](../dragon_constraints_optional.yaml). They are recommendations that help to win the game: they only give additional feedback.
+* The optional constraints are recommendations that help to win the game: they only give additional feedback. They are split into two files, so that the experiments can use only a subset of them ("some") or all of them:
+  * `*_constraints_optional_some.yaml`, e.g. [`DSL/dragon_constraints_optional_some.yaml`](../dragon_constraints_optional_some.yaml) (spawning new villagers),
+  * `*_constraints_optional_other.yaml`, e.g. [`DSL/dragon_constraints_optional_other.yaml`](../dragon_constraints_optional_other.yaml) (the rest, used only with "all").
 
-Both files have the same format and are merged into one configuration, see `simulation_configs` and `optional_constraint_names` in [`generator_utils.py`](../../generated_adaptations/generator_utils.py). The optional file may be missing; the farm currently has none.
+All the files have the same format and are merged into one configuration, see `simulation_configs` and `optional_constraint_names` in [`generator_utils.py`](../../generated_adaptations/generator_utils.py). The optional files may be missing; the farm currently has none.
 
 ## Definition of a constraint
 

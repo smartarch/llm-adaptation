@@ -1,0 +1,56 @@
+Here is a report from running unit tests on your implementation:
+
+...........................FFFF.F........FF........                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager Ronald has not eaten for 4 steps and is still in the Cave (step 16). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Michelle has not eaten for 4 steps and is still in the Cave (step 16). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Nancy has not eaten for 4 steps and is still in the Cave (step 16). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 3 times in total, at steps 16)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager Karen has not eaten for 4 steps and is still in the Cave (step 15). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Sharon has not eaten for 4 steps and is still in the Cave (step 15). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 2 times in total, at steps 15)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+Villager David has not eaten for 4 steps and is still in the Cave (step 19). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+Villager Michelle has not eaten for 4 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Nancy has not eaten for 4 steps and is still in the Cave (step 18). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 2 times in total, at steps 18)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Ronald has not eaten for 4 steps and is still in the Cave (step 16). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Michelle has not eaten for 4 steps and is still in the Cave (step 16). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+Villager Sandra has not eaten for 4 steps and is still in the Cave (step 16). Moving to the Village takes one step, so they should go to the Village now to be able to eat in time.
+(violated 3 times in total, at steps 16)
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+At step 9, there were 20 wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager (8 wheat), and 3 Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+At step 12, there were 22 wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager (9 wheat), and 2 Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming.
+At step 18, there were 25 wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager (12 wheat), and 2 Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming.
+(violated 2 times in total, at steps 12, 18)
+================================ Test Results =================================
+TestAdaptSystem::test_no_repeated_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_groups:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_no_invalid_assignments:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptSystem::test_all_assigned:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15,seed=1
+ - passed for: initial_wheat=15
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=3, no_initial_warriors
+ - passed for: seed=1, seed=2, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+7 failed, 44 passed in 7.21s
+
+Update your code to fix the failing tests. Only the system and required tests need to be fixed, the optional tests are just hints for improving your solution.
+
+We also evaluated your code in a simulation of the game. You achieved a win rate of 100%. The average number of turns (steps) to win was 16.7 (only the won games are counted, N/A if all games are lost).
+
+Try to improve your code or come up with a different approach to win the game in fewer turns.

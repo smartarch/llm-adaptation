@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Literal
 
 from utils import read_yaml
 
@@ -13,34 +14,38 @@ def simulation_class(example):
     return Simulation
 
 
-CONSTRAINT_FILES = {  # (required, optional) functional constraints; the optional file may not exist
-    "farm": ("DSL/drones_constraints.yaml", "DSL/drones_constraints_optional.yaml"),
-    "dragon": ("DSL/dragon_constraints.yaml", "DSL/dragon_constraints_optional.yaml"),
+CONSTRAINT_FILES = {  # functional constraints: required, optional "some" (a subset of the optional ones), other optional
+    # (the optional files may not exist)
+    "farm": ("DSL/drones_constraints.yaml", "DSL/drones_constraints_optional_some.yaml", "DSL/drones_constraints_optional_other.yaml"),
+    "dragon": ("DSL/dragon_constraints.yaml", "DSL/dragon_constraints_optional_some.yaml", "DSL/dragon_constraints_optional_other.yaml"),
 }
 
 
-def simulation_configs(example, required=False, optional=False):
+def optional_constraint_files(example, optional: Literal[False, "some", "all"]) -> list[str]:
+    """The files with the optional constraints: none, the "some" subset, or all of them."""
+    _, some_file, other_file = CONSTRAINT_FILES[example]
+    files = {False: [], "some": [some_file], "all": [some_file, other_file]}[optional]
+    return [file for file in files if Path(file).exists()]
+
+
+def simulation_configs(example, required=False, optional: Literal[False, "some", "all"] = False):
     if example == "farm":
         configs = ["farm/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "farm/configs/config_no_battery.yaml", "DSL/drones.yaml"]
     elif example == "dragon":
         configs = ["dragon/configs/default.yaml", "generated_adaptations/configs/generated.yaml", "DSL/dragon.yaml"]
     else:
         raise ValueError(f"Unknown example: {example}")
-    required_file, optional_file = CONSTRAINT_FILES[example]
     if required:
-        configs.append(required_file)
-    if optional and Path(optional_file).exists():
-        configs.append(optional_file)
-    return configs
+        configs.append(CONSTRAINT_FILES[example][0])
+    return configs + optional_constraint_files(example, optional)
 
 
 def optional_constraint_names(example) -> set[str]:
-    """Names of the optional functional constraints (they do not determine the validity of the AM)."""
-    optional_file = CONSTRAINT_FILES[example][1]
-    if not Path(optional_file).exists():
-        return set()
-    config = read_yaml(optional_file)
-    return set(config.get("adaptation_params", {}).get("prompt_template_params", {}).get("constraints", {}))
+    """Names of all the optional functional constraints (they do not determine the validity of the AM)."""
+    names = set()
+    for file in optional_constraint_files(example, "all"):
+        names |= set(read_yaml(file).get("adaptation_params", {}).get("prompt_template_params", {}).get("constraints", {}))
+    return names
 
 
 # TODO: can we load this from the DSL?

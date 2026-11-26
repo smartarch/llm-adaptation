@@ -1,0 +1,41 @@
+1
+...ssssssssssssssssssssssssFFFFFFFFFFFFssssssssssss                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=1] __
+Villager Michael has not eaten for 6 steps, so they are starving (step 26). Every villager must eat at least once in every 6 consecutive steps.
+Villager Kevin has not eaten for 6 steps, so they are starving (step 30). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 26, 30)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=2] __
+Villager Sandra has not eaten for 6 steps, so they are starving (step 27). Every villager must eat at least once in every 6 consecutive steps.
+Villager John has not eaten for 6 steps, so they are starving (step 28). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 27, 28)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[seed=3] __
+Villager Kevin has not eaten for 6 steps, so they are starving (step 30). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[no_initial_warriors] _
+Villager Michael has not eaten for 6 steps, so they are starving (step 28). Every villager must eat at least once in every 6 consecutive steps.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15] _
+Villager Michael has not eaten for 6 steps, so they are starving (step 26). Every villager must eat at least once in every 6 consecutive steps.
+Villager Kevin has not eaten for 6 steps, so they are starving (step 30). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 26, 30)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated[initial_wheat=15,seed=1] _
+Villager Michael has not eaten for 6 steps, so they are starving (step 26). Every villager must eat at least once in every 6 consecutive steps.
+Villager Kevin has not eaten for 6 steps, so they are starving (step 30). Every villager must eat at least once in every 6 consecutive steps.
+(violated 2 times in total, at steps 26, 30)
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[seed=1] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[seed=2] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[seed=3] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[no_initial_warriors] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[initial_wheat=15] _
+To win the game, the Dragon must be killed.
+_ TestAdaptRequiredConstraints.test_no_required_constraints_violated_at_the_end[initial_wheat=15,seed=1] _
+To win the game, the Dragon must be killed.
+================================ Test Results =================================
+TestAdaptRequiredConstraints::test_no_required_constraints_violated:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptRequiredConstraints::test_no_required_constraints_violated_at_the_end:
+ - failed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+12 failed, 3 passed, 36 skipped in 0.75s

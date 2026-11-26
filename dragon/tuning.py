@@ -3,7 +3,7 @@
 For each parameter combination and baseline, it reports:
  * the win rate, the average number of steps to win, and the average remaining HP of the Dragon in the lost games,
    over the runs from the default initial state with seeds 1..SEEDS,
- * the functional constraints (DSL/dragon_constraints.yaml and the optional ones from DSL/dragon_constraints_optional.yaml,
+ * the functional constraints (DSL/dragon_constraints.yaml and the optional ones from DSL/dragon_constraints_optional_{some,other}.yaml,
    marked "(opt.)") violated in the test situations (DSL/dragon.yaml),
    with the number of situations in which each constraint was violated; violations of the generic (system)
    constraints are reported as "system: <error type>".
@@ -39,7 +39,7 @@ GRID = {
 
 
 def make_config(baseline: str, params: dict) -> dict:
-    config = read_configs(simulation_configs("dragon", required=True, optional=True))
+    config = read_configs(simulation_configs("dragon", required=True, optional="all"))
     config = copy.deepcopy(nested_update(config, adaptation_config(baseline, "dragon", "mock")))
     config["steps"] = STEPS
     config["dragon"]["HP"] = params.get("hp", HP)

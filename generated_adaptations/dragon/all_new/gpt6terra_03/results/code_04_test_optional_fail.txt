@@ -1,0 +1,16 @@
+1
+...ssssssssssssssssssssssssssssssssssss..FF........                      [100%]
+================================== FAILURES ===================================
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[seed=3] __
+At step 9, there were 20 wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager (8 wheat), and 3 Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming.
+_ TestAdaptOptionalConstraints.test_no_optional_constraints_violated[no_initial_warriors] _
+At step 12, there were 22 wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager (9 wheat), and 2 Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming.
+At step 18, there were 25 wheat, which is enough to spawn a new villager (even a Warrior) and still keep a reserve of one meal for every villager (12 wheat), and 2 Farmers were not eating, but no new villager was spawned. When there is enough wheat, two Farmers should spawn a new villager instead of farming.
+(violated 2 times in total, at steps 12, 18)
+================================ Test Results =================================
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated:
+ - failed for: seed=3, no_initial_warriors
+ - passed for: seed=1, seed=2, initial_wheat=15, initial_wheat=15,seed=1
+TestAdaptOptionalConstraints::test_no_optional_constraints_violated_at_the_end:
+ - passed for: seed=1, seed=2, seed=3, no_initial_warriors, initial_wheat=15, initial_wheat=15,seed=1
+2 failed, 13 passed, 36 skipped in 0.86s
